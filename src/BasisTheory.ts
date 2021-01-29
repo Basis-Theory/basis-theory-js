@@ -1,14 +1,43 @@
-import axios, {AxiosInstance} from 'axios';
-import {Vault} from './Vault/Vault';
-import {BasisTheoryOptions} from './types/BasisTheoryOptions';
+import { assertService, SERVICES } from './common/constants';
+import { BasisTheoryPayments } from './payments';
+import { ServiceEnvironment } from './types';
+import { BasisTheoryVault } from './vault';
 
-export class BasisTheory<T extends BasisTheoryOptions = BasisTheoryOptions> {
-  public readonly client: AxiosInstance = axios.create({
-    baseURL: 'https://api.basistheory.com',
-  });
-  public readonly Vault: Vault;
+export class BasisTheory {
+  private _vault?: BasisTheoryVault;
+  private _payments?: BasisTheoryPayments;
 
-  public constructor(public readonly options: T) {
-    this.Vault = new Vault({ client: this.client });
+  public async init(
+    apiKey: string,
+    environment: ServiceEnvironment = 'production'
+  ): Promise<BasisTheory> {
+    this._vault = new BasisTheoryVault({
+      apiKey,
+      baseURL: SERVICES.vault[environment],
+    });
+    this._payments = new BasisTheoryPayments({
+      apiKey,
+      baseURL: SERVICES.payments[environment],
+    });
+
+    // TODO perform async initialization steps
+
+    return this;
+  }
+
+  public get vault(): BasisTheoryVault {
+    return assertService(this._vault);
+  }
+
+  public get payments(): BasisTheoryPayments {
+    return assertService(this._payments);
   }
 }
+
+declare global {
+  interface Window {
+    BasisTheory: BasisTheory;
+  }
+}
+
+window.BasisTheory = new BasisTheory();
