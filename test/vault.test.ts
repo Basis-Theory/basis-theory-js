@@ -14,7 +14,7 @@ describe('Vault', () => {
 
     const token = await bt.vault.createToken('any data we want!');
 
-    expect(apiCall).toHaveBeenCalledWith('/token', {
+    expect(apiCall).toHaveBeenCalledWith('/tokens', {
       data: 'any data we want!',
     });
     expect(token).toEqual({ token: '12345', data: 'any data we want!' });
@@ -27,7 +27,7 @@ describe('Vault', () => {
 
     const token = await bt.vault.retrieveToken('12345');
 
-    expect(apiCall).toHaveBeenCalledWith('/token/12345');
+    expect(apiCall).toHaveBeenCalledWith('/tokens/12345');
 
     expect(token).toEqual({ token: '12345', data: 'any data we want!' });
   });

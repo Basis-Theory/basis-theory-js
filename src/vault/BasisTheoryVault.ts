@@ -4,7 +4,7 @@ import { TokenCreateResponse } from './types';
 export class BasisTheoryVault extends BasisTheoryService {
   public async createToken(data: string): Promise<TokenCreateResponse> {
     const { data: res } = await this.client.post<TokenCreateResponse>(
-      '/token',
+      '/tokens',
       {
         data, // the API is accepting string only
       }
@@ -14,8 +14,12 @@ export class BasisTheoryVault extends BasisTheoryService {
 
   public async retrieveToken(id: string): Promise<TokenCreateResponse> {
     const { data: res } = await this.client.get<TokenCreateResponse>(
-      `/token/${id}`
+      `/tokens/${id}`
     );
     return res;
+  }
+
+  public async deleteToken(id: string): Promise<void> {
+    await this.client.delete<void>(`/tokens/${id}`);
   }
 }
