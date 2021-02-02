@@ -6,8 +6,15 @@ export class BasisTheoryVault extends BasisTheoryService {
     const { data: res } = await this.client.post<TokenCreateResponse>(
       '/token',
       {
-        data: JSON.stringify({ data }),
+        data, // the API is accepting string only
       }
+    );
+    return res;
+  }
+
+  public async retrieveToken(id: string): Promise<TokenCreateResponse> {
+    const { data: res } = await this.client.get<TokenCreateResponse>(
+      `/token/${id}`
     );
     return res;
   }
