@@ -2,7 +2,9 @@ import { BasisTheoryService } from '../service';
 import { TokenCreateResponse } from './types';
 
 export class BasisTheoryVault extends BasisTheoryService {
-  public async createToken(data: string): Promise<TokenCreateResponse> {
+  public async createToken(
+    data: any // TODO restrict to serializable types
+  ): Promise<TokenCreateResponse> {
     const { data: res } = await this.client.post<TokenCreateResponse>(
       '/tokens',
       {

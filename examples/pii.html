@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <title>PII example</title>
+    <!-- Simple Promise polyfill for IE11 -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/promise-polyfill/8.2.0/polyfill.min.js"
+      integrity="sha512-YK+bAjUuYdjPksbGQIIIsUn5hgYFsc+nXgx21Wwby9Mv+rJd8WZH2FRe1RdlTjFu1vxlGia9/RqmUMcZtX+BrA=="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Simple FormData polyfill for IE11 -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/formdata-polyfill@3.0.20/formdata.min.js"
+      integrity="sha256-WwFurKbIKG5rUT+KMAJOknO74F9JBuWQKvZ7+mC0NJ8="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Add BasisTheory SDK -->
+    <script src="../dist/basis-theory-js.umd.development.js"></script>
+  </head>
+  <body>
+    <style>
+      .header {
+        grid-column: span 3;
+      }
+      .mr-1 {
+        margin-right: 1em;
+      }
+      form {
+        max-width: 480px;
+      }
+      .submit {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .cards {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .card {
+        min-width: 400px;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        padding: 1em;
+        margin: 1em;
+        border-radius: 1em;
+      }
+      .card-info {
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+    <script>
+      // you can initialize the library whenever it is more suitable to you
+      // here we are doing it when the window is properly loaded
+      window.addEventListener('load', function () {
+        BasisTheory.init('04ab9d12-4959-4c48-ba03-9ef722efcc5a', 'sandbox'); // pass your API Key and enviroment
+        // or
+        // window.BasisTheory.init('123456789');
+      });
+
+      // listener for form submit event
+      function onSubmit($event) {
+        // tell the user agent not to handle the event
+        $event.preventDefault();
+
+        // get the underlying event target (our credit card form)
+        const form = $event.target;
+
+        // extract input values individually through FormData API
+        const data = new FormData(form);
+        const firstName = data.get('first_name');
+        const lastName = data.get('last_name');
+        const dob = data.get('dob');
+
+        const pii = {
+          firstName: firstName,
+          lastName: lastName,
+          dob: dob,
+        };
+
+        // this is where the magic happens
+        // invoke async BasisTheory Payments API store credit card method
+        BasisTheory.vault.createToken(pii).then(function (token) {
+          console.log(token);
+          // and when that is done
+          form.reset(); // we can reset our form
+          // handleData(card); // and attach the stored credit card info to the view
+        });
+      }
+    </script>
+
+    <!-- This is where our stored credit cards will go -->
+    <div id="cards_wrapper" class="cards"></div>
+    <hr />
+    <!-- We don't want the form to reload the page; hence `return false` -->
+    <form onsubmit="onSubmit(event); return false;">
+      <h2 class="header">Customer Data</h2>
+      <div>
+        <label for="first_name" class="mr-1">First Name:</label>
+        <input
+          class="span2"
+          type="text"
+          id="first_name"
+          name="first_name"
+          value="Regina"
+          required
+        />
+      </div>
+      <div>
+        <label for="last_name" class="mr-1">Last Name:</label>
+        <input
+          type="text"
+          id="last_name"
+          name="last_name"
+          class="span2"
+          maxlength="16"
+          value="Phalange"
+          required
+        />
+      </div>
+      <div>
+        <label for="dob" class="mr-1">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required />
+      </div>
+      <div class="submit">
+        <input type="submit" value="Save Data" class="button" />
+      </div>
+    </form>
+  </body>
+</html>
