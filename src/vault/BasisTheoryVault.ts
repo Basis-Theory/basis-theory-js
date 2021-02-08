@@ -14,7 +14,7 @@ export class BasisTheoryVault extends BasisTheoryService {
     return res;
   }
 
-  public async retrieveToken(id: string): Promise<TokenCreateResponse> {
+  public async getToken(id: string): Promise<TokenCreateResponse> {
     const { data: res } = await this.client.get<TokenCreateResponse>(
       `/tokens/${id}`
     );

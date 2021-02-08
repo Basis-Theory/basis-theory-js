@@ -1,20 +1,8 @@
 <html>
   <head>
     <title>Credit Card example</title>
-    <!-- Simple Promise polyfill for IE11 -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/promise-polyfill/8.2.0/polyfill.min.js"
-      integrity="sha512-YK+bAjUuYdjPksbGQIIIsUn5hgYFsc+nXgx21Wwby9Mv+rJd8WZH2FRe1RdlTjFu1vxlGia9/RqmUMcZtX+BrA=="
-      crossorigin="anonymous"
-    ></script>
-    <!-- Simple FormData polyfill for IE11 -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/formdata-polyfill@3.0.20/formdata.min.js"
-      integrity="sha256-WwFurKbIKG5rUT+KMAJOknO74F9JBuWQKvZ7+mC0NJ8="
-      crossorigin="anonymous"
-    ></script>
     <!-- Add BasisTheory SDK -->
-    <script src="../dist/basis-theory-js.umd.development.js"></script>
+    <script src="../dist/basis-theory-js.bundle.js"></script>
   </head>
   <body>
     <style>
@@ -65,12 +53,11 @@
         // get the underlying event target (our credit card form)
         const form = $event.target;
 
-        // extract input values individually through FormData API
-        const data = new FormData(form);
-        const cardNumber = data.get('card_number');
-        const holderName = data.get('holder_name');
-        const expiration = data.get('expiration');
-        const cvv = data.get('cvv');
+        // extract data from form elements
+        const cardNumber = document.getElementById('card_number').value;
+        const holderName = document.getElementById('holder_name').value;
+        const expiration = document.getElementById('expiration').value;
+        const cvv = document.getElementById('cvv').value;
 
         // this is where the magic happens
         // invoke async BasisTheory Payments API store credit card method

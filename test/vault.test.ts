@@ -25,7 +25,7 @@ describe('Vault', () => {
       data: { token: '12345', data: 'any data we want!' },
     });
 
-    const token = await bt.vault.retrieveToken('12345');
+    const token = await bt.vault.getToken('12345');
 
     expect(apiCall).toHaveBeenCalledWith('/tokens/12345');
 

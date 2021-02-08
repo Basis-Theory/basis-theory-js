@@ -3,7 +3,7 @@ import { ServicesMap } from '../types';
 export const SERVICES: ServicesMap = {
   vault: {
     production: '',
-    sandbox: 'https://vault-dev.basistheory.com',
+    sandbox: 'https://btvault-dev.azurewebsites.net',
     local: 'http://localhost:3000/vault', // TODO env var
   },
   payments: {
