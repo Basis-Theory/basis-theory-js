@@ -1,4 +1,5 @@
 import { assertService, SERVICES } from './common/constants';
+import { BasisTheoryEncryption } from './encryption';
 import { BasisTheoryPayments } from './payments';
 import { ServiceEnvironment } from './types';
 import { BasisTheoryVault } from './vault';
@@ -6,6 +7,7 @@ import { BasisTheoryVault } from './vault';
 export class BasisTheory {
   private _vault?: BasisTheoryVault;
   private _payments?: BasisTheoryPayments;
+  private _encryption?: BasisTheoryEncryption;
 
   public async init(
     apiKey: string,
@@ -19,7 +21,8 @@ export class BasisTheory {
       apiKey,
       baseURL: SERVICES.payments[environment],
     });
-
+    this._encryption = new BasisTheoryEncryption();
+    // initialization options
     // TODO perform async initialization steps
 
     return this;
@@ -32,12 +35,8 @@ export class BasisTheory {
   public get payments(): BasisTheoryPayments {
     return assertService(this._payments);
   }
-}
 
-declare global {
-  interface Window {
-    BasisTheory: BasisTheory;
+  public get encryption(): BasisTheoryEncryption {
+    return assertService(this._encryption);
   }
 }
-
-window.BasisTheory = new BasisTheory();
