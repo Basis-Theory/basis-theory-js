@@ -3,7 +3,7 @@
   <head>
     <title>PII example</title>
     <!-- Add BasisTheory SDK -->
-    <script src="../dist/basis-theory-js.bundle.js"></script>
+    <script src="../lib/dist/basis-theory-js.bundle.js"></script>
   </head>
   <body>
     <style>
@@ -46,7 +46,7 @@
       window.addEventListener('load', function () {
         BasisTheory.init(
           '04ab9d12-4959-4c48-ba03-9ef722efcc5a', // pass your API Key
-          'sandbox' // and chosen enviroment
+          'local' // and chosen enviroment
         ).then(function () {
           // Generate an ECIES key pair in a way we can access it later
           window.keyPair = BasisTheory.encryption.generateKeyPair();

@@ -4,12 +4,12 @@ export const SERVICES: ServicesMap = {
   vault: {
     production: '',
     sandbox: 'https://btvault-dev.azurewebsites.net',
-    local: 'http://localhost:3000/vault', // TODO env var
+    local: 'http://mock-server:3000/vault', // TODO env var
   },
   payments: {
     production: '',
     sandbox: '',
-    local: 'http://localhost:3000/payments', // TODO env var
+    local: 'http://mock-server:3000/payments', // TODO env var
   },
 };
 

@@ -1,0 +1,17 @@
+{
+  "name": "@Basis-Theory/basis-theory-js-e2e",
+  "version": "1.0.0",
+  "description": "basis-theory-js e2e tests",
+  "main": "index.js",
+  "author": "Davi Aquino <davi@basistheory.com>",
+  "license": "UNLISCENSED",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No unit tests to run\"",
+    "cypress:run": "cypress run --headless -b chrome"
+  },
+  "devDependencies": {
+    "cypress": "6.4.0",
+    "typescript": "4.1.4"
+  }
+}

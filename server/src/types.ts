@@ -16,5 +16,3 @@ export type MockStore = {
 };
 
 export type Token = string;
-
-export * from '@/types';

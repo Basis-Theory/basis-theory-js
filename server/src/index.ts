@@ -4,7 +4,8 @@ import bodyParser from 'body-parser';
 
 import { payments } from './payments';
 const app = express();
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000;
+const host = process.env.HOST || 'localhost';
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -13,8 +14,12 @@ app.use((req, _res, next) => {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.status(200).send('Hello, from mock-server')
+});
+
 app.use('/payments', payments);
 
-app.listen(port, () => {
-  console.log(`BasisTheory services mock server listening at port ${port}`);
+app.listen(port, host, () => {
+  console.log(`BasisTheory services mock server listening at ${host}:${port}`);
 });

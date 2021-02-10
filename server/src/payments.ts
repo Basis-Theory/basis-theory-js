@@ -1,12 +1,11 @@
 import { Router } from 'express';
 import { mask } from './utils';
-import { CreditCardStoreResponse, CreditCardInfo } from '../src/payments';
 import { setData } from './stores';
 import { Services } from './types';
 
 export const payments = Router();
 
-payments.post<{}, CreditCardStoreResponse, CreditCardInfo>(
+payments.post(
   '/credit_card',
   (req, res) => {
     const info = req.body;
