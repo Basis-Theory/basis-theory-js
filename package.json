@@ -16,7 +16,7 @@
     "build": "concurrently \"yarn build:lib\" \"yarn build:server\" --kill-others-on-fail",
     "build:lib": "yarn workspace @Basis-Theory/basis-theory-js build",
     "build:server": "yarn workspace @Basis-Theory/basis-theory-js-mock-server build",
-    "cypress": "cypress open",
+    "cypress:open": "cypress open",
     "cypress:ci": "cypress run --headless -b chrome",
     "test": "yarn test:lib",
     "test:lib": "yarn workspace @Basis-Theory/basis-theory-js run test",
