@@ -49,6 +49,7 @@ context('Credit Card example', () => {
           cy.wait('@getToken').then((getToken) => {
             // cy.window().its('token').should('equal', getToken.response.body.id);
 
+            // can't chain this block either 🤦‍♂️
             expect(getToken.response.body.data).to.have.property(
               'ciphertext',
               createToken.request.body.data.ciphertext
