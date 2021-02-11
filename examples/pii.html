@@ -76,7 +76,7 @@
           .encrypt(window.keyPair.publicKey, JSON.stringify(pii))
           .then(function (encrypted) {
             BasisTheory.vault.createToken(encrypted).then(function (res) {
-              const token = res.token;
+              const token = res.id;
               // save the token so we can access it later
               window.token = token;
 
@@ -88,7 +88,7 @@
           });
       }
 
-      function showToken() {
+      function showData() {
         // retrieve our token data
         BasisTheory.vault.getToken(window.token).then(function (res) {
           const data = res.data;
@@ -102,10 +102,7 @@
         });
       }
     </script>
-
-    <!-- This is where our stored credit cards will go -->
-    <div id="cards_wrapper" class="cards"></div>
-    <hr />
+    
     <!-- We don't want the form to reload the page; hence `return false` -->
     <form onsubmit="onSubmit(event); return false;">
       <h2 class="header">Customer Data</h2>
@@ -116,7 +113,6 @@
           type="text"
           id="first_name"
           name="first_name"
-          value="Regina"
           required
         />
       </div>
@@ -128,7 +124,6 @@
           name="last_name"
           class="span2"
           maxlength="16"
-          value="Phalange"
           required
         />
       </div>
@@ -141,7 +136,7 @@
       </div>
     </form>
     <div class="submit">
-      <button class="button" id="show_data" onclick="showToken();">
+      <button class="button" id="show_data" onclick="showData();">
         Show token data
       </button>
     </div>
