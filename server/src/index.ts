@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import { payments } from './payments';
+import { vault } from './vault';
 const app = express();
 const port = Number(process.env.PORT) || 3000;
 const host = process.env.HOST || 'localhost';
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/payments', payments);
+app.use('/vault', vault);
 
 app.listen(port, host, () => {
   console.log(`BasisTheory services mock server listening at ${host}:${port}`);

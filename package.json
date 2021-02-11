@@ -18,6 +18,7 @@
     "build:server": "yarn workspace @Basis-Theory/basis-theory-js-mock-server build",
     "cypress:open": "cypress open",
     "cypress:ci": "cypress run --headless -b chrome",
+    "start:server": "yarn workspace @Basis-Theory/basis-theory-js-mock-server start",
     "test": "yarn test:lib",
     "test:lib": "yarn workspace @Basis-Theory/basis-theory-js run test",
     "test:e2e": "yarn cypress:ci"
