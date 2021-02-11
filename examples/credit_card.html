@@ -2,7 +2,7 @@
   <head>
     <title>Credit Card example</title>
     <!-- Add BasisTheory SDK -->
-    <script src="../dist/basis-theory-js.bundle.js"></script>
+    <script src="../lib/dist/basis-theory-js.bundle.js"></script>
   </head>
   <body>
     <style>
@@ -82,7 +82,7 @@
         newCardDiv.innerHTML =
           '<h3>' +
           card.info.holderName +
-          '</h4>' +
+          '</h3>' +
           '<div class="card-info">' +
           card.info.cardNumber +
           '</div>' +
@@ -111,7 +111,6 @@
           type="text"
           id="holder_name"
           name="holder_name"
-          value="Regina Phalange"
           required
         />
       </div>
@@ -123,7 +122,6 @@
           name="card_number"
           class="span2"
           maxlength="16"
-          value="1234567891011121"
           required
         />
       </div>
@@ -135,7 +133,6 @@
           name="expiration"
           maxlength="5"
           size="5"
-          value="10/26"
           required
         />
         <label for="cvv" class="mr-1">CVV:</label>

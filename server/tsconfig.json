@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "declaration": true,
+    "declaration": false,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
-    "sourceMap": true,
+    "sourceMap": false,
     "outDir": "./dist",
-    "baseUrl": ".",
-    "incremental": true,
-    "paths": {
-      "@/*": ["../src/*"]
-    },
+    "incremental": false,
     "typeRoots": ["@types"]
-  }
+  },
+  "include": ["./src/**/*.ts"]
 }

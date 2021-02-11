@@ -7,13 +7,14 @@ on:
 jobs:
   build:
     name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
-
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node: ['14.x']
         os: [ubuntu-latest]
-
+    env:
+      # prevents extra Cypress installation progress messages
+      CI: 1
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -30,20 +31,38 @@ jobs:
 
       - name: Install deps and build (with cache)
         uses: bahmutov/npm-install@v1
+        env:
+          CYPRESS_INSTALL_BINARY: 0
 
-      - name: Lint
-        run: yarn lint
+      # confirm there is no Cypress installed
+      - run: yarn run cypress cache path
+      # should return empty list of installed versions
+      - run: yarn run cypress cache list
+      # restore / cache the binary ourselves on Linux
+      # see https://github.com/actions/cache
+      - name: Cache Cypress
+        id: cache-cypress
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+      # now let's install Cypress binary
+      - run: yarn run cypress install
+      - run: yarn run cypress cache list
 
-      - name: Test
-        run: yarn test --ci --coverage --maxWorkers=2
+      - name: Verify
+        run: make verify
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: e2e/cypress/screenshots
 
       - name: Monitor coverage
         uses: slavcodev/coverage-monitor-action@1.2.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          clover_file: 'coverage/clover.xml'
+          clover_file: 'lib/coverage/clover.xml'
           threshold_alert: 80
           threshold_warning: 90
-
-      - name: Build
-        run: yarn build

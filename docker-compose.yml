@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  mock-server:
+    container_name: mock-server
+    image: mock-server:latest
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+
+  # if in the future we choose to run cypress within docker
+  # e2e:
+  #   container_name: cypress
+  #   image: cypress:latest
+  #   networks: 
+  #     - basistheory
+  #   build:
+  #     context: .
+  #     dockerfile: e2e/Dockerfile
+  #   depends_on:
+  #     - mock-server
+  #   volumes:
+  #     - ./e2e/cypress:/app/e2e/cypress
+  #     - ./e2e/tsconfig.json:/app/tsconfig.json
+  #     - ./cypress.json:/app/cypress.json
+  #     - ./examples:/app/examples
+  #     - ./lib/dist:/app/lib/dist

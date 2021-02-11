@@ -3,8 +3,10 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import { payments } from './payments';
+import { vault } from './vault';
 const app = express();
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000;
+const host = process.env.HOST || 'localhost';
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -13,8 +15,13 @@ app.use((req, _res, next) => {
   next();
 });
 
-app.use('/payments', payments);
+app.get('/', (req, res) => {
+  res.status(200).send('Hello, from mock-server')
+});
 
-app.listen(port, () => {
-  console.log(`BasisTheory services mock server listening at port ${port}`);
+app.use('/payments', payments);
+app.use('/vault', vault);
+
+app.listen(port, host, () => {
+  console.log(`BasisTheory services mock server listening at ${host}:${port}`);
 });
