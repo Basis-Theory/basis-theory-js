@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 declare global {
+  // eslint-disable-next-line no-var
   var mockedAxios: jest.Mocked<typeof axios>;
 }
 

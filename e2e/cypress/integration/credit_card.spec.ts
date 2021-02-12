@@ -39,10 +39,10 @@ context('Credit Card example', () => {
         .next()
         .should('contain.text', '10/22')
         .find('a')
-        .click().then(() => {
-          expect(alert.getCall(0)).to.be.calledWith(i.response.body.token)
-        })
-      
+        .click()
+        .then(() => {
+          expect(alert.getCall(0)).to.be.calledWith(i.response.body.token);
+        });
     });
   });
 });
