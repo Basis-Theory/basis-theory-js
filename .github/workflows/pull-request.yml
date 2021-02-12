@@ -55,7 +55,6 @@ jobs:
           eslint: true
           prettier: true
 
-
       - name: Upload failed e2e tests screenshots
         uses: actions/upload-artifact@v2
         if: failure()
