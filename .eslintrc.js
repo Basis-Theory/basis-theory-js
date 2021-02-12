@@ -14,7 +14,10 @@ module.exports = {
     node: true,
   },
   rules: {
-    'prettier/prettier': ['warn'],
+    'prettier/prettier': 'warn',
+    '@typescript-eslint/member-ordering': 'warn',
+    '@typescript-eslint/explicit-function-return-type': 'error',
+    '@typescript-eslint/explicit-member-accessibility': 'warn',
   },
   overrides: [
     {

@@ -7,7 +7,7 @@ export abstract class BasisTheoryService<
 > {
   protected readonly client: AxiosInstance;
 
-  constructor(private readonly options: T) {
+  public constructor(private readonly options: T) {
     const { apiKey, baseURL } = this.options;
     this.client = axios.create({
       baseURL,

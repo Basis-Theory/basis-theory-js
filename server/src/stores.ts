@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { MockStore, ServiceStore, Services, Token } from './types';
+import { MockStore, ServiceStore, ClientStore, Services, Token } from './types';
 
 const paymentsStore: ServiceStore = {};
 const vaultStore: ServiceStore = {};
@@ -8,7 +8,7 @@ const mockStore: MockStore = {
   vault: vaultStore,
 };
 
-const getClientStore = (apiKey: string, type: Services) => {
+const getClientStore = (apiKey: string, type: Services): ClientStore => {
   const appStore = mockStore[type];
   let clientStore = appStore[apiKey];
   if (!clientStore) {
