@@ -29,31 +29,34 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install deps and build (with cache)
+      - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
         env:
           CYPRESS_INSTALL_BINARY: 0
 
-      # confirm there is no Cypress installed
-      - run: yarn run cypress cache path
-      # should return empty list of installed versions
-      - run: yarn run cypress cache list
-      # restore / cache the binary ourselves on Linux
-      # see https://github.com/actions/cache
       - name: Cache Cypress
         id: cache-cypress
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.cache/Cypress
           key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
-      # now let's install Cypress binary
+
+      # Install and check Cypress binary
       - run: yarn run cypress install
       - run: yarn run cypress cache list
 
       - name: Verify
         run: make verify
+      
+      - name: Lint
+        uses: wearerequired/lint-action@v1.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          eslint: true
+          prettier: true
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload failed e2e tests screenshots
+        uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: cypress-screenshots

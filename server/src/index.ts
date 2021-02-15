@@ -16,7 +16,7 @@ app.use((req, _res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello, from mock-server')
+  res.status(200).send('Hello, from mock-server');
 });
 
 app.use('/payments', payments);

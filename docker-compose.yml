@@ -17,7 +17,7 @@ services:
   # e2e:
   #   container_name: cypress
   #   image: cypress:latest
-  #   networks: 
+  #   networks:
   #     - basistheory
   #   build:
   #     context: .

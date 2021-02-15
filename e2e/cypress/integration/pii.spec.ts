@@ -1,4 +1,4 @@
-context('Credit Card example', () => {
+context('PII example', () => {
   beforeEach(() => {
     cy.visit('examples/pii.html');
     cy.intercept({
