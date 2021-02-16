@@ -1,4 +1,4 @@
-import 'core-js';
+// import 'core-js';
 import 'regenerator-runtime/runtime';
 import { BasisTheory } from './BasisTheory';
 

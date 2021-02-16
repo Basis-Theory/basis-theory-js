@@ -2,7 +2,7 @@
   "name": "@Basis-Theory/basis-theory-js",
   "version": "0.1.0",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "author": "James Armstead",
   "main": "dist/basis-theory.bundle.js",
   "module": "dist/index.js",
@@ -15,8 +15,10 @@
     "analyze": "size-limit --why",
     "build": "concurrently \"yarn build:bundle\" \"yarn build:module\" \"yarn build:declarations\" --kill-others-on-fail",
     "build:bundle": "webpack --config webpack.prod.js",
-    "build:module": "babel src --extensions .ts --out-dir dist",
     "build:declarations": "tsc",
+    "build:module": "babel src --extensions .ts --out-dir dist",
+    "prepare": "yarn build",
+    "release": "semantic-release",
     "size": "size-limit",
     "start": "webpack --config webpack.dev.js --watch",
     "test": "jest",
@@ -24,9 +26,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "buffer": "^6.0.3",
     "core-js": "^3.8.3",
-    "eccrypto-js": "^5.4.0",
     "process": "^0.11.10"
   },
   "devDependencies": {
@@ -48,11 +48,15 @@
     "ts-jest": "^26.5.0",
     "typescript": "4.1.4",
     "webpack": "^5.20.2",
+    "webpack-bundle-analyzer": "^4.4.0",
     "webpack-cli": "^4.5.0",
     "webpack-merge": "^5.7.3"
   },
   "engines": {
     "node": ">=10"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "size-limit": [
     {
