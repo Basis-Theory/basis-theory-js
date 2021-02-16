@@ -8,8 +8,7 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
     "analyze": "size-limit --why",
@@ -60,12 +59,8 @@
   },
   "size-limit": [
     {
-      "path": "dist/basis-theory-js.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/basis-theory-js.esm.js",
-      "limit": "10 KB"
+      "path": "dist/basis-theory.bundle.js",
+      "limit": "50 KB"
     }
   ]
 }
