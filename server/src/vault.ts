@@ -6,19 +6,19 @@ export const vault = Router();
 
 vault.post('/tokens', (req, res) => {
   const { data } = req.body;
-  const id = setData(req.apiKey, Services.vault, JSON.stringify(data));
+  const token = setData(req.apiKey, Services.vault, JSON.stringify(data));
 
   res.status(201).send({
-    id,
+    token,
     data,
   });
 });
 
-vault.get('/tokens/:id', (req, res) => {
-  const { id } = req.params;
-  const data = JSON.parse(getData(req.apiKey, Services.vault, id));
+vault.get('/tokens/:token', (req, res) => {
+  const { token } = req.params;
+  const data = JSON.parse(getData(req.apiKey, Services.vault, token));
   res.status(201).send({
-    id,
+    token,
     data,
   });
 });

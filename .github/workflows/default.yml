@@ -1,12 +1,14 @@
-name: Pull Request
+name: Default
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, release]
+  push:
+    branches: [main, release]
 
 jobs:
   build:
-    name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
+    name: Build, lint, and test on Node ${{ matrix.node }} / ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -69,3 +71,33 @@ jobs:
           clover_file: 'lib/coverage/clover.xml'
           threshold_alert: 80
           threshold_warning: 90
+
+  release:
+    name: Release
+    needs: build
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['14.x']
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+      
+      - name: Semantic Release
+        run: make release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}

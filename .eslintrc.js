@@ -24,6 +24,7 @@ module.exports = {
       files: '*.js',
       rules: {
         '@typescript-eslint/no-var-requires': 'off', // js files must be able to require('')
+        '@typescript-eslint/explicit-member-accessibility': 'off', // js files can't declare accessibility modifiers
       },
     },
   ],

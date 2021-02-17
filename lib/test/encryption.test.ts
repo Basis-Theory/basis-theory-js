@@ -1,13 +1,21 @@
 import { BasisTheory, KeyPair } from '../src';
 import isBase64 from 'is-base64';
 
-describe('Payments', () => {
+describe('Encryption', () => {
   let bt: BasisTheory;
   let keyPair: KeyPair;
 
   beforeAll(async () => {
     bt = await new BasisTheory().init('dummy-key');
-    keyPair = bt.encryption.generateKeyPair();
+    keyPair = await bt.encryption.generateKeyPair();
+  });
+
+  it('should load different encryption adapters based on runtime environment', async () => {
+    if (typeof window === 'undefined') {
+      expect(bt.encryption.name).toBe('node');
+    } else {
+      expect(bt.encryption.name).toBe('browser');
+    }
   });
 
   it('should encrypt/decrypt string data', async () => {
@@ -22,10 +30,10 @@ describe('Payments', () => {
       JSON.stringify(pii)
     );
 
-    expect(isBase64(encrypted.ciphertext)).toBe(true);
-    expect(isBase64(encrypted.ephemPublicKey)).toBe(true);
-    expect(isBase64(encrypted.iv)).toBe(true);
-    expect(isBase64(encrypted.mac)).toBe(true);
+    expect(isBase64(encrypted)).toBe(true);
+    expect(isBase64(encrypted)).toBe(true);
+    expect(isBase64(encrypted)).toBe(true);
+    expect(isBase64(encrypted)).toBe(true);
 
     const decrypted = await bt.encryption.decrypt(
       keyPair.privateKey,
