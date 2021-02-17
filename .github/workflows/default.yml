@@ -65,6 +65,7 @@ jobs:
           path: e2e/cypress/screenshots
 
       - name: Monitor coverage
+        if: ${{ github.event_name == 'pull_request' }}
         uses: slavcodev/coverage-monitor-action@1.2.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
