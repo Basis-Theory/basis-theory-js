@@ -1,4 +1,3 @@
-import { generateKeyPair } from 'crypto';
 import { EncryptionAdapter, KeyPair } from './types';
 import { browserAdapter } from './browser';
 import { nodeAdapter } from './node';
@@ -7,7 +6,7 @@ export class BasisTheoryEncryption implements EncryptionAdapter {
   private readonly adapter: EncryptionAdapter;
 
   public constructor() {
-    if (typeof generateKeyPair === 'function') {
+    if (typeof window === 'undefined') {
       this.adapter = nodeAdapter;
     } else {
       this.adapter = browserAdapter;

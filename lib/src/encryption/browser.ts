@@ -81,7 +81,7 @@ export async function generateKeyPair(): Promise<KeyPair> {
 }
 
 async function loadPublicKey(pem: string): Promise<CryptoKey> {
-  return await crypto.subtle.importKey(
+  return await window.crypto.subtle.importKey(
     'spki',
     convertPemToBinary(pem, 'PUBLIC'),
     signAlgorithm,
@@ -91,7 +91,7 @@ async function loadPublicKey(pem: string): Promise<CryptoKey> {
 }
 
 async function loadPrivateKey(pem: string): Promise<CryptoKey> {
-  return crypto.subtle.importKey(
+  return window.crypto.subtle.importKey(
     'pkcs8',
     convertPemToBinary(pem, 'PRIVATE'),
     signAlgorithm,
@@ -105,7 +105,7 @@ export async function encrypt(
   data: string
 ): Promise<string> {
   const key = await loadPublicKey(publicKey);
-  const encrypted = await crypto.subtle.encrypt(
+  const encrypted = await window.crypto.subtle.encrypt(
     { name: signAlgorithm.name },
     key,
     new TextEncoder().encode(data).buffer
@@ -119,7 +119,7 @@ export async function decrypt(
   data: string
 ): Promise<string> {
   const key = await loadPrivateKey(privateKey);
-  const decrypted = await crypto.subtle.decrypt(
+  const decrypted = await window.crypto.subtle.decrypt(
     { name: signAlgorithm.name },
     key,
     base64StringToArrayBuffer(data)
