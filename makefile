@@ -14,3 +14,6 @@ start-docker:
 
 stop-docker:
 	./scripts/stopdocker.sh
+
+release:
+	yarn release

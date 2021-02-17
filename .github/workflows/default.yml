@@ -97,7 +97,7 @@ jobs:
           CYPRESS_INSTALL_BINARY: 0
       
       - name: Semantic Release
-        run: yarn release
+        run: make release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
