@@ -62,7 +62,7 @@
           .encrypt(window.keyPair.publicKey, JSON.stringify(pii))
           .then(function (encrypted) {
             BasisTheory.vault.createToken(encrypted).then(function (res) {
-              const token = res.id;
+              const token = res.token;
               // save the token so we can access it later
               window.token = token;
 
