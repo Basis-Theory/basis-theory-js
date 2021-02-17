@@ -4,7 +4,7 @@
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "UNLICENSED",
   "author": "James Armstead",
-  "main": "dist/basis-theory.bundle.js",
+  "main": "dist/basis-theory-js.bundle.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -24,9 +24,7 @@
     "test:cov": "jest --coverage"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "core-js": "^3.8.3",
-    "process": "^0.11.10"
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -61,8 +59,9 @@
   },
   "size-limit": [
     {
-      "path": "dist/basis-theory.bundle.js",
-      "limit": "50 KB"
+      "path": "dist/basis-theory-js.bundle.js",
+      "limit": "50 KB",
+      "webpack": false
     }
   ]
 }
