@@ -16,7 +16,7 @@ const resourceGroup = new azure.core.ResourceGroup(resourceGroupName, {
 });
 
 // Create the Storage account
-const storageAccountName = `${resourcePrefix}-sa`;
+const storageAccountName = `bsjs${stackName}sa`; // must be lower case and numbers only
 const storageAccount = new azure.storage.Account(storageAccountName, {
   name: storageAccountName,
   resourceGroupName: resourceGroup.name,
