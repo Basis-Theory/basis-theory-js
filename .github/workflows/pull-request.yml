@@ -42,11 +42,8 @@ jobs:
       - run: yarn run cypress install
       - run: yarn run cypress cache list
 
-      # Temporarily disabling this to reach to infra faster
-      # - name: Verify
-      #   run: make verify
-
-      - run: yarn build
+      - name: Verify
+        run: make verify
 
       - name: Upload failed e2e tests screenshots
         uses: actions/upload-artifact@v2
