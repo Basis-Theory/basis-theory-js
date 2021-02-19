@@ -23,9 +23,6 @@ const storageAccount = new azure.storage.Account(storageAccountName, {
   accountReplicationType: config.require('storageAccountReplicationType'),
   accountTier: config.require('storageAccountTier'),
   accountKind: 'StorageV2',
-  staticWebsite: {
-    indexDocument: `v${major}/index.js`,
-  },
 });
 
 // Create the container
