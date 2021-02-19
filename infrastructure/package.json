@@ -1,0 +1,21 @@
+{
+  "name": "@Basis-Theory/basis-theory-js-infrasctructure",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Basis Theory JS infrastructure",
+  "repository": "https://github.com/Basis-Theory/basis-theory-js",
+  "license": "UNLISCENSED",
+  "author": {
+    "name": "Davi Aquino",
+    "email": "davi@basistheory.com"
+  },
+  "dependencies": {
+    "@pulumi/azure": "^3.0.0",
+    "@pulumi/pulumi": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.0.0",
+    "@types/semver": "^7.3.4",
+    "semver": "^7.3.4"
+  }
+}

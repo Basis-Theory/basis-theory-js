@@ -1,14 +1,11 @@
-name: Default
+name: Pull Request
 
 on:
   pull_request:
     branches: [main, release]
-  push:
-    branches: [main, release]
 
 jobs:
   build:
-    name: Build, lint, and test on Node ${{ matrix.node }} / ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -21,15 +18,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      # - name: Size Check
-      #   uses: andresz1/size-limit-action@v1
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+      
+      - name: Setup Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
@@ -49,13 +44,6 @@ jobs:
 
       - name: Verify
         run: make verify
-      
-      - name: Lint
-        uses: wearerequired/lint-action@v1.7.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          eslint: true
-          prettier: true
 
       - name: Upload failed e2e tests screenshots
         uses: actions/upload-artifact@v2
@@ -64,41 +52,28 @@ jobs:
           name: cypress-screenshots
           path: e2e/cypress/screenshots
 
+      - name: Verify Infrastructure
+        run: make setup-infra
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_ARM_SUBSCRIPTION_ID }}
+          PULUMI_STACK: basistheory/dev
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          IS_PR_WORKFLOW: true
+      
+      - name: Lint
+        uses: wearerequired/lint-action@v1.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          eslint: true
+          prettier: true
+
       - name: Monitor coverage
-        if: ${{ github.event_name == 'pull_request' }}
         uses: slavcodev/coverage-monitor-action@1.2.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           clover_file: 'lib/coverage/clover.xml'
           threshold_alert: 80
           threshold_warning: 90
-
-  release:
-    name: Release
-    needs: build
-    if: ${{ github.event_name == 'push' }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node: ['14.x']
-        os: [ubuntu-latest]
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-
-      - name: Install deps (with cache)
-        uses: bahmutov/npm-install@v1
-        env:
-          CYPRESS_INSTALL_BINARY: 0
-      
-      - name: Semantic Release
-        run: make release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
