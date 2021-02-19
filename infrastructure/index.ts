@@ -16,7 +16,7 @@ const resourceGroup = new azure.core.ResourceGroup(resourceGroupName, {
 });
 
 // Create the Storage account
-const storageAccountName = `bsjs${stackName}sa`; // must be lower case and numbers only
+const storageAccountName = `btjs${stackName}sa`; // must be lower case and numbers only
 const storageAccount = new azure.storage.Account(storageAccountName, {
   name: storageAccountName,
   resourceGroupName: resourceGroup.name,
@@ -123,6 +123,6 @@ process.env.AZ_INDEX_BLOB = indexName;
 // /alpha/1.0.0-alpha.1.js
 // /alpha/1.0.0-alpha.2.js
 
-// /beta/index.js          - latest beta prerelease
+// /beta/index.js           - latest beta prerelease
 // /beta/1.0.0-alpha.1.js
 // /beta/1.0.0-alpha.2.js
