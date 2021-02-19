@@ -15,5 +15,9 @@ start-docker:
 stop-docker:
 	./scripts/stopdocker.sh
 
+setup-infra:
+	./scripts/setupinfra.sh
+
 release:
 	yarn release
+	$(MAKE) setup-infra

@@ -5,12 +5,15 @@
   "description": "Basis Theory JS monorepo package",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "UNLISCENSED",
-  "author": "Davi Aquino <davi@basistheory.com>",
-  "main": "index.js",
+  "author": {
+    "name": "Davi Aquino",
+    "email": "davi@basistheory.com"
+  },
   "workspaces": [
     "lib",
     "server",
-    "e2e"
+    "e2e",
+    "infrastructure"
   ],
   "scripts": {
     "build": "concurrently \"yarn build:lib\" \"yarn build:server\" --kill-others-on-fail",
