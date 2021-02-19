@@ -1,3 +1,10 @@
+# [1.0.0-alpha.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2021-02-19)
+
+
+### Features
+
+* add IaC pulumi code ([81b2977](https://github.com/Basis-Theory/basis-theory-js/commit/81b29777814f569659228f5f05e3276a78419de0))
+
 # 1.0.0-alpha.1 (2021-02-17)
 
 
