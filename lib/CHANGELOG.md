@@ -1,3 +1,10 @@
+# [1.0.0-alpha.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2021-02-22)
+
+
+### Bug Fixes
+
+* typo in package main property ([0238c88](https://github.com/Basis-Theory/basis-theory-js/commit/0238c88cf2ff4d761dc7b91eebf2ad59ff43639d))
+
 # [1.0.0-alpha.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2021-02-19)
 
 
