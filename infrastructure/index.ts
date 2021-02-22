@@ -1,6 +1,8 @@
 import * as pulumi from '@pulumi/pulumi';
 import * as azure from '@pulumi/azure';
 import * as semver from 'semver';
+import * as path from 'path';
+import * as fs from 'fs';
 import { version, main } from '../lib/package.json';
 
 const stackName = pulumi.runtime.getStack();
@@ -33,8 +35,18 @@ const container = new azure.storage.Container(containerName, {
   containerAccessType: 'private', // verify if CDN can access this way
 });
 
+const bundlePath = path.resolve('../lib', main);
+
+try {
+  console.log(`Using bundle path: ${bundlePath}`);
+  console.log(bundlePath);
+  console.log(fs.statSync(bundlePath));
+} catch (error) {
+  console.error(error);
+}
+
 // load the main bundle as an asset
-const bundleAsset = new pulumi.asset.FileAsset(`../lib/${main}`);
+const bundleAsset = new pulumi.asset.FileAsset(bundlePath);
 
 // resolve blob dir (name prefix) based on version
 let dir: string;

@@ -13,12 +13,11 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
   pulumi preview
 else
   pulumi up -y
-  az cdn endpoint purge \
-    --resource-group $AZ_RESOURCE_GROUP \
-    --profile-name $AZ_CDN_PROFILE \
-    --name $AZ_CDN_ENDPOINT \
-    --content-paths "$AZ_INDEX_BLOB"
-
+  # az cdn endpoint purge \
+  # --resource-group $AZ_RESOURCE_GROUP \
+  # --profile-name $AZ_CDN_PROFILE \
+  # --name $AZ_CDN_ENDPOINT \
+  # --content-paths "$AZ_INDEX_BLOB"
 fi
 
 result=$?
