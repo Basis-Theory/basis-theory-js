@@ -24,14 +24,16 @@ const storageAccount = new azure.storage.Account(storageAccountName, {
   accountReplicationType: config.require('storageAccountReplicationType'),
   accountTier: config.require('storageAccountTier'),
   accountKind: 'StorageV2',
+  staticWebsite: {
+    indexDocument: 'index.html',
+  },
 });
 
 // Create the container
-const containerName = `${resourcePrefix}-sa-js`;
+const containerName = `$web`;
 const container = new azure.storage.Container(containerName, {
   name: containerName,
   storageAccountName: storageAccount.name,
-  containerAccessType: 'blob', // TODO 'private' + CDN SAS rewrite rule
 });
 
 const bundlePath = path.resolve('../lib', main);
@@ -93,12 +95,12 @@ const endpoint = new azure.cdn.Endpoint(endpointName, {
   name: endpointName,
   resourceGroupName: resourceGroup.name,
   profileName: cdn.name,
-  // originHostHeader: storageAccount.primaryWebHost,
+  originHostHeader: storageAccount.primaryWebHost,
   origins: [
-    // {
-    //   name: `${resourcePrefix}-cdn-ep-blob-origin`,
-    //   hostName: storageAccount.primaryWebHost,
-    // },
+    {
+      name: `${resourcePrefix}-cdn-ep-blob-origin`,
+      hostName: storageAccount.primaryWebHost,
+    },
   ],
 });
 
