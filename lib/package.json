@@ -4,7 +4,7 @@
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "UNLICENSED",
   "author": "James Armstead",
-  "main": "dist/basis-theory.bundle.js",
+  "main": "dist/basis-theory-js.bundle.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -61,7 +61,7 @@
   },
   "size-limit": [
     {
-      "path": "dist/basis-theory.bundle.js",
+      "path": "dist/basis-theory-js.bundle.js",
       "limit": "50 KB"
     }
   ]
