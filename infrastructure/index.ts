@@ -62,8 +62,7 @@ const index = new azure.storage.Blob(
     source: bundleAsset,
   },
   {
-    protect: true,
-    deleteBeforeReplace: true,
+    // protect: true,
   }
 );
 
@@ -79,7 +78,7 @@ const versioned = new azure.storage.Blob(
     source: bundleAsset,
   },
   {
-    protect: true,
+    // protect: true,
   }
 );
 
