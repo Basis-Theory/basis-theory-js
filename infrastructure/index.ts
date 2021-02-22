@@ -31,7 +31,7 @@ const containerName = `${resourcePrefix}-sa-js`;
 const container = new azure.storage.Container(containerName, {
   name: containerName,
   storageAccountName: storageAccount.name,
-  containerAccessType: 'private', // verify if CDN can access this way
+  containerAccessType: 'blob', // TODO 'private' + CDN SAS rewrite rule
 });
 
 const bundlePath = path.resolve('../lib', main);
@@ -61,6 +61,7 @@ const index = new azure.storage.Blob(
   },
   {
     protect: true,
+    deleteBeforeReplace: true,
   }
 );
 
@@ -92,12 +93,12 @@ const endpoint = new azure.cdn.Endpoint(endpointName, {
   name: endpointName,
   resourceGroupName: resourceGroup.name,
   profileName: cdn.name,
-  originHostHeader: storageAccount.primaryWebHost,
+  // originHostHeader: storageAccount.primaryWebHost,
   origins: [
-    {
-      name: `${resourcePrefix}-cdn-ep-blob-origin`,
-      hostName: storageAccount.primaryWebHost,
-    },
+    // {
+    //   name: `${resourcePrefix}-cdn-ep-blob-origin`,
+    //   hostName: storageAccount.primaryWebHost,
+    // },
   ],
 });
 
@@ -105,6 +106,7 @@ export const resource_group_name = resourceGroup.name;
 export const index_js_name = index.name;
 export const versioned_js_name = versioned.name;
 export const endpoint_name = endpoint.name;
+export const storage_account = storageAccount.name;
 export const cdn_url = pulumi.interpolate`https://${endpoint.hostName}/`;
 
 // these vars are used by scripts/setupinfra.sh
