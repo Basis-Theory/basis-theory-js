@@ -35,11 +35,10 @@ const container = new azure.storage.Container(containerName, {
   containerAccessType: 'private', // verify if CDN can access this way
 });
 
-const bundlePath = path.resolve('../lib', main);
+const bundlePath = path.resolve('../../lib', main);
 
 try {
   console.log(`Using bundle path: ${bundlePath}`);
-  console.log(bundlePath);
   console.log(fs.statSync(bundlePath));
 } catch (error) {
   console.error(error);
