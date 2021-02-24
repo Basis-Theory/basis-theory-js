@@ -110,12 +110,6 @@ export const endpoint_name = endpoint.name;
 export const storage_account = storageAccount.name;
 export const cdn_url = pulumi.interpolate`https://${endpoint.hostName}/`;
 
-// these vars are used by scripts/setupinfra.sh
-process.env.AZ_RESOURCE_GROUP = resourceGroupName;
-process.env.AZ_CDN_PROFILE = cdnName;
-process.env.AZ_CDN_ENDPOINT = endpointName;
-process.env.AZ_INDEX_BLOB = indexName;
-
 // Container file schema
 //
 // /v1/index.js             - latest v1 release | storage index
