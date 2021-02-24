@@ -12,9 +12,6 @@ pulumi stack select $PULUMI_STACK
 pulumi stack
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   pulumi preview
-  STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.resource_group_name, .cnd_profile_name, .endpoint_name, .index_js_name')
-  read AZ_RESOURCE_GROUP AZ_CDN_PROFILE AZ_CDN_ENDPOINT AZ_INDEX_BLOB < <(echo $STACK_OUTPUTS)
-  echo $AZ_RESOURCE_GROUP $AZ_CDN_PROFILE $AZ_CDN_ENDPOINT $AZ_INDEX_BLOB
 else
   pulumi up -y
   STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.resource_group_name, .cnd_profile_name, .endpoint_name, .index_js_name')
