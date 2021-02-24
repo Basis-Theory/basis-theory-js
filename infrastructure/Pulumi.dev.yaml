@@ -1,4 +1,4 @@
 config:
-  azure:location: CentralUS
+  azure-nextgen:location: CentralUS
   basis-theory-js:storageAccountSku: Standard_LRS
   basis-theory-js:cdnSku: Standard_Microsoft
