@@ -1,5 +1,8 @@
 import * as pulumi from '@pulumi/pulumi';
-import * as azure from '@pulumi/azure';
+import * as cdn from '@pulumi/azure-nextgen/cdn/latest';
+import * as resources from '@pulumi/azure-nextgen/resources/latest';
+import * as storage from '@pulumi/azure-nextgen/storage/latest';
+
 import * as semver from 'semver';
 import * as path from 'path';
 import { version, main } from '../lib/package.json';
@@ -12,29 +15,35 @@ const prerelease = semver.prerelease(version);
 
 // Create the resource group for this stack
 const resourceGroupName = resourcePrefix;
-const resourceGroup = new azure.core.ResourceGroup(resourceGroupName, {
-  name: resourceGroupName,
+const resourceGroup = new resources.ResourceGroup(resourceGroupName, {
+  resourceGroupName,
 });
 
 // Create the Storage account
 const storageAccountName = `btjs${stackName}sa`; // must be lower case and numbers only
-const storageAccount = new azure.storage.Account(storageAccountName, {
-  name: storageAccountName,
+const storageAccount = new storage.StorageAccount(storageAccountName, {
+  accountName: storageAccountName,
   resourceGroupName: resourceGroup.name,
-  accountReplicationType: config.require('storageAccountReplicationType'),
-  accountTier: config.require('storageAccountTier'),
-  accountKind: 'StorageV2',
-  staticWebsite: {
-    indexDocument: 'index.html',
+  kind: 'StorageV2',
+  sku: {
+    name: config.require('storageAccountSku'),
   },
 });
 
-// Create the container
-const containerName = `$web`;
-const container = new azure.storage.Container(containerName, {
-  name: containerName,
-  storageAccountName: storageAccount.name,
+// Create the website (along with $web container)
+const websiteName = `${storageAccountName}-ws`;
+const website = new storage.StorageAccountStaticWebsite(websiteName, {
+  accountName: storageAccount.name,
+  resourceGroupName: resourceGroup.name,
 });
+
+// Create the container
+// const containerName = `$web`;
+// const container = new storage.BlobContainer(containerName, {
+//   containerName,
+//   resourceGroupName,
+//   accountName: storageAccount.name,
+// });
 
 const bundlePath = path.resolve('../lib', main);
 
@@ -51,12 +60,13 @@ if (prerelease) {
 
 // Create the index blob (updatable)
 const indexName = `${dir}/index.js`;
-const index = new azure.storage.Blob(
+const index = new storage.Blob(
   `${resourcePrefix}-${dir}-index-js`,
   {
-    name: indexName,
-    storageAccountName: storageAccount.name,
-    storageContainerName: container.name,
+    blobName: indexName,
+    accountName: storageAccount.name,
+    containerName: website.containerName,
+    resourceGroupName: resourceGroup.name,
     type: 'Block',
     contentType: 'application/javascript',
     source: bundleAsset,
@@ -67,12 +77,13 @@ const index = new azure.storage.Blob(
 );
 
 const versionedName = `${dir}/${version}.js`;
-const versioned = new azure.storage.Blob(
+const versioned = new storage.Blob(
   `${resourcePrefix}-${version}-js`,
   {
-    name: versionedName,
-    storageAccountName: storageAccount.name,
-    storageContainerName: container.name,
+    blobName: versionedName,
+    accountName: storageAccount.name,
+    containerName: website.containerName,
+    resourceGroupName: resourceGroup.name,
     type: 'Block',
     contentType: 'application/javascript',
     source: bundleAsset,
@@ -82,29 +93,33 @@ const versioned = new azure.storage.Blob(
   }
 );
 
-const cdnName = `${resourcePrefix}-cdn`;
-const cdn = new azure.cdn.Profile(cdnName, {
-  name: cdnName,
+const profileName = `${resourcePrefix}-cdn`;
+const cdnProfile = new cdn.Profile(profileName, {
+  profileName,
   resourceGroupName: resourceGroup.name,
-  sku: config.require('cdnSku'),
+  sku: {
+    name: config.require('cdnSku'),
+  },
 });
 
 const endpointName = `${resourcePrefix}-cdn-ep`;
-const endpoint = new azure.cdn.Endpoint(endpointName, {
-  name: endpointName,
+const endpoint = new cdn.Endpoint(endpointName, {
+  endpointName,
+  profileName: cdnProfile.name,
   resourceGroupName: resourceGroup.name,
-  profileName: cdn.name,
-  originHostHeader: storageAccount.primaryWebHost,
+  originHostHeader: storageAccount.primaryEndpoints.web,
   origins: [
     {
-      name: `${resourcePrefix}-cdn-ep-blob-origin`,
-      hostName: storageAccount.primaryWebHost,
+      name: `${endpointName}-blob-origin`,
+      hostName: storageAccount.primaryEndpoints.web,
     },
   ],
+  isCompressionEnabled: true,
+  contentTypesToCompress: ['application/javascript'],
 });
 
 export const resource_group_name = resourceGroup.name;
-export const cnd_profile_name = cdn.name;
+export const cnd_profile_name = cdnProfile.name;
 export const index_js_name = index.name;
 export const versioned_js_name = versioned.name;
 export const endpoint_name = endpoint.name;

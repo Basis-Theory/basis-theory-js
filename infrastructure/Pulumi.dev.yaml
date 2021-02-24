@@ -1,5 +1,4 @@
 config:
   azure:location: CentralUS
-  basis-theory-js:storageAccountReplicationType: LRS
-  basis-theory-js:storageAccountTier: Standard
+  basis-theory-js:storageAccountSku: Standard_LRS
   basis-theory-js:cdnSku: Standard_Microsoft
