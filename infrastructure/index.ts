@@ -102,16 +102,20 @@ const cdnProfile = new cdn.Profile(profileName, {
   },
 });
 
+const webOriginHost = storageAccount.primaryEndpoints.web.apply(
+  (url) => new URL(url).host
+);
+
 const endpointName = `${resourcePrefix}-cdn-ep`;
 const endpoint = new cdn.Endpoint(endpointName, {
   endpointName,
   profileName: cdnProfile.name,
   resourceGroupName: resourceGroup.name,
-  originHostHeader: storageAccount.primaryEndpoints.web,
+  originHostHeader: webOriginHost,
   origins: [
     {
       name: `${endpointName}-blob-origin`,
-      hostName: storageAccount.primaryEndpoints.web,
+      hostName: webOriginHost,
     },
   ],
   isCompressionEnabled: true,
