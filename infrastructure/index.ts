@@ -104,6 +104,7 @@ const endpoint = new azure.cdn.Endpoint(endpointName, {
 });
 
 export const resource_group_name = resourceGroup.name;
+export const cnd_profile_name = cdn.name;
 export const index_js_name = index.name;
 export const versioned_js_name = versioned.name;
 export const endpoint_name = endpoint.name;
