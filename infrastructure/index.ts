@@ -1,4 +1,5 @@
 import * as pulumi from '@pulumi/pulumi';
+import * as cloudflare from '@pulumi/cloudflare';
 import * as cdn from '@pulumi/azure-nextgen/cdn/latest';
 import * as resources from '@pulumi/azure-nextgen/resources/latest';
 import * as storage from '@pulumi/azure-nextgen/storage/latest';
@@ -36,14 +37,6 @@ const website = new storage.StorageAccountStaticWebsite(websiteName, {
   accountName: storageAccount.name,
   resourceGroupName: resourceGroup.name,
 });
-
-// Create the container
-// const containerName = `$web`;
-// const container = new storage.BlobContainer(containerName, {
-//   containerName,
-//   resourceGroupName,
-//   accountName: storageAccount.name,
-// });
 
 const bundlePath = path.resolve('../lib', main);
 
@@ -93,6 +86,7 @@ const versioned = new storage.Blob(
   }
 );
 
+// Create the CDN Profile
 const profileName = `${resourcePrefix}-cdn`;
 const cdnProfile = new cdn.Profile(profileName, {
   profileName,
@@ -106,6 +100,7 @@ const webOriginHost = storageAccount.primaryEndpoints.web.apply(
   (url) => new URL(url).host
 );
 
+// Create the CDN endpoint
 const endpointName = `${resourcePrefix}-cdn-ep`;
 const endpoint = new cdn.Endpoint(endpointName, {
   endpointName,
@@ -149,13 +144,33 @@ const endpoint = new cdn.Endpoint(endpointName, {
   // },
 });
 
+// Create DNS CNAME record
+const recordName = `${resourcePrefix}-cname`;
+const cname = new cloudflare.Record(recordName, {
+  name: config.requireSecret('cname'), // js-dev
+  value: endpoint.hostName,
+  zoneId: config.requireSecret('cloudflareDnsZoneId'),
+  type: 'CNAME',
+  proxied: false,
+});
+
+// Bind a CDN Custom Domain to the record
+const customDomainName = `${resourcePrefix}-cdn-domain`;
+new cdn.CustomDomain(customDomainName, {
+  customDomainName,
+  endpointName: endpoint.name,
+  hostName: cname.name.apply((name) => `${name}.basistheory.com`),
+  profileName: cdnProfile.name,
+  resourceGroupName: resourceGroup.name,
+});
+
+export const cdn_url = pulumi.interpolate`https://${endpoint.hostName}/`;
 export const resource_group_name = resourceGroup.name;
 export const cnd_profile_name = cdnProfile.name;
 export const index_js_name = index.name;
 export const versioned_js_name = versioned.name;
 export const endpoint_name = endpoint.name;
 export const storage_account = storageAccount.name;
-export const cdn_url = pulumi.interpolate`https://${endpoint.hostName}/`;
 
 // Container file schema
 //

@@ -2,3 +2,4 @@ config:
   azure-nextgen:location: CentralUS
   basis-theory-js:storageAccountSku: Standard_LRS
   basis-theory-js:cdnSku: Standard_Microsoft
+  basis-theory-js:cname: js-dev # which results into js-dev.basistheory.com
