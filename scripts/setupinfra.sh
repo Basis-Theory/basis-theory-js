@@ -9,6 +9,8 @@ pulumi login
 (pulumi stack init $PULUMI_STACK) || echo "Pulumi $PULUMI_STACK already exists"
 pulumi stack select $PULUMI_STACK
 
+pulumi config set --secret cloudflareDnsZoneId $CLOUDFLARE_DNS_ZONE_ID
+
 pulumi stack
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   pulumi preview
