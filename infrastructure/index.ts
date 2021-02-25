@@ -147,16 +147,16 @@ const endpoint = new cdn.Endpoint(endpointName, {
 // Create DNS CNAME record
 const recordName = `${resourcePrefix}-cname`;
 const cname = new cloudflare.Record(recordName, {
-  name: config.requireSecret('cname'), // js-dev
+  name: config.requireSecret('cname'), // js-dev / js
   value: endpoint.hostName,
   zoneId: config.requireSecret('cloudflareDnsZoneId'),
   type: 'CNAME',
-  proxied: false,
+  proxied: true,
 });
 
 // Bind a CDN Custom Domain to the record
 const customDomainName = `${resourcePrefix}-cdn-domain`;
-new cdn.CustomDomain(customDomainName, {
+const domain = new cdn.CustomDomain(customDomainName, {
   customDomainName,
   endpointName: endpoint.name,
   hostName: cname.name.apply((name) => `${name}.basistheory.com`),
@@ -171,6 +171,7 @@ export const index_js_name = index.name;
 export const versioned_js_name = versioned.name;
 export const endpoint_name = endpoint.name;
 export const storage_account = storageAccount.name;
+export const endpoint_domain = domain.hostName;
 
 // Container file schema
 //
