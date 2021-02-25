@@ -120,6 +120,33 @@ const endpoint = new cdn.Endpoint(endpointName, {
   ],
   isCompressionEnabled: true,
   contentTypesToCompress: ['application/javascript'],
+
+  // TODO resume this when it is relevant again
+  // deliveryPolicy: {
+  //   rules: [
+  //     {
+  //       order: 0,
+  //       name: 'RewriteToJS',
+  //       conditions: [{
+  //         name: 'UrlFileExtension',
+  //         parameters: {
+  //           operator: ''
+  //         }
+  //       }],
+  //       actions: [
+  //         {
+  //           name: 'UrlRewrite',
+  //           parameters: {
+  //             sourcePattern: '/',
+  //             destination: '',
+  //             odataType:
+  //               '#Microsoft.Azure.Management.Cdn.Models.UrlRewriteActionParameters',
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 });
 
 export const resource_group_name = resourceGroup.name;

@@ -20,7 +20,7 @@ else
   --resource-group $AZ_RESOURCE_GROUP \
   --profile-name $AZ_CDN_PROFILE \
   --name $AZ_CDN_ENDPOINT \
-  --content-paths "$AZ_INDEX_BLOB"
+  --content-paths "/$AZ_INDEX_BLOB"
 fi
 
 result=$?
