@@ -6,6 +6,8 @@ import * as storage from '@pulumi/azure-nextgen/storage/latest';
 
 import * as semver from 'semver';
 import * as path from 'path';
+
+import { lookupDns } from './utils';
 import { version, main } from '../lib/package.json';
 
 const stackName = pulumi.runtime.getStack();
@@ -160,7 +162,7 @@ const customDomainName = `${resourcePrefix}-cdn-domain`;
 const domain = new cdn.CustomDomain(customDomainName, {
   customDomainName,
   endpointName: endpoint.name,
-  hostName: cname.name.apply((name) => `${name}.basistheory.com`),
+  hostName: cname.name.apply((name) => lookupDns(`${name}.basistheory.com`)),
   profileName: cdnProfile.name,
   resourceGroupName: resourceGroup.name,
 });
