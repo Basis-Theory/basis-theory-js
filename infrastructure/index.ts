@@ -154,7 +154,7 @@ const cname = new cloudflare.Record(recordName, {
   value: endpoint.hostName,
   zoneId: config.requireSecret('cloudflareDnsZoneId'),
   type: 'CNAME',
-  // proxied: true,
+  proxied: false,
 });
 
 // // resolve domain hostname, waiting dns replication
