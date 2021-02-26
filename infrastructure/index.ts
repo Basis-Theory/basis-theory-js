@@ -148,7 +148,7 @@ const endpoint = new cdn.Endpoint(endpointName, {
 // Create DNS CNAME record
 const recordName = `${resourcePrefix}-cname`;
 const cname = new cloudflare.Record(recordName, {
-  name: config.requireSecret('cname'), // js-dev / js
+  name: config.require('cname'), // js-dev / js
   value: endpoint.hostName,
   zoneId: config.requireSecret('cloudflareDnsZoneId'),
   type: 'CNAME',
