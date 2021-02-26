@@ -165,7 +165,7 @@ const domain = new cdn.CustomDomain(customDomainName, {
   hostName: cname.name.apply(async (name) => {
     const hostname = `${name}.basistheory.com`;
     await lookupDns(hostname);
-    return name;
+    return hostname;
   }),
   profileName: cdnProfile.name,
   resourceGroupName: resourceGroup.name,
