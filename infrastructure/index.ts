@@ -159,7 +159,11 @@ const cname = new cloudflare.Record(recordName, {
 
 // resolve domain hostname, waiting dns replication
 const domainHostname = pulumi
-  .all([cname.name, cname.proxied, endpoint.hostName])
+  .all([
+    cname.name,
+    cloudflare.Record.get(recordName, cname.id).proxied, // gets the existing state on Cloudflare
+    endpoint.hostName,
+  ])
   .apply(async ([cname, proxied, endpointHostname]) => {
     console.log(`CNAME proxied: ${proxied}`);
     const hostname = `${cname}.basistheory.com`;
