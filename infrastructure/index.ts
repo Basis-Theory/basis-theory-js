@@ -157,7 +157,7 @@ const cname = new cloudflare.Record(recordName, {
   // proxied: true,
 });
 
-// resolve domain hostname, waiting
+// resolve domain hostname, waiting dns replication
 const domainHostname = pulumi
   .all([cname.name, endpoint.hostName])
   .apply(async ([cname, endpointHostname]) => {
@@ -166,15 +166,15 @@ const domainHostname = pulumi
     return hostname;
   });
 
-// Bind a CDN Custom Domain to the record
-const customDomainName = `${resourcePrefix}-cdn-domain`;
-const domain = new cdn.CustomDomain(customDomainName, {
-  customDomainName,
-  endpointName: endpoint.name,
-  hostName: domainHostname,
-  profileName: cdnProfile.name,
-  resourceGroupName: resourceGroup.name,
-});
+// // Bind a CDN Custom Domain to the record
+// const customDomainName = `${resourcePrefix}-cdn-domain`;
+// const domain = new cdn.CustomDomain(customDomainName, {
+//   customDomainName,
+//   endpointName: endpoint.name,
+//   hostName: domainHostname,
+//   profileName: cdnProfile.name,
+//   resourceGroupName: resourceGroup.name,
+// });
 
 export const cdn_url = pulumi.interpolate`https://${endpoint.hostName}/`;
 export const resource_group_name = resourceGroup.name;
@@ -183,7 +183,7 @@ export const index_js_name = index.name;
 export const versioned_js_name = versioned.name;
 export const endpoint_name = endpoint.name;
 export const storage_account = storageAccount.name;
-export const endpoint_domain = domain.hostName;
+// export const endpoint_domain = domain.hostName;
 
 // Container file schema
 //
