@@ -157,16 +157,21 @@ const cname = new cloudflare.Record(recordName, {
   // proxied: true,
 });
 
+// resolve domain hostname, waiting
+const domainHostname = pulumi
+  .all([cname.name, endpoint.hostName])
+  .apply(async ([cname, endpointHostname]) => {
+    const hostname = `${cname}.basistheory.com`;
+    await lookupDns(hostname, endpointHostname);
+    return hostname;
+  });
+
 // Bind a CDN Custom Domain to the record
 const customDomainName = `${resourcePrefix}-cdn-domain`;
 const domain = new cdn.CustomDomain(customDomainName, {
   customDomainName,
   endpointName: endpoint.name,
-  hostName: cname.name.apply(async (name) => {
-    const hostname = `${name}.basistheory.com`;
-    await lookupDns(hostname);
-    return hostname;
-  }),
+  hostName: domainHostname,
   profileName: cdnProfile.name,
   resourceGroupName: resourceGroup.name,
 });

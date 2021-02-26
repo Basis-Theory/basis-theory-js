@@ -1,15 +1,21 @@
 import * as dns from 'dns';
 import * as retry from 'async-retry';
 
-export const lookupDns = (address: string): Promise<string> => {
+export const lookupDns = (
+  address: string,
+  expected?: string
+): Promise<string> => {
   return retry(
     () =>
       new Promise<string>((resolve, reject) => {
-        dns.lookup(address, (err, address) => {
+        dns.lookup(address, (err, result) => {
           if (err) {
-            reject(err);
+            return reject(err);
           }
-          resolve(address);
+          if (expected && expected !== result) {
+            return reject(result);
+          }
+          return resolve(result);
         });
       }),
     {
