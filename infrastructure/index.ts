@@ -7,7 +7,7 @@ import * as storage from '@pulumi/azure-nextgen/storage/latest';
 import * as semver from 'semver';
 import * as path from 'path';
 
-import { lookupDns } from './utils';
+// import { lookupDns } from './utils';
 import { version, main } from '../lib/package.json';
 
 const stackName = pulumi.runtime.getStack();
@@ -157,15 +157,15 @@ const cname = new cloudflare.Record(recordName, {
   // proxied: true,
 });
 
-// resolve domain hostname, waiting dns replication
-const domainHostname = pulumi
-  .all([cname.name, endpoint.hostName])
-  .apply(async ([cname, endpointHostname]) => {
-    const hostname = `${cname}.basistheory.com`;
-    await lookupDns(hostname, endpointHostname);
-    return hostname;
-  });
-
+// // resolve domain hostname, waiting dns replication
+// const domainHostname = pulumi
+//   .all([cname.name, endpoint.hostName])
+//   .apply(async ([cname, endpointHostname]) => {
+//     const hostname = `${cname}.basistheory.com`;
+//     await lookupDns(hostname, endpointHostname);
+//     return hostname;
+//   });
+//
 // // Bind a CDN Custom Domain to the record
 // const customDomainName = `${resourcePrefix}-cdn-domain`;
 // const domain = new cdn.CustomDomain(customDomainName, {
@@ -183,6 +183,7 @@ export const index_js_name = index.name;
 export const versioned_js_name = versioned.name;
 export const endpoint_name = endpoint.name;
 export const storage_account = storageAccount.name;
+export const cname_hostname = cname.hostname;
 // export const endpoint_domain = domain.hostName;
 
 // Container file schema
