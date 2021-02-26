@@ -159,10 +159,19 @@ const cname = new cloudflare.Record(recordName, {
 
 // resolve domain hostname, waiting dns replication
 const domainHostname = pulumi
-  .all([cname.name, endpoint.hostName])
-  .apply(async ([cname, endpointHostname]) => {
+  .all([cname.name, cname.proxied, endpoint.hostName])
+  .apply(async ([cname, proxied, endpointHostname]) => {
+    console.log(`CNAME proxied: ${proxied}`);
     const hostname = `${cname}.basistheory.com`;
-    await assertDns(hostname, 'CNAME', [endpointHostname]);
+    if (proxied) {
+      // only asserts existance of the record
+      // one can't expect a proxied dns resolution to match the endpoint
+      await assertDns(hostname, 'CNAME');
+    } else {
+      // asserts both the existance of the record
+      // and its resolved value
+      await assertDns(hostname, 'CNAME', [endpointHostname]);
+    }
     return hostname;
   });
 
