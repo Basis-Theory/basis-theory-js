@@ -113,6 +113,7 @@ const endpoint = new cdn.Endpoint(endpointName, {
       hostName: webOriginHost,
     },
   ],
+  isHttpAllowed: false,
   isCompressionEnabled: true,
   contentTypesToCompress: ['application/javascript'],
 
