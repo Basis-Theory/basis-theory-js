@@ -162,7 +162,11 @@ const customDomainName = `${resourcePrefix}-cdn-domain`;
 const domain = new cdn.CustomDomain(customDomainName, {
   customDomainName,
   endpointName: endpoint.name,
-  hostName: cname.name.apply((name) => lookupDns(`${name}.basistheory.com`)),
+  hostName: cname.name.apply(async (name) => {
+    const hostname = `${name}.basistheory.com`;
+    await lookupDns(hostname);
+    return name;
+  }),
   profileName: cdnProfile.name,
   resourceGroupName: resourceGroup.name,
 });
