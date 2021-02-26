@@ -9,6 +9,8 @@ pulumi login
 (pulumi stack init $PULUMI_STACK) || echo "Pulumi $PULUMI_STACK already exists"
 pulumi stack select $PULUMI_STACK
 
+pulumi config set --secret cloudflareDnsZoneId $CLOUDFLARE_DNS_ZONE_ID
+
 pulumi stack
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   pulumi preview
@@ -20,7 +22,7 @@ else
   --resource-group $AZ_RESOURCE_GROUP \
   --profile-name $AZ_CDN_PROFILE \
   --name $AZ_CDN_ENDPOINT \
-  --content-paths "$AZ_INDEX_BLOB"
+  --content-paths "/$AZ_INDEX_BLOB"
 fi
 
 result=$?
