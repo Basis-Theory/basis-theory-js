@@ -29,4 +29,4 @@ services:
   #     - ./e2e/tsconfig.json:/app/tsconfig.json
   #     - ./cypress.json:/app/cypress.json
   #     - ./examples:/app/examples
-  #     - ./lib/dist:/app/lib/dist
+  #     - ./library/dist:/app/library/dist

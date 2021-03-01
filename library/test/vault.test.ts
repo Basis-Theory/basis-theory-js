@@ -31,4 +31,12 @@ describe('Vault', () => {
 
     expect(token).toEqual({ token: '12345', data: 'any data we want!' });
   });
+
+  it('should delete a token', async () => {
+    const apiCall = mockedAxios.delete.mockResolvedValueOnce({});
+
+    await bt.vault.deleteToken('12345');
+
+    expect(apiCall).toHaveBeenCalledWith('/tokens/12345');
+  });
 });

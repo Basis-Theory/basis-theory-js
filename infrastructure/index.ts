@@ -8,7 +8,7 @@ import * as semver from 'semver';
 import * as path from 'path';
 
 import { assertCloudflareDns } from './utils';
-import { version, main } from '../lib/package.json';
+import { version, main } from '../library/package.json';
 
 const stackName = pulumi.runtime.getStack();
 const resourcePrefix = `btjs-${stackName}`;
@@ -40,7 +40,7 @@ const website = new storage.StorageAccountStaticWebsite(websiteName, {
   resourceGroupName: resourceGroup.name,
 });
 
-const bundlePath = path.resolve('../lib', main);
+const bundlePath = path.resolve('../library', main);
 
 // load the main bundle as an asset
 const bundleAsset = new pulumi.asset.FileAsset(bundlePath);
