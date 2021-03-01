@@ -7,7 +7,7 @@ import * as storage from '@pulumi/azure-nextgen/storage/latest';
 import * as semver from 'semver';
 import * as path from 'path';
 
-import { assertDns } from './utils';
+import { assertCloudflareDns } from './utils';
 import { version, main } from '../lib/package.json';
 
 const stackName = pulumi.runtime.getStack();
@@ -159,22 +159,12 @@ const cname = new cloudflare.Record(recordName, {
 
 // resolve domain hostname, waiting dns replication
 const domainHostname = pulumi
-  .all([
-    cname.name,
-    // endpoint.hostName
-  ])
-  .apply(
-    async ([
-      cname,
-      // endpointHostname
-    ]) => {
-      const hostname = `${cname}.basistheory.com`;
-      await assertDns(hostname, 'CNAME');
-      // when proxied=true, can't assert the expected value (hostname) because CloudFlare points to their own servers with A records
-      // await assertDns(hostname, 'CNAME', [endpointHostname]);
-      return hostname;
-    }
-  );
+  .all([cname.name, endpoint.hostName])
+  .apply(async ([cname, endpointHostname]) => {
+    const hostname = `${cname}.basistheory.com`;
+    await assertCloudflareDns(hostname, endpointHostname);
+    return hostname;
+  });
 
 // Bind a CDN Custom Domain to the record
 const customDomainName = `${resourcePrefix}-cdn-domain`;
