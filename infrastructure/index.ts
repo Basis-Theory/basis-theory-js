@@ -157,11 +157,15 @@ const cname = new cloudflare.Record(recordName, {
   proxied: false,
 });
 
+const cnameId = pulumi
+  .all([cname.zoneId, cname.id])
+  .apply(([zone, id]) => `${zone}/${id}`);
+
 // resolve domain hostname, waiting dns replication
 const domainHostname = pulumi
   .all([
     cname.name,
-    cloudflare.Record.get(recordName, cname.id).proxied, // gets the existing state on Cloudflare
+    cloudflare.Record.get(recordName, cnameId).proxied, // gets the existing state on Cloudflare
     endpoint.hostName,
   ])
   .apply(async ([cname, proxied, endpointHostname]) => {
