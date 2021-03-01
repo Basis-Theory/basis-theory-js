@@ -157,31 +157,24 @@ const cname = new cloudflare.Record(recordName, {
   proxied: false,
 });
 
-const cnameId = pulumi
-  .all([cname.zoneId, cname.id])
-  .apply(([zone, id]) => `${zone}/${id}`);
-
 // resolve domain hostname, waiting dns replication
 const domainHostname = pulumi
   .all([
     cname.name,
-    cloudflare.Record.get(recordName, cnameId).proxied, // gets the existing state on Cloudflare
-    endpoint.hostName,
+    // endpoint.hostName
   ])
-  .apply(async ([cname, proxied, endpointHostname]) => {
-    console.log(`CNAME proxied: ${proxied}`);
-    const hostname = `${cname}.basistheory.com`;
-    if (proxied) {
-      // only asserts existance of the record
-      // one can't expect a proxied dns resolution to match the endpoint
+  .apply(
+    async ([
+      cname,
+      // endpointHostname
+    ]) => {
+      const hostname = `${cname}.basistheory.com`;
       await assertDns(hostname, 'CNAME');
-    } else {
-      // asserts both the existance of the record
-      // and its resolved value
-      await assertDns(hostname, 'CNAME', [endpointHostname]);
+      // when proxied=true, can't assert the expected value (hostname) because CloudFlare points to their own servers with A records
+      // await assertDns(hostname, 'CNAME', [endpointHostname]);
+      return hostname;
     }
-    return hostname;
-  });
+  );
 
 // Bind a CDN Custom Domain to the record
 const customDomainName = `${resourcePrefix}-cdn-domain`;
