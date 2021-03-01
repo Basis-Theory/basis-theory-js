@@ -7,7 +7,7 @@ import * as storage from '@pulumi/azure-nextgen/storage/latest';
 import * as semver from 'semver';
 import * as path from 'path';
 
-import { assertDns } from './utils';
+import { assertCloudflareDns } from './utils';
 import { version, main } from '../lib/package.json';
 
 const stackName = pulumi.runtime.getStack();
@@ -162,7 +162,7 @@ const domainHostname = pulumi
   .all([cname.name, endpoint.hostName])
   .apply(async ([cname, endpointHostname]) => {
     const hostname = `${cname}.basistheory.com`;
-    await assertDns(hostname, 'CNAME', [endpointHostname]);
+    await assertCloudflareDns(hostname, endpointHostname);
     return hostname;
   });
 
