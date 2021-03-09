@@ -22,7 +22,7 @@ export interface AtomicCard {
 
 // we can disable for this next line as we are only exporting interfaces here
 // eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace PaymentsApi {
+export declare namespace PaymentsApi {
   export interface SourceCardModel {
     card: CardModel;
     billing_details?: BillingDetailsModel;
