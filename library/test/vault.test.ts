@@ -1,4 +1,5 @@
 import { BasisTheory } from '../src';
+import { axios } from './setup';
 
 describe('Vault', () => {
   let bt: BasisTheory;
@@ -8,7 +9,7 @@ describe('Vault', () => {
   });
 
   it('should create a new token', async () => {
-    const apiCall = mockedAxios.post.mockResolvedValueOnce({
+    const apiCall = axios.post.mockResolvedValueOnce({
       data: { token: '12345', data: 'any data we want!' },
     });
 
@@ -21,7 +22,7 @@ describe('Vault', () => {
   });
 
   it('should retrieve a token', async () => {
-    const apiCall = mockedAxios.get.mockResolvedValueOnce({
+    const apiCall = axios.get.mockResolvedValueOnce({
       data: { token: '12345', data: 'any data we want!' },
     });
 
@@ -33,7 +34,7 @@ describe('Vault', () => {
   });
 
   it('should delete a token', async () => {
-    const apiCall = mockedAxios.delete.mockResolvedValueOnce({});
+    const apiCall = axios.delete.mockResolvedValueOnce({});
 
     await bt.vault.deleteToken('12345');
 
