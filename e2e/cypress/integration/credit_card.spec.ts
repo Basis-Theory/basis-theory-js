@@ -40,7 +40,6 @@ context('Credit Card example', () => {
       cy.on('window:alert', alert);
 
       cy.get('#cards_wrapper').children().should('have.length', 1);
-      cy.get('#cards_wrapper').find('h3').should('have.text', 'John Doe');
       cy.get('#cards_wrapper')
         .find('.card-info')
         .first()
