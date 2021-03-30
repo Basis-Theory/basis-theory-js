@@ -1,21 +1,26 @@
 import { Router } from 'express';
-import { mask } from './utils';
 import { setData } from './stores';
 import { Services } from './types';
+import { mask } from './utils';
 
 export const payments = Router();
 
-payments.post('/credit_card', (req, res) => {
+payments.post('/sources/cards', (req, res) => {
   const info = req.body;
   const data = JSON.stringify(info);
   const token = setData(req.apiKey, Services.payments, data);
 
   res.status(201).send({
     token,
-    info: {
-      cardNumber: mask(info.cardNumber, 4),
-      expiration: info.expiration,
-      holderName: info.holderName,
+    metadata: {
+      masked: {
+        number: mask(info.card.number, 4),
+        expiration_month: 'XX',
+        expiration_year: 'XX',
+      },
+    },
+    billing_details: info.billing_details && {
+      name: info.billing_details.name,
     },
   });
 });

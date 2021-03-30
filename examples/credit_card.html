@@ -54,44 +54,75 @@
         const form = $event.target;
 
         // extract data from form elements
-        const cardNumber = document.getElementById('card_number').value;
-        const holderName = document.getElementById('holder_name').value;
-        const expiration = document.getElementById('expiration').value;
-        const cvv = document.getElementById('cvv').value;
+        const number = document.getElementById('card_number').value;
+        const name = document.getElementById('holder_name').value;
+        const expiration_month = document.getElementById('expiration_month')
+          .value;
+        const expiration_year = document.getElementById('expiration_year')
+          .value;
+        const cvc = document.getElementById('cvc').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const line1 = document.getElementById('line1').value;
+        const line2 = document.getElementById('line2').value;
+        const city = document.getElementById('city').value;
+        const state = document.getElementById('state').value;
+        const postal_code = document.getElementById('postal_code').value;
+        const country = document.getElementById('country').value;
+
+        const paymentInfo = {
+          card: {
+            number,
+            expiration_month,
+            expiration_year,
+            cvc,
+          },
+          billing_details: {
+            name,
+            email,
+            phone,
+            address: {
+              line1,
+              line2,
+              city,
+              state,
+              postal_code,
+              country,
+            },
+          },
+        };
 
         // this is where the magic happens
         // invoke async BasisTheory Payments API store credit card method
-        BasisTheory.payments
-          .storeCreditCard({
-            cardNumber: cardNumber,
-            holderName: holderName,
-            expiration: expiration,
-            cvv: cvv,
-          })
-          .then(function (card) {
-            // and when that is done
-            form.reset(); // we can reset our form
-            handleNewCard(card); // and attach the stored credit card info to the view
-          });
+        BasisTheory.payments.storeCreditCard(paymentInfo).then(function (data) {
+          // and when that is done
+          form.reset(); // we can reset our form
+          handleNewCard(data); // and attach the stored credit card info to the view
+        });
       }
 
-      function handleNewCard(card) {
+      function handleNewCard(data) {
         const wrapper = document.getElementById('cards_wrapper');
         const newCardDiv = document.createElement('div');
+        const name = data.billing_details ? data.billing_details.name : '';
+        const expiration =
+          data.metadata.masked.expiration_month +
+          '/' +
+          data.metadata.masked.expiration_year;
         newCardDiv.className = 'card';
         newCardDiv.innerHTML =
           '<h3>' +
-          card.info.holderName +
+          name +
           '</h3>' +
           '<div class="card-info">' +
-          card.info.cardNumber +
+          data.metadata.masked.number +
           '</div>' +
           '<div class="card-info">' +
           '<span>' +
-          card.info.expiration +
+          expiration +
           '</span>' +
           '<a href="#" onclick="alert(\'' +
-          card.token +
+          data.token +
           '\'); return true;">see token</a>' +
           '</div>';
         wrapper.appendChild(newCardDiv);
@@ -106,13 +137,7 @@
       <h2 class="header">Add New Credit Card</h2>
       <div>
         <label for="holder_name" class="mr-1">Holder Name:</label>
-        <input
-          class="span2"
-          type="text"
-          id="holder_name"
-          name="holder_name"
-          required
-        />
+        <input class="span2" type="text" id="holder_name" name="holder_name" />
       </div>
       <div>
         <label for="card_number" class="mr-1">Card Number:</label>
@@ -128,21 +153,66 @@
       <div>
         <label for="expiration" class="mr-1">Expiration:</label>
         <input
-          type="text"
-          id="expiration"
-          name="expiration"
-          maxlength="5"
-          size="5"
+          type="number"
+          id="expiration_month"
+          name="expiration_month"
+          size="2"
+          min="1"
+          max="12"
+          required
+        />/
+        <input
+          type="number"
+          id="expiration_year"
+          name="expiration_year"
+          size="2"
+          min="1990"
+          max="9999"
           required
         />
-        <label for="cvv" class="mr-1">CVV:</label>
+        <label for="cvc" class="mr-1">CVC:</label>
         <input
           type="text"
-          id="cvv"
-          name="cvv"
-          maxlength="3"
+          id="cvc"
+          name="cvc"
+          minlength="3"
+          maxlength="4"
           size="3"
-          required
+        />
+      </div>
+      <div>
+        <label for="email" class="mr-1">Email:</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <div>
+        <label for="phone" class="mr-1">Phone:</label>
+        <input type="tel" id="phone" name="phone" />
+      </div>
+      <div>
+        <label for="line1" class="mr-1">Address (line 1):</label>
+        <input type="text" id="line1" name="line1" />
+      </div>
+      <div>
+        <label for="line2" class="mr-1">Address (line 2):</label>
+        <input type="text" id="line2" name="line2" />
+      </div>
+      <div>
+        <label for="city" class="mr-1">City:</label>
+        <input type="text" id="city" name="city" size="8" />
+        <label for="state" class="mr-1">State:</label>
+        <input type="text" id="state" name="state" size="8" />
+      </div>
+      <div>
+        <label for="postal_code" class="mr-1">Postal Code:</label>
+        <input type="text" id="postal_code" name="postal_code" size="8" />
+        <label for="country" class="mr-1">Country:</label>
+        <input
+          type="text"
+          id="country"
+          name="country"
+          size="2"
+          maxlength="2"
+          minlength="2"
         />
       </div>
       <div class="submit">

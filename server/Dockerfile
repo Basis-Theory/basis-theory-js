@@ -9,4 +9,6 @@ RUN yarn install --production
 
 EXPOSE 3000
 
+RUN ls
+
 CMD [ "node", "index.js" ]
