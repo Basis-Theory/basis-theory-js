@@ -2,7 +2,7 @@
   <head>
     <title>Credit Card example</title>
     <!-- Add BasisTheory SDK -->
-    <script src="../library/dist/basis-theory-js.bundle.js"></script>
+    <script src="https://js-dev.basistheory.com/alpha/1.0.0-alpha.3.js"></script>
   </head>
   <body>
     <style>
@@ -40,7 +40,7 @@
       // you can initialize the library whenever it is more suitable to you
       // here we are doing it when the window is properly loaded
       window.addEventListener('load', function () {
-        BasisTheory.init('123456789', 'local'); // pass your API Key and enviroment
+        BasisTheory.init('123456789', 'sandbox'); // pass your API Key and enviroment
         // or
         // window.BasisTheory.init('123456789');
       });
