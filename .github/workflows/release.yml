@@ -12,7 +12,6 @@ jobs:
         node: ['14.x']
         os: [ubuntu-latest]
     env:
-      # prevents extra Cypress installation progress messages
       CI: 1
     steps:
       - name: Checkout repo
@@ -33,39 +32,16 @@ jobs:
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
-        env:
-          CYPRESS_INSTALL_BINARY: 0
-
-      - name: Cache Cypress
-        id: cache-cypress
-        uses: actions/cache@v2
         with:
-          path: ~/.cache/Cypress
-          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
-
-      # Install and check Cypress binary
-      - run: yarn run cypress install
-      - run: yarn run cypress cache list
-
-      - name: Verify
-        run: make verify
-
-      - name: Upload failed e2e tests screenshots
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: e2e/cypress/screenshots
+          install-command: yarn --frozen-lockfile --production=true --no-progress --ignore-scripts
+          working-directory: infrastructure
       
       - name: Release
         run: make release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ARM_CLIENT_ID: ${{ secrets.AZURE_ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_ARM_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_ARM_SUBSCRIPTION_ID }}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_DEV_CREDENTIALS }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_DNS_ZONE_ID: ${{ secrets.CLOUDFLARE_DNS_ZONE_ID }}
           PULUMI_STACK: basistheory/dev

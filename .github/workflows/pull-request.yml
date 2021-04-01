@@ -55,10 +55,7 @@ jobs:
       - name: Verify Infrastructure
         run: make setup-infra
         env:
-          ARM_CLIENT_ID: ${{ secrets.AZURE_ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_ARM_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_ARM_SUBSCRIPTION_ID }}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_DEV_CREDENTIALS }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_DNS_ZONE_ID: ${{ secrets.CLOUDFLARE_DNS_ZONE_ID }}
           PULUMI_STACK: basistheory/dev
