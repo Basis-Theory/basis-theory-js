@@ -39,8 +39,8 @@ jobs:
       - name: Release
         run: make release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_PAT }}
+          NPM_TOKEN: ${{ secrets.PACKAGE_PAT }}
           AZURE_CREDENTIALS: ${{ secrets.AZURE_DEV_CREDENTIALS }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_DNS_ZONE_ID: ${{ secrets.CLOUDFLARE_DNS_ZONE_ID }}
