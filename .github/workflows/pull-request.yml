@@ -65,14 +65,14 @@ jobs:
       - name: Lint
         uses: wearerequired/lint-action@v1.7.0
         with:
-          github_token: ${{ secrets.PACKAGE_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           eslint: true
           prettier: true
 
       - name: Monitor coverage
         uses: slavcodev/coverage-monitor-action@1.2.0
         with:
-          github_token: ${{ secrets.PACKAGE_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           clover_file: 'library/coverage/clover.xml'
           threshold_alert: 80
           threshold_warning: 90
