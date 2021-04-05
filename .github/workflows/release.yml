@@ -12,7 +12,6 @@ jobs:
         node: ['14.x']
         os: [ubuntu-latest]
     env:
-      # prevents extra Cypress installation progress messages
       CI: 1
     steps:
       - name: Checkout repo
@@ -29,7 +28,7 @@ jobs:
       - name: Login in Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_DEV_CREDENTIALS }}
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
@@ -60,12 +59,9 @@ jobs:
       - name: Release
         run: make release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PACKAGE_PAT }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ARM_CLIENT_ID: ${{ secrets.AZURE_ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_ARM_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_ARM_SUBSCRIPTION_ID }}
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_DEV_CREDENTIALS }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_DNS_ZONE_ID: ${{ secrets.CLOUDFLARE_DNS_ZONE_ID }}
           PULUMI_STACK: basistheory/dev
