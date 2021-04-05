@@ -32,9 +32,29 @@ jobs:
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+
+      - name: Cache Cypress
+        id: cache-cypress
+        uses: actions/cache@v2
         with:
-          install-command: yarn --frozen-lockfile --production=true --no-progress --ignore-scripts
-          working-directory: infrastructure
+          path: ~/.cache/Cypress
+          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+
+      # Install and check Cypress binary
+      - run: yarn run cypress install
+      - run: yarn run cypress cache list
+
+      - name: Verify
+        run: make verify
+
+      - name: Upload failed e2e tests screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: e2e/cypress/screenshots
       
       - name: Release
         run: make release
