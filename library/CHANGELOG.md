@@ -1,3 +1,10 @@
+# [1.0.0-alpha.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2021-04-06)
+
+
+### Bug Fixes
+
+* :alien: change payments source API interface ([7b4f4ab](https://github.com/Basis-Theory/basis-theory-js/commit/7b4f4ab84ff9668549aea854d4685789f0176630))
+
 # [1.0.0-alpha.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2021-02-22)
 
 
