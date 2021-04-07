@@ -17,7 +17,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.PACKAGE_PAT }}
+          token: ${{ secrets.SEMANTIC_RELEASE_PAT }}
 
       - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
@@ -61,7 +61,7 @@ jobs:
       - name: Release
         run: make release
         env:
-          GITHUB_TOKEN: ${{ secrets.PACKAGE_PAT }}
+          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AZURE_CREDENTIALS: ${{ secrets.AZURE_DEV_CREDENTIALS }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
