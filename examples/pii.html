@@ -30,7 +30,7 @@
       window.addEventListener('load', function () {
         BasisTheory.init(
           '04ab9d12-4959-4c48-ba03-9ef722efcc5a', // pass your API Key
-          'local' // and chosen enviroment
+          { environment: 'local' } // and chosen enviroment
         ).then(function () {
           // Generate an ECIES key pair in a way we can access it later
           BasisTheory.encryption.generateKeyPair().then(function (keyPair) {
