@@ -2,6 +2,7 @@ import * as dns from 'dns';
 import * as https from 'https';
 import * as netmask from 'netmask';
 import * as retry from 'async-retry';
+import { promisify } from 'util';
 
 export const resolveDns = (
   hostname: string,
@@ -9,13 +10,16 @@ export const resolveDns = (
 ): Promise<string[]> => {
   return retry(
     () =>
-      new Promise<string[]>((resolve, reject) => {
-        dns.resolve(hostname, (err, records) => {
-          if (err) {
-            return reject(err);
-          }
-          return resolve(records);
-        });
+      new Promise<string[]>(async (resolve, reject) => {
+        try {
+          const [r1, r2] = await Promise.all([
+            promisify(dns.resolve)(hostname),
+            promisify(dns.resolveCname)(hostname),
+          ]);
+          resolve([...r1, ...r2]);
+        } catch (error) {
+          reject(error);
+        }
       }),
     retryOptions
   );
