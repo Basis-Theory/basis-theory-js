@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { mocked } from 'ts-jest/utils';
-import { findScript, injectScript } from '../src/common/utils';
+import { assertInit, findScript, injectScript } from '../src/common/utils';
 import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
 
@@ -8,6 +8,12 @@ jest.mock('../src/common/utils');
 
 describe('Elements', () => {
   let BasisTheory: typeof BasisTheoryType;
+
+  beforeAll(() => {
+    mocked(assertInit).mockImplementation(
+      jest.requireActual('../src/common/utils').assertInit
+    );
+  });
 
   beforeEach(() => {
     jest.isolateModules(async () => {
@@ -51,7 +57,7 @@ describe('Elements', () => {
     it('should resolve to previously initialized BasisTheoryElements', async () => {
       let loadElements: () => unknown = jest.fn();
       jest.isolateModules(() => {
-        ({ loadElements } = require('../src/common/constants'));
+        ({ loadElements } = require('../src/common/elements'));
       });
 
       const expectedElements = {

@@ -1,4 +1,4 @@
-import { assertInit, loadElements, SERVICES } from './common/constants';
+import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryEncryption } from './encryption';
 import { BasisTheoryPayments } from './payments';
 import { BasisTheoryElements, BasisTheoryInitOptions } from './types';
