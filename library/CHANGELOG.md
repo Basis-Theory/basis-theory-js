@@ -1,3 +1,10 @@
+# [1.0.0-alpha.5](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2021-04-09)
+
+
+### Features
+
+* add BasisTheoryElements dynamic loading ([4d679e5](https://github.com/Basis-Theory/basis-theory-js/commit/4d679e5af667c29cf031a473e53367e63b84fd15))
+
 # [1.0.0-alpha.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2021-04-06)
 
 
