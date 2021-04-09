@@ -197,5 +197,5 @@ export const endpoint_domain = domain.hostName;
 // /alpha/1.0.0-alpha.2.js
 
 // /beta/index.js           - latest beta prerelease
-// /beta/1.0.0-alpha.1.js
-// /beta/1.0.0-alpha.2.js
+// /beta/1.0.0-beta.1.js
+// /beta/1.0.0-beta.2.js

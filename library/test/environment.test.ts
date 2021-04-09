@@ -4,7 +4,7 @@ import { SERVICES } from '../src/common';
 
 describe('Environments', () => {
   it('should use sandbox environment', async () => {
-    await new BasisTheory().init('sb-key', 'sandbox');
+    await new BasisTheory().init('sb-key', { environment: 'sandbox' });
     expect(axios.create).toHaveBeenCalledWith({
       baseURL: SERVICES.vault.sandbox,
       headers: {
@@ -20,7 +20,7 @@ describe('Environments', () => {
   });
 
   it('should use local environment', async () => {
-    await new BasisTheory().init('local-key', 'local');
+    await new BasisTheory().init('local-key', { environment: 'local' });
     expect(axios.create).toHaveBeenCalledWith({
       baseURL: SERVICES.vault.local,
       headers: {
@@ -35,7 +35,7 @@ describe('Environments', () => {
     });
   });
 
-  it('should throw error if not properly initialize', () => {
+  it('should throw error if not properly initialized', () => {
     expect(() => {
       const bt = new BasisTheory();
       bt.vault.createToken('some data');
