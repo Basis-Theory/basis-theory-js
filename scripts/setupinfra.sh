@@ -25,12 +25,13 @@ pulumi stack
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   pulumi preview --diff
 
-  STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.bundlePath, .jsStorageContainerName, .blobDir')
-  read BUNDLE_PATH CONTAINER_NAME BLOB_DIR < <(echo $STACK_OUTPUTS)
+  STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.bundlePath, .jsStorageAccountName, .jsStorageContainerName, .blobDir')
+  read BUNDLE_PATH STORAGE_ACCOUNT_NAME CONTAINER_NAME BLOB_DIR < <(echo $STACK_OUTPUTS)
 
   BLOB_NAME=$BLOB_DIR/$(git rev-parse HEAD).js
 
   az storage blob upload \
+  --account-name $STORAGE_ACCOUNT_NAME \
   -f $BUNDLE_PATH \
   -c $CONTAINER_NAME \
   -n $BLOB_NAME
@@ -38,21 +39,24 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
 else
   pulumi up -y
 
-  STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.jsCdnResourceGroupName, .jsCdnProfileName, .jsCdnEndpointName, .jsStorageContainerName, .bundlePath, .indexJsName, .versionedJsName')
-  read RESOURCE_GROUP_NAME PROFILE_NAME ENDPOINT_NAME CONTAINER_NAME BUNDLE_PATH INDEX_JS_NAME VERSIONED_JS_NAME < <(echo $STACK_OUTPUTS)
+  STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.jsCdnResourceGroupName, .jsStorageAccountName, .jsCdnProfileName, .jsCdnEndpointName, .jsStorageContainerName, .bundlePath, .indexJsName, .versionedJsName')
+  read RESOURCE_GROUP_NAME STORAGE_ACCOUNT_NAME PROFILE_NAME ENDPOINT_NAME CONTAINER_NAME BUNDLE_PATH INDEX_JS_NAME VERSIONED_JS_NAME < <(echo $STACK_OUTPUTS)
 
   # uploads index file
   az storage blob upload \
+  --account-name $STORAGE_ACCOUNT_NAME \
   -f $BUNDLE_PATH \
   -c $CONTAINER_NAME \
   -n $INDEX_JS_NAME
 
-  # uploads index file
+  # uploads version file
   az storage blob upload \
+  --account-name $STORAGE_ACCOUNT_NAME \
   -f $BUNDLE_PATH \
   -c $CONTAINER_NAME \
   -n $INDEX_JS_NAME
 
+  # purges index file from cdn
   az cdn endpoint purge \
   --resource-group $RESOURCE_GROUP_NAME \
   --profile-name $PROFILE_NAME \

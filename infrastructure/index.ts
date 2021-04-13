@@ -22,10 +22,12 @@ if (prerelease) {
 const indexName = `${dir}/index.js`;
 const versionedName = `${dir}/${version}.js`;
 
+export const jsStorageAccountName = infrastructure.getOutput(
+  'jsStorageAccountName'
+);
 export const jsCdnResourceGroupName = infrastructure.getOutput(
   'jsCdnResourceGroupName'
 );
-
 export const jsStorageContainerName = infrastructure.getOutput(
   'jsStorageContainerName'
 );
