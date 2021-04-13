@@ -66,5 +66,5 @@ jobs:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_DEV_CREDENTIALS }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_DNS_ZONE_ID: ${{ secrets.CLOUDFLARE_DNS_ZONE_ID }}
-          PULUMI_STACK: basistheory/dev
+          PULUMI_STACK: basistheory/prod
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

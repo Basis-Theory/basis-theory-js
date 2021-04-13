@@ -19,22 +19,49 @@ pulumi login
 (pulumi stack init $PULUMI_STACK) || echo "Pulumi $PULUMI_STACK already exists"
 pulumi stack select $PULUMI_STACK
 
-pulumi config set --secret cloudflareDnsZoneId $CLOUDFLARE_DNS_ZONE_ID
-
 pulumi stack
+
+
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   pulumi preview --diff
+
+  STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.bundlePath, .jsStorageContainerName, .blobDir')
+  read BUNDLE_PATH CONTAINER_NAME BLOB_DIR < <(echo $STACK_OUTPUTS)
+
+  BLOB_NAME=$BLOB_DIR/$(git rev-parse HEAD).js
+
+  az storage blob upload \
+  -f $BUNDLE_PATH \
+  -c $CONTAINER_NAME \
+  -n $BLOB_NAME
+
 else
   pulumi up -y
-  STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.resource_group_name, .cnd_profile_name, .endpoint_name, .index_js_name')
-  read AZ_RESOURCE_GROUP AZ_CDN_PROFILE AZ_CDN_ENDPOINT AZ_INDEX_BLOB < <(echo $STACK_OUTPUTS)
+
+  STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.jsCdnResourceGroupName, .jsCdnProfileName, .jsCdnEndpointName, .jsStorageContainerName, .bundlePath, .indexJsName, .versionedJsName')
+  read RESOURCE_GROUP_NAME PROFILE_NAME ENDPOINT_NAME CONTAINER_NAME BUNDLE_PATH INDEX_JS_NAME VERSIONED_JS_NAME < <(echo $STACK_OUTPUTS)
+
+  # uploads index file
+  az storage blob upload \
+  -f $BUNDLE_PATH \
+  -c $CONTAINER_NAME \
+  -n $INDEX_JS_NAME
+
+  # uploads index file
+  az storage blob upload \
+  -f $BUNDLE_PATH \
+  -c $CONTAINER_NAME \
+  -n $INDEX_JS_NAME
+
   az cdn endpoint purge \
-  --resource-group $AZ_RESOURCE_GROUP \
-  --profile-name $AZ_CDN_PROFILE \
-  --name $AZ_CDN_ENDPOINT \
-  --content-paths "/$AZ_INDEX_BLOB" \
+  --resource-group $RESOURCE_GROUP_NAME \
+  --profile-name $PROFILE_NAME \
+  --name $ENDPOINT_NAME \
+  --content-paths "/$INDEX_JS_NAME" \
   --no-wait
+
 fi
+
 
 result=$?
 
