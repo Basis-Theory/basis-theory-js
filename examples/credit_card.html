@@ -79,9 +79,7 @@
           country,
         };
 
-        const hasAddress = Object.keys(address).reduce((p, key) => {
-          return p || address[key];
-        }, false);
+        const hasAddress = Object.keys(address).some((key) => address[key]);
 
         const paymentInfo = {
           card: {
@@ -110,9 +108,9 @@
       function handleNewCard(data) {
         const wrapper = document.getElementById('cards_wrapper');
         const newCardDiv = document.createElement('div');
-        const name = data.billing_details ? data.billing_details.name : '';
+        const name = data.billingDetails ? data.billingDetails.name : '';
         const expiration =
-          data.card.expiration_month + '/' + data.card.expiration_year;
+          data.card.expirationMonth + '/' + data.card.expirationYear;
         newCardDiv.className = 'card';
         newCardDiv.innerHTML =
           '<h3>' +
