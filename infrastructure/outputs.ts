@@ -6,10 +6,12 @@ import {
   versionedJsName,
 } from './';
 
-console.log({
-  indexJsName,
-  versionedJsName,
-  blobVersion,
-  blobDir,
-  bundlePath,
-});
+console.log(
+  JSON.stringify({
+    indexJsName,
+    versionedJsName,
+    blobVersion,
+    blobDir,
+    bundlePath,
+  })
+);
