@@ -184,7 +184,7 @@ export const versioned_js_name = versioned.name;
 export const endpoint_name = endpoint.name;
 export const storage_account = storageAccount.name;
 // export const cname_hostname = cname.hostname;
-export const endpoint_domain = domain.hostName;
+// export const endpoint_domain = domain.hostName;
 
 // Container file schema
 //
