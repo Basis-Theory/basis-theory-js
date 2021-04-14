@@ -30,6 +30,7 @@
     "test": "yarn test:library",
     "test:e2e": "yarn cypress:ci",
     "test:library": "yarn workspace @Basis-Theory/basis-theory-js run test",
+    "infra:outputs": "yarn workspace @Basis-Theory/basis-theory-js-infrasctructure run outputs",
     "pretty-quick": "pretty-quick --staged",
     "postinstall": "husky install"
   },
