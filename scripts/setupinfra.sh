@@ -21,9 +21,8 @@ pulumi stack select $PULUMI_STACK
 
 pulumi stack
 
-
 if [ "$IS_PR_WORKFLOW" = true ] ; then
-  pulumi preview --diff
+  pulumi preview --diff --json
 
   STACK_OUTPUTS=$(pulumi stack output --json | jq -r '.bundlePath, .jsStorageAccountName, .jsStorageContainerName, .blobDir')
   read BUNDLE_PATH STORAGE_ACCOUNT_NAME CONTAINER_NAME BLOB_DIR < <(echo $STACK_OUTPUTS)
