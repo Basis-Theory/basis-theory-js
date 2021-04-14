@@ -14,8 +14,8 @@ payments.post('/cards', (req, res) => {
     id: token,
     card: {
       number: mask(info.card.number, 4),
-      expiration_month: 'XX',
-      expiration_year: 'XX',
+      expiration_month: info.card.expiration_month,
+      expiration_year: info.card.expiration_year,
       cvc: 'XXX',
     },
     billing_details: info.billing_details && {
