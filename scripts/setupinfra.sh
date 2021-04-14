@@ -24,7 +24,11 @@ pulumi stack
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   pulumi preview --diff
 
-  INFRA_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_STACK --json | jq -r '.jsStorageAccountName, .jsStorageContainerName')
+  INFRA_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_STACK --json)
+
+  echo $INFRA_STACK_OUTPUTS
+
+  INFRA_STACK_OUTPUTS=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageAccountName, .jsStorageContainerName')
   read STORAGE_ACCOUNT_NAME CONTAINER_NAME < <(echo $INFRA_STACK_OUTPUTS)
 
   STACK_OUTPUTS=$(yarn outputs)
