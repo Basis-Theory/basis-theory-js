@@ -27,8 +27,15 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
   INFRA_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_STACK --json | jq -r '.jsStorageAccountName, .jsStorageContainerName')
   read STORAGE_ACCOUNT_NAME CONTAINER_NAME < <(echo $INFRA_STACK_OUTPUTS)
 
-  STACK_OUTPUTS=$(yarn outputs | jq -r '.bundlePath, .blobDir')
+  STACK_OUTPUTS=$(yarn outputs)
+
+  echo $STACK_OUTPUTS
+
+  STACK_OUTPUTS=$(echo $STACK_OUTPUTS | jq -r '.bundlePath, .blobDir')
   read BUNDLE_PATH BLOB_DIR < <(echo $STACK_OUTPUTS)
+
+  echo bundlepath $BUNDLE_PATH
+  echo blobdir $BLOB_DIR
 
   BLOB_NAME=$BLOB_DIR/$(git rev-parse HEAD).js
 
