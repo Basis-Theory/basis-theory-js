@@ -1,11 +1,14 @@
+import { Chance } from 'chance';
 import { axios } from './setup';
 import { BasisTheory } from '../src';
 
 describe('Payments', () => {
   let bt: BasisTheory;
+  let chance: Chance.Chance;
 
   beforeAll(async () => {
     bt = await new BasisTheory().init('dummy-key');
+    chance = new Chance();
   });
 
   it('should create a new credit card with minimum required fields', async () => {
@@ -21,7 +24,7 @@ describe('Payments', () => {
       card: creditCardInfo,
     });
 
-    expect(apiCall).toHaveBeenCalledWith('/sources/cards', {
+    expect(apiCall).toHaveBeenCalledWith('/cards', {
       card: {
         number: '12345678910111213',
         expiration_month: 12,
@@ -37,7 +40,7 @@ describe('Payments', () => {
       expirationMonth: 12,
       expirationYear: 29,
     };
-    const billingInfo = {
+    const billingDetails = {
       address: {
         city: 'Honolulu',
         country: 'US',
@@ -46,15 +49,21 @@ describe('Payments', () => {
         state: 'HI',
       },
     };
-    const apiCall = axios.post.mockResolvedValueOnce({
-      data: { token: '12345' },
+    const token = chance.string();
+    const apiCall = axios.post.mockImplementationOnce((url, data) => {
+      return Promise.resolve({
+        data: {
+          id: token,
+          ...data,
+        },
+      });
     });
-    const token = await bt.payments.storeCreditCard({
+    const atomicCard = await bt.payments.storeCreditCard({
       card: creditCardInfo,
-      billingDetails: billingInfo,
+      billingDetails,
     });
 
-    expect(apiCall).toHaveBeenCalledWith('/sources/cards', {
+    expect(apiCall).toHaveBeenCalledWith('/cards', {
       card: {
         number: '12345678910111213',
         expiration_month: 12,
@@ -70,7 +79,11 @@ describe('Payments', () => {
         },
       },
     });
-    expect(token).toEqual({ token: '12345' });
+    expect(atomicCard).toEqual({
+      id: token,
+      card: creditCardInfo,
+      billingDetails,
+    });
   });
 
   it('should create a new credit card with all fields', async () => {
@@ -80,7 +93,7 @@ describe('Payments', () => {
       expirationYear: 29,
       cvc: '123',
     };
-    const billingInfo = {
+    const billingDetails = {
       name: 'John Doe',
       email: 'john.doe@basistheory.com',
       phone: '+12035555555',
@@ -93,15 +106,21 @@ describe('Payments', () => {
         state: 'HI',
       },
     };
-    const apiCall = axios.post.mockResolvedValueOnce({
-      data: { token: '12345' },
+    const token = chance.string();
+    const apiCall = axios.post.mockImplementationOnce((url, data) => {
+      return Promise.resolve({
+        data: {
+          id: token,
+          ...data,
+        },
+      });
     });
-    const token = await bt.payments.storeCreditCard({
+    const atomicCard = await bt.payments.storeCreditCard({
       card: creditCardInfo,
-      billingDetails: billingInfo,
+      billingDetails,
     });
 
-    expect(apiCall).toHaveBeenCalledWith('/sources/cards', {
+    expect(apiCall).toHaveBeenCalledWith('/cards', {
       card: {
         number: '12345678910111213',
         expiration_month: 12,
@@ -122,6 +141,10 @@ describe('Payments', () => {
         },
       },
     });
-    expect(token).toEqual({ token: '12345' });
+    expect(atomicCard).toEqual({
+      id: token,
+      card: creditCardInfo,
+      billingDetails,
+    });
   });
 });

@@ -50,17 +50,9 @@ export declare namespace PaymentsApi {
   }
 
   export interface SourceCardResponse {
-    token: string;
-    metadata: {
-      type?: string;
-      masked: {
-        number: string;
-        expiration_month: 'XX';
-        expiration_year: 'XX';
-      };
-    };
-    billing_details?: {
-      name?: string;
-    };
+    id: string;
+    type: 'card';
+    card: CardModel;
+    billing_details?: BillingDetailsModel;
   }
 }

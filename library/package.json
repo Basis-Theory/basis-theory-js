@@ -25,8 +25,10 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "camelcase-keys": "^6.2.2",
     "core-js": "^3.8.3",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "snakecase-keys": "^3.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -37,10 +39,12 @@
     "@babel/preset-typescript": "^7.12.13",
     "@peculiar/webcrypto": "^1.1.6",
     "@size-limit/preset-small-lib": "^4.9.1",
+    "@types/chance": "^1.1.1",
     "@types/eccrypto": "^1.1.2",
     "@types/is-base64": "^1.1.0",
     "@types/jest": "^26.0.20",
     "babel-loader": "^8.2.2",
+    "chance": "^1.1.7",
     "concurrently": "5.3.0",
     "is-base64": "^1.1.0",
     "jest": "^26.6.3",

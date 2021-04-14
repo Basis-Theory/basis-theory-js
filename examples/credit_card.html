@@ -70,6 +70,17 @@
         const postal_code = document.getElementById('postal_code').value;
         const country = document.getElementById('country').value;
 
+        const address = {
+          line1,
+          line2,
+          city,
+          state,
+          postal_code,
+          country,
+        };
+
+        const hasAddress = Object.keys(address).some((key) => address[key]);
+
         const paymentInfo = {
           card: {
             number,
@@ -79,16 +90,9 @@
           },
           billing_details: {
             name,
-            email,
-            phone,
-            address: {
-              line1,
-              line2,
-              city,
-              state,
-              postal_code,
-              country,
-            },
+            email: email || undefined,
+            phone: phone || undefined,
+            address: hasAddress ? address : undefined,
           },
         };
 
@@ -104,25 +108,23 @@
       function handleNewCard(data) {
         const wrapper = document.getElementById('cards_wrapper');
         const newCardDiv = document.createElement('div');
-        const name = data.billing_details ? data.billing_details.name : '';
+        const name = data.billingDetails ? data.billingDetails.name : '';
         const expiration =
-          data.metadata.masked.expiration_month +
-          '/' +
-          data.metadata.masked.expiration_year;
+          data.card.expirationMonth + '/' + data.card.expirationYear;
         newCardDiv.className = 'card';
         newCardDiv.innerHTML =
           '<h3>' +
           name +
           '</h3>' +
           '<div class="card-info">' +
-          data.metadata.masked.number +
+          data.card.number +
           '</div>' +
           '<div class="card-info">' +
           '<span>' +
           expiration +
           '</span>' +
           '<a href="#" onclick="alert(\'' +
-          data.token +
+          data.id +
           '\'); return true;">see token</a>' +
           '</div>';
         wrapper.appendChild(newCardDiv);
@@ -151,7 +153,7 @@
         />
       </div>
       <div>
-        <label for="expiration" class="mr-1">Expiration:</label>
+        <label for="expiration_month" class="mr-1">Expiration:</label>
         <input
           type="number"
           id="expiration_month"

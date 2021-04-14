@@ -2,7 +2,7 @@ context('Credit Card example', () => {
   beforeEach(() => {
     cy.visit('examples/credit_card.html');
     cy.intercept({
-      pathname: '/payments/sources/cards',
+      pathname: '/atomic/cards',
     }).as('createCreditCard');
   });
 
@@ -27,10 +27,11 @@ context('Credit Card example', () => {
   });
 
   it('should be able to submit form with minimum information and get masked information back', () => {
+    const year = (new Date().getFullYear() + 1).toString();
     cy.get('form').find('#holder_name').type('John Doe');
-    cy.get('form').find('#card_number').type('1234567891011121');
+    cy.get('form').find('#card_number').type('4242424242424242');
     cy.get('form').find('#expiration_month').type('10');
-    cy.get('form').find('#expiration_year').type('22');
+    cy.get('form').find('#expiration_year').type(year);
     cy.get('form').find('#cvc').type('123');
     cy.get('form').submit();
 
@@ -43,13 +44,13 @@ context('Credit Card example', () => {
       cy.get('#cards_wrapper')
         .find('.card-info')
         .first()
-        .should('have.text', `${'X'.repeat(12)}1121`)
+        .should('have.text', `${'X'.repeat(12)}4242`)
         .next()
-        .should('contain.text', 'XX/XX')
+        .should('contain.text', `10/${year}`)
         .find('a')
         .click()
         .then(() => {
-          expect(alert.getCall(0)).to.be.calledWith(i.response.body.token);
+          expect(alert.getCall(0)).to.be.calledWith(i.response.body.id);
         });
     });
   });
