@@ -8,7 +8,7 @@ import {
 
 import * as fs from 'fs';
 
-console.log('Generation ouputs.json file');
+console.log('Generating outputs.json file');
 
 fs.writeFileSync(
   './outputs.json',
