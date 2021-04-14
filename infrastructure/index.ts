@@ -1,4 +1,3 @@
-// import * as pulumi from '@pulumi/pulumi';
 import * as semver from 'semver';
 import * as path from 'path';
 import { version, main } from '../library/package.json';
