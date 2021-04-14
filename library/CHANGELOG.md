@@ -1,3 +1,11 @@
+# [1.0.0-alpha.6](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2021-04-14)
+
+
+### Bug Fixes
+
+* perform deep key case change ([bf2847d](https://github.com/Basis-Theory/basis-theory-js/commit/bf2847dfaf7306394486884d1a37790e6d3a29d7))
+* update card creation contract ([4a08fea](https://github.com/Basis-Theory/basis-theory-js/commit/4a08feab5b0cbb4f5570dbd1d80edf8767100e7d))
+
 # [1.0.0-alpha.5](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2021-04-09)
 
 
