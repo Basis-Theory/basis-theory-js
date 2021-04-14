@@ -7,9 +7,9 @@ export const SERVICES: ServicesMap = {
     local: 'http://localhost:3000/vault', // TODO env var
   },
   payments: {
-    production: 'https://api.basistheory.com/payments',
-    sandbox: 'https://api-dev.basistheory.com/payments',
-    local: 'http://localhost:3000/payments', // TODO env var
+    production: 'https://api.basistheory.com/atomic',
+    sandbox: 'https://api-dev.basistheory.com/atomic',
+    local: 'http://localhost:3000/atomic', // TODO env var
   },
 };
 

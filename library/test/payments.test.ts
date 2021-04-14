@@ -21,7 +21,7 @@ describe('Payments', () => {
       card: creditCardInfo,
     });
 
-    expect(apiCall).toHaveBeenCalledWith('/sources/cards', {
+    expect(apiCall).toHaveBeenCalledWith('/cards', {
       card: {
         number: '12345678910111213',
         expiration_month: 12,
@@ -54,7 +54,7 @@ describe('Payments', () => {
       billingDetails: billingInfo,
     });
 
-    expect(apiCall).toHaveBeenCalledWith('/sources/cards', {
+    expect(apiCall).toHaveBeenCalledWith('/cards', {
       card: {
         number: '12345678910111213',
         expiration_month: 12,
@@ -101,7 +101,7 @@ describe('Payments', () => {
       billingDetails: billingInfo,
     });
 
-    expect(apiCall).toHaveBeenCalledWith('/sources/cards', {
+    expect(apiCall).toHaveBeenCalledWith('/cards', {
       card: {
         number: '12345678910111213',
         expiration_month: 12,

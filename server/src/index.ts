@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.status(200).send('Hello, from mock-server');
 });
 
-app.use('/payments', payments);
+app.use('/atomic', payments);
 app.use('/vault', vault);
 
 app.listen(port, host, () => {
