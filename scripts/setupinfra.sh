@@ -18,31 +18,29 @@ BLOB_DIR=$(cat outputs.json | jq -r '.blobDir')
 INDEX_JS_NAME=$(cat outputs.json | jq -r '.indexJsName')
 VERSIONED_JS_NAME=$(cat outputs.json | jq -r '.versionedJsName')
 
+az storage blob upload \
+  --account-name $STORAGE_ACCOUNT_NAME \
+  -f $BUNDLE_PATH \
+  -c $CONTAINER_NAME \
+  -n "$INDEX_JS_NAME"
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   BLOB_NAME=$BLOB_DIR/$(git rev-parse HEAD).js
 
   # uploads commit hash named blob
   az storage blob upload \
-  --account-name $STORAGE_ACCOUNT_NAME \
-  -f $BUNDLE_PATH \
-  -c $CONTAINER_NAME \
-  -n "$BLOB_NAME"
+    --account-name $STORAGE_ACCOUNT_NAME \
+    -f $BUNDLE_PATH \
+    -c $CONTAINER_NAME \
+    -n "$BLOB_NAME"
 
 else
-  # uploads index file
-  az storage blob upload \
-  --account-name $STORAGE_ACCOUNT_NAME \
-  -f $BUNDLE_PATH \
-  -c $CONTAINER_NAME \
-  -n "$INDEX_JS_NAME"
-
   # uploads version file
   az storage blob upload \
-  --account-name $STORAGE_ACCOUNT_NAME \
-  -f $BUNDLE_PATH \
-  -c $CONTAINER_NAME \
-  -n "$VERSIONED_JS_NAME"
+    --account-name $STORAGE_ACCOUNT_NAME \
+    -f $BUNDLE_PATH \
+    -c $CONTAINER_NAME \
+    -n "$VERSIONED_JS_NAME"
 
   # purges index file from cdn
   # az cdn endpoint purge \
