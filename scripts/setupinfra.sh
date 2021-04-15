@@ -43,7 +43,7 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
   --account-name $STORAGE_ACCOUNT_NAME \
   -f $BUNDLE_PATH \
   -c $CONTAINER_NAME \
-  -n "/$BLOB_NAME"
+  -n "$BLOB_NAME"
 
 else
   pulumi up -y
@@ -53,14 +53,14 @@ else
   --account-name $STORAGE_ACCOUNT_NAME \
   -f $BUNDLE_PATH \
   -c $CONTAINER_NAME \
-  -n "/$INDEX_JS_NAME"
+  -n "$INDEX_JS_NAME"
 
   # uploads version file
   az storage blob upload \
   --account-name $STORAGE_ACCOUNT_NAME \
   -f $BUNDLE_PATH \
   -c $CONTAINER_NAME \
-  -n "/$VERSIONED_JS_NAME"
+  -n "$VERSIONED_JS_NAME"
 
   # purges index file from cdn
   # az cdn endpoint purge \
