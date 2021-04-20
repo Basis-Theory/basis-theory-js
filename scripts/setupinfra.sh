@@ -10,6 +10,7 @@ pulumi login
 INFRA_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_STACK --json)
 STORAGE_ACCOUNT_NAME=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageAccountName')
 CONTAINER_NAME=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageContainerName')
+JS_HOST=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsHostName')
 
 yarn outputs
 
@@ -17,6 +18,8 @@ BUNDLE_PATH=$(cat outputs.json | jq -r '.bundlePath')
 BLOB_DIR=$(cat outputs.json | jq -r '.blobDir')
 INDEX_JS_NAME=$(cat outputs.json | jq -r '.indexJsName')
 VERSIONED_JS_NAME=$(cat outputs.json | jq -r '.versionedJsName')
+
+echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
 az storage blob upload \
   --account-name $STORAGE_ACCOUNT_NAME \
@@ -27,6 +30,8 @@ az storage blob upload \
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   BLOB_NAME=$BLOB_DIR/$(git rev-parse HEAD).js
 
+  echo "Uploading bundle to $JS_HOST/$BLOB_NAME"
+
   # uploads commit hash named blob
   az storage blob upload \
     --account-name $STORAGE_ACCOUNT_NAME \
@@ -35,6 +40,8 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
     -n "$BLOB_NAME"
 
 else
+  echo "Uploading bundle to $JS_HOST/$VERSIONED_JS_NAME"
+
   # uploads version file
   az storage blob upload \
     --account-name $STORAGE_ACCOUNT_NAME \
