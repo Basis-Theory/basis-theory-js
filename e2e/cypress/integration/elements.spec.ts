@@ -1,6 +1,6 @@
 context('Elements example', () => {
-  it('should load BasisTheoryElements dinamically', () => {
-    cy.intercept('js.basistheory.com/elements/index.js', {
+  it('should load BasisTheoryElements dynamically', () => {
+    cy.intercept(/https:\/\/.+?\/elements/, {
       body: `
         window.BasisTheoryElements = {
           init: (apiKey, environment) => {

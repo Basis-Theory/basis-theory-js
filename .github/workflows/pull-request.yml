@@ -47,6 +47,13 @@ jobs:
       - run: yarn run cypress install
       - run: yarn run cypress cache list
 
+      - name: Write .env
+        run: make write-lib-vars
+        env:
+          PULUMI_INFRA_STACK: basistheory/infrastructure-azure/dev
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          IS_PR_WORKFLOW: true
+
       - name: Verify
         run: make verify
 
