@@ -11,7 +11,7 @@ INFRA_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_STACK --json)
 
 echo $INFRA_STACK_OUTPUTS
 
-JS_HOST=$(echo $INFRA_STACK_OUTPUTS | jq -r '.hostnames.js')
+JS_HOST=$(echo $INFRA_STACK_OUTPUTS | jq -r '.hostNames.js')
 
 printf 'JS_HOST=%s\n' "$JS_HOST" >> .env
 
