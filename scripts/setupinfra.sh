@@ -10,7 +10,7 @@ pulumi login
 INFRA_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_STACK --json)
 STORAGE_ACCOUNT_NAME=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageAccountName')
 CONTAINER_NAME=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageContainerName')
-JS_HOST=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsHostName')
+JS_HOST=$(echo $INFRA_STACK_OUTPUTS | jq -r '.hostNames.js')
 
 yarn outputs
 
