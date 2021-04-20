@@ -45,6 +45,7 @@
     "@types/is-base64": "^1.1.0",
     "@types/jest": "^26.0.20",
     "babel-loader": "^8.2.2",
+    "babel-plugin-inline-dotenv": "^1.6.0",
     "chance": "^1.1.7",
     "concurrently": "5.3.0",
     "dotenv-webpack": "^7.0.2",
