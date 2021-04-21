@@ -12,7 +12,9 @@ jobs:
         node: ['14.x']
         os: [ubuntu-latest]
     env:
-      CI: 1
+      CI: 1 # prevents extra Cypress installation progress messages
+      PULUMI_INFRA_DEV_STACK: basistheory/infrastructure-azure/dev
+      PULUMI_INFRA_PROD_STACK: basistheory/infrastructure-azure/prod
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -48,6 +50,11 @@ jobs:
       - run: yarn run cypress install
       - run: yarn run cypress cache list
 
+      - name: Write .env
+        run: make write-lib-vars
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
       - name: Verify
         run: make verify
 
@@ -63,5 +70,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PULUMI_INFRA_STACK: basistheory/infrastructure-azure/prod
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

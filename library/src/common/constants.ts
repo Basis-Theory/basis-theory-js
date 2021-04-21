@@ -2,14 +2,14 @@ import { ServicesMap } from '../types';
 
 export const SERVICES: ServicesMap = {
   vault: {
-    production: 'https://api.basistheory.com/vault',
-    sandbox: 'https://api-dev.basistheory.com/vault',
-    local: 'http://localhost:3000/vault', // TODO env var
+    production: `https://${process.env.API_HOST_PROD}/vault`,
+    sandbox: `https://${process.env.API_HOST_DEV}/vault`,
+    local: `http://${process.env.API_HOST_LOCAL}/vault`,
   },
   payments: {
-    production: 'https://api.basistheory.com/atomic',
-    sandbox: 'https://api-dev.basistheory.com/atomic',
-    local: 'http://localhost:3000/atomic', // TODO env var
+    production: `https://${process.env.API_HOST_PROD}/atomic`,
+    sandbox: `https://${process.env.API_HOST_DEV}/atomic`,
+    local: `http://${process.env.API_HOST_LOCAL}/atomic`,
   },
 };
 

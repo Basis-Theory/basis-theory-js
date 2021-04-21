@@ -12,5 +12,8 @@ module.exports = {
     ],
     '@babel/typescript',
   ],
-  plugins: ['@babel/proposal-class-properties'],
+  plugins: [
+    '@babel/proposal-class-properties',
+    ['inline-dotenv', { unsafe: true }],
+  ],
 };

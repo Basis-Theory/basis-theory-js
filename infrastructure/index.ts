@@ -25,9 +25,15 @@ export const bundlePath = path.resolve('../library', main);
 
 // Container file schema
 //
+// js(-dev).basistheory.com -> latest stable index
+//
+
+// js(-dev).basistheory.com/v1  -> rewrites to index  /v1/index.js
+
 // /v1/index.js             - latest v1 release | storage index
 // /v1/1.0.0.js
 // /v1/1.0.1.js
+//
 
 // /alpha/index.js          - latest alpha prerelease
 // /alpha/1.0.0-alpha.1.js

@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 const { merge } = require('webpack-merge');
 const babelConfig = require('./babel.bundle.config');
 
@@ -28,6 +29,8 @@ const base = {
       },
     ],
   },
+
+  plugins: [new Dotenv()],
 };
 
 const umd = merge(base, {

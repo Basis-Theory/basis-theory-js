@@ -20,7 +20,7 @@ export const loadElements = (): Promise<BasisTheoryElements> => {
         return;
       }
       try {
-        const url = 'https://js.basistheory.com/elements/index.js';
+        const url = `https://${process.env.JS_HOST}/elements`;
         let script = findScript(url);
 
         if (!script) {

@@ -21,3 +21,6 @@ setup-infra:
 release:
 	yarn release
 	$(MAKE) setup-infra
+
+write-lib-vars:
+	./scripts/writelibvars.sh

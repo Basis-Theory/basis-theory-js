@@ -7,3 +7,4 @@ screenshots
 .nvmrc
 .npmrc
 .idea
+.env
