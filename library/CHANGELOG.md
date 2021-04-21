@@ -1,3 +1,12 @@
+# [1.0.0-alpha.7](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2021-04-21)
+
+
+### Bug Fixes
+
+* **ENG-249:** chore: add upload echo messages ([e48c256](https://github.com/Basis-Theory/basis-theory-js/commit/e48c256e7399b670f9837cf109cbe194eb36e4af))
+* **ENG-249:** use http for local env ([81b358f](https://github.com/Basis-Theory/basis-theory-js/commit/81b358f8a2b56296f05f69df204001a727611048))
+* **ENG-249:** use JS_HOST var to load elements from ([21d2b5e](https://github.com/Basis-Theory/basis-theory-js/commit/21d2b5eefa6a9a96d682571889e0c78e26f00c15))
+
 # [1.0.0-alpha.6](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2021-04-14)
 
 
