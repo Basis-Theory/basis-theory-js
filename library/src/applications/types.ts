@@ -12,9 +12,7 @@ export interface Application {
   ownerId: string;
   name: string;
   type: ApplicationType;
-  createdBy: string;
   createdAt: string;
-  modifiedBy: string;
   modifiedAt: string;
   permissions: string[];
   key?: string;
