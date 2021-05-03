@@ -3,11 +3,11 @@ context('PII example', () => {
     cy.visit('examples/pii.html');
     cy.intercept({
       method: 'POST',
-      pathname: '/vault/tokens',
+      pathname: '/tokens',
     }).as('createToken');
     cy.intercept({
       method: 'GET',
-      pathname: '/vault/tokens/*',
+      pathname: '/tokens/*',
     }).as('getToken');
   });
 

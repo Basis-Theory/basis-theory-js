@@ -22,7 +22,7 @@ fi
 printf 'JS_HOST=%s\n' "$JS_HOST" >> .env
 printf 'API_HOST_PROD=%s\n' "$API_HOST_PROD" >> .env
 printf 'API_HOST_DEV=%s\n' "$API_HOST_DEV" >> .env
-printf 'API_HOST_LOCAL=localhost:3000\n' >> .env
+printf 'API_HOST_LOCAL=localhost:3333\n' >> .env
 
 result=$?
 

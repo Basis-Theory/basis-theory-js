@@ -98,7 +98,7 @@
 
         // this is where the magic happens
         // invoke async BasisTheory Payments API store credit card method
-        BasisTheory.payments.storeCreditCard(paymentInfo).then(function (data) {
+        BasisTheory.atomic.storeCreditCard(paymentInfo).then(function (data) {
           // and when that is done
           form.reset(); // we can reset our form
           handleNewCard(data); // and attach the stored credit card info to the view

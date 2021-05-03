@@ -1,1 +1,1 @@
-export * from './BasisTheoryVault';
+export * from './BasisTheoryTokens';

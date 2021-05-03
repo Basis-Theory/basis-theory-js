@@ -2,7 +2,7 @@ import { Chance } from 'chance';
 import { axios } from './setup';
 import { BasisTheory } from '../src';
 
-describe('Payments', () => {
+describe('Atomic', () => {
   let bt: BasisTheory;
   let chance: Chance.Chance;
 
@@ -20,7 +20,7 @@ describe('Payments', () => {
     const apiCall = axios.post.mockResolvedValueOnce({
       data: { token: '12345' },
     });
-    const token = await bt.payments.storeCreditCard({
+    const token = await bt.atomic.storeCreditCard({
       card: creditCardInfo,
     });
 
@@ -58,7 +58,7 @@ describe('Payments', () => {
         },
       });
     });
-    const atomicCard = await bt.payments.storeCreditCard({
+    const atomicCard = await bt.atomic.storeCreditCard({
       card: creditCardInfo,
       billingDetails,
     });
@@ -115,7 +115,7 @@ describe('Payments', () => {
         },
       });
     });
-    const atomicCard = await bt.payments.storeCreditCard({
+    const atomicCard = await bt.atomic.storeCreditCard({
       card: creditCardInfo,
       billingDetails,
     });
