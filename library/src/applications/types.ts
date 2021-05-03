@@ -12,9 +12,7 @@ export interface Application {
   ownerId: string;
   name: string;
   type: ApplicationType;
-  createdBy: string;
   createdAt: string;
-  modifiedBy: string;
   modifiedAt: string;
   permissions: string[];
   key?: string;
@@ -28,9 +26,7 @@ export declare namespace ApplicationsApi {
     owner_id: string;
     name: string;
     type: ApplicationType;
-    created_by: string;
     created_at: string;
-    modified_by: string;
     modified_at: string;
     permissions: string[];
     key?: string;
