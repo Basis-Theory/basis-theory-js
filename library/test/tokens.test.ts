@@ -10,7 +10,13 @@ describe('Tokens', () => {
 
   it('should create a new token', async () => {
     const apiCall = axios.post.mockResolvedValueOnce({
-      data: { token: '12345', data: 'any data we want!' },
+      data: {
+        id: '12345',
+        tenant_id: '123',
+        data: {
+          my_field: 'some value',
+        },
+      },
     });
 
     const token = await bt.tokens.createToken('any data we want!');
@@ -18,19 +24,37 @@ describe('Tokens', () => {
     expect(apiCall).toHaveBeenCalledWith('/', {
       data: 'any data we want!',
     });
-    expect(token).toEqual({ token: '12345', data: 'any data we want!' });
+    expect(token).toEqual({
+      id: '12345',
+      tenantId: '123',
+      data: {
+        my_field: 'some value',
+      },
+    });
   });
 
   it('should retrieve a token', async () => {
     const apiCall = axios.get.mockResolvedValueOnce({
-      data: { token: '12345', data: 'any data we want!' },
+      data: {
+        id: '12345',
+        tenant_id: '123',
+        data: {
+          my_field: 'some value',
+        },
+      },
     });
 
     const token = await bt.tokens.getToken('12345');
 
     expect(apiCall).toHaveBeenCalledWith('/12345');
 
-    expect(token).toEqual({ token: '12345', data: 'any data we want!' });
+    expect(token).toEqual({
+      id: '12345',
+      tenantId: '123',
+      data: {
+        my_field: 'some value',
+      },
+    });
   });
 
   it('should delete a token', async () => {

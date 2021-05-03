@@ -1,8 +1,8 @@
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryEncryption } from './encryption';
-import { BasisTheoryPayments } from './payments';
+import { BasisTheoryAtomic } from './atomic';
 import { BasisTheoryElements, BasisTheoryInitOptions } from './types';
-import { BasisTheoryTokens } from './vault';
+import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
@@ -13,7 +13,7 @@ export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
 export class BasisTheory {
   private _initOptions?: Required<BasisTheoryInitOptions>;
   private _tokens?: BasisTheoryTokens;
-  private _atomic?: BasisTheoryPayments;
+  private _atomic?: BasisTheoryAtomic;
   private _encryption?: BasisTheoryEncryption;
   private _elements?: BasisTheoryElements;
   private _applications?: BasisTheoryApplications;
@@ -30,7 +30,7 @@ export class BasisTheory {
       apiKey,
       baseURL: SERVICES.tokens[this._initOptions.environment],
     });
-    this._atomic = new BasisTheoryPayments({
+    this._atomic = new BasisTheoryAtomic({
       apiKey,
       baseURL: SERVICES.atomic[this._initOptions.environment],
     });
@@ -60,7 +60,7 @@ export class BasisTheory {
     return assertInit(this._tokens);
   }
 
-  public get atomic(): BasisTheoryPayments {
+  public get atomic(): BasisTheoryAtomic {
     return assertInit(this._atomic);
   }
 
