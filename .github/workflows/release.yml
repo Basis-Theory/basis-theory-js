@@ -13,6 +13,7 @@ jobs:
         os: [ubuntu-latest]
     env:
       CI: 1 # prevents extra Cypress installation progress messages
+      HUSKY: 0 # disables husky hooks
       PULUMI_INFRA_DEV_STACK: basistheory/infrastructure-azure/dev
       PULUMI_INFRA_PROD_STACK: basistheory/infrastructure-azure/prod
     steps:
