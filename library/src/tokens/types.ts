@@ -1,9 +1,9 @@
-export type primitive = string | number | boolean | null;
+export type Primitive = string | number | boolean | null;
 export type DataObject = {
   [member: string]: TokenData;
 };
 export type DataArray = Array<TokenData>;
-export type TokenData = primitive | DataObject | DataArray;
+export type TokenData = Primitive | DataObject | DataArray;
 
 export type TokenType = 'token' | 'card';
 
