@@ -3,9 +3,9 @@ import { setData } from './stores';
 import { Services } from './types';
 import { mask } from './utils';
 
-export const payments = Router();
+export const atomic = Router();
 
-payments.post('/cards', (req, res) => {
+atomic.post('/cards', (req, res) => {
   const info = req.body;
   const data = JSON.stringify(info);
   const token = setData(req.apiKey, Services.payments, data);

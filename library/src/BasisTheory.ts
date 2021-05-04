@@ -1,8 +1,9 @@
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryEncryption } from './encryption';
-import { BasisTheoryPayments } from './payments';
+import { BasisTheoryAtomic } from './atomic';
 import { BasisTheoryElements, BasisTheoryInitOptions } from './types';
-import { BasisTheoryVault } from './vault';
+import { BasisTheoryTokens } from './tokens';
+import { BasisTheoryApplications } from './applications';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -11,10 +12,11 @@ export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
 
 export class BasisTheory {
   private _initOptions?: Required<BasisTheoryInitOptions>;
-  private _vault?: BasisTheoryVault;
-  private _payments?: BasisTheoryPayments;
+  private _tokens?: BasisTheoryTokens;
+  private _atomic?: BasisTheoryAtomic;
   private _encryption?: BasisTheoryEncryption;
   private _elements?: BasisTheoryElements;
+  private _applications?: BasisTheoryApplications;
 
   public async init(
     apiKey: string,
@@ -24,17 +26,19 @@ export class BasisTheory {
       ...defaultInitOptions,
       ...options,
     });
-    this._vault = new BasisTheoryVault({
+    this._tokens = new BasisTheoryTokens({
       apiKey,
-      baseURL: SERVICES.vault[this._initOptions.environment],
+      baseURL: SERVICES.tokens[this._initOptions.environment],
     });
-    this._payments = new BasisTheoryPayments({
+    this._atomic = new BasisTheoryAtomic({
       apiKey,
-      baseURL: SERVICES.payments[this._initOptions.environment],
+      baseURL: SERVICES.atomic[this._initOptions.environment],
+    });
+    this._applications = new BasisTheoryApplications({
+      apiKey,
+      baseURL: SERVICES.applications[this._initOptions.environment],
     });
     this._encryption = new BasisTheoryEncryption();
-    // initialization options
-    // TODO perform async initialization steps
 
     if (this._initOptions.elements) {
       await this.loadElements(apiKey);
@@ -52,12 +56,12 @@ export class BasisTheory {
     return assertInit(this._initOptions);
   }
 
-  public get vault(): BasisTheoryVault {
-    return assertInit(this._vault);
+  public get tokens(): BasisTheoryTokens {
+    return assertInit(this._tokens);
   }
 
-  public get payments(): BasisTheoryPayments {
-    return assertInit(this._payments);
+  public get atomic(): BasisTheoryAtomic {
+    return assertInit(this._atomic);
   }
 
   public get encryption(): BasisTheoryEncryption {
@@ -70,5 +74,9 @@ export class BasisTheory {
 
   public get elements(): BasisTheoryElements {
     return assertInit(this._elements);
+  }
+
+  public get applications(): BasisTheoryApplications {
+    return assertInit(this._applications);
   }
 }

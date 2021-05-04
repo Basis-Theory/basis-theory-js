@@ -1,15 +1,20 @@
 import { ServicesMap } from '../types';
 
 export const SERVICES: ServicesMap = {
-  vault: {
-    production: `https://${process.env.API_HOST_PROD}/vault`,
-    sandbox: `https://${process.env.API_HOST_DEV}/vault`,
-    local: `http://${process.env.API_HOST_LOCAL}/vault`,
+  tokens: {
+    production: `https://${process.env.API_HOST_PROD}/tokens`,
+    sandbox: `https://${process.env.API_HOST_DEV}/tokens`,
+    local: `http://${process.env.API_HOST_LOCAL}/tokens`,
   },
-  payments: {
+  atomic: {
     production: `https://${process.env.API_HOST_PROD}/atomic`,
     sandbox: `https://${process.env.API_HOST_DEV}/atomic`,
     local: `http://${process.env.API_HOST_LOCAL}/atomic`,
+  },
+  applications: {
+    production: `https://${process.env.API_HOST_PROD}/applications`,
+    sandbox: `https://${process.env.API_HOST_DEV}/applications`,
+    local: `http://${process.env.API_HOST_LOCAL}/applications`,
   },
 };
 

@@ -10,7 +10,7 @@ timeout=30000
 # continue until $n equals 5
 while [ $i -le $timeout ]
 do
-	status=$(curl -s -o /dev/null -i -w "%{http_code}" http://localhost:3000/)
+	status=$(curl -s -o /dev/null -i -w "%{http_code}" http://localhost:3333/)
 
     if [ $status == "200" ]
     then

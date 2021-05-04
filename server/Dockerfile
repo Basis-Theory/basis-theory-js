@@ -7,7 +7,7 @@ COPY ["server/package.json", "server/dist/*", "./"]
 
 RUN yarn install --production
 
-EXPOSE 3000
+EXPOSE 3333
 
 RUN ls
 

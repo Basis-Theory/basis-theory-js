@@ -6,13 +6,13 @@ describe('Environments', () => {
   it('should use sandbox environment', async () => {
     await new BasisTheory().init('sb-key', { environment: 'sandbox' });
     expect(axios.create).toHaveBeenCalledWith({
-      baseURL: SERVICES.vault.sandbox,
+      baseURL: SERVICES.tokens.sandbox,
       headers: {
         'X-API-KEY': 'sb-key',
       },
     });
     expect(axios.create).toHaveBeenCalledWith({
-      baseURL: SERVICES.payments.sandbox,
+      baseURL: SERVICES.atomic.sandbox,
       headers: {
         'X-API-KEY': 'sb-key',
       },
@@ -22,13 +22,13 @@ describe('Environments', () => {
   it('should use local environment', async () => {
     await new BasisTheory().init('local-key', { environment: 'local' });
     expect(axios.create).toHaveBeenCalledWith({
-      baseURL: SERVICES.vault.local,
+      baseURL: SERVICES.tokens.local,
       headers: {
         'X-API-KEY': 'local-key',
       },
     });
     expect(axios.create).toHaveBeenCalledWith({
-      baseURL: SERVICES.payments.local,
+      baseURL: SERVICES.atomic.local,
       headers: {
         'X-API-KEY': 'local-key',
       },
@@ -38,7 +38,7 @@ describe('Environments', () => {
   it('should throw error if not properly initialized', () => {
     expect(() => {
       const bt = new BasisTheory();
-      bt.vault.createToken('some data');
+      bt.tokens.createToken('some data');
     }).toThrowError();
   });
 });

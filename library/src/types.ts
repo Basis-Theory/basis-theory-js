@@ -4,7 +4,7 @@ export type ServiceUrlMap = {
   [key in ServiceEnvironment]: string;
 };
 
-export type Services = 'vault' | 'payments';
+export type Services = 'tokens' | 'atomic' | 'applications';
 
 export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
