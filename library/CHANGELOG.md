@@ -1,3 +1,21 @@
+# [1.0.0-alpha.8](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2021-05-04)
+
+
+### Bug Fixes
+
+* **ENG-298:** remove created_by and modified_by ([60c9035](https://github.com/Basis-Theory/basis-theory-js/commit/60c903520eaf46357dae6abc2f48237995dc32af))
+* **ENG-298:** remove createdBy and modifiedBy ([cf8b789](https://github.com/Basis-Theory/basis-theory-js/commit/cf8b789551fe9d9b1739841c87e48ab61e54f6f9))
+
+
+### Code Refactoring
+
+* **ENG-298:** rename folders and change response type ([33d724d](https://github.com/Basis-Theory/basis-theory-js/commit/33d724da7ce3616dbc5aa47df6852c1e5d7dcc0f))
+
+
+### BREAKING CHANGES
+
+* **ENG-298:** `createToken` and `getToken` now resolve to `CreateTokenResponse`
+
 # [1.0.0-alpha.7](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2021-04-21)
 
 
