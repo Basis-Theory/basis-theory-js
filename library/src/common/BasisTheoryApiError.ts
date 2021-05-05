@@ -1,8 +1,9 @@
 export class BasisTheoryApiError extends Error {
-  public readonly data: unknown;
-  public readonly status: number;
-
-  public constructor(message: string, status: number, data?: unknown) {
+  public constructor(
+    message: string,
+    public readonly status: number,
+    public readonly data?: unknown
+  ) {
     super(message);
     this.name = 'BasisTheoryApiError';
     this.status = status;

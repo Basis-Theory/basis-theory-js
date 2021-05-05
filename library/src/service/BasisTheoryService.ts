@@ -18,7 +18,7 @@ export abstract class BasisTheoryService<
     this.client.interceptors.response.use(
       (response) => response,
       (error) => {
-        const status = error.response?.data.statusCode || -1;
+        const status = error.response?.status || -1;
         const data = error.response?.data;
 
         throw new BasisTheoryApiError(error.message, status, data);

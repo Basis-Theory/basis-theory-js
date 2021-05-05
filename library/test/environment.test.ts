@@ -73,10 +73,10 @@ describe('Environments', () => {
           message: 'some error message',
           response: {
             data: {
-              statusCode: 418,
               key1: 'value1',
               key2: 'value2',
             },
+            status: 418,
           },
         };
 
@@ -86,10 +86,7 @@ describe('Environments', () => {
         } catch (error) {
           expect(error).toHaveProperty('name', 'BasisTheoryApiError');
           expect(error).toHaveProperty('message', expectedError.message);
-          expect(error).toHaveProperty(
-            'status',
-            expectedError.response.data.statusCode
-          );
+          expect(error).toHaveProperty('status', expectedError.response.status);
           expect(error).toHaveProperty('data', expectedError.response.data);
         }
       });
