@@ -1,8 +1,8 @@
 {
   "integrationFolder": "e2e/cypress/integration",
   "screenshotsFolder": "e2e/cypress/screenshots",
+  "supportFile": "e2e/cypress/support/index.ts",
   "video": false,
   "pluginsFile": false,
-  "supportFile": false,
   "fixturesFolder": false
 }

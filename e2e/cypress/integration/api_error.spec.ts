@@ -1,9 +1,19 @@
+///  <reference path="../support/index.d.ts" />
+
 context('API error', () => {
   beforeEach(() => {
     cy.visit('./e2e/cypress/fixtures/credit_card_api_error.html');
   });
 
-  context('network error', () => {
+  context('network error/network offline', () => {
+    beforeEach(() => {
+      cy.goOffline();
+    });
+
+    afterEach(() => {
+      cy.goOnline();
+    });
+
     it('should return error with status of -1 and data of undefined', () => {
       cy.get('form').find('#card_number').type('4242424242424242');
       cy.get('form').find('#expiration_month').type('10');
