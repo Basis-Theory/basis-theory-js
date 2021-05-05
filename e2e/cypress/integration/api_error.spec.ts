@@ -4,24 +4,19 @@ context('API error', () => {
   });
 
   context('network error', () => {
-    beforeEach(() => {
-      cy.intercept('/api-error').as('network-error');
-    });
-
     it('should return error with status of -1 and data of undefined', () => {
       cy.get('form').find('#card_number').type('4242424242424242');
       cy.get('form').find('#expiration_month').type('10');
       cy.get('form').find('#expiration_year').type('2029');
       cy.get('form').find('#cvc').type('123');
       cy.get('form').submit();
-
-      cy.wait('@network-error').then(({ request: { body } }) => {
-        const parsedBody = JSON.parse(body);
-
-        expect(parsedBody.name).to.eq('BasisTheoryApiError');
-        expect(parsedBody.status).to.eq(-1);
-        expect(parsedBody.data).to.eq(undefined);
-      });
+      cy.get('#response').should(
+        'have.text',
+        JSON.stringify({
+          status: -1,
+          name: 'BasisTheoryApiError',
+        })
+      );
     });
   });
 
@@ -33,8 +28,7 @@ context('API error', () => {
       cy.intercept('/atomic/cards', {
         statusCode: status,
         body: data,
-      });
-      cy.intercept('/api-error').as('api-error');
+      }).as('atomic-cards');
     });
 
     it('should return error with the API status and data', () => {
@@ -43,14 +37,14 @@ context('API error', () => {
       cy.get('form').find('#expiration_year').type('2029');
       cy.get('form').find('#cvc').type('123');
       cy.get('form').submit();
-
-      cy.wait('@api-error').then(({ request: { body } }) => {
-        const parsedBody = JSON.parse(body);
-
-        expect(parsedBody.name).to.eq('BasisTheoryApiError');
-        expect(parsedBody.data).to.eq(data);
-        expect(parsedBody.status).to.eq(status);
-      });
+      cy.get('#response').should(
+        'have.text',
+        JSON.stringify({
+          status,
+          data,
+          name: 'BasisTheoryApiError',
+        })
+      );
     });
   });
 });

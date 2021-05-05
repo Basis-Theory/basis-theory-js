@@ -19,6 +19,7 @@
         const expiration_year = document.getElementById('expiration_year')
           .value;
         const cvc = document.getElementById('cvc').value;
+        const response = document.getElementById('response');
 
         const paymentInfo = {
           card: {
@@ -35,14 +36,12 @@
             // should not fall into here
           })
           .catch(function (error) {
-            fetch('/api-error', {
-              body: JSON.stringify(error),
-              method: 'POST',
-            });
+            response.innerHTML = JSON.stringify(error);
           });
       }
     </script>
 
+    <div id="response"></div>
     <form onsubmit="onSubmit(event); return false;">
       <h2 class="header">Add New Credit Card</h2>
       <div>
