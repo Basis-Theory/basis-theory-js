@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { API_KEY_HEADER } from '../common';
 import { BasisTheoryServiceOptions } from './types';
+import { BasisTheoryApiError } from '../common/BasisTheoryApiError';
 
 export abstract class BasisTheoryService<
   T extends BasisTheoryServiceOptions = BasisTheoryServiceOptions
@@ -15,5 +16,14 @@ export abstract class BasisTheoryService<
         [API_KEY_HEADER]: apiKey,
       },
     });
+    this.client.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const status = error.response?.data.statusCode || -1;
+        const data = error.response?.data;
+
+        throw new BasisTheoryApiError(error.message, status, data);
+      }
+    );
   }
 }
