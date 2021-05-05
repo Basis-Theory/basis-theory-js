@@ -22,11 +22,6 @@ export interface BasisTheoryElements {
   ) => Promise<BasisTheoryElements>;
 }
 
-export interface BasisTheoryApiError extends Error {
-  data?: unknown;
-  status: number;
-}
-
 declare global {
   interface Window {
     BasisTheoryElements?: BasisTheoryElements;
