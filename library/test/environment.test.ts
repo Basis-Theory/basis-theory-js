@@ -50,25 +50,25 @@ describe('Environments', () => {
           };
         };
       },
-      requestFn: (arg: unknown) => unknown,
-      responseFn: (arg: unknown) => void;
+      responseFn: (arg: unknown) => unknown,
+      errorFn: (arg: unknown) => void;
 
     beforeAll(async () => {
       await new BasisTheory().init('local-key', { environment: 'local' });
 
       axiosClient = axios.create.mock.results[0].value;
       [
-        requestFn,
         responseFn,
+        errorFn,
       ] = axiosClient.interceptors.response.use.mock.calls[0];
     });
 
     it('should return unaltered response', async () => {
-      expect(requestFn(56789)).toBe(56789);
+      expect(responseFn(56789)).toBe(56789);
     });
 
     describe('response exists', () => {
-      it('should return the response status and response data', async () => {
+      it('should throw BasisTheoryApiError with response status and response data', async () => {
         const expectedError = {
           message: 'some error message',
           response: {
@@ -81,7 +81,7 @@ describe('Environments', () => {
         };
 
         try {
-          responseFn(expectedError);
+          errorFn(expectedError);
           fail('should have thrown BasisTheoryApiError');
         } catch (error) {
           expect(error).toHaveProperty('name', 'BasisTheoryApiError');
@@ -96,11 +96,11 @@ describe('Environments', () => {
     });
 
     describe('response does not exist', () => {
-      it('should return -1 for the status and an undefined for data', async () => {
+      it('should throw BasisTheoryApiError with -1 for the status and an undefined for data', async () => {
         const errorMessage = 'some error message';
 
         try {
-          responseFn({
+          errorFn({
             message: errorMessage,
           });
           fail('should have thrown BasisTheoryApiError');
