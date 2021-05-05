@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { mocked } from 'ts-jest/utils';
-import { assertInit, findScript, injectScript } from '../src/common';
+import { assertInit, findScript, injectScript } from '../src/common/utils';
 import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
 
