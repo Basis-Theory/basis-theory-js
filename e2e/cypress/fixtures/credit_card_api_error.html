@@ -35,8 +35,6 @@
             // should not fall into here
           })
           .catch(function (error) {
-            console.log(error);
-
             fetch('/api-error', {
               body: JSON.stringify(error),
               method: 'POST',
