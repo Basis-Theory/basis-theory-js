@@ -4,7 +4,9 @@ import { BasisTheoryService } from '../service';
 import { AtomicCard, PaymentsApi } from './types';
 
 export class BasisTheoryAtomic extends BasisTheoryService {
-  public async storeCreditCard(source: AtomicCard): Promise<AtomicCard> {
+  public async storeCreditCard(
+    source: Omit<AtomicCard, 'id'>
+  ): Promise<AtomicCard> {
     const payload: PaymentsApi.SourceCardModel = snakecaseKeys(source, {
       deep: true,
     });
