@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { API_KEY_HEADER } from '../common';
+import { API_KEY_HEADER, BasisTheoryApiError } from '../common';
 import { BasisTheoryServiceOptions } from './types';
 
 export abstract class BasisTheoryService<
@@ -15,5 +15,14 @@ export abstract class BasisTheoryService<
         [API_KEY_HEADER]: apiKey,
       },
     });
+    this.client.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const status = error.response?.status || -1;
+        const data = error.response?.data;
+
+        throw new BasisTheoryApiError(error.message, status, data);
+      }
+    );
   }
 }
