@@ -1,4 +1,5 @@
 export interface AtomicCard {
+  id: string;
   card: {
     number: string;
     expirationMonth: number;
