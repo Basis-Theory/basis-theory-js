@@ -1,3 +1,10 @@
+# [1.0.0-alpha.9](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2021-05-06)
+
+
+### Bug Fixes
+
+* **ENG-392:** adds exported BasisTheoryApiError type and Error class ([3627f22](https://github.com/Basis-Theory/basis-theory-js/commit/3627f2233247b70947fc4f42f5c0cadfa344d788))
+
 # [1.0.0-alpha.8](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2021-05-04)
 
 
