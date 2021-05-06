@@ -1,3 +1,10 @@
+# [1.0.0-alpha.10](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2021-05-06)
+
+
+### Bug Fixes
+
+* **ENG-285:** add id to atomic card model ([608e4fc](https://github.com/Basis-Theory/basis-theory-js/commit/608e4fc2e24cfe859723179796ec0734a6a715a6))
+
 # [1.0.0-alpha.9](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2021-05-06)
 
 
