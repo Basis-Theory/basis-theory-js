@@ -1,3 +1,10 @@
+# [1.0.0-alpha.11](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2021-05-12)
+
+
+### Features
+
+* **ENG-461:** adds create Atomic Bank ([d0a0fab](https://github.com/Basis-Theory/basis-theory-js/commit/d0a0fabfa08077d16f3508aa489adc7a7232cadb))
+
 # [1.0.0-alpha.10](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2021-05-06)
 
 
