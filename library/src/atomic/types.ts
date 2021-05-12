@@ -21,6 +21,14 @@ export interface AtomicCard {
   };
 }
 
+export interface AtomicBank {
+  id: string;
+  bank: {
+    accountNumber: string;
+    routingNumber: string;
+  };
+}
+
 // we can disable for this next line as we are only exporting interfaces here
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export declare namespace PaymentsApi {
@@ -55,5 +63,20 @@ export declare namespace PaymentsApi {
     type: 'card';
     card: CardModel;
     billing_details?: BillingDetailsModel;
+  }
+
+  export interface SourceBankModel {
+    bank: BankModel;
+  }
+
+  export interface BankModel {
+    account_number: string;
+    routing_number: string;
+  }
+
+  export interface SourceBankResponse {
+    id: string;
+    type: 'bank';
+    bank: BankModel;
   }
 }
