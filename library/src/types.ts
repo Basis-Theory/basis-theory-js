@@ -1,3 +1,5 @@
+export type InitStatus = 'not-started' | 'in-progress' | 'done';
+
 export type ServiceEnvironment = 'production' | 'sandbox' | 'local';
 
 export type ServiceUrlMap = {

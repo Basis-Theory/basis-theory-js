@@ -1,7 +1,11 @@
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryEncryption } from './encryption';
 import { BasisTheoryAtomic } from './atomic';
-import { BasisTheoryElements, BasisTheoryInitOptions } from './types';
+import {
+  BasisTheoryElements,
+  BasisTheoryInitOptions,
+  InitStatus,
+} from './types';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
 
@@ -11,6 +15,7 @@ export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
 };
 
 export class BasisTheory {
+  private _initStatus: InitStatus = 'not-started';
   private _initOptions?: Required<BasisTheoryInitOptions>;
   private _tokens?: BasisTheoryTokens;
   private _atomic?: BasisTheoryAtomic;
@@ -22,6 +27,12 @@ export class BasisTheory {
     apiKey: string,
     options: BasisTheoryInitOptions = {}
   ): Promise<BasisTheory> {
+    if (this._initStatus !== 'not-started') {
+      throw new Error(
+        'This BasisTheory instance has been already initialized.'
+      );
+    }
+    this._initStatus = 'in-progress';
     this._initOptions = Object.freeze({
       ...defaultInitOptions,
       ...options,
@@ -43,7 +54,7 @@ export class BasisTheory {
     if (this._initOptions.elements) {
       await this.loadElements(apiKey);
     }
-
+    this._initStatus = 'done';
     return this;
   }
 
