@@ -1,4 +1,4 @@
-export type InitStatus = 'not-started' | 'in-progress' | 'done';
+export type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
 export type ServiceEnvironment = 'production' | 'sandbox' | 'local';
 

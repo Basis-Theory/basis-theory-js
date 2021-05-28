@@ -1,7 +1,7 @@
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryEncryption } from './encryption';
 import { BasisTheoryAtomic } from './atomic';
-import {
+import type {
   BasisTheoryElements,
   BasisTheoryInitOptions,
   InitStatus,
@@ -27,34 +27,39 @@ export class BasisTheory {
     apiKey: string,
     options: BasisTheoryInitOptions = {}
   ): Promise<BasisTheory> {
-    if (this._initStatus !== 'not-started') {
+    if (this._initStatus !== 'not-started' && this._initStatus !== 'error') {
       throw new Error(
         'This BasisTheory instance has been already initialized.'
       );
     }
     this._initStatus = 'in-progress';
-    this._initOptions = Object.freeze({
-      ...defaultInitOptions,
-      ...options,
-    });
-    this._tokens = new BasisTheoryTokens({
-      apiKey,
-      baseURL: SERVICES.tokens[this._initOptions.environment],
-    });
-    this._atomic = new BasisTheoryAtomic({
-      apiKey,
-      baseURL: SERVICES.atomic[this._initOptions.environment],
-    });
-    this._applications = new BasisTheoryApplications({
-      apiKey,
-      baseURL: SERVICES.applications[this._initOptions.environment],
-    });
-    this._encryption = new BasisTheoryEncryption();
+    try {
+      this._initOptions = Object.freeze({
+        ...defaultInitOptions,
+        ...options,
+      });
+      this._tokens = new BasisTheoryTokens({
+        apiKey,
+        baseURL: SERVICES.tokens[this._initOptions.environment],
+      });
+      this._atomic = new BasisTheoryAtomic({
+        apiKey,
+        baseURL: SERVICES.atomic[this._initOptions.environment],
+      });
+      this._applications = new BasisTheoryApplications({
+        apiKey,
+        baseURL: SERVICES.applications[this._initOptions.environment],
+      });
+      this._encryption = new BasisTheoryEncryption();
 
-    if (this._initOptions.elements) {
-      await this.loadElements(apiKey);
+      if (this._initOptions.elements) {
+        await this.loadElements(apiKey);
+      }
+      this._initStatus = 'done';
+    } catch (e) {
+      this._initStatus = 'error';
+      throw e;
     }
-    this._initStatus = 'done';
     return this;
   }
 
