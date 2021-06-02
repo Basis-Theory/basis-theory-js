@@ -4,9 +4,9 @@ import {
   privateDecrypt,
   constants,
 } from 'crypto';
-import { EncryptionAdapter, KeyPair } from './types';
+import { EncryptionAdapter, KeyPair } from '../types';
 
-export async function generateKeyPair(): Promise<KeyPair> {
+export async function generateKeys(): Promise<KeyPair> {
   const { publicKey, privateKey } = generateKeyPairSync('rsa', {
     modulusLength: 4096,
     publicKeyEncoding: {
@@ -53,7 +53,7 @@ export async function decrypt(
 
 export const nodeAdapter: EncryptionAdapter = {
   name: 'node',
-  generateKeyPair,
+  generateKeys,
   encrypt,
   decrypt,
 };

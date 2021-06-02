@@ -1,4 +1,4 @@
-import { EncryptionAdapter, KeyPair } from './types';
+import { EncryptionAdapter, KeyPair } from '../types';
 
 const signAlgorithm = {
   name: 'RSA-OAEP',
@@ -60,7 +60,7 @@ export function convertPemToBinary(
   return base64StringToArrayBuffer(encoded);
 }
 
-export async function generateKeyPair(): Promise<KeyPair> {
+export async function generateKeys(): Promise<KeyPair> {
   const keyPair = await window.crypto.subtle.generateKey(signAlgorithm, true, [
     'encrypt',
     'decrypt',
@@ -130,7 +130,7 @@ export async function decrypt(
 
 export const browserAdapter: EncryptionAdapter = {
   name: 'browser',
-  generateKeyPair,
+  generateKeys,
   encrypt,
   decrypt,
 };

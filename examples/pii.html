@@ -33,7 +33,7 @@
           { environment: 'local' } // and chosen environment
         ).then(function () {
           // Generate an ECIES key pair in a way we can access it later
-          BasisTheory.encryption.generateKeyPair().then(function (keyPair) {
+          BasisTheory.encryption.generateKeys().then(function (keyPair) {
             window.keyPair = keyPair;
           });
         });

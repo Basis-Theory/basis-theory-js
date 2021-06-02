@@ -8,6 +8,7 @@ import { BasisTheoryApplications } from './applications';
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
   elements: false,
+  encryption: {},
 };
 
 export class BasisTheory {
@@ -38,7 +39,12 @@ export class BasisTheory {
       apiKey,
       baseURL: SERVICES.applications[this._initOptions.environment],
     });
-    this._encryption = new BasisTheoryEncryption();
+
+    if (Object.keys(this._initOptions.encryption).length > 0) {
+      this._encryption = new BasisTheoryEncryption(
+        this._initOptions.encryption
+      );
+    }
 
     if (this._initOptions.elements) {
       await this.loadElements(apiKey);

@@ -7,7 +7,7 @@ describe('Encryption', () => {
 
   beforeAll(async () => {
     bt = await new BasisTheory().init('dummy-key');
-    keyPair = await bt.encryption.generateKeyPair();
+    keyPair = await bt.encryption.generateKeys();
   });
 
   it('should load different encryption adapters based on runtime environment', async () => {
