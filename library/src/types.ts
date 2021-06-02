@@ -11,38 +11,37 @@ export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
 };
 
-export type Providers = 'BROWSER' | 'AZURE';
+export type Providers = 'BROWSER' | 'NODE' | 'AZURE';
 
 export const algorithm = ['RSA', 'AES'] as const;
 
 export type Algorithm = typeof algorithm[number];
 
-export interface EncryptionProviderOptions<T extends Providers> {
+export interface EncryptionProviderOptions {
   defaultKeySize: number;
   keyExpirationInDays: number;
-  provider: T;
 }
 
 export interface AzureEncryptionOptions
-  extends EncryptionProviderOptions<'AZURE'> {
+  extends EncryptionOptions<'AZURE'>,
+    EncryptionProviderOptions {
   keyVaultName: string;
   credentials?: TokenCredential;
 }
 
-export interface EncryptionOptions<
-  T extends EncryptionProviderOptions<Q>,
-  Q extends Providers
-> {
-  provider: Q;
+export interface EncryptionOptions<T extends Providers> {
+  provider: T;
   algorithm: Algorithm;
-  options: T;
+  options: EncryptionProviderOptions;
 }
 
 export interface BasisTheoryInitOptions {
   environment?: ServiceEnvironment;
   elements?: boolean;
   encryption?: {
-    azureEncryption?: EncryptionOptions<AzureEncryptionOptions, 'AZURE'>;
+    azureEncryption?: AzureEncryptionOptions;
+    browserEncryption?: EncryptionOptions<'BROWSER'>;
+    nodeEncryption?: EncryptionOptions<'NODE'>;
   };
 }
 

@@ -1,4 +1,5 @@
-import { EncryptionAdapter, KeyPair } from '../types';
+import type { EncryptionAdapter, KeyPair } from '../types';
+import type { Algorithm } from '../../types';
 
 const signAlgorithm = {
   name: 'RSA-OAEP',
@@ -60,7 +61,7 @@ export function convertPemToBinary(
   return base64StringToArrayBuffer(encoded);
 }
 
-export async function generateKeys(): Promise<KeyPair> {
+async function generateRSAKeys(): Promise<KeyPair> {
   const keyPair = await window.crypto.subtle.generateKey(signAlgorithm, true, [
     'encrypt',
     'decrypt',
@@ -78,6 +79,20 @@ export async function generateKeys(): Promise<KeyPair> {
     publicKey: convertBinaryToPem(exportedPublic, 'PUBLIC'),
     privateKey: convertBinaryToPem(exportedPrivate, 'PRIVATE'),
   };
+}
+
+const generateKeyMap: Record<
+  Algorithm,
+  () => Promise<KeyPair | string | unknown>
+> = {
+  RSA: generateRSAKeys,
+  AES: () => Promise.resolve(),
+};
+
+export async function generateKeys(
+  algorithm: Algorithm
+): Promise<KeyPair | string | unknown> {
+  return generateKeyMap[algorithm]();
 }
 
 async function loadPublicKey(pem: string): Promise<CryptoKey> {

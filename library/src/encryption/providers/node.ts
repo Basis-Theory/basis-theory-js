@@ -5,8 +5,9 @@ import {
   constants,
 } from 'crypto';
 import { EncryptionAdapter, KeyPair } from '../types';
+import type { Algorithm } from '../../types';
 
-export async function generateKeys(): Promise<KeyPair> {
+function generateRSAKeys(): Promise<KeyPair> {
   const { publicKey, privateKey } = generateKeyPairSync('rsa', {
     modulusLength: 4096,
     publicKeyEncoding: {
@@ -18,7 +19,22 @@ export async function generateKeys(): Promise<KeyPair> {
       format: 'pem',
     },
   });
-  return { publicKey, privateKey };
+
+  return Promise.resolve({ publicKey, privateKey });
+}
+
+const generateKeyMap: Record<
+  Algorithm,
+  () => Promise<KeyPair | string | unknown>
+> = {
+  RSA: generateRSAKeys,
+  AES: () => Promise.resolve(),
+};
+
+export async function generateKeys(
+  algorithm: Algorithm
+): Promise<KeyPair | string | unknown> {
+  return generateKeyMap[algorithm]();
 }
 
 export async function encrypt(

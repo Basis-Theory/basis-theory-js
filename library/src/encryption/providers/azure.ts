@@ -19,9 +19,8 @@ let keyExpiresInDays: number;
 function init({
   azureEncryption,
 }: NonNullable<BasisTheoryInitOptions['encryption']>): void {
-  credentials =
-    azureEncryption?.options.credentials ?? new DefaultAzureCredential();
-  keyVaultUrl = `https://${azureEncryption?.options.keyVaultName}.vault.azure.net`;
+  credentials = azureEncryption?.credentials ?? new DefaultAzureCredential();
+  keyVaultUrl = `https://${azureEncryption?.keyVaultName}.vault.azure.net`;
   keySize = azureEncryption?.options.defaultKeySize ?? 2048;
   keyExpiresInDays = azureEncryption?.options.keyExpirationInDays ?? 180;
 }
@@ -36,7 +35,8 @@ async function generateRSAKeys(): Promise<KeyVaultKey> {
   const expiresOn: Date = new Date(
     notBefore.setDate(notBefore.getDate() + keyExpiresInDays)
   );
-  const rsaKey = await keyClient.createRsaKey('testing', {
+
+  return keyClient.createRsaKey('testing', {
     hsm: false,
     enabled: true,
     keyOps: ['encrypt', 'decrypt'],
@@ -44,8 +44,6 @@ async function generateRSAKeys(): Promise<KeyVaultKey> {
     notBefore,
     expiresOn,
   });
-
-  return rsaKey;
 }
 
 const generateKeyMap: Record<
