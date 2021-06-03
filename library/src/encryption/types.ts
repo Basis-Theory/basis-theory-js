@@ -2,7 +2,7 @@ import type { Algorithm, BasisTheoryInitOptions } from '../types';
 
 export interface KeyPair {
   publicKey: string;
-  privateKey?: string;
+  privateKey: string;
 }
 
 export interface EncryptionAdapter {

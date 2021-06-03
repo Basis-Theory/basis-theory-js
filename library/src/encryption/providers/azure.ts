@@ -21,8 +21,8 @@ function init({
 }: NonNullable<BasisTheoryInitOptions['encryption']>): void {
   credentials = azureEncryption?.credentials ?? new DefaultAzureCredential();
   keyVaultUrl = `https://${azureEncryption?.keyVaultName}.vault.azure.net`;
-  keySize = azureEncryption?.options.defaultKeySize ?? 2048;
-  keyExpiresInDays = azureEncryption?.options.keyExpirationInDays ?? 180;
+  keySize = azureEncryption?.options?.defaultKeySize ?? 2048;
+  keyExpiresInDays = azureEncryption?.options?.keyExpirationInDays ?? 180;
 }
 
 function getKeyClient(): KeyClient {
@@ -89,7 +89,7 @@ export async function decrypt(
 }
 
 export const azureAdapter: EncryptionAdapter = {
-  name: 'node',
+  name: 'azure',
   init,
   generateKeys,
   encrypt,

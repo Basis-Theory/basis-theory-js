@@ -22,17 +22,14 @@ export interface EncryptionProviderOptions {
   keyExpirationInDays: number;
 }
 
-export interface AzureEncryptionOptions
-  extends EncryptionOptions<'AZURE'>,
-    EncryptionProviderOptions {
+export interface AzureEncryptionOptions extends EncryptionOptions {
   keyVaultName: string;
   credentials?: TokenCredential;
 }
 
-export interface EncryptionOptions<T extends Providers> {
-  provider: T;
+export interface EncryptionOptions {
   algorithm: Algorithm;
-  options: EncryptionProviderOptions;
+  options?: EncryptionProviderOptions;
 }
 
 export interface BasisTheoryInitOptions {
@@ -40,8 +37,8 @@ export interface BasisTheoryInitOptions {
   elements?: boolean;
   encryption?: {
     azureEncryption?: AzureEncryptionOptions;
-    browserEncryption?: EncryptionOptions<'BROWSER'>;
-    nodeEncryption?: EncryptionOptions<'NODE'>;
+    browserEncryption?: EncryptionOptions;
+    nodeEncryption?: EncryptionOptions;
   };
 }
 

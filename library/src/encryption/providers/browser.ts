@@ -1,12 +1,19 @@
 import type { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm } from '../../types';
+import { BasisTheoryInitOptions } from '../../types';
 
-const signAlgorithm = {
-  name: 'RSA-OAEP',
-  modulusLength: 4096,
-  publicExponent: new Uint8Array([1, 0, 1]),
-  hash: 'SHA-256',
-};
+let signAlgorithm: RsaHashedKeyGenParams;
+
+function init({
+  browserEncryption,
+}: NonNullable<BasisTheoryInitOptions['encryption']>): void {
+  signAlgorithm = {
+    name: 'RSA-OAEP',
+    modulusLength: browserEncryption?.options?.defaultKeySize ?? 4096,
+    publicExponent: new Uint8Array([1, 0, 1]),
+    hash: 'SHA-256',
+  };
+}
 
 export function arrayBufferToBase64String(arrayBuffer: ArrayBuffer): string {
   return window.btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
@@ -125,8 +132,8 @@ export async function encrypt(
     key,
     new TextEncoder().encode(data).buffer
   );
-  const encryptedData = arrayBufferToBase64String(encrypted);
-  return encryptedData;
+
+  return arrayBufferToBase64String(encrypted);
 }
 
 export async function decrypt(
@@ -139,13 +146,14 @@ export async function decrypt(
     key,
     base64StringToArrayBuffer(data)
   );
-  const decryptedData = new TextDecoder().decode(decrypted);
-  return decryptedData;
+
+  return new TextDecoder().decode(decrypted);
 }
 
 export const browserAdapter: EncryptionAdapter = {
   name: 'browser',
   generateKeys,
+  init,
   encrypt,
   decrypt,
 };

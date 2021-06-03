@@ -6,27 +6,27 @@ import type { Algorithm, BasisTheoryInitOptions } from '../types';
 import type { KeyPair } from './types';
 
 export class BasisTheoryEncryption implements EncryptionAdapter {
-  private readonly adapter: EncryptionAdapter;
-  private readonly algorithm: Algorithm;
+  private readonly adapter: EncryptionAdapter = nodeAdapter;
+  private readonly algorithm: Algorithm = 'RSA';
 
   public constructor(
     private readonly encryptionOptions: NonNullable<
       BasisTheoryInitOptions['encryption']
     >
   ) {
-    this.algorithm = encryptionOptions.azureEncryption?.algorithm ?? 'RSA';
-    switch (encryptionOptions) {
-      case encryptionOptions.azureEncryption:
-        this.adapter = azureAdapter;
-        break;
-      case encryptionOptions.browserEncryption:
-        this.adapter = browserAdapter;
-        break;
-      case encryptionOptions.nodeEncryption:
-        this.adapter = nodeAdapter;
-        break;
-      default:
-        throw new Error('No adapter found for the provider');
+    if (encryptionOptions.azureEncryption) {
+      this.adapter = azureAdapter;
+      this.algorithm = encryptionOptions.azureEncryption?.algorithm ?? 'RSA';
+    }
+
+    if (encryptionOptions.browserEncryption) {
+      this.adapter = browserAdapter;
+      this.algorithm = encryptionOptions.browserEncryption?.algorithm ?? 'RSA';
+    }
+
+    if (encryptionOptions.nodeEncryption) {
+      this.adapter = nodeAdapter;
+      this.algorithm = encryptionOptions.nodeEncryption?.algorithm ?? 'RSA';
     }
   }
 

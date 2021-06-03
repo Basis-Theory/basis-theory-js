@@ -6,10 +6,19 @@ import {
 } from 'crypto';
 import { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm } from '../../types';
+import { BasisTheoryInitOptions } from '../../types';
+
+let keySize: number;
+
+function init({
+  nodeEncryption,
+}: NonNullable<BasisTheoryInitOptions['encryption']>): void {
+  keySize = nodeEncryption?.options?.defaultKeySize ?? 4096;
+}
 
 function generateRSAKeys(): Promise<KeyPair> {
   const { publicKey, privateKey } = generateKeyPairSync('rsa', {
-    modulusLength: 4096,
+    modulusLength: keySize,
     publicKeyEncoding: {
       type: 'spki',
       format: 'pem',
@@ -70,6 +79,7 @@ export async function decrypt(
 export const nodeAdapter: EncryptionAdapter = {
   name: 'node',
   generateKeys,
+  init,
   encrypt,
   decrypt,
 };
