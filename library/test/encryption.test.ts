@@ -6,14 +6,10 @@ describe('Encryption', () => {
   let keyPair: KeyPair;
 
   beforeAll(async () => {
-    bt = await new BasisTheory().init('dummy-key', {
-      encryption: {
-        nodeEncryption: {
-          algorithm: 'RSA',
-        },
-      },
+    bt = await new BasisTheory().init('dummy-key');
+    bt.encryption.nodeEncryption.init({
+      algorithm: 'RSA',
     });
-    bt.encryption.init();
   });
 
   it('should encrypt/decrypt string data', async () => {
@@ -23,18 +19,15 @@ describe('Encryption', () => {
       dob: '01/01/1990',
     };
 
-    keyPair = (await bt.encryption.generateKeys()) as KeyPair;
-    const encrypted = await bt.encryption.encrypt(
+    keyPair = (await bt.encryption.nodeEncryption.generateKeys()) as KeyPair;
+    const encrypted = await bt.encryption.nodeEncryption.encrypt(
       keyPair.publicKey,
       JSON.stringify(pii)
     );
 
     expect(isBase64(encrypted)).toBe(true);
-    expect(isBase64(encrypted)).toBe(true);
-    expect(isBase64(encrypted)).toBe(true);
-    expect(isBase64(encrypted)).toBe(true);
 
-    const decrypted = await bt.encryption.decrypt(
+    const decrypted = await bt.encryption.nodeEncryption.decrypt(
       keyPair.privateKey,
       encrypted
     );
@@ -44,40 +37,34 @@ describe('Encryption', () => {
 
   describe('node provider in init options', () => {
     it('should load node encryption adapter', () => {
-      expect(bt.encryption.name).toBe('node');
+      expect(bt.encryption.nodeEncryption.name).toBe('node');
     });
   });
 
   describe('azure provider in init options', () => {
     beforeAll(async () => {
-      bt = await new BasisTheory().init('dummy-key', {
-        encryption: {
-          azureEncryption: {
-            algorithm: 'RSA',
-            keyVaultName: 'dummy-vault-name',
-          },
-        },
+      bt = await new BasisTheory().init('dummy-key');
+      bt.encryption.azureEncryption.init({
+        algorithm: 'RSA',
+        keyVaultName: 'dummy-vault-name',
       });
     });
 
     it('should load azure encryption adapter', () => {
-      expect(bt.encryption.name).toBe('azure');
+      expect(bt.encryption.azureEncryption.name).toBe('azure');
     });
   });
 
   describe('browser provider in init options', () => {
     beforeAll(async () => {
-      bt = await new BasisTheory().init('dummy-key', {
-        encryption: {
-          browserEncryption: {
-            algorithm: 'RSA',
-          },
-        },
+      bt = await new BasisTheory().init('dummy-key');
+      bt.encryption.browserEncryption.init({
+        algorithm: 'RSA',
       });
     });
 
     it('should load browser encryption adapter', () => {
-      expect(bt.encryption.name).toBe('browser');
+      expect(bt.encryption.browserEncryption.name).toBe('browser');
     });
   });
 

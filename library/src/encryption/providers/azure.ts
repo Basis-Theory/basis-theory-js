@@ -5,7 +5,7 @@ import {
   KeyVaultKey,
 } from '@azure/keyvault-keys';
 import type { EncryptionAdapter, KeyPair } from '../types';
-import type { Algorithm, BasisTheoryInitOptions } from '../../types';
+import type { Algorithm, AzureEncryptionOptions } from '../../types';
 import {
   arrayBufferToBase64String,
   base64StringToArrayBuffer,
@@ -15,14 +15,14 @@ let credentials: TokenCredential;
 let keyVaultUrl: string;
 let keySize: number;
 let keyExpiresInDays: number;
+let algorithm: Algorithm;
 
-function init({
-  azureEncryption,
-}: NonNullable<BasisTheoryInitOptions['encryption']>): void {
+function init(azureEncryption: AzureEncryptionOptions): void {
   credentials = azureEncryption?.credentials ?? new DefaultAzureCredential();
   keyVaultUrl = `https://${azureEncryption?.keyVaultName}.vault.azure.net`;
   keySize = azureEncryption?.options?.defaultKeySize ?? 2048;
   keyExpiresInDays = azureEncryption?.options?.keyExpirationInDays ?? 180;
+  algorithm = azureEncryption?.algorithm ?? 'RSA';
 }
 
 function getKeyClient(): KeyClient {
@@ -54,9 +54,7 @@ const generateKeyMap: Record<
   AES: () => Promise.resolve(),
 };
 
-export async function generateKeys(
-  algorithm: Algorithm
-): Promise<KeyPair | string | unknown> {
+export async function generateKeys(): Promise<KeyPair | string | unknown> {
   return generateKeyMap[algorithm]();
 }
 

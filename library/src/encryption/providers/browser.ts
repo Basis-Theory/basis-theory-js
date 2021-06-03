@@ -1,18 +1,17 @@
 import type { EncryptionAdapter, KeyPair } from '../types';
-import type { Algorithm } from '../../types';
-import { BasisTheoryInitOptions } from '../../types';
+import type { Algorithm, EncryptionOptions } from '../../types';
 
 let signAlgorithm: RsaHashedKeyGenParams;
+let algorithm: Algorithm;
 
-function init({
-  browserEncryption,
-}: NonNullable<BasisTheoryInitOptions['encryption']>): void {
+function init(browserEncryption: EncryptionOptions): void {
   signAlgorithm = {
     name: 'RSA-OAEP',
     modulusLength: browserEncryption?.options?.defaultKeySize ?? 4096,
     publicExponent: new Uint8Array([1, 0, 1]),
     hash: 'SHA-256',
   };
+  algorithm = browserEncryption?.algorithm ?? 'RSA';
 }
 
 export function arrayBufferToBase64String(arrayBuffer: ArrayBuffer): string {
@@ -96,9 +95,7 @@ const generateKeyMap: Record<
   AES: () => Promise.resolve(),
 };
 
-export async function generateKeys(
-  algorithm: Algorithm
-): Promise<KeyPair | string | unknown> {
+export async function generateKeys(): Promise<KeyPair | string | unknown> {
   return generateKeyMap[algorithm]();
 }
 

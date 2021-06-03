@@ -1,4 +1,4 @@
-import type { Algorithm, BasisTheoryInitOptions } from '../types';
+import { AzureEncryptionOptions, EncryptionOptions } from '../types';
 
 export interface KeyPair {
   publicKey: string;
@@ -7,10 +7,8 @@ export interface KeyPair {
 
 export interface EncryptionAdapter {
   name: string;
-  generateKeys(algorithm: Algorithm): Promise<KeyPair | string | unknown>;
-  init?(
-    encryptionOptions: NonNullable<BasisTheoryInitOptions['encryption']>
-  ): void;
+  generateKeys(): Promise<KeyPair | string | unknown>;
+  init(encryptionOptions: EncryptionOptions | AzureEncryptionOptions): void;
   encrypt(encryptionKey: unknown, plainTextData: string): Promise<string>;
   decrypt(decryptionKey: unknown, cipherTextData: string): Promise<string>;
 }

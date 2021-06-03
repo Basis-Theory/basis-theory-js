@@ -5,15 +5,14 @@ import {
   constants,
 } from 'crypto';
 import { EncryptionAdapter, KeyPair } from '../types';
-import type { Algorithm } from '../../types';
-import { BasisTheoryInitOptions } from '../../types';
+import type { Algorithm, EncryptionOptions } from '../../types';
 
 let keySize: number;
+let algorithm: Algorithm;
 
-function init({
-  nodeEncryption,
-}: NonNullable<BasisTheoryInitOptions['encryption']>): void {
+function init(nodeEncryption: EncryptionOptions): void {
   keySize = nodeEncryption?.options?.defaultKeySize ?? 4096;
+  algorithm = nodeEncryption?.algorithm ?? 'RSA';
 }
 
 function generateRSAKeys(): Promise<KeyPair> {
@@ -40,9 +39,7 @@ const generateKeyMap: Record<
   AES: () => Promise.resolve(),
 };
 
-export async function generateKeys(
-  algorithm: Algorithm
-): Promise<KeyPair | string | unknown> {
+export async function generateKeys(): Promise<KeyPair | string | unknown> {
   return generateKeyMap[algorithm]();
 }
 

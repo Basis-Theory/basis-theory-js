@@ -2,38 +2,33 @@ import type { EncryptionAdapter } from './types';
 import { browserAdapter } from './providers/browser';
 import { azureAdapter } from './providers/azure';
 import { nodeAdapter } from './providers/node';
-import type { Algorithm, BasisTheoryInitOptions } from '../types';
+import type { AzureEncryptionOptions, Providers } from '../types';
 import type { KeyPair } from './types';
+import { EncryptionOptions } from '../types';
 
 export class BasisTheoryEncryption implements EncryptionAdapter {
   private readonly adapter: EncryptionAdapter = nodeAdapter;
-  private readonly algorithm: Algorithm = 'RSA';
 
-  public constructor(
-    private readonly encryptionOptions: NonNullable<
-      BasisTheoryInitOptions['encryption']
-    >
-  ) {
-    if (encryptionOptions.azureEncryption) {
-      this.adapter = azureAdapter;
-      this.algorithm = encryptionOptions.azureEncryption?.algorithm ?? 'RSA';
-    }
-
-    if (encryptionOptions.browserEncryption) {
-      this.adapter = browserAdapter;
-      this.algorithm = encryptionOptions.browserEncryption?.algorithm ?? 'RSA';
-    }
-
-    if (encryptionOptions.nodeEncryption) {
-      this.adapter = nodeAdapter;
-      this.algorithm = encryptionOptions.nodeEncryption?.algorithm ?? 'RSA';
+  public constructor(encryptionProvider: Providers) {
+    switch (encryptionProvider) {
+      case 'AZURE':
+        this.adapter = azureAdapter;
+        break;
+      case 'BROWSER':
+        this.adapter = browserAdapter;
+        break;
+      case 'NODE':
+        this.adapter = nodeAdapter;
+        break;
+      default:
+        throw new Error('No adapter found for provider');
     }
   }
 
-  public init(): void {
-    return typeof this.adapter.init === 'function'
-      ? this.adapter.init(this.encryptionOptions)
-      : undefined;
+  public init(
+    encryptionOptions: EncryptionOptions | AzureEncryptionOptions
+  ): void {
+    return this.adapter.init(encryptionOptions);
   }
 
   public get name(): string {
@@ -41,7 +36,7 @@ export class BasisTheoryEncryption implements EncryptionAdapter {
   }
 
   public async generateKeys(): Promise<KeyPair | string | unknown> {
-    return this.adapter.generateKeys(this.algorithm);
+    return this.adapter.generateKeys();
   }
 
   public async encrypt(

@@ -1,4 +1,5 @@
 import type { TokenCredential } from '@azure/identity';
+import { EncryptionAdapter } from './encryption';
 
 export type ServiceEnvironment = 'production' | 'sandbox' | 'local';
 
@@ -35,11 +36,6 @@ export interface EncryptionOptions {
 export interface BasisTheoryInitOptions {
   environment?: ServiceEnvironment;
   elements?: boolean;
-  encryption?: {
-    azureEncryption?: AzureEncryptionOptions;
-    browserEncryption?: EncryptionOptions;
-    nodeEncryption?: EncryptionOptions;
-  };
 }
 
 export interface BasisTheoryElements {
