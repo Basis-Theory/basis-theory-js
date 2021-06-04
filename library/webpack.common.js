@@ -49,5 +49,5 @@ const umd = merge(base, {
 
 module.exports = [
   umd,
-  // other configs, like `cjs` or `esm` could go here
+  // other configs like `cjs` or `esm` could go here
 ];
