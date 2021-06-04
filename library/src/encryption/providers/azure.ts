@@ -6,11 +6,8 @@ import {
 } from '@azure/keyvault-keys';
 import type { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm, AzureEncryptionOptions } from '../../types';
-import {
-  arrayBufferToBase64String,
-  base64StringToArrayBuffer,
-} from './browser';
 import { assertInit } from '../../common';
+import { arrayBufferToBase64String, base64StringToArrayBuffer } from './utils';
 
 let credentials: TokenCredential;
 let keyVaultUrl: string;
@@ -56,15 +53,12 @@ const generateKeyMap: Record<
   AES: () => Promise.resolve(),
 };
 
-export async function generateKeys(): Promise<KeyPair | string | unknown> {
+async function generateKeys(): Promise<KeyPair | string | unknown> {
   assertInit(credentials);
   return generateKeyMap[algorithm]();
 }
 
-export async function encrypt(
-  publicKey: KeyVaultKey,
-  data: string
-): Promise<string> {
+async function encrypt(publicKey: KeyVaultKey, data: string): Promise<string> {
   assertInit(credentials);
   const cryptoClient = new CryptographyClient(publicKey, credentials);
 
@@ -76,10 +70,7 @@ export async function encrypt(
   return arrayBufferToBase64String(encrypted.result.buffer);
 }
 
-export async function decrypt(
-  privateKey: KeyVaultKey,
-  data: string
-): Promise<string> {
+async function decrypt(privateKey: KeyVaultKey, data: string): Promise<string> {
   assertInit(credentials);
   const cryptoClient = new CryptographyClient(privateKey, credentials);
 

@@ -11,42 +11,49 @@ describe('Encryption', () => {
   beforeAll(async () => {
     bt = await new BasisTheory().init('dummy-key');
     bt.addEncryptionAdapter('node', nodeAdapter);
-    bt.encryption['node'].init({ algorithm: 'RSA' });
-  });
-
-  it('should encrypt/decrypt string data', async () => {
-    const pii = {
-      firstName: 'John',
-      lastName: 'Doe',
-      dob: '01/01/1990',
-    };
-
-    keyPair = (await bt.encryption['node'].generateKeys()) as KeyPair;
-    const encrypted = await bt.encryption['node'].encrypt(
-      keyPair.publicKey,
-      JSON.stringify(pii)
-    );
-
-    expect(isBase64(encrypted)).toBe(true);
-
-    const decrypted = await bt.encryption['node'].decrypt(
-      keyPair.privateKey,
-      encrypted
-    );
-
-    expect(JSON.parse(decrypted)).toStrictEqual(pii);
   });
 
   describe('node provider', () => {
-    it('should load node encryption adapter', () => {
-      expect(bt.encryption['node'].name).toBe('node');
+    describe('init has been called', () => {
+      beforeAll(() => {
+        bt.encryption['node'].init({ algorithm: 'RSA' });
+      });
+
+      it('should encrypt/decrypt string data', async () => {
+        const pii = {
+          firstName: 'John',
+          lastName: 'Doe',
+          dob: '01/01/1990',
+        };
+
+        keyPair = (await bt.encryption['node'].generateKeys()) as KeyPair;
+        const encrypted = await bt.encryption['node'].encrypt(
+          keyPair.publicKey,
+          JSON.stringify(pii)
+        );
+
+        expect(isBase64(encrypted)).toBe(true);
+
+        const decrypted = await bt.encryption['node'].decrypt(
+          keyPair.privateKey,
+          encrypted
+        );
+
+        expect(JSON.parse(decrypted)).toStrictEqual(pii);
+      });
+
+      it('should load node encryption adapter', () => {
+        expect(bt.encryption['node'].name).toBe('node');
+      });
     });
 
-    it('should throw an error when init has not been called', async () => {
-      bt.addEncryptionAdapter('someprovider', azureAdapter);
-      await expect(async () => {
-        await bt.encryption['someprovider'].generateKeys();
-      }).rejects.toThrowError();
+    describe('init has not been called', () => {
+      it('should throw an error when init has not been called', async () => {
+        bt.addEncryptionAdapter('someprovider', azureAdapter);
+        await expect(() =>
+          bt.encryption['someprovider'].generateKeys()
+        ).rejects.toThrowError();
+      });
     });
   });
 
@@ -54,21 +61,28 @@ describe('Encryption', () => {
     beforeAll(async () => {
       bt = await new BasisTheory().init('dummy-key');
       bt.addEncryptionAdapter('azure', azureAdapter);
-      bt.encryption['azure'].init({
-        algorithm: 'RSA',
-        keyVaultName: 'dummy-vault-name',
+    });
+
+    describe('init has not been called', () => {
+      it('should throw an error when init has not been called', async () => {
+        bt.addEncryptionAdapter('someprovider', azureAdapter);
+        await expect(async () =>
+          bt.encryption['someprovider'].generateKeys()
+        ).rejects.toThrowError();
       });
     });
 
-    it('should load azure encryption adapter', () => {
-      expect(bt.encryption['azure'].name).toBe('azure');
-    });
+    describe('init has been called', () => {
+      beforeAll(() => {
+        bt.encryption['azure'].init({
+          algorithm: 'RSA',
+          keyVaultName: 'dummy-vault-name',
+        });
+      });
 
-    it('should throw an error when init has not been called', async () => {
-      bt.addEncryptionAdapter('someprovider', azureAdapter);
-      await expect(async () => {
-        await bt.encryption['someprovider'].generateKeys();
-      }).rejects.toThrowError();
+      it('should load azure encryption adapter', () => {
+        expect(bt.encryption['azure'].name).toBe('azure');
+      });
     });
   });
 
@@ -76,20 +90,27 @@ describe('Encryption', () => {
     beforeAll(async () => {
       bt = await new BasisTheory().init('dummy-key');
       bt.addEncryptionAdapter('browser', browserAdapter);
-      bt.encryption['browser'].init({
-        algorithm: 'RSA',
+    });
+
+    describe('init has not been called', () => {
+      it('should throw an error when init has not been called', async () => {
+        bt.addEncryptionAdapter('someprovider', browserAdapter);
+        await expect(() =>
+          bt.encryption['someprovider'].generateKeys()
+        ).rejects.toThrowError();
       });
     });
 
-    it('should load browser encryption adapter', () => {
-      expect(bt.encryption['browser'].name).toBe('browser');
-    });
+    describe('init has been called', () => {
+      beforeAll(() => {
+        bt.encryption['browser'].init({
+          algorithm: 'RSA',
+        });
+      });
 
-    it('should throw an error when init has not been called', async () => {
-      bt.addEncryptionAdapter('someprovider', browserAdapter);
-      await expect(async () => {
-        await bt.encryption['someprovider'].generateKeys();
-      }).rejects.toThrowError();
+      it('should load browser encryption adapter', () => {
+        expect(bt.encryption['browser'].name).toBe('browser');
+      });
     });
   });
 

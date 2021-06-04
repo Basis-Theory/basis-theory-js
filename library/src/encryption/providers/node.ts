@@ -40,15 +40,12 @@ const generateKeyMap: Record<
   AES: () => Promise.resolve(),
 };
 
-export async function generateKeys(): Promise<KeyPair | string | unknown> {
+async function generateKeys(): Promise<KeyPair | string | unknown> {
   assertInit(algorithm);
   return generateKeyMap[algorithm]();
 }
 
-export async function encrypt(
-  publicKey: string,
-  data: string
-): Promise<string> {
+async function encrypt(publicKey: string, data: string): Promise<string> {
   assertInit(algorithm);
   const encrypted = publicEncrypt(
     {
@@ -61,10 +58,7 @@ export async function encrypt(
   return encrypted.toString('base64');
 }
 
-export async function decrypt(
-  privateKey: string,
-  data: string
-): Promise<string> {
+async function decrypt(privateKey: string, data: string): Promise<string> {
   assertInit(algorithm);
   const decrypted = privateDecrypt(
     {
