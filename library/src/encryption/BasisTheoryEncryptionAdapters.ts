@@ -1,27 +1,29 @@
 import { BasisTheoryEncryption } from './BasisTheoryEncryption';
-import { AzureEncryptionOptions, EncryptionOptions } from '../types';
-import { EncryptionAdapter } from './types';
+import { assertInit } from '../common';
 
 export class BasisTheoryEncryptionAdapters {
-  private _azureEncryption: BasisTheoryEncryption;
-  private _nodeEncryption: BasisTheoryEncryption;
-  private _browserEncryption: BasisTheoryEncryption;
+  private _azureEncryption: BasisTheoryEncryption | undefined;
+  private _nodeEncryption: BasisTheoryEncryption | undefined;
+  private _browserEncryption: BasisTheoryEncryption | undefined;
 
   public constructor() {
-    this._azureEncryption = new BasisTheoryEncryption('AZURE');
-    this._nodeEncryption = new BasisTheoryEncryption('NODE');
-    this._browserEncryption = new BasisTheoryEncryption('BROWSER');
+    if (typeof window === 'undefined') {
+      this._azureEncryption = new BasisTheoryEncryption('AZURE');
+      this._nodeEncryption = new BasisTheoryEncryption('NODE');
+    } else {
+      this._browserEncryption = new BasisTheoryEncryption('BROWSER');
+    }
   }
 
   public get azureEncryption(): BasisTheoryEncryption {
-    return this._azureEncryption;
+    return assertInit(this._azureEncryption);
   }
 
   public get browserEncryption(): BasisTheoryEncryption {
-    return this._browserEncryption;
+    return assertInit(this._browserEncryption);
   }
 
   public get nodeEncryption(): BasisTheoryEncryption {
-    return this._nodeEncryption;
+    return assertInit(this._nodeEncryption);
   }
 }
