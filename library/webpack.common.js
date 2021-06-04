@@ -2,7 +2,6 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const { merge } = require('webpack-merge');
 const babelConfig = require('./babel.bundle.config');
-const PeerDepsExternalsPlugin = require('peer-deps-externals-webpack-plugin');
 
 const base = {
   target: ['web', 'es6'],
@@ -31,7 +30,7 @@ const base = {
     ],
   },
 
-  plugins: [new Dotenv(), new PeerDepsExternalsPlugin()],
+  plugins: [new Dotenv()],
 
   externals: {
     '@azure/keyvault-keys': 'azure/keyvault-keys',
