@@ -48,7 +48,7 @@ const generateKeyMap: Record<
   () => Promise<KeyPair | string | unknown>
 > = {
   RSA: generateRSAKeys,
-  AES: () => Promise.resolve(),
+  AES: () => Promise.reject(),
 };
 
 async function generateKeys(): Promise<KeyPair | string | unknown> {

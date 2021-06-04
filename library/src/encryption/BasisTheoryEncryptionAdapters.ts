@@ -2,9 +2,9 @@ import { BasisTheoryEncryption } from './BasisTheoryEncryption';
 import { assertInit } from '../common';
 
 export class BasisTheoryEncryptionAdapters {
-  private _azureEncryption: BasisTheoryEncryption | undefined;
-  private _nodeEncryption: BasisTheoryEncryption | undefined;
-  private _browserEncryption: BasisTheoryEncryption | undefined;
+  private _azureEncryption?: BasisTheoryEncryption;
+  private _nodeEncryption?: BasisTheoryEncryption;
+  private _browserEncryption?: BasisTheoryEncryption;
 
   public constructor() {
     if (typeof window === 'undefined') {
