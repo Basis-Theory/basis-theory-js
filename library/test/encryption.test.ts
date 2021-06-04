@@ -67,16 +67,4 @@ describe('Encryption', () => {
       expect(bt.encryption.browserEncryption.name).toBe('browser');
     });
   });
-
-  describe('encryption provider has not been properly initialized', () => {
-    beforeAll(async () => {
-      bt = await new BasisTheory().init('dummy-key');
-    });
-
-    it('should throw an error when encryption has not been properly initialized', async () => {
-      expect(() => {
-        bt.encryption;
-      }).toThrowError();
-    });
-  });
 });

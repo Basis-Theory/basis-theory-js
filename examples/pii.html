@@ -33,9 +33,14 @@
           { environment: 'local' } // and chosen environment
         ).then(function () {
           // Generate an ECIES key pair in a way we can access it later
-          BasisTheory.encryption.generateKeys().then(function (keyPair) {
-            window.keyPair = keyPair;
+          BasisTheory.encryption.browserEncryption.init({
+            algorithm: 'RSA',
           });
+          BasisTheory.encryption.browserEncryption
+            .generateKeys()
+            .then(function (keyPair) {
+              window.keyPair = keyPair;
+            });
         });
       });
 
@@ -58,7 +63,7 @@
         });
 
         // let's encrypt the pii with our previously generated public key
-        BasisTheory.encryption
+        BasisTheory.encryption.browserEncryption
           .encrypt(window.keyPair.publicKey, JSON.stringify(pii))
           .then(function (encrypted) {
             BasisTheory.tokens.createToken(encrypted).then(function (res) {
@@ -79,7 +84,7 @@
         BasisTheory.tokens.getToken(window.token).then(function (res) {
           const data = res.data;
           // decrypt it using our local private key
-          BasisTheory.encryption
+          BasisTheory.encryption.browserEncryption
             .decrypt(window.keyPair.privateKey, data)
             .then(function (pii) {
               // display it
