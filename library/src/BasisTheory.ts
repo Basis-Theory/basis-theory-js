@@ -1,9 +1,9 @@
 import { assertInit, loadElements, SERVICES } from './common';
-import { BasisTheoryEncryption } from './encryption';
 import { BasisTheoryAtomic } from './atomic';
 import { BasisTheoryElements, BasisTheoryInitOptions } from './types';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
+import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -14,7 +14,7 @@ export class BasisTheory {
   private _initOptions?: Required<BasisTheoryInitOptions>;
   private _tokens?: BasisTheoryTokens;
   private _atomic?: BasisTheoryAtomic;
-  private _encryption?: BasisTheoryEncryption;
+  private _encryption?: BasisTheoryEncryptionAdapters;
   private _elements?: BasisTheoryElements;
   private _applications?: BasisTheoryApplications;
 
@@ -38,7 +38,8 @@ export class BasisTheory {
       apiKey,
       baseURL: SERVICES.applications[this._initOptions.environment],
     });
-    this._encryption = new BasisTheoryEncryption();
+
+    this._encryption = new BasisTheoryEncryptionAdapters();
 
     if (this._initOptions.elements) {
       await this.loadElements(apiKey);
@@ -64,7 +65,7 @@ export class BasisTheory {
     return assertInit(this._atomic);
   }
 
-  public get encryption(): BasisTheoryEncryption {
+  public get encryption(): BasisTheoryEncryptionAdapters {
     return assertInit(this._encryption);
   }
 

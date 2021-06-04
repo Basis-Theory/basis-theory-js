@@ -31,6 +31,10 @@ const base = {
   },
 
   plugins: [new Dotenv()],
+
+  externals: {
+    '@azure/keyvault-keys': 'azure/keyvault-keys',
+  },
 };
 
 const umd = merge(base, {
@@ -44,5 +48,5 @@ const umd = merge(base, {
 
 module.exports = [
   umd,
-  // other configs, like `cjs` or `esm` could go here
+  // other configs like `cjs` or `esm` could go here
 ];
