@@ -6,6 +6,7 @@ import {
 } from 'crypto';
 import { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm, EncryptionOptions } from '../../types';
+import { assertInit } from '../../common';
 
 let keySize: number;
 let algorithm: Algorithm;
@@ -40,6 +41,7 @@ const generateKeyMap: Record<
 };
 
 export async function generateKeys(): Promise<KeyPair | string | unknown> {
+  assertInit(algorithm);
   return generateKeyMap[algorithm]();
 }
 
@@ -47,6 +49,7 @@ export async function encrypt(
   publicKey: string,
   data: string
 ): Promise<string> {
+  assertInit(algorithm);
   const encrypted = publicEncrypt(
     {
       key: publicKey,
@@ -62,6 +65,7 @@ export async function decrypt(
   privateKey: string,
   data: string
 ): Promise<string> {
+  assertInit(algorithm);
   const decrypted = privateDecrypt(
     {
       key: privateKey,

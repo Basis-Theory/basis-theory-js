@@ -10,6 +10,7 @@ import {
   arrayBufferToBase64String,
   base64StringToArrayBuffer,
 } from './browser';
+import { assertInit } from '../../common';
 
 let credentials: TokenCredential;
 let keyVaultUrl: string;
@@ -30,6 +31,7 @@ function getKeyClient(): KeyClient {
 }
 
 async function generateRSAKeys(): Promise<KeyVaultKey> {
+  assertInit(credentials);
   const keyClient = getKeyClient();
   const notBefore: Date = new Date();
   const expiresOn: Date = new Date(
@@ -55,6 +57,7 @@ const generateKeyMap: Record<
 };
 
 export async function generateKeys(): Promise<KeyPair | string | unknown> {
+  assertInit(credentials);
   return generateKeyMap[algorithm]();
 }
 
@@ -62,6 +65,7 @@ export async function encrypt(
   publicKey: KeyVaultKey,
   data: string
 ): Promise<string> {
+  assertInit(credentials);
   const cryptoClient = new CryptographyClient(publicKey, credentials);
 
   const encrypted = await cryptoClient.encrypt(
@@ -76,6 +80,7 @@ export async function decrypt(
   privateKey: KeyVaultKey,
   data: string
 ): Promise<string> {
+  assertInit(credentials);
   const cryptoClient = new CryptographyClient(privateKey, credentials);
 
   const decrypted = await cryptoClient.decrypt(

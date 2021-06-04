@@ -3,7 +3,7 @@ import { BasisTheoryAtomic } from './atomic';
 import { BasisTheoryElements, BasisTheoryInitOptions } from './types';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
-import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
+import { EncryptionAdapter } from './encryption';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -14,9 +14,9 @@ export class BasisTheory {
   private _initOptions?: Required<BasisTheoryInitOptions>;
   private _tokens?: BasisTheoryTokens;
   private _atomic?: BasisTheoryAtomic;
-  private _encryption?: BasisTheoryEncryptionAdapters;
   private _elements?: BasisTheoryElements;
   private _applications?: BasisTheoryApplications;
+  private _encryptionAdapters: Record<string, EncryptionAdapter> = {};
 
   public async init(
     apiKey: string,
@@ -39,13 +39,20 @@ export class BasisTheory {
       baseURL: SERVICES.applications[this._initOptions.environment],
     });
 
-    this._encryption = new BasisTheoryEncryptionAdapters();
-
     if (this._initOptions.elements) {
       await this.loadElements(apiKey);
     }
 
     return this;
+  }
+
+  public addEncryptionAdapter(
+    providerName: string,
+    encryptionAdapter: EncryptionAdapter
+  ): Record<string, EncryptionAdapter> {
+    this._encryptionAdapters[providerName] = encryptionAdapter;
+
+    return this._encryptionAdapters;
   }
 
   private async loadElements(apiKey: string): Promise<void> {
@@ -65,8 +72,8 @@ export class BasisTheory {
     return assertInit(this._atomic);
   }
 
-  public get encryption(): BasisTheoryEncryptionAdapters {
-    return assertInit(this._encryption);
+  public get encryption(): Record<string, EncryptionAdapter> {
+    return assertInit(this._encryptionAdapters);
   }
 
   public set elements(elements: BasisTheoryElements) {

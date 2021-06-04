@@ -1,5 +1,6 @@
 import type { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm, EncryptionOptions } from '../../types';
+import { assertInit } from '../../common';
 
 let signAlgorithm: RsaHashedKeyGenParams;
 let algorithm: Algorithm;
@@ -68,6 +69,7 @@ export function convertPemToBinary(
 }
 
 async function generateRSAKeys(): Promise<KeyPair> {
+  assertInit(algorithm);
   const keyPair = await window.crypto.subtle.generateKey(signAlgorithm, true, [
     'encrypt',
     'decrypt',
@@ -96,6 +98,7 @@ const generateKeyMap: Record<
 };
 
 export async function generateKeys(): Promise<KeyPair | string | unknown> {
+  assertInit(algorithm);
   return generateKeyMap[algorithm]();
 }
 
@@ -123,6 +126,7 @@ export async function encrypt(
   publicKey: string,
   data: string
 ): Promise<string> {
+  assertInit(algorithm);
   const key = await loadPublicKey(publicKey);
   const encrypted = await window.crypto.subtle.encrypt(
     { name: signAlgorithm.name },
@@ -137,6 +141,7 @@ export async function decrypt(
   privateKey: string,
   data: string
 ): Promise<string> {
+  assertInit(algorithm);
   const key = await loadPrivateKey(privateKey);
   const decrypted = await window.crypto.subtle.decrypt(
     { name: signAlgorithm.name },
