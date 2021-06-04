@@ -16,6 +16,10 @@ export interface CreateTokenResponse {
   metadata: unknown;
 }
 
+export interface GetTokenResponse extends CreateTokenResponse {
+  data: unknown;
+}
+
 // we can disable for this next line as we are only exporting interfaces here
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export declare namespace TokensApi {

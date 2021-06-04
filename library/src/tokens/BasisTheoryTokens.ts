@@ -1,5 +1,10 @@
 import { BasisTheoryService } from '../service';
-import { CreateTokenResponse, TokenData, TokensApi } from './types';
+import {
+  CreateTokenResponse,
+  GetTokenResponse,
+  TokenData,
+  TokensApi,
+} from './types';
 import camelcaseKeys from 'camelcase-keys';
 
 export class BasisTheoryTokens extends BasisTheoryService {
@@ -16,13 +21,13 @@ export class BasisTheoryTokens extends BasisTheoryService {
     return token;
   }
 
-  public async getToken(id: string): Promise<CreateTokenResponse> {
+  public async getToken(id: string): Promise<GetTokenResponse> {
     const { data: res } = await this.client.get<TokensApi.CreateTokenResponse>(
       `/${id}`
     );
     const token = (camelcaseKeys(res, {
       deep: false,
-    }) as unknown) as CreateTokenResponse;
+    }) as unknown) as GetTokenResponse;
     return token;
   }
 
