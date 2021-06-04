@@ -39,14 +39,11 @@ const generateKeyMap: Record<
   AES: () => Promise.resolve(),
 };
 
-export async function generateKeys(): Promise<KeyPair | string | unknown> {
+async function generateKeys(): Promise<KeyPair | string | unknown> {
   return generateKeyMap[algorithm]();
 }
 
-export async function encrypt(
-  publicKey: string,
-  data: string
-): Promise<string> {
+async function encrypt(publicKey: string, data: string): Promise<string> {
   const encrypted = publicEncrypt(
     {
       key: publicKey,
@@ -58,10 +55,7 @@ export async function encrypt(
   return encrypted.toString('base64');
 }
 
-export async function decrypt(
-  privateKey: string,
-  data: string
-): Promise<string> {
+async function decrypt(privateKey: string, data: string): Promise<string> {
   const decrypted = privateDecrypt(
     {
       key: privateKey,

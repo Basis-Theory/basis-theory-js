@@ -7,7 +7,7 @@ import type { KeyPair } from './types';
 import { EncryptionOptions } from '../types';
 
 export class BasisTheoryEncryption implements EncryptionAdapter {
-  private readonly adapter: EncryptionAdapter = nodeAdapter;
+  private readonly adapter: EncryptionAdapter;
 
   public constructor(encryptionProvider: Providers) {
     switch (encryptionProvider) {
