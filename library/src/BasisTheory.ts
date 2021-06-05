@@ -1,9 +1,9 @@
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryAtomic } from './atomic';
-import { BasisTheoryElements, BasisTheoryInitOptions } from './types';
+import type { BasisTheoryElements, BasisTheoryInitOptions } from './types';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
-import { EncryptionAdapter } from './encryption';
+import type { EncryptionAdapter } from './encryption';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',

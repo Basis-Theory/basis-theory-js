@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { API_KEY_HEADER, BasisTheoryApiError } from '../common';
-import { BasisTheoryServiceOptions } from './types';
+import type { BasisTheoryServiceOptions } from './types';
 
 export abstract class BasisTheoryService<
   T extends BasisTheoryServiceOptions = BasisTheoryServiceOptions

@@ -1,5 +1,4 @@
 import type { TokenCredential } from '@azure/identity';
-import { EncryptionAdapter } from './encryption';
 
 export type ServiceEnvironment = 'production' | 'sandbox' | 'local';
 
