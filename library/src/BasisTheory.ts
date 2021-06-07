@@ -1,6 +1,10 @@
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryAtomic } from './atomic';
-import { BasisTheoryElements, BasisTheoryInitOptions } from './types';
+import type {
+  BasisTheoryElements,
+  BasisTheoryInitOptions,
+  InitStatus,
+} from './types';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
@@ -11,6 +15,7 @@ export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
 };
 
 export class BasisTheory {
+  private _initStatus: InitStatus = 'not-started';
   private _initOptions?: Required<BasisTheoryInitOptions>;
   private _tokens?: BasisTheoryTokens;
   private _atomic?: BasisTheoryAtomic;
@@ -22,29 +27,40 @@ export class BasisTheory {
     apiKey: string,
     options: BasisTheoryInitOptions = {}
   ): Promise<BasisTheory> {
-    this._initOptions = Object.freeze({
-      ...defaultInitOptions,
-      ...options,
-    });
-    this._tokens = new BasisTheoryTokens({
-      apiKey,
-      baseURL: SERVICES.tokens[this._initOptions.environment],
-    });
-    this._atomic = new BasisTheoryAtomic({
-      apiKey,
-      baseURL: SERVICES.atomic[this._initOptions.environment],
-    });
-    this._applications = new BasisTheoryApplications({
-      apiKey,
-      baseURL: SERVICES.applications[this._initOptions.environment],
-    });
-
-    this._encryption = new BasisTheoryEncryptionAdapters();
-
-    if (this._initOptions.elements) {
-      await this.loadElements(apiKey);
+    if (this._initStatus !== 'not-started' && this._initStatus !== 'error') {
+      throw new Error(
+        'This BasisTheory instance has been already initialized.'
+      );
     }
+    this._initStatus = 'in-progress';
+    try {
+      this._initOptions = Object.freeze({
+        ...defaultInitOptions,
+        ...options,
+      });
+      this._tokens = new BasisTheoryTokens({
+        apiKey,
+        baseURL: SERVICES.tokens[this._initOptions.environment],
+      });
+      this._atomic = new BasisTheoryAtomic({
+        apiKey,
+        baseURL: SERVICES.atomic[this._initOptions.environment],
+      });
+      this._applications = new BasisTheoryApplications({
+        apiKey,
+        baseURL: SERVICES.applications[this._initOptions.environment],
+      });
 
+      this._encryption = new BasisTheoryEncryptionAdapters();
+
+      if (this._initOptions.elements) {
+        await this.loadElements(apiKey);
+      }
+      this._initStatus = 'done';
+    } catch (e) {
+      this._initStatus = 'error';
+      throw e;
+    }
     return this;
   }
 

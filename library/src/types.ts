@@ -1,4 +1,5 @@
 import type { TokenCredential } from '@azure/identity';
+export type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
 export type ServiceEnvironment = 'production' | 'sandbox' | 'local';
 
