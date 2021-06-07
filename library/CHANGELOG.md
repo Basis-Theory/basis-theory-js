@@ -1,3 +1,11 @@
+# [1.0.0-alpha.14](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2021-06-07)
+
+
+### Bug Fixes
+
+* **ENG-297:** handles errors on init to allow retry ([dc36bc4](https://github.com/Basis-Theory/basis-theory-js/commit/dc36bc4693530615684d236f1836ff8ad769d4dc))
+* **ENG-297:** throw error if multiple calls to init ([8d7d704](https://github.com/Basis-Theory/basis-theory-js/commit/8d7d70416ff1d297d501c27e5d1d5ba883418498))
+
 # [1.0.0-alpha.13](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2021-06-04)
 
 
