@@ -1,3 +1,23 @@
+# [1.0.0-alpha.13](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2021-06-04)
+
+
+### Bug Fixes
+
+* **ENG-623:** fix get token return type ([b2c909d](https://github.com/Basis-Theory/basis-theory-js/commit/b2c909d1b6ea97ad1b21d2ea8e0aa779fff152d2))
+
+# [1.0.0-alpha.12](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2021-06-04)
+
+
+### Bug Fixes
+
+* **ENG-621:** adds azure provider. adds interface for multiple providers ([a591742](https://github.com/Basis-Theory/basis-theory-js/commit/a59174295916b30e69671085b336437ca8338489))
+
+
+### BREAKING CHANGES
+
+* **ENG-621:** encryption functions have been moved under properties
+of their providers
+
 # [1.0.0-alpha.11](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2021-05-12)
 
 

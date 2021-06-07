@@ -1,3 +1,4 @@
+import type { TokenCredential } from '@azure/identity';
 export type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
 export type ServiceEnvironment = 'production' | 'sandbox' | 'local';
@@ -7,10 +8,30 @@ export type ServiceUrlMap = {
 };
 
 export type Services = 'tokens' | 'atomic' | 'applications';
-
 export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
 };
+
+export type Providers = 'BROWSER' | 'NODE' | 'AZURE';
+
+export const algorithm = ['RSA', 'AES'] as const;
+
+export type Algorithm = typeof algorithm[number];
+
+export interface EncryptionProviderOptions {
+  defaultKeySize: number;
+  keyExpirationInDays: number;
+}
+
+export interface AzureEncryptionOptions extends EncryptionOptions {
+  keyVaultName: string;
+  credentials?: TokenCredential;
+}
+
+export interface EncryptionOptions {
+  algorithm: Algorithm;
+  options?: EncryptionProviderOptions;
+}
 
 export interface BasisTheoryInitOptions {
   environment?: ServiceEnvironment;
