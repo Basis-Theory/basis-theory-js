@@ -1,5 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
-import { API_KEY_HEADER, BasisTheoryApiError } from '../common';
+import {
+  API_KEY_HEADER,
+  BasisTheoryApiError,
+  transformRequestSnakeCase,
+  transformResponseCamelCase,
+} from '../common';
 import { BasisTheoryServiceOptions } from './types';
 
 export abstract class BasisTheoryService<
@@ -14,6 +19,9 @@ export abstract class BasisTheoryService<
       headers: {
         [API_KEY_HEADER]: apiKey,
       },
+      transformRequest: options.transformRequest || transformRequestSnakeCase,
+      transformResponse:
+        options.transformResponse || transformResponseCamelCase,
     });
     this.client.interceptors.response.use(
       (response) => response,

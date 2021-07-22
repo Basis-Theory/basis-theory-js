@@ -1,22 +1,29 @@
-export const applicationTypes = [
+export const APPLICATION_TYPES = [
   'server_to_server',
   'public',
   'elements',
   'management',
 ] as const;
 
-export type ApplicationType = typeof applicationTypes[number];
+export type ApplicationType = typeof APPLICATION_TYPES[number];
 
 export interface Application {
   id: string;
-  ownerId: string;
+  tenantId: string;
   name: string;
+  key?: string;
   type: ApplicationType;
+  permissions: string[];
   createdAt: string;
   modifiedAt: string;
-  permissions: string[];
-  key?: string;
 }
+
+export type CreateApplicationModel = Pick<Application, 'name' | 'type'> &
+  Partial<Pick<Application, 'permissions'>>;
+
+export type UpdateApplicationModel = Partial<
+  Pick<Application, 'name' | 'permissions'>
+>;
 
 // we can disable for this next line as we are only exporting interfaces here
 // eslint-disable-next-line @typescript-eslint/no-namespace

@@ -1,38 +1,41 @@
 import { axios } from './setup';
 import { BasisTheory } from '../src';
 import { SERVICES } from '../src/common';
+import { Chance } from 'chance';
+import type { ServiceEnvironment } from '../src/types';
 
 describe('Environments', () => {
-  it('should use sandbox environment', async () => {
-    await new BasisTheory().init('sb-key', { environment: 'sandbox' });
-    expect(axios.create).toHaveBeenCalledWith({
-      baseURL: SERVICES.tokens.sandbox,
-      headers: {
-        'X-API-KEY': 'sb-key',
-      },
-    });
-    expect(axios.create).toHaveBeenCalledWith({
-      baseURL: SERVICES.atomic.sandbox,
-      headers: {
-        'X-API-KEY': 'sb-key',
-      },
-    });
-  });
+  const chance = new Chance();
+  it('should use environment map', async () => {
+    const environment = chance.pickone([
+      'production',
+      'sandbox',
+      'local',
+    ]) as ServiceEnvironment;
 
-  it('should use local environment', async () => {
-    await new BasisTheory().init('local-key', { environment: 'local' });
-    expect(axios.create).toHaveBeenCalledWith({
-      baseURL: SERVICES.tokens.local,
+    await new BasisTheory().init('sb-key', {
+      environment,
+    });
+    const baseConfig = {
       headers: {
-        'X-API-KEY': 'local-key',
+        'X-API-KEY': 'sb-key',
       },
+      transformRequest: expect.any(Function),
+      transformResponse: expect.any(Function),
+    };
+    expect(axios.create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: SERVICES.tokens[environment],
     });
     expect(axios.create).toHaveBeenCalledWith({
-      baseURL: SERVICES.atomic.local,
-      headers: {
-        'X-API-KEY': 'local-key',
-      },
+      ...baseConfig,
+      baseURL: SERVICES.atomic[environment],
     });
+    expect(axios.create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: SERVICES.applications[environment],
+    });
+    expect(axios.create).toHaveBeenCalledTimes(3);
   });
 
   it('should throw error if not properly initialized', () => {

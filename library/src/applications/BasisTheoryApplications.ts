@@ -1,20 +1,36 @@
-import { BasisTheoryService } from '../service';
-import type { Application } from './types';
-import camelcaseKeys from 'camelcase-keys';
-import { ApplicationsApi } from './types';
+import type {
+  Application,
+  CreateApplicationModel,
+  UpdateApplicationModel,
+} from './types';
+import { BasisTheoryCRUDService } from '../service/BasisTheoryCRUDService';
+import { createRequestConfig, dataExtractor } from '../common';
+import { RequestOptions } from '../service';
 
-export class BasisTheoryApplications extends BasisTheoryService {
+export class BasisTheoryApplications extends BasisTheoryCRUDService<
+  Application,
+  CreateApplicationModel,
+  UpdateApplicationModel
+> {
+  /**
+   * @deprecated use {@link retrieveByKey} instead
+   */
   public async getApplicationByKey(): Promise<Application> {
-    const {
-      data,
-    } = await this.client.get<ApplicationsApi.GetApplicationByKeyResponse>(
-      '/key'
-    );
+    return this.retrieveByKey();
+  }
 
-    const application = (camelcaseKeys(data, {
-      deep: true,
-    }) as unknown) as Application;
+  public retrieveByKey(options?: RequestOptions): Promise<Application> {
+    return this.client
+      .get('/key', createRequestConfig(options))
+      .then(dataExtractor);
+  }
 
-    return application;
+  public regenerateKey(
+    id: string,
+    options?: RequestOptions
+  ): Promise<Application> {
+    return this.client
+      .post(`${id}/regenerate`, undefined, createRequestConfig(options))
+      .then(dataExtractor);
   }
 }
