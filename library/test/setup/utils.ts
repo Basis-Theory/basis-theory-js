@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type */
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import type { CRUD, PaginatedList } from '../../src/service';
@@ -42,7 +43,7 @@ type TestCrudParam<T, C, U> = () => {
   transformedUpdatePayload?: unknown;
 };
 
-export const testCRUD = <T, C, U>(param: TestCrudParam<T, C, U>) => {
+export const testCRUD = <T, C, U>(param: TestCrudParam<T, C, U>): void => {
   testCreate(param);
   testRetrieve(param);
   testUpdate(param);

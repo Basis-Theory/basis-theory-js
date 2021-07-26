@@ -25,10 +25,10 @@ type QueryValue =
   | (number | string)[];
 
 export interface PaginatedQuery {
-  page?: number;
-  size?: number;
   [key: string]: QueryValue;
   [key: number]: QueryValue;
+  page?: number;
+  size?: number;
 }
 
 export interface RequestOptions {

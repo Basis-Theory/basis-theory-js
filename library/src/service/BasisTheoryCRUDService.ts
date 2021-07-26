@@ -6,7 +6,6 @@ import type {
   RequestOptions,
 } from './types';
 import { createRequestConfig, dataExtractor } from '../common';
-import snakecaseKeys from 'snakecase-keys';
 import { snakeCase } from 'snake-case';
 
 export abstract class BasisTheoryCRUDService<
