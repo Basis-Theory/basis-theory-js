@@ -1,5 +1,6 @@
 import type {
   Application,
+  ApplicationQuery,
   CreateApplicationModel,
   UpdateApplicationModel,
 } from './types';
@@ -10,7 +11,8 @@ import { RequestOptions } from '../service';
 export class BasisTheoryApplications extends BasisTheoryCRUDService<
   Application,
   CreateApplicationModel,
-  UpdateApplicationModel
+  UpdateApplicationModel,
+  ApplicationQuery
 > {
   /**
    * @deprecated use {@link retrieveByKey} instead

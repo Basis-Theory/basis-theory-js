@@ -1,5 +1,5 @@
 import { BasisTheoryElements } from '../types';
-import { findScript, injectScript } from './utils';
+import { findScript, injectScript } from './script';
 
 let elementsPromise: Promise<BasisTheoryElements>;
 

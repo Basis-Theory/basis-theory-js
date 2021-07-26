@@ -30,6 +30,7 @@
     "camelcase-keys": "^6.2.2",
     "core-js": "^3.8.3",
     "process": "^0.11.10",
+    "snake-case": "^3.0.4",
     "snakecase-keys": "^3.2.1"
   },
   "devDependencies": {

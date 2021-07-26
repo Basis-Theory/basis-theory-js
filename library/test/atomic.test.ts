@@ -1,95 +1,26 @@
 import { Chance } from 'chance';
-import { axios } from './setup';
 import { BasisTheory } from '../src';
+import MockAdapter from 'axios-mock-adapter';
+import { mockServiceClient } from './setup/utils';
 
 describe('Atomic', () => {
   let bt: BasisTheory;
   let chance: Chance.Chance;
+  let client: MockAdapter;
 
   beforeAll(async () => {
-    bt = await new BasisTheory().init('dummy-key');
     chance = new Chance();
+    bt = await new BasisTheory().init(chance.string());
+    client = mockServiceClient(bt.atomic);
   });
+
   beforeEach(() => {
-    jest.clearAllMocks();
+    client.resetHandlers();
+    client.resetHistory();
   });
+
   describe('Cards', () => {
-    it('should create a new credit card with minimum required fields', async () => {
-      const creditCardInfo = {
-        number: '12345678910111213',
-        expirationMonth: 12,
-        expirationYear: 29,
-      };
-      const apiCall = axios.post.mockResolvedValueOnce({
-        data: { token: '12345' },
-      });
-      const token = await bt.atomic.storeCreditCard({
-        card: creditCardInfo,
-      });
-
-      expect(apiCall).toHaveBeenCalledWith('/cards', {
-        card: {
-          number: '12345678910111213',
-          expiration_month: 12,
-          expiration_year: 29,
-        },
-      });
-      expect(token).toEqual({ token: '12345' });
-    });
-
-    it('should create a new credit card with required + address', async () => {
-      const creditCardInfo = {
-        number: '12345678910111213',
-        expirationMonth: 12,
-        expirationYear: 29,
-      };
-      const billingDetails = {
-        address: {
-          city: 'Honolulu',
-          country: 'US',
-          line1: '123 Chill street',
-          postalCode: '11111',
-          state: 'HI',
-        },
-      };
-      const token = chance.string();
-      const apiCall = axios.post.mockImplementationOnce((url, data) => {
-        return Promise.resolve({
-          data: {
-            id: token,
-            ...data,
-          },
-        });
-      });
-      const atomicCard = await bt.atomic.storeCreditCard({
-        card: creditCardInfo,
-        billingDetails,
-      });
-
-      expect(apiCall).toHaveBeenCalledWith('/cards', {
-        card: {
-          number: '12345678910111213',
-          expiration_month: 12,
-          expiration_year: 29,
-        },
-        billing_details: {
-          address: {
-            city: 'Honolulu',
-            country: 'US',
-            line1: '123 Chill street',
-            postal_code: '11111',
-            state: 'HI',
-          },
-        },
-      });
-      expect(atomicCard).toEqual({
-        id: token,
-        card: creditCardInfo,
-        billingDetails,
-      });
-    });
-
-    it('should create a new credit card with all fields', async () => {
+    it('should create a new credit card', async () => {
       const creditCardInfo = {
         number: '12345678910111213',
         expirationMonth: 12,
@@ -109,69 +40,76 @@ describe('Atomic', () => {
           state: 'HI',
         },
       };
-      const token = chance.string();
-      const apiCall = axios.post.mockImplementationOnce((url, data) => {
-        return Promise.resolve({
-          data: {
-            id: token,
-            ...data,
-          },
-        });
+
+      client.onPost('/cards').reply(200, {
+        id: chance.string(),
+        created_at: chance.string(),
       });
-      const atomicCard = await bt.atomic.storeCreditCard({
+
+      const token = await bt.atomic.storeCreditCard({
         card: creditCardInfo,
         billingDetails,
       });
 
-      expect(apiCall).toHaveBeenCalledWith('/cards', {
-        card: {
-          number: '12345678910111213',
-          expiration_month: 12,
-          expiration_year: 29,
-          cvc: '123',
-        },
-        billing_details: {
-          name: 'John Doe',
-          email: 'john.doe@basistheory.com',
-          phone: '+12035555555',
-          address: {
-            city: 'Honolulu',
-            country: 'US',
-            line1: '123 Chill street',
-            line2: 'Unit A',
-            postal_code: '11111',
-            state: 'HI',
+      expect(client.history.post.length).toBe(1);
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          card: {
+            number: '12345678910111213',
+            expiration_month: 12,
+            expiration_year: 29,
+            cvc: '123',
           },
-        },
-      });
-      expect(atomicCard).toEqual({
-        id: token,
-        card: creditCardInfo,
-        billingDetails,
+          billing_details: {
+            name: 'John Doe',
+            email: 'john.doe@basistheory.com',
+            phone: '+12035555555',
+            address: {
+              city: 'Honolulu',
+              country: 'US',
+              line1: '123 Chill street',
+              line2: 'Unit A',
+              postal_code: '11111',
+              state: 'HI',
+            },
+          },
+        })
+      );
+      expect(token).toStrictEqual({
+        id: expect.any(String),
+        createdAt: expect.any(String),
       });
     });
   });
 
   describe('Banks', () => {
-    it('should create a new bank with required fields', async () => {
+    it('should create a new bank with all fields', async () => {
       const bankInfo = {
         accountNumber: '123456789',
         routingNumber: '12345679012',
       };
-      const apiCall = axios.post.mockResolvedValueOnce({
-        data: { token: '12345' },
+
+      client.onPost('/banks').reply(200, {
+        id: chance.string(),
+        created_at: chance.string(),
       });
       const token = await bt.atomic.storeBank({
         bank: bankInfo,
       });
 
-      expect(apiCall).toHaveBeenCalledWith('/banks', {
-        bank: {
-          account_number: '123456789',
-          routing_number: '12345679012',
-        },
+      expect(client.history.post.length).toBe(1);
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          bank: {
+            account_number: '123456789',
+            routing_number: '12345679012',
+          },
+        })
+      );
+      expect(token).toStrictEqual({
+        id: expect.any(String),
+        createdAt: expect.any(String),
       });
-      expect(token).toEqual({ token: '12345' });
     });
   });
 });

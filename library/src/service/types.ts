@@ -16,9 +16,19 @@ export interface PaginatedList<T> {
   data: T[];
 }
 
+type QueryValue =
+  | boolean
+  | number
+  | string
+  | null
+  | undefined
+  | (number | string)[];
+
 export interface PaginatedQuery {
   page?: number;
   size?: number;
+  [key: string]: QueryValue;
+  [key: number]: QueryValue;
 }
 
 export interface RequestOptions {
