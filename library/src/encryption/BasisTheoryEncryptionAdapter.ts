@@ -1,8 +1,10 @@
-import type { EncryptionAdapter } from './types';
 import { browserAdapter } from './providers/browser';
-import type { Providers } from '../types';
-import type { KeyPair } from './types';
-import { EncryptionOptions } from '../types';
+import type {
+  KeyPair,
+  Providers,
+  EncryptionOptions,
+  EncryptionAdapter,
+} from './types';
 
 /**
  * @deprecated kept for legacy purposes, soon to be removed

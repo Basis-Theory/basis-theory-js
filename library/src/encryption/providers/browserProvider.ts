@@ -1,5 +1,11 @@
-import type { AES, EncryptionKey, EncryptionProvider, KeyPair } from '../types';
-import type { Algorithm } from '../../types';
+import type {
+  AES,
+  EncryptionKey,
+  EncryptionProvider,
+  KeyPair,
+  Algorithm,
+  ProviderOptions,
+} from '../types';
 import {
   arrayBufferToBase64String,
   base64StringToArrayBuffer,
@@ -9,10 +15,10 @@ import {
 
 let signAlgorithm: RsaHashedKeyGenParams;
 
-function init(rsaKeySize?: number): void {
+function init(options?: ProviderOptions): void {
   signAlgorithm = {
     name: 'RSA-OAEP',
-    modulusLength: rsaKeySize ?? 4096,
+    modulusLength: options?.rsaKeySize ?? 4096,
     publicExponent: new Uint8Array([1, 0, 1]),
     hash: 'SHA-256',
   };
@@ -107,13 +113,6 @@ async function generateKeys(
   return generateKeyMap[algorithm]();
 }
 
-async function loadAesKey(rawKey: ArrayBuffer): Promise<CryptoKey> {
-  return await window.crypto.subtle.importKey('raw', rawKey, 'AES-GCM', true, [
-    'encrypt',
-    'decrypt',
-  ]);
-}
-
 async function loadPublicKey(pem: string): Promise<CryptoKey> {
   return await window.crypto.subtle.importKey(
     'spki',
@@ -134,15 +133,11 @@ async function loadPrivateKey(pem: string): Promise<CryptoKey> {
   );
 }
 
-async function rsaEncrypt(publicKey: string, data: string): Promise<string> {
-  const key = await loadPublicKey(publicKey);
-  const encrypted = await window.crypto.subtle.encrypt(
-    { name: signAlgorithm.name },
-    key,
-    new TextEncoder().encode(data).buffer
-  );
-
-  return arrayBufferToBase64String(encrypted);
+async function loadAesKey(rawKey: ArrayBuffer): Promise<CryptoKey> {
+  return await window.crypto.subtle.importKey('raw', rawKey, 'AES-GCM', true, [
+    'encrypt',
+    'decrypt',
+  ]);
 }
 
 async function encrypt(key: EncryptionKey, plainText: string): Promise<string> {
@@ -168,6 +163,17 @@ async function decrypt(
   } else {
     throw new Error('Algorithm not found for browser encryption provider');
   }
+}
+
+async function rsaEncrypt(publicKey: string, data: string): Promise<string> {
+  const key = await loadPublicKey(publicKey);
+  const encrypted = await window.crypto.subtle.encrypt(
+    { name: signAlgorithm.name },
+    key,
+    new TextEncoder().encode(data).buffer
+  );
+
+  return arrayBufferToBase64String(encrypted);
 }
 
 async function rsaDecrypt(privateKey: string, data: string): Promise<string> {

@@ -3,9 +3,11 @@ import type {
   EncryptionProvider,
   EncryptionKey,
   EncryptionService,
+  KeyPair,
+  Algorithm,
+  Providers,
+  ProviderOptions,
 } from './types';
-import type { Algorithm, Providers } from '../types';
-import type { KeyPair } from './types';
 import { nodeProvider } from './providers/nodeProvider';
 import { aesToString } from './providers/utils';
 import { browserProvider } from './providers/browserProvider';
@@ -26,8 +28,8 @@ export class BasisTheoryEncryptionService implements EncryptionService {
     }
   }
 
-  public init(rsaKeySize?: number): void {
-    return this.provider.init(rsaKeySize);
+  public init(options?: ProviderOptions): void {
+    return this.provider.init(options);
   }
 
   public async generateKeys(

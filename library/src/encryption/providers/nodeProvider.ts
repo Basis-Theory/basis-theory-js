@@ -7,8 +7,14 @@ import {
   createCipheriv,
   createDecipheriv,
 } from 'crypto';
-import { KeyPair, AES, EncryptionKey, EncryptionProvider } from '../types';
-import type { Algorithm } from '../../types';
+import {
+  KeyPair,
+  AES,
+  EncryptionKey,
+  EncryptionProvider,
+  ProviderOptions,
+  Algorithm,
+} from '../types';
 import { aesToString, fromAesString } from './utils';
 
 let _rsaKeySize: number;
@@ -20,8 +26,8 @@ async function randomAes(): Promise<AES> {
   });
 }
 
-function init(rsaKeySize?: number): void {
-  _rsaKeySize = rsaKeySize ?? 4096;
+function init(options?: ProviderOptions): void {
+  _rsaKeySize = options?.rsaKeySize ?? 4096;
 }
 
 async function generateAESKey(): Promise<string> {

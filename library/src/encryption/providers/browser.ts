@@ -1,5 +1,9 @@
-import type { EncryptionAdapter, KeyPair } from '../types';
-import type { Algorithm, EncryptionOptions } from '../../types';
+import type {
+  EncryptionAdapter,
+  KeyPair,
+  Algorithm,
+  EncryptionOptions,
+} from '../types';
 import { arrayBufferToBase64String, base64StringToArrayBuffer } from './utils';
 
 let signAlgorithm: RsaHashedKeyGenParams;
