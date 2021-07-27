@@ -12,7 +12,7 @@ export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
 };
 
-export type Providers = 'BROWSER' | 'NODE' | 'AZURE';
+export type Providers = 'BROWSER' | 'NODE';
 
 export const algorithm = ['RSA', 'AES'] as const;
 

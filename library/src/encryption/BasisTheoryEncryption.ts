@@ -1,55 +1,28 @@
-import type { EncryptionAdapter } from './types';
-import { browserAdapter } from './providers/browser';
-import { azureAdapter } from './providers/azure';
-import { nodeAdapter } from './providers/node';
-import type { AzureEncryptionOptions, Providers } from '../types';
-import type { KeyPair } from './types';
-import { EncryptionOptions } from '../types';
+import { BasisTheoryEncryptionService } from './BasisTheoryEncryptionService';
+import { BasisTheoryEncryptionAdapter } from './BasisTheoryEncryptionAdapter';
+import { assertInit } from '../common';
 
-export class BasisTheoryEncryption implements EncryptionAdapter {
-  private readonly adapter: EncryptionAdapter;
+export class BasisTheoryEncryption {
+  private _browserEncryption?: BasisTheoryEncryptionAdapter;
 
-  public constructor(encryptionProvider: Providers) {
-    switch (encryptionProvider) {
-      case 'AZURE':
-        this.adapter = azureAdapter;
-        break;
-      case 'BROWSER':
-        this.adapter = browserAdapter;
-        break;
-      case 'NODE':
-        this.adapter = nodeAdapter;
-        break;
-      default:
-        throw new Error('No adapter found for provider');
+  public constructor() {
+    if (typeof window !== 'undefined') {
+      this._browserEncryption = new BasisTheoryEncryptionAdapter('BROWSER');
     }
   }
 
-  public init(
-    encryptionOptions: EncryptionOptions | AzureEncryptionOptions
-  ): void {
-    return this.adapter.init(encryptionOptions);
+  public node(): BasisTheoryEncryptionService {
+    return assertInit(new BasisTheoryEncryptionService('NODE'));
   }
 
-  public get name(): string {
-    return this.adapter.name;
+  public browser(): BasisTheoryEncryptionService {
+    return assertInit(new BasisTheoryEncryptionService('BROWSER'));
   }
 
-  public async generateKeys(): Promise<KeyPair | string | unknown> {
-    return this.adapter.generateKeys();
-  }
-
-  public async encrypt(
-    encryptionKey: string,
-    plainTextData: string
-  ): Promise<string> {
-    return this.adapter.encrypt(encryptionKey, plainTextData);
-  }
-
-  public async decrypt(
-    decryptionKey: string,
-    cipherTextData: string
-  ): Promise<string> {
-    return this.adapter.decrypt(decryptionKey, cipherTextData);
+  /**
+   * @deprecated prefer to use @see browser for safer encryption
+   */
+  public get browserEncryption(): BasisTheoryEncryptionAdapter {
+    return assertInit(this._browserEncryption);
   }
 }
