@@ -14,6 +14,7 @@ module.exports = {
   ],
   plugins: [
     '@babel/proposal-class-properties',
+    'babel-plugin-transform-typescript-metadata',
     ['inline-dotenv', { unsafe: true }],
   ],
 };

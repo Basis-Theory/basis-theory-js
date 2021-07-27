@@ -1,56 +1,38 @@
-import type {
+import {
   EncryptedData,
-  EncryptionProvider,
-  EncryptionKey,
+  EncryptionFactory,
   EncryptionService,
-  KeyPair,
-  Algorithm,
-  Providers,
-  ProviderOptions,
+  ProviderKey,
 } from './types';
-import { nodeProvider } from './providers/nodeProvider';
-import { aesToString } from './providers/utils';
-import { browserProvider } from './providers/browserProvider';
+import { container, injectable } from 'tsyringe';
+import { AesEncryptionService } from './BasisTheoryAesEncryptionService';
+import { aesToString, fromAesString } from './providers/utils';
 
+@injectable()
 export class BasisTheoryEncryptionService implements EncryptionService {
-  private readonly provider: EncryptionProvider;
-
-  public constructor(encryptionProvider: Providers) {
-    switch (encryptionProvider) {
-      case 'BROWSER':
-        this.provider = browserProvider;
-        break;
-      case 'NODE':
-        this.provider = nodeProvider;
-        break;
-      default:
-        throw new Error('No adapter found for provider');
-    }
-  }
-
-  public init(options?: ProviderOptions): void {
-    return this.provider.init(options);
-  }
-
-  public async generateKeys(
-    algorithm: Algorithm
-  ): Promise<KeyPair | string | unknown> {
-    return this.provider.generateKeys(algorithm);
-  }
-
   public async encrypt(
-    key: EncryptionKey,
+    key: ProviderKey,
     plainText: string
   ): Promise<EncryptedData> {
-    const aes = await this.provider.randomAes();
-    const cekPlainText = aesToString(aes);
-    const cek: EncryptionKey = {
-      key: cekPlainText,
-      algorithm: 'AES',
-    };
+    let encryptedContent;
+    let cekPlainText;
 
-    const encryptedContent = await this.provider.encrypt(cek, plainText);
-    const encryptedCek = await this.provider.encrypt(key, cekPlainText);
+    if (key.provider === 'BROWSER') {
+      const aes = await AesEncryptionService.CreateAes('BROWSER');
+      encryptedContent = await AesEncryptionService.Encrypt(
+        aes,
+        plainText,
+        'BROWSER'
+      );
+      cekPlainText = aesToString(aes);
+    } else {
+      const aes = await AesEncryptionService.CreateAes();
+      encryptedContent = await AesEncryptionService.Encrypt(aes, plainText);
+      cekPlainText = aesToString(aes);
+    }
+
+    const factory = this.resolveFactory(key);
+    const encryptedCek = await factory.encrypt(key.providerKeyId, cekPlainText);
 
     return {
       cipherText: encryptedContent,
@@ -58,20 +40,45 @@ export class BasisTheoryEncryptionService implements EncryptionService {
         key: encryptedCek,
         algorithm: 'AES',
       },
-      kek: key,
+      kek: {
+        key: key?.keyId ?? key.providerKeyId,
+        algorithm: key.algorithm,
+      },
     };
   }
 
-  public async decrypt(
-    key: EncryptionKey,
-    data: EncryptedData
-  ): Promise<string> {
-    const cekPlainText = await this.provider.decrypt(key, data.cek.key);
-    const aesKey: EncryptionKey = {
-      key: cekPlainText,
-      algorithm: 'AES',
-    };
+  public async decrypt(key: ProviderKey, data: EncryptedData): Promise<string> {
+    const factory = this.resolveFactory(key);
+    const cekPlainText = await factory.decrypt(key.providerKeyId, data.cek.key);
+    const aes = fromAesString(cekPlainText);
 
-    return await this.provider.decrypt(aesKey, data.cipherText);
+    if (key.provider === 'BROWSER') {
+      return await AesEncryptionService.Decrypt(
+        aes,
+        data.cipherText,
+        'BROWSER'
+      );
+    }
+
+    return await AesEncryptionService.Decrypt(aes, data.cipherText);
+  }
+
+  private resolveFactory(key: ProviderKey): EncryptionFactory {
+    const factories = container.resolveAll<EncryptionFactory>(
+      'EncryptionFactory'
+    );
+
+    for (let i = 0; i < factories.length; i++) {
+      if (
+        factories[i].algorithm === key.algorithm &&
+        factories[i].provider === key.provider
+      ) {
+        return factories[i];
+      }
+    }
+
+    throw new Error(
+      'Encryption factory not found for key provider and algorithm'
+    );
   }
 }
