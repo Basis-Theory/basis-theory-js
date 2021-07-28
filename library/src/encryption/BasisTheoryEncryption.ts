@@ -9,6 +9,7 @@ import { BrowserRsaProviderKeyFactory } from './providers/browser/BrowserRsaProv
 import { BrowserAesProviderKeyFactory } from './providers/browser/BrowserAesProviderKeyFactory';
 import { BasisTheoryProviderKeyService } from './BasisTheoryProviderKeyService';
 import { BasisTheoryEncryptionService } from './BasisTheoryEncryptionService';
+import { EncryptionOptions } from './types';
 
 @registry([
   { token: 'EncryptionFactory', useToken: BrowserRsaEncryptionFactory },
@@ -20,25 +21,26 @@ import { BasisTheoryEncryptionService } from './BasisTheoryEncryptionService';
   { token: 'ProviderKeyFactory', useToken: BrowserAesProviderKeyFactory },
 ])
 export class BasisTheoryEncryption {
-  private _encryptionService: BasisTheoryEncryptionService;
-  private _providerKeyService: BasisTheoryProviderKeyService;
   private _browserEncryption?: BasisTheoryEncryptionAdapter;
 
   public constructor() {
     if (typeof window !== 'undefined') {
       this._browserEncryption = new BasisTheoryEncryptionAdapter('BROWSER');
     }
-
-    this._encryptionService = new BasisTheoryEncryptionService();
-    this._providerKeyService = new BasisTheoryProviderKeyService();
   }
 
-  public get encryptionService(): BasisTheoryEncryptionService {
-    return assertInit(this._encryptionService);
+  public encryptionService(
+    options?: EncryptionOptions
+  ): BasisTheoryEncryptionService {
+    const encryptionService = new BasisTheoryEncryptionService(options);
+    return assertInit(encryptionService);
   }
 
-  public get providerKeyService(): BasisTheoryProviderKeyService {
-    return assertInit(this._providerKeyService);
+  public providerKeyService(
+    options?: EncryptionOptions
+  ): BasisTheoryProviderKeyService {
+    const providerKeyService = new BasisTheoryProviderKeyService(options);
+    return assertInit(providerKeyService);
   }
 
   /**
