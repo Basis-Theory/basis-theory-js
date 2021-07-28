@@ -38,9 +38,9 @@ export class BasisTheoryEncryption {
     const defaultOptions: EncryptionOptions = {};
 
     if (options) {
-      container.register('EncryptionOptions', { useValue: options });
+      container.register('Options', { useValue: options });
     } else {
-      container.register('EncryptionOptions', { useValue: defaultOptions });
+      container.register('Options', { useValue: defaultOptions });
     }
 
     const encryptionService = container.resolve(BasisTheoryEncryptionService);
