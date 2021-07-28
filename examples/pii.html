@@ -71,8 +71,6 @@
           .encrypt(window.providerKey, JSON.stringify(pii))
           .then(function (encrypted) {
             BasisTheory.tokens.createToken(encrypted).then(function (res) {
-              console.log(encrypted);
-              console.log(res);
               const token = res.id;
               // save the token so we can access it later
               window.token = token;
@@ -88,11 +86,7 @@
       function showData() {
         // retrieve our token data
         BasisTheory.tokens.getToken(window.token).then(function (res) {
-          console.log(window.token);
-          console.log(res);
           const data = res.data;
-          console.log(data);
-          console.log(window.providerKey);
           // decrypt it using our local provider key
           BasisTheory.encryption
             .encryptionService()

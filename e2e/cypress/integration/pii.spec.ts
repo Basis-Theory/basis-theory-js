@@ -29,7 +29,8 @@ context('PII example', () => {
     cy.get('form').find('#last_name').type('Doe');
     cy.get('form').find('#dob').type('1990-01-01');
     cy.window()
-      .should('have.property', 'providerKey')
+      .its('providerKey')
+      .should('exist')
       .then(() => {
         cy.get('form').submit();
 
@@ -37,7 +38,7 @@ context('PII example', () => {
           cy.get('#show_data').should('be.visible');
           cy.window().should('have.property', 'token');
 
-          expect(createToken.request.body.data).to.have.property('cipherText');
+          expect(createToken.request.body.data).to.have.property('cipher_text');
           expect(createToken.request.body.data).to.have.property('cek');
           expect(createToken.request.body.data).to.have.property('kek');
 
