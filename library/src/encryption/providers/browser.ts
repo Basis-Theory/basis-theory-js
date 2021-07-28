@@ -129,6 +129,9 @@ async function decrypt(privateKey: string, data: string): Promise<string> {
   return new TextDecoder().decode(decrypted);
 }
 
+/**
+ * @deprecated soon to be removed.
+ */
 export const browserAdapter: EncryptionAdapter = {
   name: 'browser',
   generateKeys,

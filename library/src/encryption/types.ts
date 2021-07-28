@@ -1,3 +1,5 @@
+import { TokenCredential } from '@azure/identity';
+
 export type AES = { key: Buffer; IV: Buffer };
 export type Provider = 'BROWSER' | 'NODE' | 'AZURE';
 export type Algorithm = 'RSA' | 'AES';
@@ -64,11 +66,13 @@ export interface EncryptionOptions {
   rsaKeySize?: number;
 }
 
-/*
-export interface RsaKeyOptions {
-  keySize?: number;
-  keyExpirationInDays?: number;
-}*/
+/**
+ * @deprecated soon to be removed
+ */
+export interface AzureEncryptionOptions extends EncryptionAdapterOptions {
+  keyVaultName: string;
+  credentials?: TokenCredential;
+}
 
 /**
  * @deprecated soon to be removed
@@ -97,7 +101,9 @@ export interface KeyPair {
 export interface EncryptionAdapter {
   name: string;
   generateKeys(): Promise<KeyPair | string | unknown>;
-  init(encryptionOptions: EncryptionAdapterOptions): void;
+  init(
+    encryptionOptions: EncryptionAdapterOptions | AzureEncryptionOptions
+  ): void;
   encrypt(encryptionKey: unknown, plainTextData: string): Promise<string>;
   decrypt(decryptionKey: unknown, cipherTextData: string): Promise<string>;
 }

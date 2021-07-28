@@ -56,7 +56,6 @@ describe('Encryption', () => {
       expect(JSON.parse(decrypted)).toStrictEqual(pii);
     });
 
-    /*
     describe('azure provider in init options', () => {
       beforeAll(async () => {
         bt = await new BasisTheory().init('dummy-key');
@@ -69,7 +68,7 @@ describe('Encryption', () => {
       it('should load azure encryption adapter', () => {
         expect(bt.encryption.azureEncryption.name).toBe('azure');
       });
-    });*/
+    });
   } else {
     describe('browser provider in init options', () => {
       beforeAll(async () => {

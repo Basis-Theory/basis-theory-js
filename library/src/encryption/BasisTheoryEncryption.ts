@@ -24,11 +24,14 @@ import { NodeRsaProviderKeyFactory } from './providers/node/NodeRsaProviderKeyFa
   { token: 'ProviderKeyFactory', useToken: NodeRsaProviderKeyFactory },
 ])
 export class BasisTheoryEncryption {
+  private _azureEncryption?: BasisTheoryEncryptionAdapter;
   private _browserEncryption?: BasisTheoryEncryptionAdapter;
 
   public constructor() {
     if (typeof window !== 'undefined') {
       this._browserEncryption = new BasisTheoryEncryptionAdapter('BROWSER');
+    } else {
+      this._azureEncryption = new BasisTheoryEncryptionAdapter('AZURE');
     }
   }
 
@@ -67,5 +70,12 @@ export class BasisTheoryEncryption {
    */
   public get browserEncryption(): BasisTheoryEncryptionAdapter {
     return assertInit(this._browserEncryption);
+  }
+
+  /**
+   * @deprecated soon to be removed in favor of external lib
+   */
+  public get azureEncryption(): BasisTheoryEncryptionAdapter {
+    return assertInit(this._azureEncryption);
   }
 }
