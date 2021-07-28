@@ -1,7 +1,7 @@
 const common = {
   preset: 'ts-jest',
   automock: false,
-  setupFiles: ['<rootDir>/test/setup/setupJest.ts'],
+  coveragePathIgnorePatterns: ['test', 'dist', 'src/encryption/providers', 'src/encryption/BasisTheoryAesEncryptionService.ts'],
 };
 
 module.exports = {
@@ -10,19 +10,11 @@ module.exports = {
       ...common,
       displayName: 'jsdom',
       testEnvironment: './test/setup/JSDOMExtendedEnvironment.js',
-      coveragePathIgnorePatterns: [
-        'src/encryption/providers',
-        'src/encryption/BasisTheoryAesEncryptionService.ts',
-      ],
     },
     {
       ...common,
       displayName: 'node',
       testEnvironment: 'node',
-      coveragePathIgnorePatterns: [
-        'src/encryption/providers',
-        'src/encryption/BasisTheoryAesEncryptionService.ts',
-      ],
     },
   ],
   coverageThreshold: {

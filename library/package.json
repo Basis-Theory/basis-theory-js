@@ -1,6 +1,6 @@
 {
   "name": "@Basis-Theory/basis-theory-js",
-  "version": "1.0.0-alpha.14",
+  "version": "1.0.0-alpha.15",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "UNLICENSED",
   "author": "James Armstead",
@@ -32,8 +32,9 @@
     "core-js": "^3.8.3",
     "process": "^0.11.10",
     "reflect-metadata": "^0.1.13",
-    "snakecase-keys": "^3.2.1",
     "tsyringe": "^4.6.0"
+    "snake-case": "^3.0.4",
+    "snakecase-keys": "^3.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -50,6 +51,7 @@
     "@types/eccrypto": "^1.1.2",
     "@types/is-base64": "^1.1.0",
     "@types/jest": "^26.0.20",
+    "axios-mock-adapter": "^1.19.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",

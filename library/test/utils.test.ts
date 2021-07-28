@@ -1,39 +1,100 @@
-import { findScript, injectScript } from '../src/common/utils';
-import { describeif } from './setup/utils';
+import {
+  errorInterceptor,
+  dataExtractor,
+  createRequestConfig,
+} from '../src/common/utils';
+import type { AxiosResponse } from 'axios';
+import { Chance } from 'chance';
+import type { RequestOptions } from '../src/service';
+import { API_KEY_HEADER } from '../dist/common';
+import { BT_TRACE_ID_HEADER } from '../src/common';
 
-describeif(typeof window === 'object')('Utils', () => {
-  afterEach(() => {
-    document.getElementsByTagName('html')[0].innerHTML = '';
+describe('Utils', () => {
+  let chance: Chance.Chance;
+
+  beforeEach(() => {
+    chance = new Chance();
   });
 
-  it('should find existing script', () => {
-    const existingScript = document.createElement('script');
-    existingScript.src = 'source?param=1';
-    document.head.appendChild(existingScript);
-
-    expect(findScript('source')).toBe(existingScript);
+  describe('data extractor', () => {
+    it('should handle falsy data', () => {
+      expect(
+        dataExtractor((undefined as unknown) as AxiosResponse)
+      ).toBeUndefined();
+      expect(dataExtractor((null as unknown) as AxiosResponse)).toBeUndefined();
+    });
+    it('should extract data', () => {
+      expect(dataExtractor(({} as unknown) as AxiosResponse)).toBeUndefined();
+      expect(
+        dataExtractor(({ data: chance.string() } as unknown) as AxiosResponse)
+      ).toStrictEqual(expect.any(String));
+    });
   });
 
-  it('should inject script in document.head', () => {
-    const script = injectScript('source');
-
-    expect(document.head.children[0]).toBe(script);
+  describe('create request config', () => {
+    it('should handle falsy data', () => {
+      expect(createRequestConfig(undefined)).toBeUndefined();
+      expect(
+        createRequestConfig((null as unknown) as RequestOptions)
+      ).toBeUndefined();
+    });
+    it('should handle empty options', () => {
+      expect(createRequestConfig({})).toStrictEqual({
+        headers: {},
+      });
+    });
+    it('should handle options', () => {
+      expect(
+        createRequestConfig({
+          apiKey: chance.string(),
+          correlationId: chance.string(),
+        })
+      ).toStrictEqual({
+        headers: {
+          [API_KEY_HEADER]: expect.any(String),
+          [BT_TRACE_ID_HEADER]: expect.any(String),
+        },
+      });
+    });
   });
 
-  it('should inject script in document.body', () => {
-    document.head.remove();
+  describe('error interceptor', () => {
+    it('should throw BasisTheoryApiError with response status and response data', async () => {
+      const expectedError = {
+        message: 'some error message',
+        response: {
+          data: {
+            key1: 'value1',
+            key2: 'value2',
+          },
+          status: 418,
+        },
+      };
 
-    const script = injectScript('source');
+      try {
+        errorInterceptor(expectedError);
+        fail('should have thrown BasisTheoryApiError');
+      } catch (error) {
+        expect(error).toHaveProperty('name', 'BasisTheoryApiError');
+        expect(error).toHaveProperty('message', expectedError.message);
+        expect(error).toHaveProperty('status', expectedError.response.status);
+        expect(error).toHaveProperty('data', expectedError.response.data);
+      }
+    });
+    it('should throw BasisTheoryApiError with -1 for the status and an undefined for data', async () => {
+      const errorMessage = 'some error message';
 
-    expect(document.body.children[0]).toBe(script);
-  });
-
-  it("should throw error when can't inject script", () => {
-    document.head.remove();
-    document.body.remove();
-
-    expect(() => injectScript('source')).toThrowError(
-      'No <head> or <body> elements found in document.'
-    );
+      try {
+        errorInterceptor({
+          message: errorMessage,
+        });
+        fail('should have thrown BasisTheoryApiError');
+      } catch (error) {
+        expect(error).toHaveProperty('name', 'BasisTheoryApiError');
+        expect(error).toHaveProperty('message', errorMessage);
+        expect(error).toHaveProperty('status', -1);
+        expect(error).toHaveProperty('data', undefined);
+      }
+    });
   });
 });

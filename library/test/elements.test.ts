@@ -1,24 +1,17 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { mocked } from 'ts-jest/utils';
-import { assertInit, findScript, injectScript } from '../src/common/utils';
 import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
-
-jest.mock('../src/common/utils');
 
 describe('Elements', () => {
   let BasisTheory: typeof BasisTheoryType;
 
-  beforeAll(() => {
-    mocked(assertInit).mockImplementation(
-      jest.requireActual('../src/common/utils').assertInit
-    );
-  });
+  const loadModule = () => {
+    jest.resetModules();
+    ({ BasisTheory } = require('../src'));
+  };
 
   beforeEach(() => {
-    jest.isolateModules(async () => {
-      ({ BasisTheory } = require('../src'));
-    });
+    loadModule();
   });
 
   it('should not load elements with default options', async () => {
@@ -74,9 +67,13 @@ describe('Elements', () => {
     it('should reject if load elements throws error', () => {
       const message = 'load error';
 
-      mocked(findScript).mockImplementationOnce(() => {
-        throw new Error(message);
-      });
+      jest.mock('../src/common/script', () => ({
+        findScript: () => {
+          throw new Error(message);
+        },
+      }));
+
+      loadModule();
 
       expect(
         new BasisTheory().init('', { elements: true })
@@ -89,6 +86,16 @@ describe('Elements', () => {
       let errorCallback: () => void;
 
       beforeEach(() => {
+        jest.mock('../src/common/script', () => ({
+          findScript: () => {
+            const script = document.createElement('script');
+            return {
+              ...script,
+              addEventListener,
+            };
+          },
+        }));
+
         addEventListener = jest.fn((event: string, callback: () => void) => {
           if (event === 'load') {
             loadCallback = callback;
@@ -97,16 +104,10 @@ describe('Elements', () => {
           }
         });
 
-        mocked(findScript).mockImplementationOnce(() => {
-          const script = document.createElement('script');
-          return {
-            ...script,
-            addEventListener,
-          };
-        });
+        loadModule();
       });
 
-      it('should resolve successfully', () => {
+      it('should resolve successfully', async () => {
         const promise = new BasisTheory().init('', { elements: true });
 
         expect(addEventListener.mock.calls[0]).toEqual([
@@ -121,7 +122,7 @@ describe('Elements', () => {
         window.BasisTheoryElements = { init: jest.fn() };
 
         loadCallback();
-        expect(promise).resolves.toBeDefined();
+        await expect(promise).resolves.toBeDefined();
       });
 
       it('should reject when Elements can not load in window', () => {
@@ -148,7 +149,6 @@ describe('Elements', () => {
       const elementsInit = jest.fn();
 
       beforeEach(() => {
-        bt = new BasisTheory();
         addEventListener = jest.fn((event: string, callback: () => void) => {
           if (event === 'load') {
             loadCallback = callback;
@@ -157,16 +157,19 @@ describe('Elements', () => {
           }
         });
 
-        mocked(findScript).mockImplementationOnce(() => {
-          return null;
-        });
-        mocked(injectScript).mockImplementationOnce(() => {
-          const script = document.createElement('script');
-          return {
-            ...script,
-            addEventListener,
-          };
-        });
+        jest.mock('../src/common/script', () => ({
+          findScript: () => null,
+          injectScript: () => {
+            const script = document.createElement('script');
+            return {
+              ...script,
+              addEventListener,
+            };
+          },
+        }));
+
+        loadModule();
+        bt = new BasisTheory();
       });
 
       it('should resolve successfully and have elements initialized', async () => {
