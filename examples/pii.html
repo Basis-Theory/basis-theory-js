@@ -5,21 +5,26 @@
     <!-- Add BasisTheory SDK -->
     <script src="../library/dist/basis-theory-js.bundle.js"></script>
   </head>
+
   <body>
     <style>
       .header {
         grid-column: span 3;
       }
+
       .mr-1 {
         margin-right: 1em;
       }
+
       body {
         max-width: 480px;
       }
+
       .submit {
         display: flex;
         justify-content: flex-end;
       }
+
       #show_data {
         display: none;
       }
@@ -32,14 +37,12 @@
           '04ab9d12-4959-4c48-ba03-9ef722efcc5a', // pass your API Key
           { environment: 'local' } // and chosen environment
         ).then(function () {
-          // Generate an ECIES key pair in a way we can access it later
-          BasisTheory.encryption.browserEncryption.init({
-            algorithm: 'RSA',
-          });
-          BasisTheory.encryption.browserEncryption
-            .generateKeys()
-            .then(function (keyPair) {
-              window.keyPair = keyPair;
+          // Generate a browser provider key for use later
+          BasisTheory.encryption
+            .providerKeyService()
+            .getOrCreate('RSA', 'BROWSER')
+            .then(function (providerKey) {
+              window.providerKey = providerKey;
             });
         });
       });
@@ -62,9 +65,10 @@
           dob: dob,
         });
 
-        // let's encrypt the pii with our previously generated public key
-        BasisTheory.encryption.browserEncryption
-          .encrypt(window.keyPair.publicKey, JSON.stringify(pii))
+        // let's encrypt the pii with our previously generated provider key
+        BasisTheory.encryption
+          .encryptionService()
+          .encrypt(window.providerKey, JSON.stringify(pii))
           .then(function (encrypted) {
             BasisTheory.tokens.createToken(encrypted).then(function (res) {
               const token = res.id;
@@ -83,11 +87,11 @@
         // retrieve our token data
         BasisTheory.tokens.getToken(window.token).then(function (res) {
           const data = res.data;
-          // decrypt it using our local private key
-          BasisTheory.encryption.browserEncryption
-            .decrypt(window.keyPair.privateKey, data)
+          // decrypt it using our local provider key
+          BasisThepory.encryption
+            .encryptionService()
+            .decrypt(window.providerKey, data)
             .then(function (pii) {
-              // display it
               alert(JSON.parse(pii));
             });
         });

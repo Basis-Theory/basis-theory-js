@@ -29,7 +29,7 @@ context('PII example', () => {
     cy.get('form').find('#last_name').type('Doe');
     cy.get('form').find('#dob').type('1990-01-01');
     cy.window()
-      .its('keyPair')
+      .its('providerKey')
       .should('exist')
       .then(() => {
         cy.get('form').submit();
