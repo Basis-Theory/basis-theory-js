@@ -54,8 +54,20 @@ context('PII example', () => {
                 );
               });
               cy.wait('@getToken').then((getToken) => {
-                expect(getToken.response.body.data).to.equal(
-                  createToken.request.body.data
+                expect(getToken.response.body.data.cipherText).to.equal(
+                  createToken.request.body.data.cipherText
+                );
+                expect(getToken.response.body.data.cek.key).to.equal(
+                  createToken.request.body.data.cek.key
+                );
+                expect(getToken.response.body.data.cek.algorithm).to.equal(
+                  createToken.request.body.data.cek.algorithm
+                );
+                expect(getToken.response.body.data.kek.key).to.equal(
+                  createToken.request.body.data.kek.key
+                );
+                expect(getToken.response.body.data.kek.algorithm).to.equal(
+                  createToken.request.body.data.kek.algorithm
                 );
               });
             });
