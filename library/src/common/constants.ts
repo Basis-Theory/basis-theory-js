@@ -19,3 +19,5 @@ export const SERVICES: ServicesMap = {
 };
 
 export const API_KEY_HEADER = 'X-API-KEY';
+
+export const BT_TRACE_ID_HEADER = 'bt-trace-id';

@@ -30,6 +30,7 @@
     "camelcase-keys": "^6.2.2",
     "core-js": "^3.8.3",
     "process": "^0.11.10",
+    "snake-case": "^3.0.4",
     "snakecase-keys": "^3.2.1"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
     "@types/eccrypto": "^1.1.2",
     "@types/is-base64": "^1.1.0",
     "@types/jest": "^26.0.20",
+    "axios-mock-adapter": "^1.19.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "chance": "^1.1.7",

@@ -56,10 +56,9 @@
         // extract data from form elements
         const number = document.getElementById('card_number').value;
         const name = document.getElementById('holder_name').value;
-        const expiration_month = document.getElementById('expiration_month')
+        const expirationMonth = document.getElementById('expiration_month')
           .value;
-        const expiration_year = document.getElementById('expiration_year')
-          .value;
+        const expirationYear = document.getElementById('expiration_year').value;
         const cvc = document.getElementById('cvc').value;
         const email = document.getElementById('email').value;
         const phone = document.getElementById('phone').value;
@@ -67,7 +66,7 @@
         const line2 = document.getElementById('line2').value;
         const city = document.getElementById('city').value;
         const state = document.getElementById('state').value;
-        const postal_code = document.getElementById('postal_code').value;
+        const postalCode = document.getElementById('postal_code').value;
         const country = document.getElementById('country').value;
 
         const address = {
@@ -75,7 +74,7 @@
           line2,
           city,
           state,
-          postal_code,
+          postalCode,
           country,
         };
 
@@ -84,11 +83,11 @@
         const paymentInfo = {
           card: {
             number,
-            expiration_month,
-            expiration_year,
+            expirationMonth,
+            expirationYear,
             cvc,
           },
-          billing_details: {
+          billingDetails: {
             name,
             email: email || undefined,
             phone: phone || undefined,

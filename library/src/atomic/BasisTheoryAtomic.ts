@@ -2,22 +2,13 @@ import camelcaseKeys from 'camelcase-keys';
 import snakecaseKeys from 'snakecase-keys';
 import { BasisTheoryService } from '../service';
 import { AtomicBank, AtomicCard, PaymentsApi } from './types';
+import { dataExtractor } from '../common';
 
 export class BasisTheoryAtomic extends BasisTheoryService {
   public async storeCreditCard(
     source: Omit<AtomicCard, 'id'>
   ): Promise<AtomicCard> {
-    const payload: PaymentsApi.SourceCardModel = snakecaseKeys(source, {
-      deep: true,
-    });
-    const { data } = await this.client.post<PaymentsApi.SourceCardResponse>(
-      '/cards',
-      payload
-    );
-    const newCard = (camelcaseKeys(data, {
-      deep: true,
-    }) as unknown) as AtomicCard;
-    return newCard;
+    return this.client.post<AtomicCard>('/cards', source).then(dataExtractor);
   }
 
   public async storeBank(source: Omit<AtomicBank, 'id'>): Promise<AtomicBank> {
