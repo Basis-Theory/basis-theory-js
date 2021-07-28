@@ -1,3 +1,16 @@
+# [1.0.0-alpha.15](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2021-07-28)
+
+
+### Bug Fixes
+
+* delete return type and tests ([9a86020](https://github.com/Basis-Theory/basis-theory-js/commit/9a860204e967db5045f0063ed353b09d5e991087))
+
+
+### Features
+
+* add full applications client ([d8b2c1a](https://github.com/Basis-Theory/basis-theory-js/commit/d8b2c1ab6075c9299b686f4d29a847505257319d))
+* wip add applications crud service and refactor axios mock ([03a2d2b](https://github.com/Basis-Theory/basis-theory-js/commit/03a2d2bd66fce2ccb894a4bd745cef4e592674bd))
+
 # [1.0.0-alpha.14](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2021-06-07)
 
 
