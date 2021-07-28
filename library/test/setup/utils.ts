@@ -285,10 +285,7 @@ export const testDelete = <T, C, U>(param: TestCrudParam<T, C, U>) => {
       created_at: createdAt,
     });
 
-    expect(await service.delete(id)).toStrictEqual({
-      id,
-      createdAt,
-    });
+    expect(await service.delete(id)).toBeUndefined();
     expect(client.history.delete.length).toBe(1);
     expect(client.history.delete[0].headers).toMatchObject({
       [API_KEY_HEADER]: expect.any(String),
@@ -309,10 +306,7 @@ export const testDelete = <T, C, U>(param: TestCrudParam<T, C, U>) => {
         apiKey,
         correlationId,
       })
-    ).toStrictEqual({
-      id,
-      createdAt,
-    });
+    ).toBeUndefined();
     expect(client.history.delete.length).toBe(1);
     expect(client.history.delete[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
