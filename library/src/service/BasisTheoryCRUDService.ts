@@ -38,10 +38,8 @@ export abstract class BasisTheoryCRUDService<
       .then(dataExtractor);
   }
 
-  public delete(id: string, options?: RequestOptions): Promise<T> {
-    return this.client
-      .delete(id, createRequestConfig(options))
-      .then(dataExtractor);
+  public async delete(id: string, options?: RequestOptions): Promise<void> {
+    await this.client.delete(id, createRequestConfig(options));
   }
 
   public list(

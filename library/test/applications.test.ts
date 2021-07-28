@@ -104,19 +104,13 @@ describe('Applications', () => {
     });
 
     it('should reject with status >= 400 <= 599', async () => {
-      const status = chance.integer({
-        min: 400,
-        max: 599,
-      });
+      const status = errorStatus();
 
       client.onGet('/key').reply(status);
 
       const promise = bt.applications.retrieveByKey();
 
-      await expect(promise).rejects.toMatchObject({
-        name: 'BasisTheoryApiError',
-        status,
-      });
+      await expectBasisTheoryApiError(promise, status);
     });
   });
 

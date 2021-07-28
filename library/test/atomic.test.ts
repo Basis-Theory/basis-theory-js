@@ -41,7 +41,7 @@ describe('Atomic', () => {
         },
       };
 
-      client.onPost('/cards').reply(200, {
+      client.onPost('/cards').reply(201, {
         id: chance.string(),
         created_at: chance.string(),
       });
@@ -89,7 +89,7 @@ describe('Atomic', () => {
         routingNumber: '12345679012',
       };
 
-      client.onPost('/banks').reply(200, {
+      client.onPost('/banks').reply(201, {
         id: chance.string(),
         created_at: chance.string(),
       });

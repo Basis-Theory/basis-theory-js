@@ -20,7 +20,7 @@ describe('Tokens', () => {
   });
 
   it('should create a new token', async () => {
-    client.onPost('/').reply(200, {
+    client.onPost('/').reply(201, {
       id: chance.string(),
       tenant_id: chance.string(),
       created_at: chance.string(),

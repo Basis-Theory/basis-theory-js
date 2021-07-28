@@ -65,7 +65,7 @@ export const testCreate = <T, C, U>(param: TestCrudParam<T, C, U>) => {
     } = param();
     const createdAt = chance.string();
 
-    client.onPost('/').reply(200, {
+    client.onPost('/').reply(201, {
       ...transformedCreatePayload,
       created_at: createdAt,
     });
@@ -93,7 +93,7 @@ export const testCreate = <T, C, U>(param: TestCrudParam<T, C, U>) => {
     } = param();
     const createdAt = chance.string();
 
-    client.onPost('/').reply(200, {
+    client.onPost('/').reply(201, {
       ...transformedCreatePayload,
       created_at: createdAt,
     });

@@ -45,6 +45,6 @@ export interface CRUD<
   create(payload: C, options?: RequestOptions): Promise<T>;
   retrieve(id: string, options?: RequestOptions): Promise<T>;
   update(id: string, payload: U, options?: RequestOptions): Promise<T>;
-  delete(id: string, options?: RequestOptions): Promise<T>;
+  delete(id: string, options?: RequestOptions): Promise<void>;
   list(query?: Q, options?: RequestOptions): Promise<PaginatedList<T>>;
 }
