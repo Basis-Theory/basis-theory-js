@@ -97,7 +97,7 @@ async function browserAesDecrypt(
 }
 
 async function nodeAesEncrypt(aes: AES, plainText: string): Promise<string> {
-  const algorithm = 'aes-256-gcm';
+  const algorithm = 'aes-256-cbc';
   const cipher = createCipheriv(algorithm, aes.key, aes.IV);
 
   let encrypted = cipher.update(plainText, 'utf-8', 'base64');
@@ -107,9 +107,8 @@ async function nodeAesEncrypt(aes: AES, plainText: string): Promise<string> {
 }
 
 async function nodeAesDecrypt(aes: AES, cipherText: string): Promise<string> {
-  const algorithm = 'aes-256-gcm';
+  const algorithm = 'aes-256-cbc';
   const decipher = createDecipheriv(algorithm, aes.key, aes.IV);
-
   let decrypted = decipher.update(cipherText, 'base64', 'utf-8');
   decrypted += decipher.final('utf-8');
 

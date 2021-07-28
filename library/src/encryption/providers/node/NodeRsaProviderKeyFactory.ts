@@ -1,4 +1,5 @@
 import { generateKeyPairSync } from 'crypto';
+import { injectable } from 'tsyringe';
 import {
   Algorithm,
   EncryptionOptions,
@@ -8,6 +9,7 @@ import {
 } from '../../types';
 import { rsaToString } from '../../utils';
 
+@injectable()
 export class NodeRsaProviderKeyFactory implements ProviderKeyFactory {
   public provider: Provider = 'NODE';
   public algorithm: Algorithm = 'RSA';

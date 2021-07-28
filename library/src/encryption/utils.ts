@@ -1,17 +1,21 @@
 import { AES, KeyPair } from './types';
 
 export function arrayBufferToBase64String(arrayBuffer: ArrayBuffer): string {
-  return window.btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+  return Buffer.from(arrayBuffer).toString('base64');
 }
 
 export function base64StringToArrayBuffer(b64str: string): ArrayBuffer {
-  const binary = window.atob(b64str);
+  /*
+  const binary = atob(b64str);
+
   const len = binary.length;
   const bytes = new Uint8Array(len);
   for (let i = 0; i < len; i++) {
     bytes[i] = binary.charCodeAt(i);
   }
-  return bytes.buffer;
+  return bytes.buffer;*/
+
+  return Buffer.from(b64str, 'base64');
 }
 
 export function aesToString(aes: AES): string {

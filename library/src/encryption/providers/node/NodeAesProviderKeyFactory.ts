@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { AesEncryptionService } from '../../BasisTheoryAesEncryptionService';
 import {
   Algorithm,
@@ -7,6 +8,7 @@ import {
 } from '../../types';
 import { aesToString } from '../../utils';
 
+@injectable()
 export class NodeAesProviderKeyFactory implements ProviderKeyFactory {
   public provider: Provider = 'NODE';
   public algorithm: Algorithm = 'AES';

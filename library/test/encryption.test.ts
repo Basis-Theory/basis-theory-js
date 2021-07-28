@@ -1,47 +1,62 @@
-import { BasisTheory, KeyPair } from '../src';
+import { BasisTheory, ProviderKey } from '../src';
 import isBase64 from 'is-base64';
 
 describe('Encryption', () => {
   let bt: BasisTheory;
-  let keyPair: KeyPair;
+  let key: ProviderKey;
 
   if (typeof window === 'undefined') {
     beforeAll(async () => {
       bt = await new BasisTheory().init('dummy-key');
-      bt.encryption.nodeEncryption.init({
-        algorithm: 'RSA',
-      });
     });
 
-    it('should encrypt/decrypt string data', async () => {
+    it('should encrypt/decrypt string data with node RSA', async () => {
       const pii = {
         firstName: 'John',
         lastName: 'Doe',
         dob: '01/01/1990',
       };
 
-      keyPair = (await bt.encryption.nodeEncryption.generateKeys()) as KeyPair;
-      const encrypted = await bt.encryption.nodeEncryption.encrypt(
-        keyPair.publicKey,
-        JSON.stringify(pii)
-      );
+      key = (await bt.encryption
+        .providerKeyService()
+        .getOrCreate('RSA', 'NODE')) as ProviderKey;
+      const encrypted = await bt.encryption
+        .encryptionService()
+        .encrypt(key, JSON.stringify(pii));
 
-      expect(isBase64(encrypted)).toBe(true);
+      expect(isBase64(encrypted.cipherText)).toBe(true);
 
-      const decrypted = await bt.encryption.nodeEncryption.decrypt(
-        keyPair.privateKey,
-        encrypted
-      );
+      const decrypted = await bt.encryption
+        .encryptionService()
+        .decrypt(key, encrypted);
 
       expect(JSON.parse(decrypted)).toStrictEqual(pii);
     });
 
-    describe('node provider in init options', () => {
-      it('should load node encryption adapter', () => {
-        expect(bt.encryption.nodeEncryption.name).toBe('node');
-      });
+    it('should encrypt/decrypt string data with node AES', async () => {
+      const pii = {
+        firstName: 'John',
+        lastName: 'Doe',
+        dob: '01/01/1990',
+      };
+
+      key = (await bt.encryption
+        .providerKeyService()
+        .getOrCreate('AES', 'NODE')) as ProviderKey;
+      const encrypted = await bt.encryption
+        .encryptionService()
+        .encrypt(key, JSON.stringify(pii));
+
+      expect(isBase64(encrypted.cipherText)).toBe(true);
+
+      const decrypted = await bt.encryption
+        .encryptionService()
+        .decrypt(key, encrypted);
+
+      expect(JSON.parse(decrypted)).toStrictEqual(pii);
     });
 
+    /*
     describe('azure provider in init options', () => {
       beforeAll(async () => {
         bt = await new BasisTheory().init('dummy-key');
@@ -54,7 +69,7 @@ describe('Encryption', () => {
       it('should load azure encryption adapter', () => {
         expect(bt.encryption.azureEncryption.name).toBe('azure');
       });
-    });
+    });*/
   } else {
     describe('browser provider in init options', () => {
       beforeAll(async () => {

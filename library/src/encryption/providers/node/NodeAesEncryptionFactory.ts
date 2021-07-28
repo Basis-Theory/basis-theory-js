@@ -1,13 +1,15 @@
 import { createCipheriv, createDecipheriv } from 'crypto';
+import { injectable } from 'tsyringe';
 import { Algorithm, EncryptionFactory, Provider } from '../../types';
 import { fromAesString } from '../../utils';
 
+@injectable()
 export class NodeAesEncryptionFactory implements EncryptionFactory {
   public provider: Provider = 'NODE';
   public algorithm: Algorithm = 'AES';
 
   public async encrypt(keyId: string, plainText: string): Promise<string> {
-    const algorithm = 'aes-256-gcm';
+    const algorithm = 'aes-256-cbc';
     const aesKey = fromAesString(keyId);
     const cipher = createCipheriv(algorithm, aesKey.key, aesKey.IV);
 
@@ -18,7 +20,7 @@ export class NodeAesEncryptionFactory implements EncryptionFactory {
   }
 
   public async decrypt(keyId: string, cipherText: string): Promise<string> {
-    const algorithm = 'aes-256-gcm';
+    const algorithm = 'aes-256-cbc';
     const aesKey = fromAesString(keyId);
     const decipher = createDecipheriv(algorithm, aesKey.key, aesKey.IV);
 

@@ -5,17 +5,13 @@ import {
   EncryptionService,
   ProviderKey,
 } from './types';
-import { container, injectable } from 'tsyringe';
+import { container, inject, singleton } from 'tsyringe';
 import { AesEncryptionService } from './BasisTheoryAesEncryptionService';
 import { aesToString, fromAesString } from './utils';
 
-@injectable()
+@singleton()
 export class BasisTheoryEncryptionService implements EncryptionService {
-  private readonly _options: EncryptionOptions | undefined;
-
-  public constructor(options?: EncryptionOptions) {
-    this._options = options;
-  }
+  public constructor(@inject('Options') private options?: EncryptionOptions) {}
 
   public async encrypt(
     key: ProviderKey,
@@ -41,11 +37,11 @@ export class BasisTheoryEncryptionService implements EncryptionService {
     const factory = this.resolveFactory(key);
     let encryptedCek;
 
-    if (this._options !== undefined) {
+    if (this.options !== undefined) {
       encryptedCek = await factory.encrypt(
         key.providerKeyId,
         cekPlainText,
-        this._options
+        this.options
       );
     } else {
       encryptedCek = await factory.encrypt(key.providerKeyId, cekPlainText);
@@ -68,11 +64,11 @@ export class BasisTheoryEncryptionService implements EncryptionService {
     const factory = this.resolveFactory(key);
     let cekPlainText;
 
-    if (this._options !== undefined) {
+    if (this.options !== undefined) {
       cekPlainText = await factory.decrypt(
         key.providerKeyId,
         data.cek.key,
-        this._options
+        this.options
       );
     } else {
       cekPlainText = await factory.decrypt(key.providerKeyId, data.cek.key);

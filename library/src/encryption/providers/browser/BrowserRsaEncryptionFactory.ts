@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { getBrowserSignAlgorithm } from '../../BasisTheoryAesEncryptionService';
 import {
   Algorithm,
@@ -11,6 +12,7 @@ import {
   arrayBufferToBase64String,
 } from '../../utils';
 
+@injectable()
 export class BrowserRsaEncryptionFactory implements EncryptionFactory {
   public provider: Provider = 'BROWSER';
   public algorithm: Algorithm = 'RSA';

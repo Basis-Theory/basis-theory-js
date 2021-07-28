@@ -1,4 +1,4 @@
-import { injectable, container } from 'tsyringe';
+import { singleton, inject, container } from 'tsyringe';
 import {
   Algorithm,
   Provider,
@@ -8,13 +8,9 @@ import {
   ProviderKeyFactory,
 } from './types';
 
-@injectable()
+@singleton()
 export class BasisTheoryProviderKeyService implements ProviderKeyService {
-  private readonly _options: EncryptionOptions | undefined;
-
-  public constructor(options?: EncryptionOptions) {
-    this._options = options;
-  }
+  public constructor(@inject('Options') private options?: EncryptionOptions) {}
 
   public async getOrCreate(
     algorithm: Algorithm,
@@ -22,7 +18,7 @@ export class BasisTheoryProviderKeyService implements ProviderKeyService {
     name?: string
   ): Promise<ProviderKey> {
     const factory = this.resolveFactory(algorithm, provider);
-    return factory.create(name, this._options);
+    return factory.create(name, this.options);
   }
 
   private resolveFactory(

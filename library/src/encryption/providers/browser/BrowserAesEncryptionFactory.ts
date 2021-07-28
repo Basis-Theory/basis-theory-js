@@ -5,7 +5,9 @@ import {
   base64StringToArrayBuffer,
 } from '../../utils';
 import { loadBrowserAesKey } from '../../BasisTheoryAesEncryptionService';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export class BrowserAesEncryptionFactory implements EncryptionFactory {
   public provider: Provider = 'BROWSER';
   public algorithm: Algorithm = 'AES';
