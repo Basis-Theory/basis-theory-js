@@ -8,7 +8,7 @@ import { registry } from 'tsyringe';
 import { BrowserRsaProviderKeyFactory } from './providers/browser/BrowserRsaProviderKeyFactory';
 import { BrowserAesProviderKeyFactory } from './providers/browser/BrowserAesProviderKeyFactory';
 import { BasisTheoryProviderKeyService } from './BasisTheoryProviderKeyService';
-import { BTEncryptionService } from './BasisTheoryEncryptionService';
+import { BasisTheoryEncryptionService } from './BasisTheoryEncryptionService';
 
 @registry([
   { token: 'EncryptionFactory', useToken: BrowserRsaEncryptionFactory },
@@ -20,7 +20,7 @@ import { BTEncryptionService } from './BasisTheoryEncryptionService';
   { token: 'ProviderKeyFactory', useToken: BrowserAesProviderKeyFactory },
 ])
 export class BasisTheoryEncryption {
-  private _encryptionService: BTEncryptionService;
+  private _encryptionService: BasisTheoryEncryptionService;
   private _providerKeyService: BasisTheoryProviderKeyService;
   private _browserEncryption?: BasisTheoryEncryptionAdapter;
 
@@ -29,11 +29,11 @@ export class BasisTheoryEncryption {
       this._browserEncryption = new BasisTheoryEncryptionAdapter('BROWSER');
     }
 
-    this._encryptionService = new BTEncryptionService();
+    this._encryptionService = new BasisTheoryEncryptionService();
     this._providerKeyService = new BasisTheoryProviderKeyService();
   }
 
-  public get encryptionService(): BTEncryptionService {
+  public get encryptionService(): BasisTheoryEncryptionService {
     return assertInit(this._encryptionService);
   }
 

@@ -3,7 +3,7 @@ import {
   fromAesString,
   arrayBufferToBase64String,
   base64StringToArrayBuffer,
-} from '../utils';
+} from '../../utils';
 import { loadBrowserAesKey } from '../../BasisTheoryAesEncryptionService';
 
 export class BrowserAesEncryptionFactory implements EncryptionFactory {

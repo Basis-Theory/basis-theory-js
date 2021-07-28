@@ -1,9 +1,9 @@
 import { createCipheriv, createDecipheriv } from 'crypto';
-import { Algorithm, EncryptionFactory, Providers } from '../../types';
-import { fromAesString } from '../utils';
+import { Algorithm, EncryptionFactory, Provider } from '../../types';
+import { fromAesString } from '../../utils';
 
 export class NodeAesEncryptionFactory implements EncryptionFactory {
-  public provider: Providers = 'NODE';
+  public provider: Provider = 'NODE';
   public algorithm: Algorithm = 'AES';
 
   public async encrypt(keyId: string, plainText: string): Promise<string> {

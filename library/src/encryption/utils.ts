@@ -1,4 +1,4 @@
-import { AES } from './types';
+import { AES, KeyPair } from './types';
 
 export function arrayBufferToBase64String(arrayBuffer: ArrayBuffer): string {
   return window.btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
@@ -20,13 +20,25 @@ export function aesToString(aes: AES): string {
   )}`;
 }
 
-export function rsaToString(
-  publicKey: ArrayBuffer,
-  privateKey: ArrayBuffer
+export function rsaBufferToString(
+  pubKey: ArrayBuffer,
+  privKey: ArrayBuffer
 ): string {
-  return `${arrayBufferToBase64String(publicKey)}.${arrayBufferToBase64String(
-    privateKey
+  return `${arrayBufferToBase64String(pubKey)}.${arrayBufferToBase64String(
+    privKey
   )}`;
+}
+
+export function rsaToString(pubKey: string, privKey: string): string {
+  return `${pubKey}.${privKey}`;
+}
+
+export function rsaToKeyPair(rsaString: string): KeyPair {
+  const parts = rsaString.split('.');
+  return {
+    publicKey: parts[0],
+    privateKey: parts[1],
+  };
 }
 
 export function fromAesString(aesString: string): AES {

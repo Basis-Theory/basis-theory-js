@@ -1,26 +1,23 @@
 import { getBrowserSignAlgorithm } from '../../BasisTheoryAesEncryptionService';
 import {
   Algorithm,
+  EncryptionOptions,
   Provider,
   ProviderKey,
   ProviderKeyFactory,
-  RsaKeyOptions,
 } from '../../types';
-import { rsaToString } from '../../utils';
+import { rsaBufferToString } from '../../utils';
 
-@injectable()
 export class BrowserRsaProviderKeyFactory implements ProviderKeyFactory {
   public provider: Provider = 'BROWSER';
   public algorithm: Algorithm = 'RSA';
-  private readonly _rsaOptions: RsaKeyOptions;
 
-  public constructor(options: RsaKeyOptions) {
-    this._rsaOptions = options;
-  }
-
-  public async create(name?: string): Promise<ProviderKey> {
+  public async create(
+    name?: string,
+    options?: EncryptionOptions
+  ): Promise<ProviderKey> {
     const keyPair = await window.crypto.subtle.generateKey(
-      getBrowserSignAlgorithm(this._rsaOptions.keySize),
+      getBrowserSignAlgorithm(options?.rsaKeySize),
       true,
       ['encrypt', 'decrypt']
     );
@@ -33,7 +30,7 @@ export class BrowserRsaProviderKeyFactory implements ProviderKeyFactory {
       keyPair.privateKey
     );
 
-    const keyId = rsaToString(exportedPublic, exportedPrivate);
+    const keyId = rsaBufferToString(exportedPublic, exportedPrivate);
 
     return {
       name: name ?? 'rsaKeyPair',

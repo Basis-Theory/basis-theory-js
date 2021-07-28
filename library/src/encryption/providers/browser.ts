@@ -2,14 +2,14 @@ import type {
   EncryptionAdapter,
   KeyPair,
   Algorithm,
-  EncryptionOptions,
+  EncryptionAdapterOptions,
 } from '../types';
-import { arrayBufferToBase64String, base64StringToArrayBuffer } from './utils';
+import { arrayBufferToBase64String, base64StringToArrayBuffer } from '../utils';
 
 let signAlgorithm: RsaHashedKeyGenParams;
 let algorithm: Algorithm;
 
-function init(browserEncryption: EncryptionOptions): void {
+function init(browserEncryption: EncryptionAdapterOptions): void {
   signAlgorithm = {
     name: 'RSA-OAEP',
     modulusLength: browserEncryption?.options?.defaultKeySize ?? 4096,

@@ -5,7 +5,7 @@ import {
   ProviderKey,
   ProviderKeyFactory,
 } from '../../types';
-import { aesToString } from '../utils';
+import { aesToString } from '../../utils';
 
 export class BrowserAesProviderKeyFactory implements ProviderKeyFactory {
   public provider: Provider = 'BROWSER';

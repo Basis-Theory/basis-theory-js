@@ -1,8 +1,8 @@
 import { browserAdapter } from './providers/browser';
 import type {
   KeyPair,
-  Providers,
-  EncryptionOptions,
+  Provider,
+  EncryptionAdapterOptions,
   EncryptionAdapter,
 } from './types';
 
@@ -12,7 +12,7 @@ import type {
 export class BasisTheoryEncryptionAdapter implements EncryptionAdapter {
   private readonly adapter: EncryptionAdapter;
 
-  public constructor(encryptionProvider: Providers) {
+  public constructor(encryptionProvider: Provider) {
     switch (encryptionProvider) {
       case 'BROWSER':
         this.adapter = browserAdapter;
@@ -22,7 +22,7 @@ export class BasisTheoryEncryptionAdapter implements EncryptionAdapter {
     }
   }
 
-  public init(encryptionOptions: EncryptionOptions): void {
+  public init(encryptionOptions: EncryptionAdapterOptions): void {
     return this.adapter.init(encryptionOptions);
   }
 

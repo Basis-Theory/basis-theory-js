@@ -2,23 +2,26 @@ import { getBrowserSignAlgorithm } from '../../BasisTheoryAesEncryptionService';
 import {
   Algorithm,
   EncryptionFactory,
+  EncryptionOptions,
   Provider,
-  RsaKeyOptions,
 } from '../../types';
-import { arrayBufferToBase64String, base64StringToArrayBuffer } from '../utils';
+import {
+  rsaToKeyPair,
+  base64StringToArrayBuffer,
+  arrayBufferToBase64String,
+} from '../../utils';
 
-@injectable()
 export class BrowserRsaEncryptionFactory implements EncryptionFactory {
   public provider: Provider = 'BROWSER';
   public algorithm: Algorithm = 'RSA';
-  private readonly _rsaOptions: RsaKeyOptions;
 
-  public constructor(options: RsaKeyOptions) {
-    this._rsaOptions = options;
-  }
-
-  public async encrypt(keyId: string, plainText: string): Promise<string> {
-    const key = await this.loadPublicKey(keyId);
+  public async encrypt(
+    keyId: string,
+    plainText: string,
+    options?: EncryptionOptions
+  ): Promise<string> {
+    const keyPair = rsaToKeyPair(keyId);
+    const key = await this.loadPublicKey(keyPair.publicKey, options);
     const encrypted = await window.crypto.subtle.encrypt(
       { name: 'RSA-OAEP' },
       key,
@@ -27,8 +30,13 @@ export class BrowserRsaEncryptionFactory implements EncryptionFactory {
     return arrayBufferToBase64String(encrypted);
   }
 
-  public async decrypt(keyId: string, cipherText: string): Promise<string> {
-    const key = await this.loadPrivateKey(keyId);
+  public async decrypt(
+    keyId: string,
+    cipherText: string,
+    options?: EncryptionOptions
+  ): Promise<string> {
+    const keyPair = rsaToKeyPair(keyId);
+    const key = await this.loadPrivateKey(keyPair.privateKey, options);
     const decrypted = await window.crypto.subtle.decrypt(
       { name: 'RSA-OAEP' },
       key,
@@ -38,21 +46,27 @@ export class BrowserRsaEncryptionFactory implements EncryptionFactory {
     return new TextDecoder().decode(decrypted);
   }
 
-  private async loadPublicKey(pem: string): Promise<CryptoKey> {
+  private async loadPublicKey(
+    pem: string,
+    options?: EncryptionOptions
+  ): Promise<CryptoKey> {
     return await window.crypto.subtle.importKey(
       'spki',
       this.pemToBinary(pem, 'PUBLIC'),
-      getBrowserSignAlgorithm(this._rsaOptions.keySize),
+      getBrowserSignAlgorithm(options?.rsaKeySize ?? 4096),
       true,
       ['encrypt']
     );
   }
 
-  private async loadPrivateKey(pem: string): Promise<CryptoKey> {
+  private async loadPrivateKey(
+    pem: string,
+    options?: EncryptionOptions
+  ): Promise<CryptoKey> {
     return window.crypto.subtle.importKey(
       'pkcs8',
       this.pemToBinary(pem, 'PRIVATE'),
-      getBrowserSignAlgorithm(this._rsaOptions.keySize),
+      getBrowserSignAlgorithm(options?.rsaKeySize ?? 4096),
       true,
       ['decrypt']
     );

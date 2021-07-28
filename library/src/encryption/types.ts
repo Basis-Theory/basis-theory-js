@@ -28,9 +28,9 @@ export interface ProviderOptions {
 
 export interface ProviderKeyService {
   getOrCreate(
-    name: string,
     algorithm: Algorithm,
-    provider: Provider
+    provider: Provider,
+    name?: string
   ): Promise<ProviderKey>;
 }
 
@@ -42,20 +42,33 @@ export interface EncryptionService {
 export interface EncryptionFactory {
   provider: Provider;
   algorithm: Algorithm;
-  encrypt(keyId: string, plainText: string): Promise<string>;
-  decrypt(keyId: string, cipherText: string): Promise<string>;
+  encrypt(
+    keyId: string,
+    plainText: string,
+    options?: EncryptionOptions
+  ): Promise<string>;
+  decrypt(
+    keyId: string,
+    cipherText: string,
+    options?: EncryptionOptions
+  ): Promise<string>;
 }
 
 export interface ProviderKeyFactory {
   provider: Provider;
   algorithm: Algorithm;
-  create(name?: string): Promise<ProviderKey>;
+  create(name?: string, options?: EncryptionOptions): Promise<ProviderKey>;
 }
 
+export interface EncryptionOptions {
+  rsaKeySize?: number;
+}
+
+/*
 export interface RsaKeyOptions {
   keySize?: number;
   keyExpirationInDays?: number;
-}
+}*/
 
 /**
  * @deprecated soon to be removed
@@ -73,9 +86,6 @@ export interface EncryptionProviderOptions {
   keyExpirationInDays: number;
 }
 
-/**
- * @deprecated soon to be removed
- */
 export interface KeyPair {
   publicKey: string;
   privateKey: string;
