@@ -61,7 +61,7 @@ export class BasisTheoryEncryption {
       container.register('Options', { useValue: defaultOptions });
     }
 
-    const providerKeyService = new BasisTheoryProviderKeyService(options);
+    const providerKeyService = container.resolve(BasisTheoryProviderKeyService);
     return assertInit(providerKeyService);
   }
 
