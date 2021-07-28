@@ -37,7 +37,9 @@ context('PII example', () => {
           cy.get('#show_data').should('be.visible');
           cy.window().should('have.property', 'token');
 
-          expect(createToken.request.body.data).to.be.a('string');
+          expect(createToken.request.body.data).to.have.property('cipherText');
+          expect(createToken.request.body.data).to.have.property('cek');
+          expect(createToken.request.body.data).to.have.property('kek');
 
           cy.get('#show_data')
             .click()
