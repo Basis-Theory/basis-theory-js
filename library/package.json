@@ -32,7 +32,7 @@
     "core-js": "^3.8.3",
     "process": "^0.11.10",
     "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.6.0"
+    "tsyringe": "^4.6.0",
     "snake-case": "^3.0.4",
     "snakecase-keys": "^3.2.1"
   },
