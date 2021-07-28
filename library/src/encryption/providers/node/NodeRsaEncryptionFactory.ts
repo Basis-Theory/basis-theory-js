@@ -2,6 +2,7 @@ import { publicEncrypt, privateDecrypt, constants } from 'crypto';
 import { injectable } from 'tsyringe';
 import { Algorithm, EncryptionFactory, Provider } from '../../types';
 import { rsaToKeyPair } from '../../utils';
+import { Buffer } from 'buffer';
 
 @injectable()
 export class NodeRsaEncryptionFactory implements EncryptionFactory {

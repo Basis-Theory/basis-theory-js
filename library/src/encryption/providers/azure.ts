@@ -7,6 +7,7 @@ import {
 import type { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm, AzureEncryptionOptions } from '../types';
 import { arrayBufferToBase64String, base64StringToArrayBuffer } from '../utils';
+import { Buffer } from 'buffer';
 
 let credentials: TokenCredential;
 let keyVaultUrl: string;

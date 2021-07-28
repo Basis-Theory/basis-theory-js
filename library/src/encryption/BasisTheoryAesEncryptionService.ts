@@ -1,6 +1,7 @@
 import { randomBytes, createCipheriv, createDecipheriv } from 'crypto';
 import { AES, Provider } from './types';
 import { arrayBufferToBase64String, base64StringToArrayBuffer } from './utils';
+import { Buffer } from 'buffer';
 
 type AesProvider = Exclude<Provider, 'AZURE'>;
 export class AesEncryptionService {
