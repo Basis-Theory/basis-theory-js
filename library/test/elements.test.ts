@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import type { BasisTheory as BasisTheoryType } from '../src';
+import { Chance } from 'chance';
 import { describeif } from './setup/utils';
 
 describe('Elements', () => {
+  let chance: Chance.Chance;
   let BasisTheory: typeof BasisTheoryType;
 
   const loadModule = () => {
@@ -11,6 +13,7 @@ describe('Elements', () => {
   };
 
   beforeEach(() => {
+    chance = new Chance();
     loadModule();
   });
 
@@ -83,7 +86,7 @@ describe('Elements', () => {
     describe('with a previously loaded script', () => {
       let addEventListener: jest.Mock<void>;
       let loadCallback: () => void;
-      let errorCallback: () => void;
+      let errorCallback: (event?: unknown) => void;
 
       beforeEach(() => {
         jest.mock('../src/common/script', () => ({
@@ -133,12 +136,19 @@ describe('Elements', () => {
         );
       });
 
-      it('should reject when Elements throw error', () => {
+      it('should reject when Elements throw unknown error', () => {
         const promise = new BasisTheory().init('', { elements: true });
         errorCallback();
         expect(promise).rejects.toThrowError(
-          'There was an error when loading BasisTheoryElements'
+          'There was an unknown error when loading BasisTheoryElements'
         );
+      });
+
+      it('should reject when Elements throw error', () => {
+        const message = chance.string();
+        const promise = new BasisTheory().init('', { elements: true });
+        errorCallback({ error: new Error(message) });
+        expect(promise).rejects.toThrowError(message);
       });
     });
 

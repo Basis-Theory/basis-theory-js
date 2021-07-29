@@ -67,6 +67,7 @@ export class BasisTheory {
   private async loadElements(apiKey: string): Promise<void> {
     const elements = await loadElements();
     await elements.init(apiKey, this.initOptions.environment);
+    this.elements = elements;
   }
 
   public get initOptions(): Required<BasisTheoryInitOptions> {

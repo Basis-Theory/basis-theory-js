@@ -34,9 +34,12 @@ export const loadElements = (): Promise<BasisTheoryElements> => {
           }
         });
 
-        script.addEventListener('error', () => {
+        script.addEventListener('error', (event) => {
           reject(
-            new Error('There was an error when loading BasisTheoryElements')
+            event?.error ||
+              new Error(
+                'There was an unknown error when loading BasisTheoryElements'
+              )
           );
         });
       } catch (error) {
