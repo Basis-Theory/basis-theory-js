@@ -1,3 +1,10 @@
+# [1.0.0-alpha.16](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2021-08-02)
+
+
+### Bug Fixes
+
+* add dependency resolutions ([90874cf](https://github.com/Basis-Theory/basis-theory-js/commit/90874cf7309ae86682e04b869d7169621b633423))
+
 # [1.0.0-alpha.15](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2021-07-28)
 
 
