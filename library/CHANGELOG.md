@@ -1,3 +1,10 @@
+# [1.0.0-alpha.17](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2021-08-03)
+
+
+### Bug Fixes
+
+* bubble script load error ([2ae67a5](https://github.com/Basis-Theory/basis-theory-js/commit/2ae67a5b11e696c6248974eb1e6caa765c45a56f))
+
 # [1.0.0-alpha.16](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2021-08-02)
 
 
