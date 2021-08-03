@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type */
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import type { CRUD, PaginatedList } from '../../src/service';
+import type { PaginatedList } from '../../src/service';
 import { API_KEY_HEADER, transformRequestSnakeCase } from '../../src/common';
 import { BT_TRACE_ID_HEADER } from '../../src/common';
 import { PaginatedQuery } from '../../src/service';
+import {
+  ICreate,
+  IDelete,
+  IList,
+  IRetrieve,
+  IUpdate,
+} from '../../src/service/CrudBuilder';
 
 export const describeif = (condition: boolean): typeof describe =>
   condition ? describe : describe.skip;
@@ -28,14 +35,20 @@ export const expectBasisTheoryApiError = <T>(
     status,
   });
 
-type TestCrudParam<T, C, U> = () => {
-  service: CRUD<T, C, U>;
+type TestParam<S> = {
+  service: S;
   client: MockAdapter;
+};
+
+type TestCreateParam<T, C> = TestParam<ICreate<T, C>> & {
   createPayload: C;
   /**
    * @default snake case transformed {@link createPayload}
    */
   transformedCreatePayload?: unknown;
+};
+
+type TestUpdateParam<T, U> = TestParam<IUpdate<T, U>> & {
   updatePayload: U;
   /**
    * @default snake case transformed {@link updatePayload}
@@ -43,7 +56,19 @@ type TestCrudParam<T, C, U> = () => {
   transformedUpdatePayload?: unknown;
 };
 
-export const testCRUD = <T, C, U>(param: TestCrudParam<T, C, U>): void => {
+type TestRetrieveParam<T> = TestParam<IRetrieve<T>>;
+
+type TestDeleteParam = TestParam<IDelete>;
+
+type TestListParam<T> = TestParam<IList<T, PaginatedQuery>>;
+
+export const testCRUD = <T, C, U>(
+  param: () => TestCreateParam<T, C> &
+    TestRetrieveParam<T> &
+    TestUpdateParam<T, U> &
+    TestDeleteParam &
+    TestListParam<T>
+): void => {
   testCreate(param);
   testRetrieve(param);
   testUpdate(param);
@@ -51,7 +76,7 @@ export const testCRUD = <T, C, U>(param: TestCrudParam<T, C, U>): void => {
   testList(param);
 };
 
-export const testCreate = <T, C, U>(param: TestCrudParam<T, C, U>) => {
+export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
   const chance = new Chance();
   const correlationId = chance.string();
   const apiKey = chance.string();
@@ -130,7 +155,7 @@ export const testCreate = <T, C, U>(param: TestCrudParam<T, C, U>) => {
   });
 };
 
-export const testRetrieve = <T, C, U>(param: TestCrudParam<T, C, U>) => {
+export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -192,7 +217,7 @@ export const testRetrieve = <T, C, U>(param: TestCrudParam<T, C, U>) => {
   });
 };
 
-export const testUpdate = <T, C, U>(param: TestCrudParam<T, C, U>) => {
+export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -270,7 +295,7 @@ export const testUpdate = <T, C, U>(param: TestCrudParam<T, C, U>) => {
   });
 };
 
-export const testDelete = <T, C, U>(param: TestCrudParam<T, C, U>) => {
+export const testDelete = (param: () => TestDeleteParam) => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -326,7 +351,7 @@ export const testDelete = <T, C, U>(param: TestCrudParam<T, C, U>) => {
   });
 };
 
-export const testList = <T, C, U>(param: TestCrudParam<T, C, U>) => {
+export const testList = <T>(param: () => TestListParam<T>) => {
   const chance = new Chance();
   const correlationId = chance.string();
   const apiKey = chance.string();

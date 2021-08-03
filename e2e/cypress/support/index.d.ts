@@ -13,5 +13,11 @@ declare namespace Cypress {
      * @param scheme
      */
     goOnline();
+
+    testCreate(serviceName: string);
+    testRetrieve(serviceName: string);
+    testUpdate(serviceName: string);
+    testDelete(serviceName: string);
+    testList(serviceName: string);
   }
 }
