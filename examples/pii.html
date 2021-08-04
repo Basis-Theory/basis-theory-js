@@ -38,9 +38,8 @@
           { environment: 'local' } // and chosen environment
         ).then(function () {
           // Generate a browser provider key for use later
-          BasisTheory.encryption
-            .providerKeyService()
-            .getOrCreate('RSA', 'BROWSER')
+          BasisTheory.encryption.providerKeyService
+            .getOrCreate('browserRsaTest', 'RSA', 'BROWSER')
             .then(function (providerKey) {
               window.providerKey = providerKey;
             });
@@ -66,8 +65,7 @@
         });
 
         // let's encrypt the pii with our previously generated provider key
-        BasisTheory.encryption
-          .encryptionService()
+        BasisTheory.encryption.encryptionService
           .encrypt(window.providerKey, JSON.stringify(pii))
           .then(function (encrypted) {
             BasisTheory.tokens.createToken(encrypted).then(function (res) {
@@ -88,8 +86,7 @@
         BasisTheory.tokens.getToken(window.token).then(function (res) {
           const data = res.data;
           // decrypt it using our local provider key
-          BasisTheory.encryption
-            .encryptionService()
+          BasisTheory.encryption.encryptionService
             .decrypt(window.providerKey, data)
             .then(function (pii) {
               alert(JSON.parse(pii));

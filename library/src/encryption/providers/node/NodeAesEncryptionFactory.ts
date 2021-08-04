@@ -1,30 +1,38 @@
-import { createCipheriv, createDecipheriv } from 'crypto';
 import { injectable } from 'tsyringe';
-import { Algorithm, EncryptionFactory, Provider } from '../../types';
-import { fromAesString } from '../../utils';
+import { createCipheriv, createDecipheriv } from 'crypto';
+import { keyIdToAes } from '../../utils';
+import { EncryptionFactory } from '../../types';
 
 @injectable()
 export class NodeAesEncryptionFactory implements EncryptionFactory {
-  public provider: Provider = 'NODE';
-  public algorithm: Algorithm = 'AES';
+  public provider = 'NODE';
+  public algorithm = 'AES';
 
-  public async encrypt(keyId: string, plainText: string): Promise<string> {
+  public async encrypt(keyId: string, plainTxt: string): Promise<string> {
     const algorithm = 'aes-256-cbc';
-    const aesKey = fromAesString(keyId);
-    const cipher = createCipheriv(algorithm, aesKey.key, aesKey.IV);
+    const aesKey = keyIdToAes(keyId);
+    const cipher = createCipheriv(
+      algorithm,
+      Buffer.from(aesKey.key),
+      Buffer.from(aesKey.iv)
+    );
 
-    let encrypted = cipher.update(plainText, 'utf-8', 'base64');
+    let encrypted = cipher.update(plainTxt, 'utf-8', 'base64');
     encrypted += cipher.final('base64');
 
     return Promise.resolve(encrypted);
   }
 
-  public async decrypt(keyId: string, cipherText: string): Promise<string> {
+  public async decrypt(keyId: string, cipherTxt: string): Promise<string> {
     const algorithm = 'aes-256-cbc';
-    const aesKey = fromAesString(keyId);
-    const decipher = createDecipheriv(algorithm, aesKey.key, aesKey.IV);
+    const aesKey = keyIdToAes(keyId);
+    const decipher = createDecipheriv(
+      algorithm,
+      Buffer.from(aesKey.key),
+      Buffer.from(aesKey.iv)
+    );
 
-    let decrypted = decipher.update(cipherText, 'base64', 'utf-8');
+    let decrypted = decipher.update(cipherTxt, 'base64', 'utf-8');
     decrypted += decipher.final('utf-8');
 
     return Promise.resolve(decrypted);

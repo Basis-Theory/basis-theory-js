@@ -1,16 +1,16 @@
 import { publicEncrypt, privateDecrypt, constants } from 'crypto';
 import { injectable } from 'tsyringe';
-import { Algorithm, EncryptionFactory, Provider } from '../../types';
-import { rsaToKeyPair } from '../../utils';
 import { Buffer } from 'buffer';
+import { EncryptionFactory } from '../../types';
+import { keyIdToRsaKeyPair } from '../../utils';
 
 @injectable()
 export class NodeRsaEncryptionFactory implements EncryptionFactory {
-  public provider: Provider = 'NODE';
-  public algorithm: Algorithm = 'RSA';
+  public provider = 'NODE';
+  public algorithm = 'RSA';
 
-  public async encrypt(keyId: string, plainText: string): Promise<string> {
-    const keyPair = rsaToKeyPair(keyId);
+  public async encrypt(keyId: string, plainTxt: string): Promise<string> {
+    const keyPair = keyIdToRsaKeyPair(keyId);
 
     const encrypted = publicEncrypt(
       {
@@ -18,13 +18,13 @@ export class NodeRsaEncryptionFactory implements EncryptionFactory {
         padding: constants.RSA_PKCS1_OAEP_PADDING,
         oaepHash: 'sha256',
       },
-      Buffer.from(plainText)
+      Buffer.from(plainTxt)
     );
     return encrypted.toString('base64');
   }
 
-  public async decrypt(keyId: string, cipherText: string): Promise<string> {
-    const keyPair = rsaToKeyPair(keyId);
+  public async decrypt(keyId: string, cipherTxt: string): Promise<string> {
+    const keyPair = keyIdToRsaKeyPair(keyId);
 
     const decrypted = privateDecrypt(
       {
@@ -32,7 +32,7 @@ export class NodeRsaEncryptionFactory implements EncryptionFactory {
         padding: constants.RSA_PKCS1_OAEP_PADDING,
         oaepHash: 'sha256',
       },
-      Buffer.from(cipherText, 'base64')
+      Buffer.from(cipherTxt, 'base64')
     );
     return decrypted.toString();
   }

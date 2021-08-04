@@ -1,29 +1,21 @@
-import { singleton, inject, container } from 'tsyringe';
-import {
-  Algorithm,
-  Provider,
-  ProviderKey,
-  ProviderKeyService,
-  EncryptionOptions,
-  ProviderKeyFactory,
-} from './types';
+import { singleton, container } from 'tsyringe';
+import { ProviderKey, ProviderKeyFactory } from './types';
 
 @singleton()
-export class BasisTheoryProviderKeyService implements ProviderKeyService {
-  public constructor(@inject('Options') private options?: EncryptionOptions) {}
-
+export class BasisTheoryProviderKeyService {
   public async getOrCreate(
-    algorithm: Algorithm,
-    provider: Provider,
-    name?: string
+    name: string,
+    algorithm: string,
+    provider: string
   ): Promise<ProviderKey> {
+    //TODO: repository stuff
     const factory = this.resolveFactory(algorithm, provider);
-    return factory.create(name, this.options);
+    return factory.create(name);
   }
 
   private resolveFactory(
-    algorithm: Algorithm,
-    provider: Provider
+    algorithm: string,
+    provider: string
   ): ProviderKeyFactory {
     const factories = container.resolveAll<ProviderKeyFactory>(
       'ProviderKeyFactory'

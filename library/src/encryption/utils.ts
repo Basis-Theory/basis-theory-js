@@ -1,47 +1,56 @@
-import { AES, KeyPair } from './types';
+import { AesKey, RsaKeyPair } from './types';
 import { Buffer } from 'buffer';
 
-export function arrayBufferToBase64String(arrayBuffer: ArrayBuffer): string {
+export function bufferToBase64(arrayBuffer: ArrayBuffer): string {
   return Buffer.from(arrayBuffer).toString('base64');
 }
 
-export function base64StringToArrayBuffer(b64str: string): ArrayBuffer {
+export function base64ToBuffer(b64str: string): ArrayBuffer {
   return Buffer.from(b64str, 'base64');
 }
 
-export function aesToString(aes: AES): string {
-  return `${arrayBufferToBase64String(aes.key)}.${arrayBufferToBase64String(
-    aes.IV
-  )}`;
-}
-
-export function rsaBufferToString(
+export function rsaBufferTokeyId(
   pubKey: ArrayBuffer,
   privKey: ArrayBuffer
 ): string {
-  return `${arrayBufferToBase64String(pubKey)}.${arrayBufferToBase64String(
-    privKey
-  )}`;
+  return `${bufferToBase64(pubKey)}.${bufferToBase64(privKey)}`;
 }
 
-export function rsaToString(pubKey: string, privKey: string): string {
+export function rsaToKeyId(pubKey: string, privKey: string): string {
   return `${pubKey}.${privKey}`;
 }
 
-export function rsaToKeyPair(rsaString: string): KeyPair {
+export function keyIdToRsaKeyPair(rsaString: string): RsaKeyPair {
   const parts = rsaString.split('.');
+
   return {
     publicKey: parts[0],
     privateKey: parts[1],
   };
 }
 
-export function fromAesString(aesString: string): AES {
-  const aesParts = aesString.split('.');
-  const aes: AES = {
-    key: Buffer.from(base64StringToArrayBuffer(aesParts[0])),
-    IV: Buffer.from(base64StringToArrayBuffer(aesParts[1])),
+export function aesToKeyId(aes: AesKey): string {
+  return `${bufferToBase64(aes.key)}.${bufferToBase64(aes.iv)}`;
+}
+
+export function keyIdToAes(aesKeyId: string): AesKey {
+  const aesParts = aesKeyId.split('.');
+
+  const aes: AesKey = {
+    key: Buffer.from(base64ToBuffer(aesParts[0])),
+    iv: Buffer.from(base64ToBuffer(aesParts[1])),
   };
 
   return aes;
+}
+
+export function getBrowserRsaParams(
+  rsaKeySize?: number
+): RsaHashedKeyGenParams {
+  return {
+    name: 'RSA-OAEP',
+    modulusLength: rsaKeySize ?? 4096,
+    publicExponent: new Uint8Array([1, 0, 1]),
+    hash: 'SHA-256',
+  };
 }

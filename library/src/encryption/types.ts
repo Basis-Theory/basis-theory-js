@@ -1,12 +1,15 @@
-import { TokenCredential } from '@azure/identity';
-
-export type AES = { key: Buffer; IV: Buffer };
-export type Provider = 'BROWSER' | 'NODE' | 'AZURE';
-export type Algorithm = 'RSA' | 'AES';
+export interface AesKey {
+  key: ArrayBuffer;
+  iv: ArrayBuffer;
+}
+export interface RsaKeyPair {
+  publicKey: string;
+  privateKey: string;
+}
 
 export interface EncryptionKey {
   key: string;
-  algorithm: Algorithm;
+  alg: string;
 }
 
 export interface EncryptedData {
@@ -18,92 +21,25 @@ export interface EncryptedData {
 export interface ProviderKey {
   keyId?: string;
   name: string;
-  provider: Provider;
+  provider: string;
   providerKeyId: string;
-  algorithm: Algorithm;
+  algorithm: string;
   expirationDate?: Date;
-}
-
-export interface ProviderOptions {
-  rsaKeySize: number;
-}
-
-export interface ProviderKeyService {
-  getOrCreate(
-    algorithm: Algorithm,
-    provider: Provider,
-    name?: string
-  ): Promise<ProviderKey>;
-}
-
-export interface EncryptionService {
-  encrypt(key: ProviderKey, plainText: string): Promise<EncryptedData>;
-  decrypt(key: ProviderKey, data: EncryptedData): Promise<string>;
-}
-
-export interface EncryptionFactory {
-  provider: Provider;
-  algorithm: Algorithm;
-  encrypt(
-    keyId: string,
-    plainText: string,
-    options?: EncryptionOptions
-  ): Promise<string>;
-  decrypt(
-    keyId: string,
-    cipherText: string,
-    options?: EncryptionOptions
-  ): Promise<string>;
-}
-
-export interface ProviderKeyFactory {
-  provider: Provider;
-  algorithm: Algorithm;
-  create(name?: string, options?: EncryptionOptions): Promise<ProviderKey>;
 }
 
 export interface EncryptionOptions {
   rsaKeySize?: number;
 }
 
-/**
- * @deprecated soon to be removed
- */
-export interface AzureEncryptionOptions extends EncryptionAdapterOptions {
-  keyVaultName: string;
-  credentials?: TokenCredential;
+export interface EncryptionFactory {
+  algorithm: string;
+  provider: string;
+  encrypt(keyId: string, plainTxt: string): Promise<string>;
+  decrypt(keyId: string, cipherTxt: string): Promise<string>;
 }
 
-/**
- * @deprecated soon to be removed
- */
-export interface EncryptionAdapterOptions {
-  algorithm: Algorithm;
-  options?: EncryptionProviderOptions;
-}
-
-/**
- * @deprecated soon to be removed
- */
-export interface EncryptionProviderOptions {
-  defaultKeySize: number;
-  keyExpirationInDays: number;
-}
-
-export interface KeyPair {
-  publicKey: string;
-  privateKey: string;
-}
-
-/**
- * @deprecated soon to be removed
- */
-export interface EncryptionAdapter {
-  name: string;
-  generateKeys(): Promise<KeyPair | string | unknown>;
-  init(
-    encryptionOptions: EncryptionAdapterOptions | AzureEncryptionOptions
-  ): void;
-  encrypt(encryptionKey: unknown, plainTextData: string): Promise<string>;
-  decrypt(decryptionKey: unknown, cipherTextData: string): Promise<string>;
+export interface ProviderKeyFactory {
+  algorithm: string;
+  provider: string;
+  create(name: string): Promise<ProviderKey>;
 }

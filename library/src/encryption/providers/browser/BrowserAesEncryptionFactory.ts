@@ -1,44 +1,49 @@
-import { Algorithm, EncryptionFactory, Provider } from '../../types';
-import {
-  fromAesString,
-  arrayBufferToBase64String,
-  base64StringToArrayBuffer,
-} from '../../utils';
-import { loadBrowserAesKey } from '../../BasisTheoryAesEncryptionService';
 import { injectable } from 'tsyringe';
+import { keyIdToAes, bufferToBase64, base64ToBuffer } from '../../utils';
+import { EncryptionFactory } from '../../types';
 
 @injectable()
 export class BrowserAesEncryptionFactory implements EncryptionFactory {
-  public provider: Provider = 'BROWSER';
-  public algorithm: Algorithm = 'AES';
+  public provider = 'BROWSER';
+  public algorithm = 'AES';
 
-  public async encrypt(keyId: string, plainText: string): Promise<string> {
-    const aes = fromAesString(keyId);
-    const key = await loadBrowserAesKey(aes.key);
+  public async encrypt(keyId: string, plainTxt: string): Promise<string> {
+    const aes = keyIdToAes(keyId);
+    const aesKey = await this.loadBrowserAesKey(aes.key);
     const encrypted = await window.crypto.subtle.encrypt(
       {
         name: 'AES-GCM',
-        iv: aes.IV,
+        iv: aes.iv,
       },
-      key,
-      new TextEncoder().encode(plainText).buffer
+      aesKey,
+      new TextEncoder().encode(plainTxt).buffer
     );
 
-    return arrayBufferToBase64String(encrypted);
+    return bufferToBase64(encrypted);
   }
 
-  public async decrypt(keyId: string, cipherText: string): Promise<string> {
-    const aes = fromAesString(keyId);
-    const key = await loadBrowserAesKey(aes.key);
+  public async decrypt(keyId: string, cipherTxt: string): Promise<string> {
+    const aes = keyIdToAes(keyId);
+    const aesKey = await this.loadBrowserAesKey(aes.key);
     const decrypted = await window.crypto.subtle.decrypt(
       {
         name: 'AES-GCM',
-        iv: aes.IV,
+        iv: aes.iv,
       },
-      key,
-      base64StringToArrayBuffer(cipherText)
+      aesKey,
+      base64ToBuffer(cipherTxt)
     );
 
     return new TextDecoder().decode(decrypted);
+  }
+
+  private async loadBrowserAesKey(rawKey: ArrayBuffer): Promise<CryptoKey> {
+    return await window.crypto.subtle.importKey(
+      'raw',
+      rawKey,
+      'AES-GCM',
+      true,
+      ['encrypt', 'decrypt']
+    );
   }
 }

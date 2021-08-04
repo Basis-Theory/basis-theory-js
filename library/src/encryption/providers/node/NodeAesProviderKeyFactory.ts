@@ -1,24 +1,22 @@
 import { injectable } from 'tsyringe';
-import { AesEncryptionService } from '../../BasisTheoryAesEncryptionService';
-import {
-  Algorithm,
-  Provider,
-  ProviderKey,
-  ProviderKeyFactory,
-} from '../../types';
-import { aesToString } from '../../utils';
+import { randomBytes } from 'crypto';
+import { AesKey, ProviderKey, ProviderKeyFactory } from '../../types';
+import { aesToKeyId } from '../../utils';
 
 @injectable()
 export class NodeAesProviderKeyFactory implements ProviderKeyFactory {
-  public provider: Provider = 'NODE';
-  public algorithm: Algorithm = 'AES';
+  public provider = 'NODE';
+  public algorithm = 'AES';
 
-  public async create(name?: string): Promise<ProviderKey> {
-    const aes = await AesEncryptionService.CreateAes();
+  public async create(name: string): Promise<ProviderKey> {
+    const aes: AesKey = {
+      key: randomBytes(32),
+      iv: randomBytes(16),
+    };
 
     return {
-      name: name ?? 'aesKey',
-      providerKeyId: aesToString(aes),
+      name: name,
+      providerKeyId: aesToKeyId(aes),
       provider: this.provider,
       algorithm: this.algorithm,
     };

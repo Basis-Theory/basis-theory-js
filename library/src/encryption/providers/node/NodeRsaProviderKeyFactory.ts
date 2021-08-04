@@ -1,25 +1,22 @@
 import { generateKeyPairSync } from 'crypto';
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import {
-  Algorithm,
   EncryptionOptions,
-  Provider,
   ProviderKey,
   ProviderKeyFactory,
 } from '../../types';
-import { rsaToString } from '../../utils';
+import { rsaToKeyId } from '../../utils';
 
 @injectable()
 export class NodeRsaProviderKeyFactory implements ProviderKeyFactory {
-  public provider: Provider = 'NODE';
-  public algorithm: Algorithm = 'RSA';
+  public provider = 'NODE';
+  public algorithm = 'RSA';
 
-  public async create(
-    name?: string,
-    options?: EncryptionOptions
-  ): Promise<ProviderKey> {
+  public constructor(@inject('Options') private options?: EncryptionOptions) {}
+
+  public async create(name: string): Promise<ProviderKey> {
     const { publicKey, privateKey } = generateKeyPairSync('rsa', {
-      modulusLength: options?.rsaKeySize ?? 4096,
+      modulusLength: this.options?.rsaKeySize ?? 4096,
       publicKeyEncoding: {
         type: 'spki',
         format: 'pem',
@@ -30,13 +27,13 @@ export class NodeRsaProviderKeyFactory implements ProviderKeyFactory {
       },
     });
 
-    const keyId = rsaToString(publicKey, privateKey);
+    const keyId = rsaToKeyId(publicKey, privateKey);
 
     return {
-      name: name ?? 'rsaKey',
+      name: name,
       providerKeyId: keyId,
-      provider: 'NODE',
-      algorithm: 'RSA',
+      provider: this.provider,
+      algorithm: this.algorithm,
     };
   }
 }

@@ -1,25 +1,21 @@
-import { injectable } from 'tsyringe';
-import { getBrowserSignAlgorithm } from '../../BasisTheoryAesEncryptionService';
+import { injectable, inject } from 'tsyringe';
 import {
-  Algorithm,
   EncryptionOptions,
-  Provider,
   ProviderKey,
   ProviderKeyFactory,
 } from '../../types';
-import { rsaBufferToString } from '../../utils';
+import { rsaBufferTokeyId, getBrowserRsaParams } from '../../utils';
 
 @injectable()
 export class BrowserRsaProviderKeyFactory implements ProviderKeyFactory {
-  public provider: Provider = 'BROWSER';
-  public algorithm: Algorithm = 'RSA';
+  public provider = 'BROWSER';
+  public algorithm = 'RSA';
 
-  public async create(
-    name?: string,
-    options?: EncryptionOptions
-  ): Promise<ProviderKey> {
+  public constructor(@inject('Options') private options?: EncryptionOptions) {}
+
+  public async create(name: string): Promise<ProviderKey> {
     const keyPair = await window.crypto.subtle.generateKey(
-      getBrowserSignAlgorithm(options?.rsaKeySize),
+      getBrowserRsaParams(this.options?.rsaKeySize),
       true,
       ['encrypt', 'decrypt']
     );
@@ -32,13 +28,13 @@ export class BrowserRsaProviderKeyFactory implements ProviderKeyFactory {
       keyPair.privateKey
     );
 
-    const keyId = rsaBufferToString(exportedPublic, exportedPrivate);
+    const keyId = rsaBufferTokeyId(exportedPublic, exportedPrivate);
 
     return {
-      name: name ?? 'rsaKeyPair',
+      name: name,
       providerKeyId: keyId,
-      provider: this.provider,
       algorithm: this.algorithm,
+      provider: this.provider,
     };
   }
 }

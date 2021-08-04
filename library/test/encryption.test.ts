@@ -7,6 +7,7 @@ describe('Encryption', () => {
 
   beforeAll(async () => {
     bt = await new BasisTheory().init('dummy-key');
+    bt.encryption.init({ rsaKeySize: 2048 });
   });
 
   describe('e2e encryption', () => {
@@ -18,18 +19,22 @@ describe('Encryption', () => {
           dob: '01/01/1990',
         };
 
-        key = (await bt.encryption
-          .providerKeyService()
-          .getOrCreate('RSA', 'NODE')) as ProviderKey;
-        const encrypted = await bt.encryption
-          .encryptionService()
-          .encrypt(key, JSON.stringify(pii));
+        key = (await bt.encryption.providerKeyService.getOrCreate(
+          'nodeRsaTest',
+          'RSA',
+          'NODE'
+        )) as ProviderKey;
+        const encrypted = await bt.encryption.encryptionService.encrypt(
+          key,
+          JSON.stringify(pii)
+        );
 
         expect(isBase64(encrypted.cipherText)).toBe(true);
 
-        const decrypted = await bt.encryption
-          .encryptionService()
-          .decrypt(key, encrypted);
+        const decrypted = await bt.encryption.encryptionService.decrypt(
+          key,
+          encrypted
+        );
 
         expect(JSON.parse(decrypted)).toStrictEqual(pii);
       });
@@ -41,18 +46,22 @@ describe('Encryption', () => {
           dob: '01/01/1990',
         };
 
-        key = (await bt.encryption
-          .providerKeyService()
-          .getOrCreate('AES', 'NODE')) as ProviderKey;
-        const encrypted = await bt.encryption
-          .encryptionService()
-          .encrypt(key, JSON.stringify(pii));
+        key = (await bt.encryption.providerKeyService.getOrCreate(
+          'nodeAesTest',
+          'AES',
+          'NODE'
+        )) as ProviderKey;
+        const encrypted = await bt.encryption.encryptionService.encrypt(
+          key,
+          JSON.stringify(pii)
+        );
 
         expect(isBase64(encrypted.cipherText)).toBe(true);
 
-        const decrypted = await bt.encryption
-          .encryptionService()
-          .decrypt(key, encrypted);
+        const decrypted = await bt.encryption.encryptionService.decrypt(
+          key,
+          encrypted
+        );
 
         expect(JSON.parse(decrypted)).toStrictEqual(pii);
       });
@@ -64,18 +73,22 @@ describe('Encryption', () => {
           dob: '01/01/1990',
         };
 
-        key = (await bt.encryption
-          .providerKeyService()
-          .getOrCreate('RSA', 'BROWSER')) as ProviderKey;
-        const encrypted = await bt.encryption
-          .encryptionService()
-          .encrypt(key, JSON.stringify(pii));
+        key = (await bt.encryption.providerKeyService.getOrCreate(
+          'browserRsaTest',
+          'RSA',
+          'BROWSER'
+        )) as ProviderKey;
+        const encrypted = await bt.encryption.encryptionService.encrypt(
+          key,
+          JSON.stringify(pii)
+        );
 
         expect(isBase64(encrypted.cipherText)).toBe(true);
 
-        const decrypted = await bt.encryption
-          .encryptionService()
-          .decrypt(key, encrypted);
+        const decrypted = await bt.encryption.encryptionService.decrypt(
+          key,
+          encrypted
+        );
 
         expect(JSON.parse(decrypted)).toStrictEqual(pii);
       });
@@ -87,48 +100,24 @@ describe('Encryption', () => {
           dob: '01/01/1990',
         };
 
-        key = (await bt.encryption
-          .providerKeyService()
-          .getOrCreate('AES', 'BROWSER')) as ProviderKey;
-        const encrypted = await bt.encryption
-          .encryptionService()
-          .encrypt(key, JSON.stringify(pii));
+        key = (await bt.encryption.providerKeyService.getOrCreate(
+          'browserAesTest',
+          'AES',
+          'BROWSER'
+        )) as ProviderKey;
+        const encrypted = await bt.encryption.encryptionService.encrypt(
+          key,
+          JSON.stringify(pii)
+        );
 
         expect(isBase64(encrypted.cipherText)).toBe(true);
 
-        const decrypted = await bt.encryption
-          .encryptionService()
-          .decrypt(key, encrypted);
+        const decrypted = await bt.encryption.encryptionService.decrypt(
+          key,
+          encrypted
+        );
 
         expect(JSON.parse(decrypted)).toStrictEqual(pii);
-      });
-    }
-  });
-
-  describe('encryption adapters init', () => {
-    if (typeof window === 'undefined') {
-      describe('azure provider in init options', () => {
-        beforeAll(async () => {
-          bt.encryption.azureEncryption.init({
-            algorithm: 'RSA',
-            keyVaultName: 'dummy-vault-name',
-          });
-        });
-
-        it('should load azure encryption adapter', () => {
-          expect(bt.encryption.azureEncryption.name).toBe('azure');
-        });
-      });
-    } else {
-      describe('browser provider in init options', () => {
-        beforeAll(async () => {
-          bt.encryption.browserEncryption.init({
-            algorithm: 'RSA',
-          });
-        });
-        it('should load browser encryption adapter', () => {
-          expect(bt.encryption.browserEncryption.name).toBe('browser');
-        });
       });
     }
   });
