@@ -1,8 +1,11 @@
 import { singleton, container } from 'tsyringe';
+import { BasisTheoryCacheService } from '../common/BasisTheoryCacheService';
 import { ProviderKey, ProviderKeyFactory } from './types';
 
 @singleton()
 export class BasisTheoryProviderKeyService {
+  public constructor(private _cacheService: BasisTheoryCacheService) {}
+
   public async getOrCreate(
     name: string,
     algorithm: string,

@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
 import {
   EncryptionOptions,
   ProviderKey,
@@ -11,7 +12,10 @@ export class BrowserRsaProviderKeyFactory implements ProviderKeyFactory {
   public provider = 'BROWSER';
   public algorithm = 'RSA';
 
-  public constructor(@inject('Options') private options?: EncryptionOptions) {}
+  public constructor(
+    private _cache: BasisTheoryCacheService,
+    @inject('Options') private options?: EncryptionOptions
+  ) {}
 
   public async create(name: string): Promise<ProviderKey> {
     const keyPair = await window.crypto.subtle.generateKey(

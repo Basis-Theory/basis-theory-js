@@ -1,5 +1,6 @@
 import { generateKeyPairSync } from 'crypto';
 import { inject, injectable } from 'tsyringe';
+import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
 import {
   EncryptionOptions,
   ProviderKey,
@@ -12,7 +13,10 @@ export class NodeRsaProviderKeyFactory implements ProviderKeyFactory {
   public provider = 'NODE';
   public algorithm = 'RSA';
 
-  public constructor(@inject('Options') private options?: EncryptionOptions) {}
+  public constructor(
+    private _cache: BasisTheoryCacheService,
+    @inject('Options') private options?: EncryptionOptions
+  ) {}
 
   public async create(name: string): Promise<ProviderKey> {
     const { publicKey, privateKey } = generateKeyPairSync('rsa', {

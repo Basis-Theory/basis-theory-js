@@ -30,11 +30,12 @@
     "axios": "^0.21.1",
     "camelcase-keys": "^6.2.2",
     "core-js": "^3.8.3",
+    "node-cache": "^5.1.2",
     "process": "^0.11.10",
     "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.6.0",
     "snake-case": "^3.0.4",
-    "snakecase-keys": "^3.2.1"
+    "snakecase-keys": "^3.2.1",
+    "tsyringe": "^4.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",

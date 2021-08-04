@@ -1,4 +1,5 @@
 import { injectable } from 'tsyringe';
+import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
 import { ProviderKey, ProviderKeyFactory } from '../../types';
 import { aesToKeyId } from '../../utils';
 
@@ -6,6 +7,8 @@ import { aesToKeyId } from '../../utils';
 export class BrowserAesProviderKeyFactory implements ProviderKeyFactory {
   public provider = 'BROWSER';
   public algorithm = 'AES';
+
+  public constructor(private _cache: BasisTheoryCacheService) {}
 
   public async create(name: string): Promise<ProviderKey> {
     const algorithm = { name: 'AES-GCM', length: 256 };

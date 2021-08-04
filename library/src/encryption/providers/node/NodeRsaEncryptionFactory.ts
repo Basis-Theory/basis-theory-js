@@ -3,11 +3,14 @@ import { injectable } from 'tsyringe';
 import { Buffer } from 'buffer';
 import { EncryptionFactory } from '../../types';
 import { keyIdToRsaKeyPair } from '../../utils';
+import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
 
 @injectable()
 export class NodeRsaEncryptionFactory implements EncryptionFactory {
   public provider = 'NODE';
   public algorithm = 'RSA';
+
+  public constructor(private _cache: BasisTheoryCacheService) {}
 
   public async encrypt(keyId: string, plainTxt: string): Promise<string> {
     const keyPair = keyIdToRsaKeyPair(keyId);

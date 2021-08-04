@@ -1,3 +1,4 @@
+import { container } from 'tsyringe';
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryAtomic } from './atomic';
 import type {
@@ -51,7 +52,7 @@ export class BasisTheory {
         baseURL: SERVICES.applications[this._initOptions.environment],
       });
 
-      this._encryption = new BasisTheoryEncryption();
+      this._encryption = container.resolve(BasisTheoryEncryption);
 
       if (this._initOptions.elements) {
         await this.loadElements(apiKey);

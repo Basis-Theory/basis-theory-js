@@ -1,11 +1,14 @@
 import { injectable } from 'tsyringe';
 import { keyIdToAes, bufferToBase64, base64ToBuffer } from '../../utils';
 import { EncryptionFactory } from '../../types';
+import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
 
 @injectable()
 export class BrowserAesEncryptionFactory implements EncryptionFactory {
   public provider = 'BROWSER';
   public algorithm = 'AES';
+
+  public constructor(private _cache: BasisTheoryCacheService) {}
 
   public async encrypt(keyId: string, plainTxt: string): Promise<string> {
     const aes = keyIdToAes(keyId);

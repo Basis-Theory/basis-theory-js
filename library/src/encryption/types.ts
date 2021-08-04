@@ -43,3 +43,13 @@ export interface ProviderKeyFactory {
   provider: string;
   create(name: string): Promise<ProviderKey>;
 }
+
+export interface ProviderKeyRepository {
+  getKeyByKeyId(keyId: string): Promise<ProviderKey>;
+  getKeyByName(
+    name: string,
+    provider: string,
+    algorithm: string
+  ): Promise<ProviderKey>;
+  save(key: ProviderKey): Promise<ProviderKey>;
+}

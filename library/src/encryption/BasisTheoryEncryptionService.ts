@@ -1,4 +1,4 @@
-import { container, singleton } from 'tsyringe';
+import { container, injectable, singleton } from 'tsyringe';
 import {
   EncryptedData,
   ProviderKey,
@@ -9,9 +9,13 @@ import { BrowserAesEncryptionFactory } from './providers/browser/BrowserAesEncry
 import { BrowserAesProviderKeyFactory } from './providers/browser/BrowserAesProviderKeyFactory';
 import { NodeAesEncryptionFactory } from './providers/node/NodeAesEncryptionFactory';
 import { NodeAesProviderKeyFactory } from './providers/node/NodeAesProviderKeyFactory';
+import { BasisTheoryCacheService } from '../common/BasisTheoryCacheService';
 
 @singleton()
+@injectable()
 export class BasisTheoryEncryptionService {
+  public constructor(private _cacheService: BasisTheoryCacheService) {}
+
   public async encrypt(
     key: ProviderKey,
     plainTxt: string
@@ -20,11 +24,11 @@ export class BasisTheoryEncryptionService {
     let aesEncryptionFactory: EncryptionFactory;
 
     if (key.provider === 'BROWSER') {
-      aesKeyFactory = new BrowserAesProviderKeyFactory();
-      aesEncryptionFactory = new BrowserAesEncryptionFactory();
+      aesKeyFactory = container.resolve(BrowserAesProviderKeyFactory);
+      aesEncryptionFactory = container.resolve(BrowserAesEncryptionFactory);
     } else {
-      aesKeyFactory = new NodeAesProviderKeyFactory();
-      aesEncryptionFactory = new NodeAesEncryptionFactory();
+      aesKeyFactory = container.resolve(NodeAesProviderKeyFactory);
+      aesEncryptionFactory = container.resolve(NodeAesEncryptionFactory);
     }
 
     const aesKey = await aesKeyFactory.create('aesKey');
@@ -61,9 +65,9 @@ export class BasisTheoryEncryptionService {
     );
     let aesEncryptionFactory: EncryptionFactory;
     if (key.provider === 'BROWSER') {
-      aesEncryptionFactory = new BrowserAesEncryptionFactory();
+      aesEncryptionFactory = container.resolve(BrowserAesEncryptionFactory);
     } else {
-      aesEncryptionFactory = new NodeAesEncryptionFactory();
+      aesEncryptionFactory = container.resolve(NodeAesEncryptionFactory);
     }
 
     return await aesEncryptionFactory.decrypt(cekPlainText, data.cipherText);
