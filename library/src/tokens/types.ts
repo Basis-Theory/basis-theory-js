@@ -5,7 +5,34 @@ export type DataObject = {
 export type DataArray = Array<TokenData>;
 export type TokenData = Primitive | DataObject | DataArray;
 
-export type TokenType = 'token' | 'card';
+export type TokenType = 'token' | 'card' | 'bank';
+
+export interface TokenEncryptionKey {
+  key: string;
+  alg: string;
+}
+
+export interface TokenEncryption {
+  cek: TokenEncryptionKey;
+  kek: TokenEncryptionKey;
+}
+
+export interface Token {
+  id: string;
+  tenantId: string;
+  type: TokenType;
+  data: TokenData;
+  metadata?: unknown;
+  encryption?: TokenEncryption;
+  children?: Token[];
+  createdBy: string;
+  createdAt: string;
+}
+
+export type CreateTokenModel = Pick<
+  Token,
+  'type' | 'data' | 'metadata' | 'encryption' | 'children'
+>;
 
 export interface CreateTokenResponse {
   id: string;

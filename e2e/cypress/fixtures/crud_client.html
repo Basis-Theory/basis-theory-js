@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <!-- Add BasisTheory SDK -->
+    <script src="../../../library/dist/basis-theory-js.bundle.js"></script>
+  </head>
+  <body>
+    <script>
+      let bt;
+      window.addEventListener('load', async function () {
+        bt = await BasisTheory.init('123456789', { environment: 'local' });
+      });
+
+      function submit() {
+        const service = document.getElementById('service').value;
+
+        if (document.getElementById('create').checked) {
+          bt[service].create({});
+        }
+        if (document.getElementById('retrieve').checked) {
+          bt[service].retrieve('1234567890');
+        }
+        if (document.getElementById('update').checked) {
+          bt[service].update('1234567890', {});
+        }
+        if (document.getElementById('delete').checked) {
+          bt[service].delete('1234567890');
+        }
+        if (document.getElementById('list').checked) {
+          bt[service].list();
+        }
+      }
+    </script>
+    <div>
+      <input type="checkbox" id="create" />
+      <label for="create">Create</label>
+      <input type="checkbox" id="retrieve" />
+      <label for="retrieve">Retrieve</label>
+      <input type="checkbox" id="update" />
+      <label for="update">Update</label>
+      <input type="checkbox" id="delete" />
+      <label for="delete">Delete</label>
+      <input type="checkbox" id="list" />
+      <label for="List">List</label>
+      <input type="text" placeholder="Service" id="service" />
+      <button type="button" id="submit" onclick="submit()">submit</button>
+    </div>
+  </body>
+</html>

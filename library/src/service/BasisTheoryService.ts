@@ -10,10 +10,10 @@ import { BasisTheoryServiceOptions } from './types';
 export abstract class BasisTheoryService<
   T extends BasisTheoryServiceOptions = BasisTheoryServiceOptions
 > {
-  protected readonly client: AxiosInstance;
+  public readonly client: AxiosInstance;
 
-  public constructor(private readonly options: T) {
-    const { apiKey, baseURL } = this.options;
+  public constructor(options: T) {
+    const { apiKey, baseURL } = options;
     this.client = axios.create({
       baseURL,
       headers: {

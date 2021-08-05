@@ -1,5 +1,5 @@
 import { BasisTheoryService } from '../service';
-import {
+import type {
   CreateTokenResponse,
   GetTokenResponse,
   TokenData,

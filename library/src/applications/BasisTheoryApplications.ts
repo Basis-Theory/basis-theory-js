@@ -4,35 +4,42 @@ import type {
   CreateApplicationModel,
   UpdateApplicationModel,
 } from './types';
-import { BasisTheoryCRUDService } from '../service/BasisTheoryCRUDService';
 import { createRequestConfig, dataExtractor } from '../common';
-import { RequestOptions } from '../service';
+import { BasisTheoryService, RequestOptions } from '../service';
+import { CrudBuilder } from '../service/CrudBuilder';
 
-export class BasisTheoryApplications extends BasisTheoryCRUDService<
-  Application,
-  CreateApplicationModel,
-  UpdateApplicationModel,
-  ApplicationQuery
-> {
-  /**
-   * @deprecated use {@link retrieveByKey} instead
-   */
-  public async getApplicationByKey(): Promise<Application> {
-    return this.retrieveByKey();
-  }
+export const BasisTheoryApplications = new CrudBuilder(
+  class BasisTheoryApplications extends BasisTheoryService {
+    /**
+     * @deprecated use {@link retrieveByKey} instead
+     */
+    public async getApplicationByKey(): Promise<Application> {
+      return this.retrieveByKey();
+    }
 
-  public retrieveByKey(options?: RequestOptions): Promise<Application> {
-    return this.client
-      .get('/key', createRequestConfig(options))
-      .then(dataExtractor);
-  }
+    public retrieveByKey(options?: RequestOptions): Promise<Application> {
+      return this.client
+        .get('/key', createRequestConfig(options))
+        .then(dataExtractor);
+    }
 
-  public regenerateKey(
-    id: string,
-    options?: RequestOptions
-  ): Promise<Application> {
-    return this.client
-      .post(`${id}/regenerate`, undefined, createRequestConfig(options))
-      .then(dataExtractor);
+    public regenerateKey(
+      id: string,
+      options?: RequestOptions
+    ): Promise<Application> {
+      return this.client
+        .post(`${id}/regenerate`, undefined, createRequestConfig(options))
+        .then(dataExtractor);
+    }
   }
-}
+)
+  .create<Application, CreateApplicationModel>()
+  .retrieve<Application>()
+  .update<Application, UpdateApplicationModel>()
+  .delete()
+  .list<Application, ApplicationQuery>()
+  .build();
+
+export type BasisTheoryApplications = InstanceType<
+  typeof BasisTheoryApplications
+>;
