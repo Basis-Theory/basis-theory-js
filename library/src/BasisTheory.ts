@@ -1,13 +1,10 @@
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryAtomic } from './atomic';
-import type {
-  BasisTheoryElements,
-  BasisTheoryInitOptions,
-  InitStatus,
-} from './types';
+import type { BasisTheoryInitOptions, InitStatus } from './types';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
+import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -66,7 +63,10 @@ export class BasisTheory {
 
   private async loadElements(apiKey: string): Promise<void> {
     const elements = await loadElements();
-    await elements.init(apiKey, this.initOptions.environment);
+    await (elements as BasisTheoryElementsInit).init(
+      apiKey,
+      this.initOptions.environment
+    );
     this.elements = elements;
   }
 

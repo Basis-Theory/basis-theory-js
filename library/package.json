@@ -12,12 +12,14 @@
   ],
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "concurrently \"yarn build:bundle\" \"yarn build:module\" \"yarn build:declarations\" --kill-others-on-fail",
+    "build": "concurrently \"yarn build:bundle\" \"yarn build:module\" \"yarn build:declarations\" \"yarn build:package\" --kill-others-on-fail",
     "build:bundle": "webpack --config webpack.prod.js",
     "build:declarations": "tsc",
     "build:module": "babel src --extensions .ts --out-dir dist",
+    "build:package": "node prepare.js",
     "prepare": "yarn build",
     "release": "semantic-release",
+    "postversion": "node bump.js",
     "size": "size-limit",
     "start": "webpack --config webpack.dev.js --watch",
     "test": "jest",
@@ -65,7 +67,7 @@
     "webpack-merge": "^5.7.3"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=10.12.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"

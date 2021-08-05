@@ -9,6 +9,7 @@ const base = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
+    globalObject: "typeof self !== 'undefined' ? self : this",
   },
 
   resolve: {
@@ -32,9 +33,7 @@ const base = {
 
   plugins: [new Dotenv()],
 
-  externals: {
-    '@azure/keyvault-keys': 'azure/keyvault-keys',
-  },
+  externals: ['@azure/keyvault-keys'],
 };
 
 const umd = merge(base, {

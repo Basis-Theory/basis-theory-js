@@ -1,4 +1,6 @@
 import type { TokenCredential } from '@azure/identity';
+import type { BasisTheoryElements } from './elements';
+
 export type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
 export type ServiceEnvironment = 'production' | 'sandbox' | 'local';
@@ -36,13 +38,6 @@ export interface EncryptionOptions {
 export interface BasisTheoryInitOptions {
   environment?: ServiceEnvironment;
   elements?: boolean;
-}
-
-export interface BasisTheoryElements {
-  init: (
-    apiKey: string,
-    environment: ServiceEnvironment
-  ) => Promise<BasisTheoryElements>;
 }
 
 declare global {
