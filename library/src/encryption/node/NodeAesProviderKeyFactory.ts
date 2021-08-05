@@ -1,8 +1,8 @@
 import { injectable } from 'tsyringe';
 import { randomBytes } from 'crypto';
-import { AesKey, ProviderKey, ProviderKeyFactory } from '../../types';
-import { aesToKeyId } from '../../utils';
-import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
+import { AesKey, ProviderKey, ProviderKeyFactory } from '../types';
+import { aesToKeyId } from '../utils';
+import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
 
 @injectable()
 export class NodeAesProviderKeyFactory implements ProviderKeyFactory {

@@ -1,5 +1,3 @@
-import './providers/browser/BasisTheoryBrowserEncryption';
-import './providers/node/BasisTheoryNodeEncryption';
 import { container, injectable } from 'tsyringe';
 import { assertInit } from '../common';
 import { EncryptionOptions } from './types';

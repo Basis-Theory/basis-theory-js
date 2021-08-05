@@ -45,11 +45,11 @@ export interface ProviderKeyFactory {
 }
 
 export interface ProviderKeyRepository {
-  getKeyByKeyId(keyId: string): Promise<ProviderKey>;
+  getKeyByKeyId(keyId: string): Promise<ProviderKey | undefined>;
   getKeyByName(
     name: string,
     provider: string,
     algorithm: string
-  ): Promise<ProviderKey>;
+  ): Promise<ProviderKey | undefined>;
   save(key: ProviderKey): Promise<ProviderKey>;
 }

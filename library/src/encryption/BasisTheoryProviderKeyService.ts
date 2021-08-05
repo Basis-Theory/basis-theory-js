@@ -1,19 +1,46 @@
-import { singleton, container } from 'tsyringe';
+import { ONE_HOUR_SECS } from './../common/constants';
+import { singleton, container, inject, injectable } from 'tsyringe';
 import { BasisTheoryCacheService } from '../common/BasisTheoryCacheService';
 import { ProviderKey, ProviderKeyFactory } from './types';
+import { MockProviderKeyRepository } from '../../test/setup/utils';
 
 @singleton()
+@injectable()
 export class BasisTheoryProviderKeyService {
-  public constructor(private _cacheService: BasisTheoryCacheService) {}
+  public constructor(
+    private _cache: BasisTheoryCacheService,
+    private _providerKeyRepository: MockProviderKeyRepository
+  ) {}
+
+  public async getKeyByKeyId(keyId: string): Promise<ProviderKey | undefined> {
+    return await this._cache.getOrAdd(
+      `providerkeys_${keyId}`,
+      async () => await this._providerKeyRepository.getKeyByKeyId(keyId),
+      ONE_HOUR_SECS
+    );
+  }
 
   public async getOrCreate(
     name: string,
-    algorithm: string,
-    provider: string
+    provider: string,
+    algorithm: string
   ): Promise<ProviderKey> {
-    //TODO: repository stuff
-    const factory = this.resolveFactory(algorithm, provider);
-    return factory.create(name);
+    return await this._cache.getOrAdd(
+      `providerkeys_${name}_${provider}_${algorithm}`,
+      async () => {
+        let providerKey = await this._providerKeyRepository.getKeyByName(
+          name,
+          provider,
+          algorithm
+        );
+        if (providerKey !== undefined) return providerKey;
+
+        const factory = this.resolveFactory(algorithm, provider);
+        providerKey = await factory.create(name);
+        return await this._providerKeyRepository.save(providerKey);
+      },
+      ONE_HOUR_SECS
+    );
   }
 
   private resolveFactory(
@@ -34,7 +61,7 @@ export class BasisTheoryProviderKeyService {
     }
 
     throw new Error(
-      'Provider key factory not found for provider and algorithm'
+      `Provider key factory not found for provider: ${provider} and algorithm: ${algorithm}`
     );
   }
 }

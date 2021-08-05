@@ -1,11 +1,11 @@
 import { injectable, inject } from 'tsyringe';
-import { EncryptionOptions, EncryptionFactory } from '../../types';
+import { EncryptionOptions, EncryptionFactory } from '../types';
 import {
   keyIdToRsaKeyPair,
   base64ToBuffer,
   bufferToBase64,
   getBrowserRsaParams,
-} from '../../utils';
+} from '../utils';
 
 @injectable()
 export class BrowserRsaEncryptionFactory implements EncryptionFactory {

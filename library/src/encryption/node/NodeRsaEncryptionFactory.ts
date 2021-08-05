@@ -1,9 +1,9 @@
 import { publicEncrypt, privateDecrypt, constants } from 'crypto';
 import { injectable } from 'tsyringe';
 import { Buffer } from 'buffer';
-import { EncryptionFactory } from '../../types';
-import { keyIdToRsaKeyPair } from '../../utils';
-import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
+import { EncryptionFactory } from '../types';
+import { keyIdToRsaKeyPair } from '../utils';
+import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
 
 @injectable()
 export class NodeRsaEncryptionFactory implements EncryptionFactory {

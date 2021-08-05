@@ -1,4 +1,6 @@
 import { BasisTheory, ProviderKey } from '../src';
+import './../src/encryption/browser/BasisTheoryBrowserEncryption';
+import './../src/encryption/node/BasisTheoryNodeEncryption';
 import isBase64 from 'is-base64';
 
 describe('Encryption', () => {
@@ -21,8 +23,8 @@ describe('Encryption', () => {
 
         key = (await bt.encryption.providerKeyService.getOrCreate(
           'nodeRsaTest',
-          'RSA',
-          'NODE'
+          'NODE',
+          'RSA'
         )) as ProviderKey;
         const encrypted = await bt.encryption.encryptionService.encrypt(
           key,
@@ -48,8 +50,8 @@ describe('Encryption', () => {
 
         key = (await bt.encryption.providerKeyService.getOrCreate(
           'nodeAesTest',
-          'AES',
-          'NODE'
+          'NODE',
+          'AES'
         )) as ProviderKey;
         const encrypted = await bt.encryption.encryptionService.encrypt(
           key,
@@ -75,8 +77,8 @@ describe('Encryption', () => {
 
         key = (await bt.encryption.providerKeyService.getOrCreate(
           'browserRsaTest',
-          'RSA',
-          'BROWSER'
+          'BROWSER',
+          'RSA'
         )) as ProviderKey;
         const encrypted = await bt.encryption.encryptionService.encrypt(
           key,
@@ -102,8 +104,8 @@ describe('Encryption', () => {
 
         key = (await bt.encryption.providerKeyService.getOrCreate(
           'browserAesTest',
-          'AES',
-          'BROWSER'
+          'BROWSER',
+          'AES'
         )) as ProviderKey;
         const encrypted = await bt.encryption.encryptionService.encrypt(
           key,

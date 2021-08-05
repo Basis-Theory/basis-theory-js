@@ -1,11 +1,8 @@
+import { v4 as uuid } from 'uuid';
 import { injectable, inject } from 'tsyringe';
-import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
-import {
-  EncryptionOptions,
-  ProviderKey,
-  ProviderKeyFactory,
-} from '../../types';
-import { rsaBufferTokeyId, getBrowserRsaParams } from '../../utils';
+import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
+import { EncryptionOptions, ProviderKey, ProviderKeyFactory } from '../types';
+import { rsaBufferTokeyId, getBrowserRsaParams } from '../utils';
 
 @injectable()
 export class BrowserRsaProviderKeyFactory implements ProviderKeyFactory {
@@ -32,11 +29,13 @@ export class BrowserRsaProviderKeyFactory implements ProviderKeyFactory {
       keyPair.privateKey
     );
 
-    const keyId = rsaBufferTokeyId(exportedPublic, exportedPrivate);
+    const key = rsaBufferTokeyId(exportedPublic, exportedPrivate);
+    const providerKeyId = uuid();
+    window.localStorage.setItem(providerKeyId, key);
 
     return {
       name: name,
-      providerKeyId: keyId,
+      providerKeyId: providerKeyId,
       algorithm: this.algorithm,
       provider: this.provider,
     };

@@ -9,6 +9,10 @@ export class BasisTheoryCacheService {
     this._cache = new NodeCache();
   }
 
+  public add<T>(key: string, item: T, ttl: number): void {
+    this._cache.set<T>(key, item, ttl);
+  }
+
   public async getOrAdd<T>(
     key: string,
     addItemFactory: () => Promise<T>,

@@ -1,15 +1,8 @@
 import { container, injectable, singleton } from 'tsyringe';
-import {
-  EncryptedData,
-  ProviderKey,
-  ProviderKeyFactory,
-  EncryptionFactory,
-} from './types';
-import { BrowserAesEncryptionFactory } from './providers/browser/BrowserAesEncryptionFactory';
-import { BrowserAesProviderKeyFactory } from './providers/browser/BrowserAesProviderKeyFactory';
-import { NodeAesEncryptionFactory } from './providers/node/NodeAesEncryptionFactory';
-import { NodeAesProviderKeyFactory } from './providers/node/NodeAesProviderKeyFactory';
+import { EncryptedData, ProviderKey, EncryptionFactory } from './types';
+import { aesToKeyId, keyIdToAes } from './utils';
 import { BasisTheoryCacheService } from '../common/BasisTheoryCacheService';
+import { BasisTheoryAesEncryptionService as AesEncryptionService } from './BasisTheoryAesEncryptionService';
 
 @singleton()
 @injectable()
@@ -20,23 +13,12 @@ export class BasisTheoryEncryptionService {
     key: ProviderKey,
     plainTxt: string
   ): Promise<EncryptedData> {
-    let aesKeyFactory: ProviderKeyFactory;
-    let aesEncryptionFactory: EncryptionFactory;
-
-    if (key.provider === 'BROWSER') {
-      aesKeyFactory = container.resolve(BrowserAesProviderKeyFactory);
-      aesEncryptionFactory = container.resolve(BrowserAesEncryptionFactory);
-    } else {
-      aesKeyFactory = container.resolve(NodeAesProviderKeyFactory);
-      aesEncryptionFactory = container.resolve(NodeAesEncryptionFactory);
-    }
-
-    const aesKey = await aesKeyFactory.create('aesKey');
-    const encryptedContent = await aesEncryptionFactory.encrypt(
-      aesKey.providerKeyId,
+    const aesKey = await AesEncryptionService.AesCreate();
+    const encryptedContent = await AesEncryptionService.Encrypt(
+      aesKey,
       plainTxt
     );
-    const cekPlainText = aesKey.providerKeyId;
+    const cekPlainText = aesToKeyId(aesKey);
 
     const encryptionFactory = this.resolveFactory(key);
     const encryptedCek = await encryptionFactory.encrypt(
@@ -63,14 +45,8 @@ export class BasisTheoryEncryptionService {
       key.providerKeyId,
       data.cek.key
     );
-    let aesEncryptionFactory: EncryptionFactory;
-    if (key.provider === 'BROWSER') {
-      aesEncryptionFactory = container.resolve(BrowserAesEncryptionFactory);
-    } else {
-      aesEncryptionFactory = container.resolve(NodeAesEncryptionFactory);
-    }
-
-    return await aesEncryptionFactory.decrypt(cekPlainText, data.cipherText);
+    const aesKey = keyIdToAes(cekPlainText);
+    return await AesEncryptionService.Decrypt(aesKey, data.cipherText);
   }
 
   private resolveFactory(key: ProviderKey): EncryptionFactory {

@@ -1,8 +1,8 @@
 import { injectable } from 'tsyringe';
 import { createCipheriv, createDecipheriv } from 'crypto';
-import { keyIdToAes } from '../../utils';
-import { EncryptionFactory } from '../../types';
-import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
+import { keyIdToAes } from '../utils';
+import { EncryptionFactory } from '../types';
+import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
 
 @injectable()
 export class NodeAesEncryptionFactory implements EncryptionFactory {

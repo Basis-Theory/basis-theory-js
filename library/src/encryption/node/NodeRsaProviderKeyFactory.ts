@@ -1,12 +1,8 @@
 import { generateKeyPairSync } from 'crypto';
 import { inject, injectable } from 'tsyringe';
-import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
-import {
-  EncryptionOptions,
-  ProviderKey,
-  ProviderKeyFactory,
-} from '../../types';
-import { rsaToKeyId } from '../../utils';
+import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
+import { EncryptionOptions, ProviderKey, ProviderKeyFactory } from '../types';
+import { rsaToKeyId } from '../utils';
 
 @injectable()
 export class NodeRsaProviderKeyFactory implements ProviderKeyFactory {

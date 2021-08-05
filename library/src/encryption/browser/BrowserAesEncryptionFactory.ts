@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
-import { keyIdToAes, bufferToBase64, base64ToBuffer } from '../../utils';
-import { EncryptionFactory } from '../../types';
-import { BasisTheoryCacheService } from '../../../common/BasisTheoryCacheService';
+import { keyIdToAes, bufferToBase64, base64ToBuffer } from '../utils';
+import { EncryptionFactory } from '../types';
+import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
 
 @injectable()
 export class BrowserAesEncryptionFactory implements EncryptionFactory {
@@ -10,8 +10,16 @@ export class BrowserAesEncryptionFactory implements EncryptionFactory {
 
   public constructor(private _cache: BasisTheoryCacheService) {}
 
-  public async encrypt(keyId: string, plainTxt: string): Promise<string> {
-    const aes = keyIdToAes(keyId);
+  public async encrypt(
+    providerKeyId: string,
+    plainTxt: string
+  ): Promise<string> {
+    const key = this.GetKey(providerKeyId);
+    if (key === null) {
+      throw new Error(`Key not found for providerKeyId: ${providerKeyId}`);
+    }
+
+    const aes = keyIdToAes(key);
     const aesKey = await this.loadBrowserAesKey(aes.key);
     const encrypted = await window.crypto.subtle.encrypt(
       {
@@ -25,8 +33,16 @@ export class BrowserAesEncryptionFactory implements EncryptionFactory {
     return bufferToBase64(encrypted);
   }
 
-  public async decrypt(keyId: string, cipherTxt: string): Promise<string> {
-    const aes = keyIdToAes(keyId);
+  public async decrypt(
+    providerKeyId: string,
+    cipherTxt: string
+  ): Promise<string> {
+    const key = this.GetKey(providerKeyId);
+    if (key === null) {
+      throw new Error(`Key not found for providerKeyId: ${providerKeyId}`);
+    }
+
+    const aes = keyIdToAes(key);
     const aesKey = await this.loadBrowserAesKey(aes.key);
     const decrypted = await window.crypto.subtle.decrypt(
       {
@@ -38,6 +54,10 @@ export class BrowserAesEncryptionFactory implements EncryptionFactory {
     );
 
     return new TextDecoder().decode(decrypted);
+  }
+
+  private GetKey(providerKeyId: string): string | null {
+    return localStorage.getItem(providerKeyId);
   }
 
   private async loadBrowserAesKey(rawKey: ArrayBuffer): Promise<CryptoKey> {

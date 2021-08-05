@@ -1,3 +1,10 @@
+import 'reflect-metadata';
+import { singleton } from 'tsyringe';
+import { v4 as uuid } from 'uuid';
+import {
+  ProviderKey,
+  ProviderKeyRepository,
+} from './../../src/encryption/types';
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type */
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
@@ -455,3 +462,34 @@ export const testList = <T, C, U>(param: TestCrudParam<T, C, U>) => {
     });
   });
 };
+
+@singleton()
+export class MockProviderKeyRepository implements ProviderKeyRepository {
+  private _repository: ProviderKey[] = [];
+
+  public async getKeyByKeyId(keyId: string): Promise<ProviderKey | undefined> {
+    const key = this._repository.find((key) => key.keyId === keyId);
+    return Promise.resolve(key);
+  }
+
+  public async getKeyByName(
+    name: string,
+    provider: string,
+    algorithm: string
+  ): Promise<ProviderKey | undefined> {
+    const key = this._repository.find(
+      (key) =>
+        key.name === name &&
+        key.provider === provider &&
+        key.algorithm === algorithm
+    );
+    return Promise.resolve(key);
+  }
+
+  public async save(key: ProviderKey): Promise<ProviderKey> {
+    key.keyId = uuid();
+    this._repository.push(key);
+    console.log(this._repository);
+    return Promise.resolve(key);
+  }
+}
