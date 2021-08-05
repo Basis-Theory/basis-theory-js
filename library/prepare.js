@@ -2,8 +2,12 @@ const fs = require('fs');
 const package = require('./package.json');
 
 // remove not required fields
-delete package.scripts;
 delete package.devDependencies;
+
+// use only required temporary script in dist
+package.scripts = {
+  postversion: 'cd .. && node bump.js',
+};
 
 // include all 'dist/*' files
 package.files = ['*'];
