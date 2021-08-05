@@ -19,7 +19,6 @@
     "build:package": "node prepare.js",
     "prepare": "yarn build",
     "release": "semantic-release",
-    "postversion": "node bump.js",
     "size": "size-limit",
     "start": "webpack --config webpack.dev.js --watch",
     "test": "jest",
