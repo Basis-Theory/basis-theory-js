@@ -1,3 +1,10 @@
+# [1.0.0-alpha.18](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2021-08-05)
+
+
+### Bug Fixes
+
+* introduce builder pattern for crud services ([eb106fc](https://github.com/Basis-Theory/basis-theory-js/commit/eb106fc6f428e2e0640d2df579465d5d371ad644))
+
 # [1.0.0-alpha.17](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2021-08-03)
 
 
