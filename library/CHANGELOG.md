@@ -1,3 +1,10 @@
+# [1.0.0-alpha.20](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2021-08-05)
+
+
+### Bug Fixes
+
+* remove scripts from dist package descriptor ([5f14dc5](https://github.com/Basis-Theory/basis-theory-js/commit/5f14dc52968442d467a9585fec4548178e704770))
+
 # [1.0.0-alpha.19](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2021-08-05)
 
 
