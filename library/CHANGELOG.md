@@ -1,3 +1,11 @@
+# [1.0.0-alpha.19](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2021-08-05)
+
+
+### Bug Fixes
+
+* create elements module folder for the sake of augmentation ([368820b](https://github.com/Basis-Theory/basis-theory-js/commit/368820b51d59d057b91d02586cc227410714cb9a))
+* pack dist folder ([4525082](https://github.com/Basis-Theory/basis-theory-js/commit/45250825808930843e6bf8e864f48c8dec7108b3))
+
 # [1.0.0-alpha.18](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2021-08-05)
 
 
