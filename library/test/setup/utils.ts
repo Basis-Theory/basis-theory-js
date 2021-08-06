@@ -1,9 +1,8 @@
-import 'reflect-metadata';
-import { singleton } from 'tsyringe';
 import { v4 as uuid } from 'uuid';
 import {
   ProviderKey,
   ProviderKeyRepository,
+  EncryptionKeyRepository,
 } from './../../src/encryption/types';
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type */
 import MockAdapter from 'axios-mock-adapter';
@@ -463,7 +462,6 @@ export const testList = <T, C, U>(param: TestCrudParam<T, C, U>) => {
   });
 };
 
-@singleton()
 export class MockProviderKeyRepository implements ProviderKeyRepository {
   private _repository: ProviderKey[] = [];
 
@@ -483,13 +481,33 @@ export class MockProviderKeyRepository implements ProviderKeyRepository {
         key.provider === provider &&
         key.algorithm === algorithm
     );
+
     return Promise.resolve(key);
   }
 
   public async save(key: ProviderKey): Promise<ProviderKey> {
     key.keyId = uuid();
     this._repository.push(key);
-    console.log(this._repository);
     return Promise.resolve(key);
+  }
+}
+
+export class MockEncryptionKeyRepository implements EncryptionKeyRepository {
+  private _repository = new Map<string, string>();
+
+  public async getKey(providerKeyId: string): Promise<string> {
+    const key = this._repository.get(providerKeyId);
+    if (key === undefined) {
+      throw new Error('Encryption key not found.');
+    }
+    return Promise.resolve(key);
+  }
+
+  public async save(
+    providerKeyId: string,
+    encryptionKey: string
+  ): Promise<string> {
+    this._repository.set(providerKeyId, encryptionKey);
+    return this.getKey(providerKeyId);
   }
 }

@@ -1,48 +1,76 @@
-import { injectable, inject } from 'tsyringe';
-import { EncryptionOptions, EncryptionFactory } from '../types';
+import { ONE_HOUR_SECS } from '../../common/constants';
+import { EncryptionFactory, EncryptionKeyRepository } from '../types';
 import {
   keyIdToRsaKeyPair,
   base64ToBuffer,
   bufferToBase64,
   getBrowserRsaParams,
 } from '../utils';
+import { LocalEncryptionKeyRepository } from './LocalEncryptionKeyRepository';
+import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
 
-@injectable()
 export class BrowserRsaEncryptionFactory implements EncryptionFactory {
   public provider = 'BROWSER';
   public algorithm = 'RSA';
+  private _cache = BasisTheoryCacheService.GetInstance();
 
-  public constructor(@inject('Options') private options?: EncryptionOptions) {}
+  public constructor(
+    private _keyRepository: EncryptionKeyRepository = new LocalEncryptionKeyRepository(),
+    private rsaKeySize?: number
+  ) {}
 
-  public async encrypt(keyId: string, plainTxt: string): Promise<string> {
-    const keyPair = keyIdToRsaKeyPair(keyId);
+  public async encrypt(
+    providerKeyId: string,
+    plainText: string
+  ): Promise<string> {
+    const key = await this.GetKey(providerKeyId);
+    if (key === null) {
+      throw new Error(`Key not found for providerKeyId: ${providerKeyId}`);
+    }
 
+    const keyPair = keyIdToRsaKeyPair(key);
     const pubKey = await this.loadPublicKey(keyPair.publicKey);
     const encrypted = await window.crypto.subtle.encrypt(
       { name: 'RSA-OAEP' },
       pubKey,
-      new TextEncoder().encode(plainTxt).buffer
+      new TextEncoder().encode(plainText).buffer
     );
     return bufferToBase64(encrypted);
   }
 
-  public async decrypt(keyId: string, cipherTxt: string): Promise<string> {
-    const keyPair = keyIdToRsaKeyPair(keyId);
+  public async decrypt(
+    providerKeyId: string,
+    cipherText: string
+  ): Promise<string> {
+    const key = await this.GetKey(providerKeyId);
+    if (key === null) {
+      throw new Error(`Key not found for providerKeyId: ${providerKeyId}`);
+    }
+
+    const keyPair = keyIdToRsaKeyPair(key);
     const privKey = await this.loadPrivateKey(keyPair.privateKey);
     const decrypted = await window.crypto.subtle.decrypt(
       { name: 'RSA-OAEP' },
       privKey,
-      base64ToBuffer(cipherTxt)
+      base64ToBuffer(cipherText)
     );
 
     return new TextDecoder().decode(decrypted);
+  }
+
+  private async GetKey(providerKeyId: string): Promise<string> {
+    return await this._cache.getOrAdd(
+      `keys_${providerKeyId}`,
+      async () => await this._keyRepository.getKey(providerKeyId),
+      ONE_HOUR_SECS
+    );
   }
 
   private async loadPublicKey(pem: string): Promise<CryptoKey> {
     return await window.crypto.subtle.importKey(
       'spki',
       this.pemToBinary(pem, 'PUBLIC'),
-      getBrowserRsaParams(this.options?.rsaKeySize),
+      getBrowserRsaParams(this.rsaKeySize),
       true,
       ['encrypt']
     );
@@ -52,7 +80,7 @@ export class BrowserRsaEncryptionFactory implements EncryptionFactory {
     return window.crypto.subtle.importKey(
       'pkcs8',
       this.pemToBinary(pem, 'PRIVATE'),
-      getBrowserRsaParams(this.options?.rsaKeySize),
+      getBrowserRsaParams(this.rsaKeySize),
       true,
       ['decrypt']
     );

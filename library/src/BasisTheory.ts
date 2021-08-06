@@ -1,4 +1,3 @@
-import { container } from 'tsyringe';
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryAtomic } from './atomic';
 import type {
@@ -8,7 +7,6 @@ import type {
 } from './types';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
-import { BasisTheoryEncryption } from './encryption/BasisTheoryEncryption';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -20,7 +18,6 @@ export class BasisTheory {
   private _initOptions?: Required<BasisTheoryInitOptions>;
   private _tokens?: BasisTheoryTokens;
   private _atomic?: BasisTheoryAtomic;
-  private _encryption?: BasisTheoryEncryption;
   private _elements?: BasisTheoryElements;
   private _applications?: BasisTheoryApplications;
 
@@ -52,8 +49,6 @@ export class BasisTheory {
         baseURL: SERVICES.applications[this._initOptions.environment],
       });
 
-      this._encryption = container.resolve(BasisTheoryEncryption);
-
       if (this._initOptions.elements) {
         await this.loadElements(apiKey);
       }
@@ -80,10 +75,6 @@ export class BasisTheory {
 
   public get atomic(): BasisTheoryAtomic {
     return assertInit(this._atomic);
-  }
-
-  public get encryption(): BasisTheoryEncryption {
-    return assertInit(this._encryption);
   }
 
   public set elements(elements: BasisTheoryElements) {

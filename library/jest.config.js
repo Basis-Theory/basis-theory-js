@@ -1,12 +1,7 @@
 const common = {
   preset: 'ts-jest',
   automock: false,
-  coveragePathIgnorePatterns: [
-    'test',
-    'dist',
-    'src/encryption/providers',
-    'src/encryption/BasisTheoryAesEncryptionService.ts',
-  ],
+  coveragePathIgnorePatterns: ['test', 'dist'],
 };
 
 module.exports = {

@@ -27,15 +27,11 @@ export interface ProviderKey {
   expirationDate?: Date;
 }
 
-export interface EncryptionOptions {
-  rsaKeySize?: number;
-}
-
 export interface EncryptionFactory {
   algorithm: string;
   provider: string;
-  encrypt(keyId: string, plainTxt: string): Promise<string>;
-  decrypt(keyId: string, cipherTxt: string): Promise<string>;
+  encrypt(providerKeyId: string, plainText: string): Promise<string>;
+  decrypt(providerKeyId: string, cipherText: string): Promise<string>;
 }
 
 export interface ProviderKeyFactory {
@@ -52,4 +48,9 @@ export interface ProviderKeyRepository {
     algorithm: string
   ): Promise<ProviderKey | undefined>;
   save(key: ProviderKey): Promise<ProviderKey>;
+}
+
+export interface EncryptionKeyRepository {
+  getKey(providerKeyId: string): Promise<string>;
+  save(providerKeyId: string, encryptionKey: string): Promise<string>;
 }

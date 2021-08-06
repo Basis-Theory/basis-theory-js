@@ -1,43 +1,47 @@
-import { injectable } from 'tsyringe';
-import { createCipheriv, createDecipheriv } from 'crypto';
+import { ONE_HOUR_SECS } from '../../common/constants';
 import { keyIdToAes } from '../utils';
-import { EncryptionFactory } from '../types';
+import { EncryptionFactory, EncryptionKeyRepository } from '../types';
 import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
+import { BasisTheoryAesEncryptionService } from '../BasisTheoryAesEncryptionService';
 
-@injectable()
 export class NodeAesEncryptionFactory implements EncryptionFactory {
   public provider = 'NODE';
   public algorithm = 'AES';
+  private _cache = BasisTheoryCacheService.GetInstance();
 
-  public constructor(private _cache: BasisTheoryCacheService) {}
+  public constructor(private _keyRepository: EncryptionKeyRepository) {}
 
-  public async encrypt(keyId: string, plainTxt: string): Promise<string> {
-    const algorithm = 'aes-256-cbc';
-    const aesKey = keyIdToAes(keyId);
-    const cipher = createCipheriv(
-      algorithm,
-      Buffer.from(aesKey.key),
-      Buffer.from(aesKey.iv)
-    );
+  public async encrypt(
+    providerKeyId: string,
+    plainText: string
+  ): Promise<string> {
+    const key = await this.GetKey(providerKeyId);
+    if (key === null) {
+      throw new Error(`Key not found for providerKeyId: ${providerKeyId}`);
+    }
 
-    let encrypted = cipher.update(plainTxt, 'utf-8', 'base64');
-    encrypted += cipher.final('base64');
-
-    return Promise.resolve(encrypted);
+    const aes = keyIdToAes(key);
+    return await BasisTheoryAesEncryptionService.Encrypt(aes, plainText);
   }
 
-  public async decrypt(keyId: string, cipherTxt: string): Promise<string> {
-    const algorithm = 'aes-256-cbc';
-    const aesKey = keyIdToAes(keyId);
-    const decipher = createDecipheriv(
-      algorithm,
-      Buffer.from(aesKey.key),
-      Buffer.from(aesKey.iv)
+  public async decrypt(
+    providerKeyId: string,
+    cipherText: string
+  ): Promise<string> {
+    const key = await this.GetKey(providerKeyId);
+    if (key === null) {
+      throw new Error(`Key not found for providerKeyId: ${providerKeyId}`);
+    }
+
+    const aes = keyIdToAes(key);
+    return await BasisTheoryAesEncryptionService.Decrypt(aes, cipherText);
+  }
+
+  private async GetKey(providerKeyId: string): Promise<string> {
+    return await this._cache.getOrAdd(
+      `keys_${providerKeyId}`,
+      async () => await this._keyRepository.getKey(providerKeyId),
+      ONE_HOUR_SECS
     );
-
-    let decrypted = decipher.update(cipherTxt, 'base64', 'utf-8');
-    decrypted += decipher.final('utf-8');
-
-    return Promise.resolve(decrypted);
   }
 }

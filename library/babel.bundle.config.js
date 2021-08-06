@@ -9,9 +9,5 @@ module.exports = {
     ],
     '@babel/typescript',
   ],
-  plugins: [
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
-    '@babel/proposal-class-properties',
-    'babel-plugin-transform-typescript-metadata',
-  ],
+  plugins: ['@babel/proposal-class-properties'],
 };

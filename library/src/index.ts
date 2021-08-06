@@ -1,5 +1,4 @@
 // import 'core-js';
-import 'reflect-metadata';
 import 'regenerator-runtime/runtime';
 import { BasisTheory } from './BasisTheory';
 

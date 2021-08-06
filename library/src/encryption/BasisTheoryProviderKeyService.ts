@@ -1,15 +1,16 @@
 import { ONE_HOUR_SECS } from './../common/constants';
-import { singleton, container, inject, injectable } from 'tsyringe';
 import { BasisTheoryCacheService } from '../common/BasisTheoryCacheService';
-import { ProviderKey, ProviderKeyFactory } from './types';
-import { MockProviderKeyRepository } from '../../test/setup/utils';
+import {
+  ProviderKey,
+  ProviderKeyFactory,
+  ProviderKeyRepository,
+} from './types';
 
-@singleton()
-@injectable()
 export class BasisTheoryProviderKeyService {
+  private _cache = BasisTheoryCacheService.GetInstance();
   public constructor(
-    private _cache: BasisTheoryCacheService,
-    private _providerKeyRepository: MockProviderKeyRepository
+    private _providerKeyRepository: ProviderKeyRepository,
+    private _providerKeyFactory: ProviderKeyFactory
   ) {}
 
   public async getKeyByKeyId(keyId: string): Promise<ProviderKey | undefined> {
@@ -35,33 +36,10 @@ export class BasisTheoryProviderKeyService {
         );
         if (providerKey !== undefined) return providerKey;
 
-        const factory = this.resolveFactory(algorithm, provider);
-        providerKey = await factory.create(name);
+        providerKey = await this._providerKeyFactory.create(name);
         return await this._providerKeyRepository.save(providerKey);
       },
       ONE_HOUR_SECS
-    );
-  }
-
-  private resolveFactory(
-    algorithm: string,
-    provider: string
-  ): ProviderKeyFactory {
-    const factories = container.resolveAll<ProviderKeyFactory>(
-      'ProviderKeyFactory'
-    );
-
-    for (let i = 0; i < factories.length; i++) {
-      if (
-        factories[i].algorithm === algorithm &&
-        factories[i].provider === provider
-      ) {
-        return factories[i];
-      }
-    }
-
-    throw new Error(
-      `Provider key factory not found for provider: ${provider} and algorithm: ${algorithm}`
     );
   }
 }

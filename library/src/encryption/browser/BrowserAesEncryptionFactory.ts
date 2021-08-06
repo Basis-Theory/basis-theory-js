@@ -1,72 +1,51 @@
-import { injectable } from 'tsyringe';
-import { keyIdToAes, bufferToBase64, base64ToBuffer } from '../utils';
+import { ONE_HOUR_SECS } from './../../common/constants';
+import { EncryptionKeyRepository } from './../types';
+import { BasisTheoryCacheService } from './../../common/BasisTheoryCacheService';
+import { BasisTheoryAesEncryptionService } from './../BasisTheoryAesEncryptionService';
+import { keyIdToAes } from '../utils';
 import { EncryptionFactory } from '../types';
-import { BasisTheoryCacheService } from '../../common/BasisTheoryCacheService';
+import { LocalEncryptionKeyRepository } from './LocalEncryptionKeyRepository';
 
-@injectable()
 export class BrowserAesEncryptionFactory implements EncryptionFactory {
   public provider = 'BROWSER';
   public algorithm = 'AES';
+  private _cache = BasisTheoryCacheService.GetInstance();
 
-  public constructor(private _cache: BasisTheoryCacheService) {}
+  public constructor(
+    private _keyRepository: EncryptionKeyRepository = new LocalEncryptionKeyRepository()
+  ) {}
 
   public async encrypt(
     providerKeyId: string,
-    plainTxt: string
+    plainText: string
   ): Promise<string> {
-    const key = this.GetKey(providerKeyId);
+    const key = await this.GetKey(providerKeyId);
     if (key === null) {
       throw new Error(`Key not found for providerKeyId: ${providerKeyId}`);
     }
 
     const aes = keyIdToAes(key);
-    const aesKey = await this.loadBrowserAesKey(aes.key);
-    const encrypted = await window.crypto.subtle.encrypt(
-      {
-        name: 'AES-GCM',
-        iv: aes.iv,
-      },
-      aesKey,
-      new TextEncoder().encode(plainTxt).buffer
-    );
-
-    return bufferToBase64(encrypted);
+    return await BasisTheoryAesEncryptionService.Encrypt(aes, plainText);
   }
 
   public async decrypt(
     providerKeyId: string,
-    cipherTxt: string
+    cipherText: string
   ): Promise<string> {
-    const key = this.GetKey(providerKeyId);
+    const key = await this.GetKey(providerKeyId);
     if (key === null) {
       throw new Error(`Key not found for providerKeyId: ${providerKeyId}`);
     }
 
     const aes = keyIdToAes(key);
-    const aesKey = await this.loadBrowserAesKey(aes.key);
-    const decrypted = await window.crypto.subtle.decrypt(
-      {
-        name: 'AES-GCM',
-        iv: aes.iv,
-      },
-      aesKey,
-      base64ToBuffer(cipherTxt)
-    );
-
-    return new TextDecoder().decode(decrypted);
+    return await BasisTheoryAesEncryptionService.Decrypt(aes, cipherText);
   }
 
-  private GetKey(providerKeyId: string): string | null {
-    return localStorage.getItem(providerKeyId);
-  }
-
-  private async loadBrowserAesKey(rawKey: ArrayBuffer): Promise<CryptoKey> {
-    return await window.crypto.subtle.importKey(
-      'raw',
-      rawKey,
-      'AES-GCM',
-      true,
-      ['encrypt', 'decrypt']
+  private async GetKey(providerKeyId: string): Promise<string> {
+    return await this._cache.getOrAdd(
+      `keys_${providerKeyId}`,
+      async () => await this._keyRepository.getKey(providerKeyId),
+      ONE_HOUR_SECS
     );
   }
 }

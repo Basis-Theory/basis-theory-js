@@ -1,12 +1,19 @@
-import { singleton } from 'tsyringe';
 import NodeCache from 'node-cache';
 
-@singleton()
 export class BasisTheoryCacheService {
+  private static instance: BasisTheoryCacheService;
   private _cache: NodeCache;
 
-  public constructor() {
+  private constructor() {
     this._cache = new NodeCache();
+  }
+
+  public static GetInstance(): BasisTheoryCacheService {
+    if (!BasisTheoryCacheService.instance) {
+      BasisTheoryCacheService.instance = new BasisTheoryCacheService();
+    }
+
+    return BasisTheoryCacheService.instance;
   }
 
   public add<T>(key: string, item: T, ttl: number): void {
