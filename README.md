@@ -52,6 +52,7 @@ The provided scripts with the SDK will check for all dependencies, start docker,
 
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Docker Compose](https://www.docker.com/products/docker-desktop)
+- [NodeJS](https://nodejs.org/en/) > 10.12.0
 - [Yarn](https://classic.yarnpkg.com/en/docs/)
 
 ### Build the SDK and run Tests
