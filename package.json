@@ -4,7 +4,7 @@
   "private": true,
   "description": "Basis Theory JS monorepo package",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
-  "license": "UNLISCENSED",
+  "license": "MIT",
   "author": {
     "name": "Davi Aquino",
     "email": "davi@basistheory.com"
