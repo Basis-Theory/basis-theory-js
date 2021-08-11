@@ -3,7 +3,10 @@
   "version": "1.0.0-alpha.20",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "MIT",
-  "author": "James Armstead",
+  "author": {
+    "name": "Basis Theory",
+    "email": "support@basistheory.com"
+  },
   "main": "dist/basis-theory-js.bundle.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",

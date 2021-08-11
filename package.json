@@ -6,8 +6,8 @@
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "MIT",
   "author": {
-    "name": "Davi Aquino",
-    "email": "davi@basistheory.com"
+    "name": "Basis Theory",
+    "email": "support@basistheory.com"
   },
   "workspaces": [
     "library",
