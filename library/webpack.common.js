@@ -32,8 +32,6 @@ const base = {
   },
 
   plugins: [new Dotenv()],
-
-  externals: ['@azure/keyvault-keys'],
 };
 
 const umd = merge(base, {
