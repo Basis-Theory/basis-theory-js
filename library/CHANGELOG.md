@@ -1,3 +1,10 @@
+# [1.0.0-alpha.21](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2021-08-12)
+
+
+### Bug Fixes
+
+* remove azure encryption ([66942c2](https://github.com/Basis-Theory/basis-theory-js/commit/66942c27f8eb1fc11eb24736a7cee1b443b041da))
+
 # [1.0.0-alpha.20](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2021-08-05)
 
 
