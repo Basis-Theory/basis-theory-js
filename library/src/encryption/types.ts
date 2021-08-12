@@ -1,4 +1,4 @@
-import { AzureEncryptionOptions, EncryptionOptions } from '../types';
+import { EncryptionOptions } from '../types';
 
 export interface KeyPair {
   publicKey: string;
@@ -8,7 +8,7 @@ export interface KeyPair {
 export interface EncryptionAdapter {
   name: string;
   generateKeys(): Promise<KeyPair | string | unknown>;
-  init(encryptionOptions: EncryptionOptions | AzureEncryptionOptions): void;
+  init(encryptionOptions: EncryptionOptions): void;
   encrypt(encryptionKey: unknown, plainTextData: string): Promise<string>;
   decrypt(decryptionKey: unknown, cipherTextData: string): Promise<string>;
 }

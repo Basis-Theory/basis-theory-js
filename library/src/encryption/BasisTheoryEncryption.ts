@@ -1,8 +1,7 @@
 import type { EncryptionAdapter } from './types';
 import { browserAdapter } from './providers/browser';
-import { azureAdapter } from './providers/azure';
 import { nodeAdapter } from './providers/node';
-import type { AzureEncryptionOptions, Providers } from '../types';
+import type { Providers } from '../types';
 import type { KeyPair } from './types';
 import { EncryptionOptions } from '../types';
 
@@ -11,9 +10,6 @@ export class BasisTheoryEncryption implements EncryptionAdapter {
 
   public constructor(encryptionProvider: Providers) {
     switch (encryptionProvider) {
-      case 'AZURE':
-        this.adapter = azureAdapter;
-        break;
       case 'BROWSER':
         this.adapter = browserAdapter;
         break;
@@ -21,13 +17,13 @@ export class BasisTheoryEncryption implements EncryptionAdapter {
         this.adapter = nodeAdapter;
         break;
       default:
-        throw new Error('No adapter found for provider');
+        throw new Error(
+          `No adapter found for provider name "${encryptionProvider}"`
+        );
     }
   }
 
-  public init(
-    encryptionOptions: EncryptionOptions | AzureEncryptionOptions
-  ): void {
+  public init(encryptionOptions: EncryptionOptions): void {
     return this.adapter.init(encryptionOptions);
   }
 

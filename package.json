@@ -4,10 +4,10 @@
   "private": true,
   "description": "Basis Theory JS monorepo package",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
-  "license": "UNLISCENSED",
+  "license": "Apache-2.0",
   "author": {
-    "name": "Davi Aquino",
-    "email": "davi@basistheory.com"
+    "name": "Basis Theory",
+    "email": "support@basistheory.com"
   },
   "workspaces": [
     "library",

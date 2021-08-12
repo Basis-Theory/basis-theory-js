@@ -5,7 +5,7 @@ const package = require('./package.json');
 
 package.version = distPackage.version;
 
-fs.writeFileSync('./package.json', JSON.stringify(package, null, 2));
+fs.writeFileSync('./package.json', JSON.stringify(package, null, 2) + '\n');
 
 // removes dist package scripts before publish
 delete distPackage.scripts;

@@ -1,4 +1,3 @@
-import type { TokenCredential } from '@azure/identity';
 import type { BasisTheoryElements } from './elements';
 
 export type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
@@ -14,7 +13,7 @@ export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
 };
 
-export type Providers = 'BROWSER' | 'NODE' | 'AZURE';
+export type Providers = 'BROWSER' | 'NODE';
 
 export const algorithm = ['RSA', 'AES'] as const;
 
@@ -23,11 +22,6 @@ export type Algorithm = typeof algorithm[number];
 export interface EncryptionProviderOptions {
   defaultKeySize: number;
   keyExpirationInDays: number;
-}
-
-export interface AzureEncryptionOptions extends EncryptionOptions {
-  keyVaultName: string;
-  credentials?: TokenCredential;
 }
 
 export interface EncryptionOptions {

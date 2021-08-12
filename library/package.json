@@ -2,8 +2,11 @@
   "name": "@Basis-Theory/basis-theory-js",
   "version": "1.0.0-alpha.20",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
-  "license": "UNLICENSED",
-  "author": "James Armstead",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Basis Theory",
+    "email": "support@basistheory.com"
+  },
   "main": "dist/basis-theory-js.bundle.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,11 +15,12 @@
   ],
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "concurrently \"yarn build:bundle\" \"yarn build:module\" \"yarn build:declarations\" \"yarn build:package\" --kill-others-on-fail",
+    "build": "yarn clean && concurrently \"yarn build:bundle\" \"yarn build:module\" \"yarn build:declarations\" \"yarn build:package\" --kill-others-on-fail",
     "build:bundle": "webpack --config webpack.prod.js",
     "build:declarations": "tsc",
     "build:module": "babel src --extensions .ts --out-dir dist",
     "build:package": "node prepare.js",
+    "clean": "rimraf dist",
     "prepare": "yarn build",
     "release": "semantic-release",
     "size": "size-limit",
@@ -25,8 +29,6 @@
     "test:cov": "jest --coverage"
   },
   "dependencies": {
-    "@azure/identity": "^1.3.0",
-    "@azure/keyvault-keys": "^4.1.0",
     "axios": "^0.21.1",
     "camelcase-keys": "^6.2.2",
     "core-js": "^3.8.3",
@@ -57,6 +59,7 @@
     "is-base64": "^1.1.0",
     "jest": "^26.6.3",
     "jest-environment-jsdom": "^26.6.2",
+    "rimraf": "^3.0.2",
     "size-limit": "^4.9.1",
     "ts-jest": "^26.5.0",
     "typescript": "4.1.4",
