@@ -1,3 +1,4 @@
+import type { PaginatedQuery } from '../service';
 export type Primitive = string | number | boolean | null;
 export type DataObject = {
   [member: string]: TokenData;
@@ -5,7 +6,12 @@ export type DataObject = {
 export type DataArray = Array<TokenData>;
 export type TokenData = Primitive | DataObject | DataArray;
 
-export type TokenType = 'token' | 'card' | 'bank';
+export type TokenType =
+  | 'token'
+  | 'card'
+  | 'bank'
+  | 'card:reaction'
+  | 'bank:reaction';
 
 export interface TokenEncryptionKey {
   key: string;
@@ -45,6 +51,22 @@ export interface CreateTokenResponse {
 
 export interface GetTokenResponse extends CreateTokenResponse {
   data: unknown;
+}
+
+export interface RetrieveTokenQuery {
+  children?: boolean;
+  childrenType?: TokenType | TokenType[];
+}
+
+export interface ListTokensQuery extends PaginatedQuery {
+  id?: string | string[];
+  type?: TokenType | TokenType[];
+  children?: boolean;
+  childrenType?: TokenType | TokenType[];
+}
+
+export interface ListTokensQueryDecrypted extends ListTokensQuery {
+  decryptType?: TokenType | TokenType[];
 }
 
 // we can disable for this next line as we are only exporting interfaces here
