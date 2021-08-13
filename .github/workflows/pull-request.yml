@@ -13,6 +13,7 @@ jobs:
         os: [ubuntu-latest]
     env:
       CI: 1 # prevents extra Cypress installation progress messages
+      HUSKY: 0 # disables husky hooks
       PULUMI_INFRA_DEV_STACK: basistheory/infrastructure-azure/dev
       PULUMI_INFRA_PROD_STACK: basistheory/infrastructure-azure/prod
     steps:
@@ -23,7 +24,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      
+
       - name: Setup Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
 
@@ -69,7 +70,7 @@ jobs:
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           IS_PR_WORKFLOW: true
-      
+
       - name: Lint
         uses: wearerequired/lint-action@v1.7.0
         with:
