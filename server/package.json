@@ -1,5 +1,5 @@
 {
-  "name": "@Basis-Theory/basis-theory-js-mock-server",
+  "name": "@basis-theory/basis-theory-js-mock-server",
   "version": "1.0.0",
   "description": "Express powered mock server for testing js package",
   "main": "index.ts",

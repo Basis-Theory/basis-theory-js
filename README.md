@@ -5,13 +5,13 @@
 Using [Node Package Manager](https://docs.npmjs.com/)
 
 ```sh
-npm install --save @Basis-Theory/basis-theory-js
+npm install --save @basis-theory/basis-theory-js
 ```
 
 Using [Yarn](https://classic.yarnpkg.com/en/docs/)
 
 ```sh
-yarn add @Basis-Theory/basis-theory-js
+yarn add @basis-theory/basis-theory-js
 ```
 
 ## Documentation
@@ -23,7 +23,7 @@ For a complete list of endpoints and examples, please refer to our [API docs](ht
 ### Initialization
 
 ```javascript
-import { BasisTheory } from '@Basis-Theory/basis-theory-js';
+import { BasisTheory } from '@basis-theory/basis-theory-js';
 
 const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED'); // replace with your application key
 ```
