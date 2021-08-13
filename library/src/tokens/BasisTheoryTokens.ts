@@ -7,12 +7,29 @@ import {
   ListTokensQueryDecrypted,
   TokenData,
 } from './types';
-import { BasisTheoryService, PaginatedList, RequestOptions } from '../service';
+import {
+  transformTokensResponseCamelCase,
+  transformTokenRequestSnakeCase,
+} from '../common/utils';
+import {
+  BasisTheoryService,
+  BasisTheoryServiceOptions,
+  PaginatedList,
+  RequestOptions,
+} from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
 import { createRequestConfig, getQueryParams } from '../common';
 
 export const BasisTheoryTokens = new CrudBuilder(
   class BasisTheoryTokens extends BasisTheoryService {
+    public constructor(options: BasisTheoryServiceOptions) {
+      super({
+        ...options,
+        transformResponse: transformTokensResponseCamelCase,
+        transformRequest: transformTokenRequestSnakeCase,
+      });
+    }
+
     /**
      * @deprecated use {@link create} instead
      */

@@ -35,18 +35,12 @@ export const transformTokenRequestSnakeCase: AxiosTransformer = (
   if (token === undefined) {
     return undefined;
   }
-  let snakecaseToken = snakecaseKeys(token, { deep: true }) as Token;
 
-  if (token.data === undefined) {
-    return snakecaseToken;
-  }
-  snakecaseToken = { ...snakecaseToken, data: token.data };
-
-  if (token.metadata === undefined) {
-    return snakecaseToken;
-  }
-
-  return { ...snakecaseToken, metadata: token.metadata };
+  return {
+    ...snakecaseKeys(token, { deep: true }),
+    ...(token.data !== undefined && { data: token.data }),
+    ...(token.metadata !== undefined && { metadata: token.metadata }),
+  } as Token;
 };
 
 export const transformTokensResponseCamelCase: AxiosTransformer = (
@@ -55,18 +49,12 @@ export const transformTokensResponseCamelCase: AxiosTransformer = (
   if (token === undefined) {
     return undefined;
   }
-  let camelCaseToken = camelcaseKeys(token, { deep: true }) as Token;
 
-  if (token.data === undefined) {
-    return camelCaseToken;
-  }
-  camelCaseToken = { ...camelCaseToken, data: token.data };
-
-  if (token.metadata === undefined) {
-    return camelCaseToken;
-  }
-
-  return { ...camelCaseToken, metadata: token.metadata };
+  return {
+    ...camelcaseKeys(token, { deep: true }),
+    ...(token.data !== undefined && { data: token.data }),
+    ...(token.metadata !== undefined && { metadata: token.metadata }),
+  } as Token;
 };
 
 export const transformResponseCamelCase: AxiosTransformer = <T, C>(

@@ -17,8 +17,8 @@ import {
   testDelete,
   testList,
 } from './setup/utils';
-import { API_KEY_HEADER } from '../dist/common';
 import {
+  API_KEY_HEADER,
   BT_TRACE_ID_HEADER,
   getQueryParams,
   transformTokenRequestSnakeCase,
