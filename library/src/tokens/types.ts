@@ -28,7 +28,7 @@ export interface Token {
   tenantId: string;
   type?: TokenType;
   data: TokenData;
-  metadata?: unknown;
+  metadata?: Record<string, string>;
   encryption?: TokenEncryption;
   children?: Token[];
   createdBy: string;
@@ -39,22 +39,6 @@ export type CreateTokenModel = Pick<
   Token,
   'type' | 'data' | 'metadata' | 'encryption' | 'children'
 >;
-
-/**
- * @deprecated soon to be removed
- */
-export interface CreateTokenResponse {
-  id: string;
-  tenantId: string;
-  type: TokenType;
-  createdBy: string;
-  createdAt: string;
-  metadata: unknown;
-}
-
-export interface GetTokenResponse extends CreateTokenResponse {
-  data: unknown;
-}
 
 export interface RetrieveTokenQuery {
   children?: boolean;
@@ -70,20 +54,4 @@ export interface ListTokensQuery extends PaginatedQuery {
 
 export interface ListTokensQueryDecrypted extends ListTokensQuery {
   decryptType?: TokenType | TokenType[];
-}
-
-// we can disable for this next line as we are only exporting interfaces here
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export declare namespace TokensApi {
-  /**
-   * @deprecated soon to be removed
-   */
-  export interface CreateTokenResponse {
-    id: string;
-    tenant_id: string;
-    type: TokenType;
-    created_by: string;
-    created_at: string;
-    metadata: unknown;
-  }
 }

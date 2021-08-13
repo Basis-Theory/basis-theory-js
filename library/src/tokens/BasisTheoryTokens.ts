@@ -6,50 +6,32 @@ import {
   RetrieveTokenQuery,
   ListTokensQueryDecrypted,
   TokenData,
-  CreateTokenResponse,
-  TokensApi,
-  GetTokenResponse,
 } from './types';
 import { BasisTheoryService, PaginatedList, RequestOptions } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
 import { createRequestConfig, getQueryParams } from '../common';
-import camelcaseKeys from 'camelcase-keys';
 
 export const BasisTheoryTokens = new CrudBuilder(
   class BasisTheoryTokens extends BasisTheoryService {
     /**
      * @deprecated use {@link create} instead
      */
-    public async createToken(data: TokenData): Promise<CreateTokenResponse> {
-      const {
-        data: res,
-      } = await this.client.post<TokensApi.CreateTokenResponse>('/', {
-        data,
-      });
-      const token = (camelcaseKeys(res, {
-        deep: false,
-      }) as unknown) as CreateTokenResponse;
-      return token;
+    public async createToken(data: TokenData): Promise<Token> {
+      return this.client.post('/', { data: data }).then(dataExtractor);
     }
 
     /**
      * @deprecated use {@link retrieve} instead
      */
-    public async getToken(id: string): Promise<GetTokenResponse> {
-      const {
-        data: res,
-      } = await this.client.get<TokensApi.CreateTokenResponse>(`/${id}`);
-      const token = (camelcaseKeys(res, {
-        deep: false,
-      }) as unknown) as GetTokenResponse;
-      return token;
+    public async getToken(id: string): Promise<Token> {
+      return this.client.get(id).then(dataExtractor);
     }
 
     /**
      * @deprecated use {@link delete} instead
      */
     public async deleteToken(id: string): Promise<void> {
-      await this.client.delete<void>(`/${id}`);
+      await this.client.delete(id);
     }
 
     public async retrieve(
