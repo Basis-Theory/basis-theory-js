@@ -25,7 +25,7 @@
       function submit() {
         let serviceName = document.getElementById('service').value;
 
-        if (serviceRoute.indexOf('-') !== -1) {
+        if (serviceName.indexOf('-') !== -1) {
           serviceName = kebabToCamel(serviceRoute);
         }
 
