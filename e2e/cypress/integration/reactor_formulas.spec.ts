@@ -1,17 +1,17 @@
 context('Reactor Formulas', () => {
   it('should create', () => {
-    cy.testCreate('reactorFormulas');
+    cy.testCreate('reactor-formulas');
   });
   it('should retrieve', () => {
-    cy.testRetrieve('reactorFormulas');
+    cy.testRetrieve('reactor-formulas');
   });
   it('should update', () => {
-    cy.testUpdate('reactorFormulas');
+    cy.testUpdate('reactor-formulas');
   });
   it('should delete', () => {
-    cy.testDelete('reactorFormulas');
+    cy.testDelete('reactor-formulas');
   });
   it('should list', () => {
-    cy.testList('reactorFormulas');
+    cy.testList('reactor-formulas');
   });
 });
