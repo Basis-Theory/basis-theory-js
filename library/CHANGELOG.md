@@ -1,3 +1,10 @@
+# [1.0.0-alpha.23](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2021-08-13)
+
+
+### Bug Fixes
+
+* rename package scope ([fb2d505](https://github.com/Basis-Theory/basis-theory-js/commit/fb2d5053ae9f56a85e7c82b56ea24763ae19ce90))
+
 # [1.0.0-alpha.22](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2021-08-13)
 
 
