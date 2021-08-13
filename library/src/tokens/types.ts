@@ -26,7 +26,7 @@ export interface TokenEncryption {
 export interface Token {
   id: string;
   tenantId: string;
-  type: TokenType;
+  type?: TokenType;
   data: TokenData;
   metadata?: unknown;
   encryption?: TokenEncryption;
@@ -40,6 +40,9 @@ export type CreateTokenModel = Pick<
   'type' | 'data' | 'metadata' | 'encryption' | 'children'
 >;
 
+/**
+ * @deprecated soon to be removed
+ */
 export interface CreateTokenResponse {
   id: string;
   tenantId: string;
@@ -72,6 +75,9 @@ export interface ListTokensQueryDecrypted extends ListTokensQuery {
 // we can disable for this next line as we are only exporting interfaces here
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export declare namespace TokensApi {
+  /**
+   * @deprecated soon to be removed
+   */
   export interface CreateTokenResponse {
     id: string;
     tenant_id: string;
