@@ -1,3 +1,10 @@
+# [1.0.0-alpha.22](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2021-08-13)
+
+
+### Bug Fixes
+
+* move to NPM registry ([9bd9ccd](https://github.com/Basis-Theory/basis-theory-js/commit/9bd9ccd6964765f0dbf3762ec3703cc335787c64))
+
 # [1.0.0-alpha.21](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2021-08-12)
 
 
