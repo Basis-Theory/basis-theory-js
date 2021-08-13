@@ -72,7 +72,7 @@
     "node": ">=10.12.0"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "access": "public"
   },
   "size-limit": [
     {
