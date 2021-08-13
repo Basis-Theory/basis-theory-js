@@ -3,7 +3,6 @@ import { BasisTheoryService } from './BasisTheoryService';
 import type { RequestOptions } from './types';
 import { createRequestConfig, dataExtractor, getQueryParams } from '../common';
 import type { PaginatedList, PaginatedQuery } from './types';
-import { snakeCase } from 'snake-case';
 
 type BasisTheoryServiceConstructor<
   T extends BasisTheoryService = BasisTheoryService
