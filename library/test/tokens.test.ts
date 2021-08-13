@@ -18,10 +18,14 @@ import {
   testList,
 } from './setup/utils';
 import { API_KEY_HEADER } from '../dist/common';
-import { BT_TRACE_ID_HEADER, getQueryParams } from '../src/common';
+import {
+  BT_TRACE_ID_HEADER,
+  getQueryParams,
+  transformTokenRequestSnakeCase,
+} from '../src/common';
 import { PaginatedList } from '../src/service';
 
-describe('_Tokens', () => {
+describe('Tokens', () => {
   let bt: BasisTheory;
   let chance: Chance.Chance;
   let apiKey: string;
@@ -44,7 +48,14 @@ describe('_Tokens', () => {
       const id = chance.string();
       const tenantId = chance.string();
       const type = chance.string() as TokenType;
-      const data = chance.string();
+      const data = {
+        camelCaseParameter: chance.string(),
+        snake_case_parameter: chance.string(),
+      };
+      const metadata = {
+        camelCaseParameter: chance.string(),
+        snake_case_parameter: chance.string(),
+      };
       const createdBy = chance.string();
       const createdAt = chance.string();
 
@@ -53,6 +64,7 @@ describe('_Tokens', () => {
         tenant_id: tenantId,
         type,
         data,
+        metadata,
         created_at: createdAt,
         created_by: createdBy,
       });
@@ -62,6 +74,7 @@ describe('_Tokens', () => {
         tenantId,
         type,
         data,
+        metadata,
         createdAt,
         createdBy,
       });
@@ -574,7 +587,14 @@ describe('_Tokens', () => {
     it('should create child token for a token', async () => {
       const parentId = chance.string();
       const tokenPayload = {
-        data: chance.string(),
+        data: {
+          camelCaseParameter: chance.string(),
+          snake_case_parameter: chance.string(),
+        },
+        metadata: {
+          camelCaseParameter: chance.string(),
+          snake_case_parameter: chance.string(),
+        },
       } as CreateTokenModel;
 
       const createdAt = chance.string();
@@ -803,12 +823,23 @@ describe('_Tokens', () => {
   });
 
   describe('create', () => {
+    const _chance = new Chance();
+    const createPayload = {
+      data: {
+        camelCaseParameter: _chance.string(),
+        snake_case_parameter: _chance.string(),
+      },
+      metadata: {
+        camelCaseParameter: _chance.string(),
+        snake_case_parameter: _chance.string(),
+      },
+    };
+
     testCreate(() => ({
       service: bt.tokens,
       client,
-      createPayload: {
-        data: chance.string(),
-      },
+      createPayload,
+      transformedCreatePayload: transformTokenRequestSnakeCase(createPayload),
     }));
   });
 

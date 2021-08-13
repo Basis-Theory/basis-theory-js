@@ -9,6 +9,7 @@ import type {
 import type { RequestOptions } from '../service';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
+import { Token } from '../tokens';
 
 export const assertInit = <T>(prop: T): NonNullable<T> => {
   if (prop === null || prop === undefined) {
@@ -26,6 +27,46 @@ export const transformRequestSnakeCase: AxiosTransformer = <T, S>(
   return snakecaseKeys(data, {
     deep: true,
   }) as S;
+};
+
+export const transformTokenRequestSnakeCase: AxiosTransformer = (
+  token: Token
+): Token | undefined => {
+  if (token === undefined) {
+    return undefined;
+  }
+  let snakecaseToken = snakecaseKeys(token, { deep: true }) as Token;
+
+  if (token.data === undefined) {
+    return snakecaseToken;
+  }
+  snakecaseToken = { ...snakecaseToken, data: token.data };
+
+  if (token.metadata === undefined) {
+    return snakecaseToken;
+  }
+
+  return { ...snakecaseToken, metadata: token.metadata };
+};
+
+export const transformTokensResponseCamelCase: AxiosTransformer = (
+  token: Token
+): Token | undefined => {
+  if (token === undefined) {
+    return undefined;
+  }
+  let camelCaseToken = camelcaseKeys(token, { deep: true }) as Token;
+
+  if (token.data === undefined) {
+    return camelCaseToken;
+  }
+  camelCaseToken = { ...camelCaseToken, data: token.data };
+
+  if (token.metadata === undefined) {
+    return camelCaseToken;
+  }
+
+  return { ...camelCaseToken, metadata: token.metadata };
 };
 
 export const transformResponseCamelCase: AxiosTransformer = <T, C>(

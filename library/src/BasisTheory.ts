@@ -1,3 +1,7 @@
+import {
+  transformTokensResponseCamelCase,
+  transformTokenRequestSnakeCase,
+} from './common/utils';
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryAtomic } from './atomic';
 import type { BasisTheoryInitOptions, InitStatus } from './types';
@@ -38,6 +42,8 @@ export class BasisTheory {
       this._tokens = new BasisTheoryTokens({
         apiKey,
         baseURL: SERVICES.tokens[this._initOptions.environment],
+        transformResponse: transformTokensResponseCamelCase,
+        transformRequest: transformTokenRequestSnakeCase,
       });
       this._atomic = new BasisTheoryAtomic({
         apiKey,
