@@ -14,7 +14,8 @@ export type Services =
   | 'applications'
   | 'reactorFormulas'
   | 'reactors'
-  | 'permissions';
+  | 'permissions'
+  | 'logs';
 
 export type ServicesMap = {
   [key in Services]: ServiceUrlMap;

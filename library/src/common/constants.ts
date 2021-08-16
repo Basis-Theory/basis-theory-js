@@ -16,6 +16,11 @@ export const SERVICES: ServicesMap = {
     sandbox: `https://${process.env.API_HOST_DEV}/applications`,
     local: `http://${process.env.API_HOST_LOCAL}/applications`,
   },
+  logs: {
+    production: `https://${process.env.API_HOST_PROD}/logs`,
+    sandbox: `https://${process.env.API_HOST_DEV}/logs`,
+    local: `http://${process.env.API_HOST_LOCAL}/logs`,
+  },
   reactorFormulas: {
     production: `https://${process.env.API_HOST_PROD}/reactor-formulas`,
     sandbox: `https://${process.env.API_HOST_DEV}/reactor-formulas`,

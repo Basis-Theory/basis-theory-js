@@ -41,6 +41,10 @@ describe('Environments', () => {
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
+      baseURL: SERVICES.logs[environment],
+    });
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
       baseURL: SERVICES.reactorFormulas[environment],
     });
     expect(create).toHaveBeenCalledWith({
@@ -51,7 +55,7 @@ describe('Environments', () => {
       ...baseConfig,
       baseURL: SERVICES.permissions[environment],
     });
-    expect(create).toHaveBeenCalledTimes(6);
+    expect(create).toHaveBeenCalledTimes(7);
   });
 
   it('should throw error if not properly initialized', () => {

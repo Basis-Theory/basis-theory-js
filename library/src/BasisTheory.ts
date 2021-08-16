@@ -5,6 +5,7 @@ import { BasisTheoryApplications } from './applications';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
+import { BasisTheoryLogs } from './logs';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheoryPermissions } from './permissions';
@@ -22,6 +23,7 @@ export class BasisTheory {
   private _encryption?: BasisTheoryEncryptionAdapters;
   private _elements?: BasisTheoryElements;
   private _applications?: BasisTheoryApplications;
+  private _logs?: BasisTheoryLogs;
   private _reactorFormulas?: BasisTheoryReactorFormulas;
   private _reactors?: BasisTheoryReactors;
   private _permissions?: BasisTheoryPermissions;
@@ -52,6 +54,10 @@ export class BasisTheory {
       this._applications = new BasisTheoryApplications({
         apiKey,
         baseURL: SERVICES.applications[this._initOptions.environment],
+      });
+      this._logs = new BasisTheoryLogs({
+        apiKey,
+        baseURL: SERVICES.logs[this._initOptions.environment],
       });
       this._reactorFormulas = new BasisTheoryReactorFormulas({
         apiKey,
@@ -114,6 +120,10 @@ export class BasisTheory {
 
   public get applications(): BasisTheoryApplications {
     return assertInit(this._applications);
+  }
+
+  public get logs(): BasisTheoryLogs {
+    return assertInit(this._logs);
   }
 
   public get reactorFormulas(): BasisTheoryReactorFormulas {
