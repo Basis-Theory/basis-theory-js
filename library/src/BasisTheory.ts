@@ -5,8 +5,9 @@ import { BasisTheoryApplications } from './applications';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
-import { BasisTheoryReactorFormulas } from './reactor-formulas/BasisTheoryReactorFormulas';
+import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
+import { BasisTheoryPermissions } from './permissions';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -23,6 +24,7 @@ export class BasisTheory {
   private _applications?: BasisTheoryApplications;
   private _reactorFormulas?: BasisTheoryReactorFormulas;
   private _reactors?: BasisTheoryReactors;
+  private _permissions?: BasisTheoryPermissions;
 
   public async init(
     apiKey: string,
@@ -58,6 +60,10 @@ export class BasisTheory {
       this._reactors = new BasisTheoryReactors({
         apiKey,
         baseURL: SERVICES.reactors[this._initOptions.environment],
+      });
+      this._permissions = new BasisTheoryPermissions({
+        apiKey,
+        baseURL: SERVICES.permissions[this._initOptions.environment],
       });
 
       this._encryption = new BasisTheoryEncryptionAdapters();
@@ -116,5 +122,9 @@ export class BasisTheory {
 
   public get reactors(): BasisTheoryReactors {
     return assertInit(this._reactors);
+  }
+
+  public get permissions(): BasisTheoryPermissions {
+    return assertInit(this._permissions);
   }
 }

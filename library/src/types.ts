@@ -13,7 +13,9 @@ export type Services =
   | 'atomic'
   | 'applications'
   | 'reactorFormulas'
-  | 'reactors';
+  | 'reactors'
+  | 'permissions';
+
 export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
 };
