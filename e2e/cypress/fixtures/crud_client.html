@@ -60,13 +60,13 @@
           bt[serviceName].delete('1234567890');
         }
         if (document.getElementById('retrieve-no-id').checked) {
-          bt[service].retrieve();
+          bt[serviceName].retrieve();
         }
         if (document.getElementById('update-no-id').checked) {
-          bt[service].update({});
+          bt[serviceName].update({});
         }
         if (document.getElementById('delete-no-id').checked) {
-          bt[service].delete();
+          bt[serviceName].delete();
         }
         if (document.getElementById('list').checked) {
           bt[serviceName].list();
