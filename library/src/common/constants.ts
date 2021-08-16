@@ -16,6 +16,11 @@ export const SERVICES: ServicesMap = {
     sandbox: `https://${process.env.API_HOST_DEV}/applications`,
     local: `http://${process.env.API_HOST_LOCAL}/applications`,
   },
+  tenants: {
+    production: `https://${process.env.API_HOST_PROD}/tenants/self`,
+    sandbox: `https://${process.env.API_HOST_DEV}/tenants/self`,
+    local: `http://${process.env.API_HOST_LOCAL}/tenants/self`,
+  },
 };
 
 export const API_KEY_HEADER = 'X-API-KEY';

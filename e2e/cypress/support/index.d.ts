@@ -18,6 +18,9 @@ declare namespace Cypress {
     testRetrieve(serviceName: string);
     testUpdate(serviceName: string);
     testDelete(serviceName: string);
+    testRetrieveNoId(serviceName: string);
+    testUpdateNoId(serviceName: string);
+    testDeleteNoId(serviceName: string);
     testList(serviceName: string);
   }
 }

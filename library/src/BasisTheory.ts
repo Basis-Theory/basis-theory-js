@@ -5,6 +5,7 @@ import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
+import { BasisTheoryTenants } from './tenants';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -19,6 +20,7 @@ export class BasisTheory {
   private _encryption?: BasisTheoryEncryptionAdapters;
   private _elements?: BasisTheoryElements;
   private _applications?: BasisTheoryApplications;
+  private _tenants?: BasisTheoryTenants;
 
   public async init(
     apiKey: string,
@@ -46,6 +48,10 @@ export class BasisTheory {
       this._applications = new BasisTheoryApplications({
         apiKey,
         baseURL: SERVICES.applications[this._initOptions.environment],
+      });
+      this._tenants = new BasisTheoryTenants({
+        apiKey,
+        baseURL: SERVICES.tenants[this._initOptions.environment],
       });
 
       this._encryption = new BasisTheoryEncryptionAdapters();
@@ -96,5 +102,9 @@ export class BasisTheory {
 
   public get applications(): BasisTheoryApplications {
     return assertInit(this._applications);
+  }
+
+  public get tenants(): BasisTheoryTenants {
+    return assertInit(this._tenants);
   }
 }
