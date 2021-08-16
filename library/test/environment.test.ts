@@ -51,7 +51,11 @@ describe('Environments', () => {
       ...baseConfig,
       baseURL: SERVICES.atomicBanks[environment],
     });
-    expect(create).toHaveBeenCalledTimes(6);
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: SERVICES.atomicCards[environment],
+    });
+    expect(create).toHaveBeenCalledTimes(7);
   });
 
   it('should throw error if not properly initialized', () => {

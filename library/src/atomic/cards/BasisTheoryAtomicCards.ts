@@ -1,4 +1,8 @@
-import type { AtomicBank, CreateAtomicBankModel } from './types';
+import {
+  transformAtomicRequestSnakeCase,
+  transformAtomicResponseCamelCase,
+} from './../../common/utils';
+import type { AtomicCard, CreateAtomicCardModel } from './types';
 import type {
   BasisTheoryServiceOptions,
   PaginatedQuery,
@@ -11,14 +15,12 @@ import {
   dataExtractor,
   transformAtomicReactionRequestSnakeCase,
   transformTokenResponseCamelCase,
-  transformAtomicRequestSnakeCase,
-  transformAtomicResponseCamelCase,
 } from '../../common';
 import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
 
-export const BasisTheoryAtomicBanks = new CrudBuilder(
-  class BasisTheoryAtomicBanks extends BasisTheoryService {
+export const BasisTheoryAtomicCards = new CrudBuilder(
+  class BasisTheoryAtomicCards extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
       super({
         transformRequest: transformAtomicRequestSnakeCase,
@@ -30,7 +32,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
     public async retrieveDecrypted(
       id: string,
       options?: RequestOptions
-    ): Promise<AtomicBank> {
+    ): Promise<AtomicCard> {
       return this.client
         .get(`/${id}/decrypt`, createRequestConfig(options))
         .then(dataExtractor);
@@ -51,12 +53,12 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
     }
 
     public async retrieveReaction(
-      atomicBankId: string,
+      atomicCardId: string,
       reactionTokenId: string,
       options?: RequestOptions
     ): Promise<Token> {
       return this.client
-        .get(`/${atomicBankId}/reaction/${reactionTokenId}`, {
+        .get(`/${atomicCardId}/reaction/${reactionTokenId}`, {
           transformResponse: transformTokenResponseCamelCase,
           ...createRequestConfig(options),
         })
@@ -64,12 +66,12 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
     }
   }
 )
-  .create<AtomicBank, CreateAtomicBankModel>()
-  .retrieve<AtomicBank>()
+  .create<AtomicCard, CreateAtomicCardModel>()
+  .retrieve<AtomicCard>()
   .delete()
-  .list<AtomicBank, PaginatedQuery>()
+  .list<AtomicCard, PaginatedQuery>()
   .build();
 
-export type BasisTheoryAtomicBanks = InstanceType<
-  typeof BasisTheoryAtomicBanks
+export type BasisTheoryAtomicCards = InstanceType<
+  typeof BasisTheoryAtomicCards
 >;

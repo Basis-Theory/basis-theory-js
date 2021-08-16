@@ -1,18 +1,12 @@
-export type BankType = 'bank';
+import type { Atomic } from '../types';
 
 export interface Bank {
   routingNumber: string;
   accountNumber: string;
 }
 
-export interface AtomicBank {
-  id: string;
-  tenantId: string;
-  type: BankType;
+export interface AtomicBank extends Atomic {
   bank: Bank;
-  metadata?: Record<string, string>;
-  createdBy: string;
-  createdAt: string;
 }
 
 export type CreateAtomicBankModel = Pick<AtomicBank, 'bank' | 'metadata'>;

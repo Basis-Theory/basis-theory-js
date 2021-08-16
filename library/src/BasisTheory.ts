@@ -7,7 +7,8 @@ import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptio
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
 import { BasisTheoryReactorFormulas } from './reactor-formulas/BasisTheoryReactorFormulas';
 import { BasisTheoryReactors } from './reactors';
-import { BasisTheoryAtomicBanks } from './atomic/banks/BasisTheoryAtomicBanks';
+import { BasisTheoryAtomicBanks } from './atomic/banks';
+import { BasisTheoryAtomicCards } from './atomic/cards';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -25,6 +26,7 @@ export class BasisTheory {
   private _reactorFormulas?: BasisTheoryReactorFormulas;
   private _reactors?: BasisTheoryReactors;
   private _atomicBanks?: BasisTheoryAtomicBanks;
+  private _atomicCards?: BasisTheoryAtomicCards;
 
   public async init(
     apiKey: string,
@@ -64,6 +66,10 @@ export class BasisTheory {
       this._atomicBanks = new BasisTheoryAtomicBanks({
         apiKey,
         baseURL: SERVICES.atomicBanks[this._initOptions.environment],
+      });
+      this._atomicCards = new BasisTheoryAtomicCards({
+        apiKey,
+        baseURL: SERVICES.atomicCards[this._initOptions.environment],
       });
 
       this._encryption = new BasisTheoryEncryptionAdapters();
@@ -126,5 +132,9 @@ export class BasisTheory {
 
   public get atomicBanks(): BasisTheoryAtomicBanks {
     return assertInit(this._atomicBanks);
+  }
+
+  public get atomicCards(): BasisTheoryAtomicCards {
+    return assertInit(this._atomicCards);
   }
 }

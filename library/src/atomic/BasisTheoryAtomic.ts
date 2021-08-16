@@ -1,13 +1,19 @@
 import { BasisTheoryService } from '../service';
-import { AtomicCard } from './types';
-import { AtomicBank, CreateAtomicBankModel } from './banks/types';
+import type { AtomicBank, CreateAtomicBankModel } from './banks/types';
+import type { AtomicCard, CreateAtomicCardModel } from './cards/types';
 import { dataExtractor } from '../common';
 
+/**
+ * @deprecated use {@link BasisTheoryAtomicBanks} and {@link BasisTheoryAtomicCards} instead
+ */
 export class BasisTheoryAtomic extends BasisTheoryService {
+  /**
+   * @deprecated use {@link BasisTheoryAtomicCards.create} instead
+   */
   public async storeCreditCard(
-    source: Omit<AtomicCard, 'id'>
+    model: CreateAtomicCardModel
   ): Promise<AtomicCard> {
-    return this.client.post<AtomicCard>('/cards', source).then(dataExtractor);
+    return this.client.post('/cards', model).then(dataExtractor);
   }
 
   /**
