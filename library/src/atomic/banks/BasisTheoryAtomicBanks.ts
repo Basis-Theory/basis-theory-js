@@ -1,16 +1,32 @@
 import type { AtomicBank, CreateAtomicBankModel } from './types';
-import { createRequestConfig, dataExtractor } from '../../common';
-import {
-  BasisTheoryService,
+import type {
+  BasisTheoryServiceOptions,
   PaginatedQuery,
   RequestOptions,
 } from '../../service';
+import type { ReactRequest } from '../types';
+import type { Token } from '../../tokens';
+import {
+  createRequestConfig,
+  dataExtractor,
+  transformAtomicReactionRequestSnakeCase,
+  transformTokenResponseCamelCase,
+  transformAtomicBankRequestSnakeCase,
+  transformAtomicBankResponseCamelCase,
+} from '../../common';
+import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
-import { ReactRequest } from '../types';
-import { Token } from '../../tokens';
 
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {
+    public constructor(options: BasisTheoryServiceOptions) {
+      super({
+        transformRequest: transformAtomicBankRequestSnakeCase,
+        transformResponse: transformAtomicBankResponseCamelCase,
+        ...options,
+      });
+    }
+
     public async retrieveDecrypted(
       id: string,
       options?: RequestOptions
@@ -26,7 +42,11 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
       options?: RequestOptions
     ): Promise<Token> {
       return this.client
-        .post(`/${id}/react`, request, createRequestConfig(options))
+        .post(`/${id}/react`, request, {
+          transformRequest: transformAtomicReactionRequestSnakeCase,
+          transformResponse: transformTokenResponseCamelCase,
+          ...createRequestConfig(options),
+        })
         .then(dataExtractor);
     }
 
@@ -36,10 +56,10 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
       options?: RequestOptions
     ): Promise<Token> {
       return this.client
-        .get(
-          `/${atomicBankId}/reaction/${reactionTokenId}`,
-          createRequestConfig(options)
-        )
+        .get(`/${atomicBankId}/reaction/${reactionTokenId}`, {
+          transformResponse: transformTokenResponseCamelCase,
+          ...createRequestConfig(options),
+        })
         .then(dataExtractor);
     }
   }

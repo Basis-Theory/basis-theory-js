@@ -1,8 +1,8 @@
 export type BankType = 'bank';
 
 export interface Bank {
-  routing_number: string;
-  account_number: string;
+  routingNumber: string;
+  accountNumber: string;
 }
 
 export interface AtomicBank {

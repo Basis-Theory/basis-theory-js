@@ -7,7 +7,7 @@ import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptio
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
 import { BasisTheoryReactorFormulas } from './reactor-formulas/BasisTheoryReactorFormulas';
 import { BasisTheoryReactors } from './reactors';
-import { BasisTheoryAtomicBanks } from './atomic/bank/BasisTheoryAtomicBanks';
+import { BasisTheoryAtomicBanks } from './atomic/banks/BasisTheoryAtomicBanks';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',

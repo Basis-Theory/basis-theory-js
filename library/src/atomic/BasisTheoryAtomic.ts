@@ -1,8 +1,7 @@
-import { BasisTheoryService, BasisTheoryServiceOptions } from '../service';
+import { BasisTheoryService } from '../service';
 import { AtomicCard } from './types';
-import { AtomicBank, CreateAtomicBankModel } from './bank/types';
-import { assertInit, dataExtractor } from '../common';
-import { BasisTheoryAtomicBanks } from './bank/BasisTheoryAtomicBanks';
+import { AtomicBank, CreateAtomicBankModel } from './banks/types';
+import { dataExtractor } from '../common';
 
 export class BasisTheoryAtomic extends BasisTheoryService {
   public async storeCreditCard(
