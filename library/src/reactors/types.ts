@@ -1,6 +1,6 @@
-import { PaginatedQuery } from '../service';
-import { TokenType } from '../tokens/types';
-import {
+import type { PaginatedQuery } from '../service';
+import type { TokenType } from '../tokens/types';
+import type {
   ReactorFormula,
   ReactorFormulaConfig,
 } from './../reactor-formulas/types';

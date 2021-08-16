@@ -1,9 +1,12 @@
 import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
 import { BasisTheory } from '../src';
-import { DataType, ReactorFormulaConfig } from '../src/reactor-formulas/types';
+import type {
+  DataType,
+  ReactorFormulaConfig,
+} from '../src/reactor-formulas/types';
 import { testCRUD, mockServiceClient } from './setup/utils';
-import { CreateReactorModel, UpdateReactorModel } from '../src/reactors';
+import type { CreateReactorModel, UpdateReactorModel } from '../src/reactors';
 
 describe('Reactors', () => {
   let bt: BasisTheory;

@@ -1,5 +1,5 @@
-import { PaginatedQuery } from '../service';
-import { TokenType } from '../tokens';
+import type { PaginatedQuery } from '../service';
+import type { TokenType } from '../tokens';
 
 export type FormulaType = 'official' | 'private';
 export type DataType = 'string' | 'boolean' | 'number';
