@@ -24,6 +24,8 @@ export interface AtomicCard {
 
 export interface ReactRequest {
   reactorId: string;
+  requestParameters?: Record<string, unknown>;
+  metadata?: Record<string, string>;
 }
 
 // we can disable for this next line as we are only exporting interfaces here

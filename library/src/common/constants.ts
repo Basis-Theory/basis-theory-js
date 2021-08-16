@@ -26,6 +26,11 @@ export const SERVICES: ServicesMap = {
     sandbox: `https://${process.env.API_HOST_DEV}/reactors`,
     local: `http://${process.env.API_HOST_LOCAL}/reactors`,
   },
+  atomicBanks: {
+    production: `https://${process.env.API_HOST_PROD}/atomic/banks`,
+    sandbox: `https://${process.env.API_HOST_DEV}/atomic/banks`,
+    local: `http://${process.env.API_HOST_LOCAL}/atomic/banks`,
+  },
 };
 
 export const API_KEY_HEADER = 'X-API-KEY';

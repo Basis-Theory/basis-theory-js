@@ -1,8 +1,8 @@
-import camelcaseKeys from 'camelcase-keys';
-import snakecaseKeys from 'snakecase-keys';
-import { BasisTheoryService } from '../service';
-import { AtomicBank, AtomicCard, PaymentsApi } from './types';
-import { dataExtractor } from '../common';
+import { BasisTheoryService, BasisTheoryServiceOptions } from '../service';
+import { AtomicCard } from './types';
+import { AtomicBank, CreateAtomicBankModel } from './bank/types';
+import { assertInit, dataExtractor } from '../common';
+import { BasisTheoryAtomicBanks } from './bank/BasisTheoryAtomicBanks';
 
 export class BasisTheoryAtomic extends BasisTheoryService {
   public async storeCreditCard(
@@ -11,17 +11,10 @@ export class BasisTheoryAtomic extends BasisTheoryService {
     return this.client.post<AtomicCard>('/cards', source).then(dataExtractor);
   }
 
-  public async storeBank(source: Omit<AtomicBank, 'id'>): Promise<AtomicBank> {
-    const payload: PaymentsApi.SourceBankModel = snakecaseKeys(source, {
-      deep: true,
-    });
-    const { data } = await this.client.post<PaymentsApi.SourceBankResponse>(
-      '/banks',
-      payload
-    );
-    const newBank = (camelcaseKeys(data, {
-      deep: true,
-    }) as unknown) as AtomicBank;
-    return newBank;
+  /**
+   * @deprecated use {@link BasisTheoryAtomicBanks.create} instead
+   */
+  public async storeBank(model: CreateAtomicBankModel): Promise<AtomicBank> {
+    return this.client.post('/banks', model).then(dataExtractor);
   }
 }

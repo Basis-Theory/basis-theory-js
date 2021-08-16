@@ -13,7 +13,8 @@ export type Services =
   | 'atomic'
   | 'applications'
   | 'reactorFormulas'
-  | 'reactors';
+  | 'reactors'
+  | 'atomicBanks';
 export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
 };

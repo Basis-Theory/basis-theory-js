@@ -7,6 +7,7 @@ import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptio
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
 import { BasisTheoryReactorFormulas } from './reactor-formulas/BasisTheoryReactorFormulas';
 import { BasisTheoryReactors } from './reactors';
+import { BasisTheoryAtomicBanks } from './atomic/bank/BasisTheoryAtomicBanks';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -23,6 +24,7 @@ export class BasisTheory {
   private _applications?: BasisTheoryApplications;
   private _reactorFormulas?: BasisTheoryReactorFormulas;
   private _reactors?: BasisTheoryReactors;
+  private _atomicBanks?: BasisTheoryAtomicBanks;
 
   public async init(
     apiKey: string,
@@ -58,6 +60,10 @@ export class BasisTheory {
       this._reactors = new BasisTheoryReactors({
         apiKey,
         baseURL: SERVICES.reactors[this._initOptions.environment],
+      });
+      this._atomicBanks = new BasisTheoryAtomicBanks({
+        apiKey,
+        baseURL: SERVICES.atomicBanks[this._initOptions.environment],
       });
 
       this._encryption = new BasisTheoryEncryptionAdapters();
@@ -116,5 +122,9 @@ export class BasisTheory {
 
   public get reactors(): BasisTheoryReactors {
     return assertInit(this._reactors);
+  }
+
+  public get atomicBanks(): BasisTheoryAtomicBanks {
+    return assertInit(this._atomicBanks);
   }
 }
