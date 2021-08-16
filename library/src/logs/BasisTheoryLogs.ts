@@ -1,6 +1,6 @@
 import { BasisTheoryService } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
-import { Log, LogQuery } from './types';
+import type { Log, LogQuery } from './types';
 
 export const BasisTheoryLogs = new CrudBuilder(
   class BasisTheoryLogs extends BasisTheoryService {}

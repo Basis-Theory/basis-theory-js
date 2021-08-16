@@ -1,4 +1,4 @@
-import { PaginatedQuery } from '../service';
+import type { PaginatedQuery } from '../service';
 
 export interface Log {
   tenantId: string;
