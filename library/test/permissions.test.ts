@@ -1,7 +1,7 @@
-import { PermissionType } from './../src/permissions/types';
 import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
 import type { ApplicationType } from '../src/applications/types';
+import { PermissionType } from './../src/permissions/types';
 import { BasisTheory } from '../src';
 import {
   errorStatus,
@@ -9,7 +9,6 @@ import {
   mockServiceClient,
 } from './setup/utils';
 import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
-import { Permission } from '../src/permissions';
 
 describe('Permissions', () => {
   let bt: BasisTheory;
@@ -39,8 +38,8 @@ describe('Permissions', () => {
         {
           type,
           description,
-          applicationTypes,
-        } as Permission,
+          application_types: applicationTypes,
+        },
       ]);
 
       expect(await bt.permissions.list()).toEqual([
@@ -48,7 +47,7 @@ describe('Permissions', () => {
           type,
           description,
           applicationTypes,
-        } as Permission,
+        },
       ]);
 
       expect(client.history.get.length).toBe(1);
@@ -68,8 +67,8 @@ describe('Permissions', () => {
         {
           type,
           description,
-          applicationTypes,
-        } as Permission,
+          application_types: applicationTypes,
+        },
       ]);
 
       expect(
@@ -79,7 +78,7 @@ describe('Permissions', () => {
           type,
           description,
           applicationTypes,
-        } as Permission,
+        },
       ]);
 
       expect(client.history.get.length).toBe(1);
