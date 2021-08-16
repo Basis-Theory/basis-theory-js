@@ -1,3 +1,4 @@
+import { ReactorFormulaRequestParam } from './../reactor-formulas/types';
 export interface AtomicCard {
   id: string;
   card: {
@@ -21,12 +22,8 @@ export interface AtomicCard {
   };
 }
 
-export interface AtomicBank {
-  id: string;
-  bank: {
-    accountNumber: string;
-    routingNumber: string;
-  };
+export interface ReactRequest {
+  reactorId: string;
 }
 
 // we can disable for this next line as we are only exporting interfaces here
@@ -63,20 +60,5 @@ export declare namespace PaymentsApi {
     type: 'card';
     card: CardModel;
     billing_details?: BillingDetailsModel;
-  }
-
-  export interface SourceBankModel {
-    bank: BankModel;
-  }
-
-  export interface BankModel {
-    account_number: string;
-    routing_number: string;
-  }
-
-  export interface SourceBankResponse {
-    id: string;
-    type: 'bank';
-    bank: BankModel;
   }
 }
