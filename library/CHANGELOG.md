@@ -1,3 +1,24 @@
+# [1.0.0-alpha.24](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2021-08-16)
+
+
+### Features
+
+* **ENG-722:** wip add client methods and typings to match dotnet ([fdc1c33](https://github.com/Basis-Theory/basis-theory-js/commit/fdc1c339a9c7debf8a0eee1d0962c8f97da8f5a2))
+
+# [1.0.0-alpha.23](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2021-08-13)
+
+
+### Bug Fixes
+
+* rename package scope ([fb2d505](https://github.com/Basis-Theory/basis-theory-js/commit/fb2d5053ae9f56a85e7c82b56ea24763ae19ce90))
+
+# [1.0.0-alpha.22](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2021-08-13)
+
+
+### Bug Fixes
+
+* move to NPM registry ([9bd9ccd](https://github.com/Basis-Theory/basis-theory-js/commit/9bd9ccd6964765f0dbf3762ec3703cc335787c64))
+
 # [1.0.0-alpha.21](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2021-08-12)
 
 

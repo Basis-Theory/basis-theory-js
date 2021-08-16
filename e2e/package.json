@@ -1,5 +1,5 @@
 {
-  "name": "@Basis-Theory/basis-theory-js-e2e",
+  "name": "@basis-theory/basis-theory-js-e2e",
   "version": "1.0.0",
   "description": "basis-theory-js e2e tests",
   "main": "index.js",

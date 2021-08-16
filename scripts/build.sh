@@ -7,7 +7,7 @@ current_directory="$PWD"
 
 cd $(dirname $0)
 
-yarn install --froze-lock-file
+yarn install --frozen-lockfile
 yarn build
 
 cd "$current_directory"
