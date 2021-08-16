@@ -8,8 +8,7 @@ import {
   expectBasisTheoryApiError,
   mockServiceClient,
 } from './setup/utils';
-import { API_KEY_HEADER } from '../dist/common';
-import { BT_TRACE_ID_HEADER } from '../src/common';
+import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 
 describe('Applications', () => {
   let bt: BasisTheory;
