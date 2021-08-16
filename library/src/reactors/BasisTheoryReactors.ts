@@ -1,6 +1,6 @@
 import { BasisTheoryService } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
-import {
+import type {
   Reactor,
   CreateReactorModel,
   UpdateReactorModel,

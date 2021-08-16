@@ -5,10 +5,12 @@ import { BasisTheoryApplications } from './applications';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
-import { BasisTheoryReactorFormulas } from './reactor-formulas/BasisTheoryReactorFormulas';
+import { BasisTheoryLogs } from './logs';
+import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheoryAtomicBanks } from './atomic/banks';
 import { BasisTheoryAtomicCards } from './atomic/cards';
+import { BasisTheoryPermissions } from './permissions';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
@@ -23,10 +25,12 @@ export class BasisTheory {
   private _encryption?: BasisTheoryEncryptionAdapters;
   private _elements?: BasisTheoryElements;
   private _applications?: BasisTheoryApplications;
+  private _logs?: BasisTheoryLogs;
   private _reactorFormulas?: BasisTheoryReactorFormulas;
   private _reactors?: BasisTheoryReactors;
   private _atomicBanks?: BasisTheoryAtomicBanks;
   private _atomicCards?: BasisTheoryAtomicCards;
+  private _permissions?: BasisTheoryPermissions;
 
   public async init(
     apiKey: string,
@@ -55,6 +59,10 @@ export class BasisTheory {
         apiKey,
         baseURL: SERVICES.applications[this._initOptions.environment],
       });
+      this._logs = new BasisTheoryLogs({
+        apiKey,
+        baseURL: SERVICES.logs[this._initOptions.environment],
+      });
       this._reactorFormulas = new BasisTheoryReactorFormulas({
         apiKey,
         baseURL: SERVICES.reactorFormulas[this._initOptions.environment],
@@ -70,6 +78,10 @@ export class BasisTheory {
       this._atomicCards = new BasisTheoryAtomicCards({
         apiKey,
         baseURL: SERVICES.atomicCards[this._initOptions.environment],
+      });
+      this._permissions = new BasisTheoryPermissions({
+        apiKey,
+        baseURL: SERVICES.permissions[this._initOptions.environment],
       });
 
       this._encryption = new BasisTheoryEncryptionAdapters();
@@ -122,6 +134,10 @@ export class BasisTheory {
     return assertInit(this._applications);
   }
 
+  public get logs(): BasisTheoryLogs {
+    return assertInit(this._logs);
+  }
+
   public get reactorFormulas(): BasisTheoryReactorFormulas {
     return assertInit(this._reactorFormulas);
   }
@@ -136,5 +152,9 @@ export class BasisTheory {
 
   public get atomicCards(): BasisTheoryAtomicCards {
     return assertInit(this._atomicCards);
+  }
+
+  public get permissions(): BasisTheoryPermissions {
+    return assertInit(this._permissions);
   }
 }

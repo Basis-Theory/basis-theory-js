@@ -1,12 +1,11 @@
 import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
 import { BasisTheory } from '../src';
-import { TokenType } from '../src/tokens';
-import {
+import type { TokenType } from '../src/tokens';
+import type {
   DataType,
   FormulaType,
   ReactorFormulaConfig,
-  ReactorFormulaRequestParam,
 } from '../src/reactor-formulas/types';
 import { testCRUD, mockServiceClient } from './setup/utils';
 
@@ -46,7 +45,14 @@ describe('Reactor Formulas', () => {
             type: chance.string() as DataType,
           } as ReactorFormulaConfig,
         ],
-        requestParameters: [{} as ReactorFormulaRequestParam],
+        requestParameters: [
+          {
+            name: chance.string(),
+            description: chance.string(),
+            type: chance.string() as DataType,
+            optional: chance.bool(),
+          },
+        ],
       },
       updatePayload: {
         name: chance.string(),
@@ -62,7 +68,14 @@ describe('Reactor Formulas', () => {
             type: chance.string() as DataType,
           } as ReactorFormulaConfig,
         ],
-        requestParameters: [{} as ReactorFormulaRequestParam],
+        requestParameters: [
+          {
+            name: chance.string(),
+            description: chance.string(),
+            type: chance.string() as DataType,
+            optional: chance.bool(),
+          },
+        ],
       },
     }));
   });

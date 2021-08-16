@@ -15,7 +15,9 @@ export type Services =
   | 'reactorFormulas'
   | 'reactors'
   | 'atomicBanks'
-  | 'atomicCards';
+  | 'atomicCards'
+  | 'permissions'
+  | 'logs';
 export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
 };

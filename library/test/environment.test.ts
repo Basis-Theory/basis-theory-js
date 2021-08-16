@@ -41,6 +41,10 @@ describe('Environments', () => {
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
+      baseURL: SERVICES.logs[environment],
+    });
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
       baseURL: SERVICES.reactorFormulas[environment],
     });
     expect(create).toHaveBeenCalledWith({
@@ -55,7 +59,11 @@ describe('Environments', () => {
       ...baseConfig,
       baseURL: SERVICES.atomicCards[environment],
     });
-    expect(create).toHaveBeenCalledTimes(7);
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: SERVICES.permissions[environment],
+    });
+    expect(create).toHaveBeenCalledTimes(9);
   });
 
   it('should throw error if not properly initialized', () => {
