@@ -5,7 +5,7 @@ import { BasisTheoryApplications } from './applications';
 import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
-import { BasisTheoryLogs } from './logs/BasisTheoryLogs';
+import { BasisTheoryLogs } from './logs';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   environment: 'production',
