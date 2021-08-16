@@ -1,3 +1,18 @@
+# [1.0.0-alpha.26](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2021-08-16)
+
+
+### Features
+
+* **ENG-837:** implement API client for reactor formulas ([7661e4d](https://github.com/Basis-Theory/basis-theory-js/commit/7661e4d2cc29ff820bad3ed77b2c30103b46a106))
+* **ENG-837:** implement full API client for reactors ([fe96ac0](https://github.com/Basis-Theory/basis-theory-js/commit/fe96ac024b40c5d6fd71c4d6f3bd04bcc7a49ca8))
+
+# [1.0.0-alpha.25](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2021-08-16)
+
+
+### Features
+
+* **ENG-833:** add full API client for permissions ([00c430b](https://github.com/Basis-Theory/basis-theory-js/commit/00c430b36ecdc879dd0351855f25e3b389f23c27))
+
 # [1.0.0-alpha.24](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2021-08-16)
 
 
