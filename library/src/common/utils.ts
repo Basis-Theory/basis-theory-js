@@ -70,7 +70,7 @@ export const transformAtomicReactionRequestSnakeCase: AxiosTransformer = (
   return {
     ...snakecaseKeys(request, { deep: true }),
     ...(request.requestParameters !== undefined
-      ? { requestParameters: request.requestParameters }
+      ? { request_parameters: request.requestParameters }
       : {}),
     ...(request.metadata !== undefined ? { metadata: request.metadata } : {}),
   } as Token;
