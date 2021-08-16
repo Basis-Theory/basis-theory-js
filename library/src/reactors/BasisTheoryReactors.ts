@@ -1,0 +1,20 @@
+import { BasisTheoryService } from '../service';
+import { CrudBuilder } from '../service/CrudBuilder';
+import {
+  Reactor,
+  CreateReactorModel,
+  UpdateReactorModel,
+  ReactorQuery,
+} from './types';
+
+export const BasisTheoryReactors = new CrudBuilder(
+  class BasisTheoryReactors extends BasisTheoryService {}
+)
+  .create<Reactor, CreateReactorModel>()
+  .retrieve<Reactor>()
+  .update<Reactor, UpdateReactorModel>()
+  .delete()
+  .list<Reactor, ReactorQuery>()
+  .build();
+
+export type BasisTheoryReactors = InstanceType<typeof BasisTheoryReactors>;

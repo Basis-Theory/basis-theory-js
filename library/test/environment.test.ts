@@ -43,7 +43,11 @@ describe('Environments', () => {
       ...baseConfig,
       baseURL: SERVICES.reactorFormulas[environment],
     });
-    expect(create).toHaveBeenCalledTimes(4);
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: SERVICES.reactors[environment],
+    });
+    expect(create).toHaveBeenCalledTimes(5);
   });
 
   it('should throw error if not properly initialized', () => {
