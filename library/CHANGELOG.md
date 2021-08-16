@@ -1,3 +1,10 @@
+# [1.0.0-alpha.27](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2021-08-16)
+
+
+### Features
+
+* **ENG-841:** implement API client for logs ([379daef](https://github.com/Basis-Theory/basis-theory-js/commit/379daefe748c7f435c821f340e5d61362e3c84a0))
+
 # [1.0.0-alpha.26](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2021-08-16)
 
 
