@@ -152,11 +152,7 @@ describe('Tenants', () => {
 
   describe('delete', () => {
     it('should delete a tenant', async () => {
-      const createdAt = chance.string();
-
-      client.onDelete().reply(204, {
-        created_at: createdAt,
-      });
+      client.onDelete().reply(204, {});
 
       expect(await bt.tenants.delete()).toBeUndefined();
       expect(client.history.delete.length).toBe(1);
@@ -166,13 +162,10 @@ describe('Tenants', () => {
     });
 
     it('should delete a tenant with options', async () => {
-      const createdAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onDelete().reply(204, {
-        created_at: createdAt,
-      });
+      client.onDelete().reply(204, {});
 
       expect(
         await bt.tenants.delete({

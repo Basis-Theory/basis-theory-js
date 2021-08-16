@@ -91,7 +91,7 @@ Cypress.Commands.add('testDelete', (serviceName: string) => {
 });
 
 Cypress.Commands.add('testRetrieveNoId', (serviceName: string) => {
-  cy.intercept('GET', new RegExp(`/${serviceName}/.+`), {}).as('retrieve');
+  cy.intercept('GET', `/${serviceName}`, {}).as('retrieve');
 
   cy.visit('./e2e/cypress/fixtures/crud_client.html');
 
@@ -104,7 +104,7 @@ Cypress.Commands.add('testRetrieveNoId', (serviceName: string) => {
 });
 
 Cypress.Commands.add('testUpdateNoId', (serviceName: string) => {
-  cy.intercept('PUT', new RegExp(`/${serviceName}/.+`), {}).as('update');
+  cy.intercept('PUT', `/${serviceName}`, {}).as('update');
 
   cy.visit('./e2e/cypress/fixtures/crud_client.html');
 
@@ -117,7 +117,7 @@ Cypress.Commands.add('testUpdateNoId', (serviceName: string) => {
 });
 
 Cypress.Commands.add('testDeleteNoId', (serviceName: string) => {
-  cy.intercept('DELETE', new RegExp(`/${serviceName}/.+`), {}).as('delete');
+  cy.intercept('DELETE', `/${serviceName}`, {}).as('delete');
 
   cy.visit('./e2e/cypress/fixtures/crud_client.html');
 
