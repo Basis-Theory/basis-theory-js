@@ -43,7 +43,7 @@ describe('Atomic Cards', () => {
         number: _chance.string(),
         expirationMonth: _chance.integer(),
         expirationYear: _chance.integer(),
-        cvc: _chance.integer(),
+        cvc: _chance.string(),
       },
       billingDetails: {
         name: _chance.string(),
