@@ -1,3 +1,10 @@
+# [1.0.0-alpha.25](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2021-08-16)
+
+
+### Features
+
+* **ENG-833:** add full API client for permissions ([00c430b](https://github.com/Basis-Theory/basis-theory-js/commit/00c430b36ecdc879dd0351855f25e3b389f23c27))
+
 # [1.0.0-alpha.24](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2021-08-16)
 
 
