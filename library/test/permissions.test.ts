@@ -1,7 +1,7 @@
 import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
 import type { ApplicationType } from '../src/applications/types';
-import { PermissionType } from './../src/permissions/types';
+import type { PermissionType } from './../src/permissions/types';
 import { BasisTheory } from '../src';
 import {
   errorStatus,

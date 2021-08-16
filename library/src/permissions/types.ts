@@ -1,4 +1,4 @@
-import { ApplicationType } from '../applications';
+import type { ApplicationType } from '../applications';
 
 export const PERMISSION_TYPES = [
   'tenant:read',
