@@ -9,7 +9,7 @@ export interface Card {
   number: string;
   expirationMonth: number;
   expirationYear: number;
-  cvc?: number;
+  cvc?: string;
 }
 
 export interface BillingDetails {
