@@ -1,11 +1,11 @@
 context('Tenants', () => {
   it('should retrieve', () => {
-    cy.testRetrieveNoId('tenants/sef');
+    cy.testRetrieveNoId('tenants/self');
   });
   it('should update', () => {
-    cy.testUpdateNoId('tenants/sef');
+    cy.testUpdateNoId('tenants/self');
   });
   it('should delete', () => {
-    cy.testDeleteNoId('tenants/sef');
+    cy.testDeleteNoId('tenants/self');
   });
 });
