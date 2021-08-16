@@ -8,7 +8,16 @@ export type ServiceUrlMap = {
   [key in ServiceEnvironment]: string;
 };
 
-export type Services = 'tokens' | 'atomic' | 'applications' | 'tenants';
+export type Services =
+  | 'tokens'
+  | 'atomic'
+  | 'applications'
+  | 'reactorFormulas'
+  | 'reactors'
+  | 'permissions'
+  | 'logs'
+  | 'tenants';
+
 export type ServicesMap = {
   [key in Services]: ServiceUrlMap;
 };

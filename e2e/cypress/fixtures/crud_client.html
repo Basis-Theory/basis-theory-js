@@ -3,6 +3,7 @@
     <!-- Add BasisTheory SDK -->
     <script src="../../../library/dist/basis-theory-js.bundle.js"></script>
   </head>
+
   <body>
     <script>
       let bt;
@@ -10,20 +11,35 @@
         bt = await BasisTheory.init('123456789', { environment: 'local' });
       });
 
+      function kebabToCamel(str) {
+        let arr = str.split('-');
+        let capital = arr.map((item, index) =>
+          index
+            ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
+            : item.toLowerCase()
+        );
+        let capitalString = capital.join('');
+        return capitalString;
+      }
+
       function submit() {
-        const service = document.getElementById('service').value;
+        let serviceName = document.getElementById('service').value;
+
+        if (serviceName.indexOf('-') !== -1) {
+          serviceName = kebabToCamel(serviceName);
+        }
 
         if (document.getElementById('create').checked) {
-          bt[service].create({});
+          bt[serviceName].create({});
         }
         if (document.getElementById('retrieve').checked) {
-          bt[service].retrieve('1234567890');
+          bt[serviceName].retrieve('1234567890');
         }
         if (document.getElementById('update').checked) {
-          bt[service].update('1234567890', {});
+          bt[serviceName].update('1234567890', {});
         }
         if (document.getElementById('delete').checked) {
-          bt[service].delete('1234567890');
+          bt[serviceName].delete('1234567890');
         }
         if (document.getElementById('retrieve-no-id').checked) {
           bt[service].retrieve();
@@ -35,7 +51,7 @@
           bt[service].delete();
         }
         if (document.getElementById('list').checked) {
-          bt[service].list();
+          bt[serviceName].list();
         }
       }
     </script>
