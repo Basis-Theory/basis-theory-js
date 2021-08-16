@@ -39,7 +39,11 @@ describe('Environments', () => {
       ...baseConfig,
       baseURL: SERVICES.applications[environment],
     });
-    expect(create).toHaveBeenCalledTimes(3);
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: SERVICES.permissions[environment],
+    });
+    expect(create).toHaveBeenCalledTimes(4);
   });
 
   it('should throw error if not properly initialized', () => {
