@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type,@typescript-eslint/no-explicit-any */
 import { BasisTheoryService } from './BasisTheoryService';
 import type { RequestOptions } from './types';
-import { createRequestConfig, dataExtractor } from '../common';
+import { createRequestConfig, dataExtractor, getQueryParams } from '../common';
 import type { PaginatedList, PaginatedQuery } from './types';
-import { snakeCase } from 'snake-case';
 
 type BasisTheoryServiceConstructor<
   T extends BasisTheoryService = BasisTheoryService
@@ -83,36 +82,7 @@ const List = <
       query: Q = {} as Q,
       options?: RequestOptions
     ): Promise<PaginatedList<T>> {
-      let url = '/';
-
-      const keys = Object.keys(query) as (keyof Q)[];
-
-      if (keys.length > 0) {
-        const params = new URLSearchParams();
-
-        const appendSafe = (key: string, value: unknown): void => {
-          const type = typeof value;
-          if (
-            value === null ||
-            ['boolean', 'number', 'string'].includes(type)
-          ) {
-            params.append(snakeCase(key), value as string);
-          }
-        };
-
-        keys.forEach((key) => {
-          const value = query[key];
-
-          if (Array.isArray(value)) {
-            value.forEach((aValue) => {
-              appendSafe(String(key), aValue);
-            });
-          } else {
-            appendSafe(String(key), value);
-          }
-        });
-        url += `?${params.toString()}`;
-      }
+      const url = `/${getQueryParams(query)}`;
 
       return this.client
         .get(url, createRequestConfig(options))
