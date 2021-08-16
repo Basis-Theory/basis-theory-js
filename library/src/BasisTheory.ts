@@ -1,8 +1,8 @@
 import { assertInit, loadElements, SERVICES } from './common';
 import { BasisTheoryAtomic } from './atomic';
 import type { BasisTheoryInitOptions, InitStatus } from './types';
-import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryApplications } from './applications';
+import { BasisTheoryTokens } from './tokens';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
 import { BasisTheoryPermissions } from './permissions';

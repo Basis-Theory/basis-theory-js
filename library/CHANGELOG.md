@@ -1,3 +1,10 @@
+# [1.0.0-alpha.24](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2021-08-16)
+
+
+### Features
+
+* **ENG-722:** wip add client methods and typings to match dotnet ([fdc1c33](https://github.com/Basis-Theory/basis-theory-js/commit/fdc1c339a9c7debf8a0eee1d0962c8f97da8f5a2))
+
 # [1.0.0-alpha.23](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2021-08-13)
 
 
