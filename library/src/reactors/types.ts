@@ -1,16 +1,13 @@
 import type { PaginatedQuery } from '../service';
 import type { TokenType } from '../tokens/types';
-import type {
-  ReactorFormula,
-  ReactorFormulaConfig,
-} from './../reactor-formulas/types';
+import type { ReactorFormula } from './../reactor-formulas/types';
 
 export interface Reactor {
   id: string;
   tenantId: string;
   name: string;
   formula: ReactorFormula;
-  configuration: ReactorFormulaConfig;
+  configuration: Record<string, string>;
   createdAt: string;
   modifiedAt: string;
 }

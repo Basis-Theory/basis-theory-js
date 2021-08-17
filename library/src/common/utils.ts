@@ -10,6 +10,7 @@ import type { RequestOptions } from '../service';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
 import { Token } from '../tokens';
+import { Reactor } from '../reactors';
 
 export const assertInit = <T>(prop: T): NonNullable<T> => {
   if (prop === null || prop === undefined) {
@@ -27,6 +28,21 @@ export const transformRequestSnakeCase: AxiosTransformer = <T, S>(
   return snakecaseKeys(data, {
     deep: true,
   }) as S;
+};
+
+export const transformReactorRequestSnakeCase: AxiosTransformer = (
+  reactor: Reactor
+): Reactor | undefined => {
+  if (reactor === undefined) {
+    return undefined;
+  }
+
+  return {
+    ...snakecaseKeys(reactor, { deep: true }),
+    ...(reactor.configuration !== undefined
+      ? { configuration: reactor.configuration }
+      : {}),
+  } as Reactor;
 };
 
 export const transformTokenRequestSnakeCase: AxiosTransformer = (
@@ -55,6 +71,21 @@ export const transformTokensResponseCamelCase: AxiosTransformer = (
     ...(token.data !== undefined ? { data: token.data } : {}),
     ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
   } as Token;
+};
+
+export const transformReactorResponseCamelCase: AxiosTransformer = (
+  reactor: Reactor
+): Reactor | undefined => {
+  if (reactor === undefined) {
+    return undefined;
+  }
+
+  return {
+    ...camelcaseKeys(reactor, { deep: true }),
+    ...(reactor.configuration !== undefined
+      ? { configuration: reactor.configuration }
+      : {}),
+  } as Reactor;
 };
 
 export const transformResponseCamelCase: AxiosTransformer = <T, C>(
