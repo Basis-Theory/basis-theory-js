@@ -1,0 +1,87 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['14.x']
+        os: [ubuntu-latest]
+    env:
+      CI: 1 # prevents extra Cypress installation progress messages
+      HUSKY: 0 # disables husky hooks
+      PULUMI_INFRA_DEV_STACK: basistheory/infrastructure-azure/dev
+      PULUMI_INFRA_PROD_STACK: basistheory/infrastructure-azure/prod
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Setup Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+
+      - name: Login in Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_DEV_CREDENTIALS }}
+
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+
+      - name: Cache Cypress
+        id: cache-cypress
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+
+      # Install and check Cypress binary
+      - run: yarn run cypress install
+      - run: yarn run cypress cache list
+
+      - name: Write .env
+        run: make write-lib-vars
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          IS_PR_WORKFLOW: true
+
+      - name: Verify
+        run: make verify
+
+      - name: Upload failed e2e tests screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: e2e/cypress/screenshots
+
+      - name: Verify Infrastructure
+        run: make setup-infra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          IS_PR_WORKFLOW: true
+
+      - name: Lint
+        uses: wearerequired/lint-action@v1.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          eslint: true
+          prettier: true
+
+      - name: Monitor coverage
+        uses: slavcodev/coverage-monitor-action@1.2.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          clover_file: 'library/coverage/clover.xml'
+          threshold_alert: 80
+          threshold_warning: 90

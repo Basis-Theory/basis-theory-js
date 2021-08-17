@@ -1,0 +1,83 @@
+{
+  "name": "@basis-theory/basis-theory-js",
+  "version": "0.0.0",
+  "repository": "https://github.com/Basis-Theory/basis-theory-js",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Basis Theory",
+    "email": "support@basistheory.com"
+  },
+  "main": "dist/basis-theory-js.bundle.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "analyze": "size-limit --why",
+    "build": "yarn clean && concurrently \"yarn build:bundle\" \"yarn build:module\" \"yarn build:declarations\" \"yarn build:package\" --kill-others-on-fail",
+    "build:bundle": "webpack --config webpack.prod.js",
+    "build:declarations": "tsc",
+    "build:module": "babel src --extensions .ts --out-dir dist",
+    "build:package": "node prepare.js",
+    "clean": "rimraf dist",
+    "prepare": "yarn build",
+    "release": "semantic-release",
+    "size": "size-limit",
+    "start": "webpack --config webpack.dev.js --watch",
+    "test": "jest",
+    "test:cov": "jest --coverage"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "camelcase-keys": "^6.2.2",
+    "core-js": "^3.8.3",
+    "process": "^0.11.10",
+    "snake-case": "^3.0.4",
+    "snakecase-keys": "^3.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.16",
+    "@babel/core": "^7.12.13",
+    "@babel/plugin-proposal-class-properties": "^7.12.13",
+    "@babel/plugin-transform-arrow-functions": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-typescript": "^7.12.13",
+    "@peculiar/webcrypto": "^1.1.6",
+    "@size-limit/preset-small-lib": "^4.9.1",
+    "@types/chance": "^1.1.1",
+    "@types/dotenv-webpack": "^7.0.1",
+    "@types/eccrypto": "^1.1.2",
+    "@types/is-base64": "^1.1.0",
+    "@types/jest": "^26.0.20",
+    "axios-mock-adapter": "^1.19.0",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-inline-dotenv": "^1.6.0",
+    "chance": "^1.1.7",
+    "concurrently": "5.3.0",
+    "dotenv-webpack": "^7.0.2",
+    "is-base64": "^1.1.0",
+    "jest": "^26.6.3",
+    "jest-environment-jsdom": "^26.6.2",
+    "rimraf": "^3.0.2",
+    "size-limit": "^4.9.1",
+    "ts-jest": "^26.5.0",
+    "typescript": "4.1.4",
+    "webpack": "^5.20.2",
+    "webpack-bundle-analyzer": "^4.4.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-merge": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=10.12.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "size-limit": [
+    {
+      "path": "dist/basis-theory-js.bundle.js",
+      "limit": "50 KB"
+    }
+  ]
+}

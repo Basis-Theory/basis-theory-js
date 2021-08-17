@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <!-- Add BasisTheory SDK -->
+    <script src="../../../library/dist/basis-theory-js.bundle.js"></script>
+  </head>
+
+  <body>
+    <script>
+      let bt;
+      window.addEventListener('load', async function () {
+        bt = await BasisTheory.init('123456789', { environment: 'local' });
+      });
+
+      function kebabToCamel(str) {
+        let arr = str.split('-');
+        let capital = arr.map((item, index) =>
+          index
+            ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
+            : item.toLowerCase()
+        );
+        let capitalString = capital.join('');
+        return capitalString;
+      }
+
+      function slashToCamel(str) {
+        let arr = str.split('/');
+
+        if (arr[1] === 'self') {
+          return arr[0];
+        }
+
+        let capital = arr.map((item, index) =>
+          index
+            ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
+            : item.toLowerCase()
+        );
+        let capitalString = capital.join('');
+        return capitalString;
+      }
+
+      function submit() {
+        let serviceName = document.getElementById('service').value;
+
+        if (serviceName.indexOf('-') !== -1) {
+          serviceName = kebabToCamel(serviceName);
+        } else if (serviceName.indexOf('/') !== -1) {
+          serviceName = slashToCamel(serviceName);
+        }
+
+        if (document.getElementById('create').checked) {
+          bt[serviceName].create({});
+        }
+        if (document.getElementById('retrieve').checked) {
+          bt[serviceName].retrieve('1234567890');
+        }
+        if (document.getElementById('update').checked) {
+          bt[serviceName].update('1234567890', {});
+        }
+        if (document.getElementById('delete').checked) {
+          bt[serviceName].delete('1234567890');
+        }
+        if (document.getElementById('retrieve-no-id').checked) {
+          bt[serviceName].retrieve();
+        }
+        if (document.getElementById('update-no-id').checked) {
+          bt[serviceName].update({});
+        }
+        if (document.getElementById('delete-no-id').checked) {
+          bt[serviceName].delete();
+        }
+        if (document.getElementById('list').checked) {
+          bt[serviceName].list();
+        }
+      }
+    </script>
+    <div>
+      <input type="checkbox" id="create" />
+      <label for="create">Create</label>
+      <input type="checkbox" id="retrieve" />
+      <label for="retrieve">Retrieve</label>
+      <input type="checkbox" id="update" />
+      <label for="update">Update</label>
+      <input type="checkbox" id="delete" />
+      <label for="delete">Delete</label>
+      <input type="checkbox" id="retrieve-no-id" />
+      <label for="retrieve-no-id">Retrieve No Id</label>
+      <input type="checkbox" id="update-no-id" />
+      <label for="update-no-id">Update No Id</label>
+      <input type="checkbox" id="delete-no-id" />
+      <label for="delete-no-id">Delete No Id</label>
+      <input type="checkbox" id="list" />
+      <label for="List">List</label>
+      <input type="text" placeholder="Service" id="service" />
+      <button type="button" id="submit" onclick="submit()">submit</button>
+    </div>
+  </body>
+</html>
