@@ -1,82 +1,16 @@
-export interface AtomicCard {
+import type { TokenType } from '../tokens';
+
+export interface Atomic {
   id: string;
-  card: {
-    number: string;
-    expirationMonth: number;
-    expirationYear: number;
-    cvc?: string;
-  };
-  billingDetails?: {
-    name?: string;
-    email?: string;
-    phone?: string;
-    address?: {
-      city: string;
-      country: string;
-      line1: string;
-      line2?: string;
-      postalCode: string;
-      state: string;
-    };
-  };
+  tenantId: string;
+  type: TokenType;
+  metadata?: Record<string, string>;
+  createdBy: string;
+  createdAt: string;
 }
 
-export interface AtomicBank {
-  id: string;
-  bank: {
-    accountNumber: string;
-    routingNumber: string;
-  };
-}
-
-// we can disable for this next line as we are only exporting interfaces here
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export declare namespace PaymentsApi {
-  export interface SourceCardModel {
-    card: CardModel;
-    billing_details?: BillingDetailsModel;
-  }
-
-  export interface CardModel {
-    number: string;
-    expiration_month: number;
-    expiration_year: number;
-    cvc?: string;
-  }
-
-  export interface BillingDetailsModel {
-    name?: string;
-    email?: string;
-    phone?: string;
-    address?: {
-      city: string;
-      country: string;
-      line1: string;
-      line2?: string;
-      postal_code: string;
-      state: string;
-    };
-  }
-
-  export interface SourceCardResponse {
-    id: string;
-    type: 'card';
-    card: CardModel;
-    billing_details?: BillingDetailsModel;
-  }
-
-  export interface SourceBankModel {
-    bank: BankModel;
-  }
-
-  export interface BankModel {
-    account_number: string;
-    routing_number: string;
-  }
-
-  export interface SourceBankResponse {
-    id: string;
-    type: 'bank';
-    bank: BankModel;
-  }
+export interface ReactRequest {
+  reactorId: string;
+  requestParameters?: Record<string, unknown>;
+  metadata?: Record<string, string>;
 }
