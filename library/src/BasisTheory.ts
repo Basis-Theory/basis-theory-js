@@ -8,6 +8,8 @@ import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
+import { BasisTheoryAtomicBanks } from './atomic/banks';
+import { BasisTheoryAtomicCards } from './atomic/cards';
 import { BasisTheoryPermissions } from './permissions';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
@@ -26,6 +28,8 @@ export class BasisTheory {
   private _logs?: BasisTheoryLogs;
   private _reactorFormulas?: BasisTheoryReactorFormulas;
   private _reactors?: BasisTheoryReactors;
+  private _atomicBanks?: BasisTheoryAtomicBanks;
+  private _atomicCards?: BasisTheoryAtomicCards;
   private _permissions?: BasisTheoryPermissions;
 
   public async init(
@@ -66,6 +70,14 @@ export class BasisTheory {
       this._reactors = new BasisTheoryReactors({
         apiKey,
         baseURL: SERVICES.reactors[this._initOptions.environment],
+      });
+      this._atomicBanks = new BasisTheoryAtomicBanks({
+        apiKey,
+        baseURL: SERVICES.atomicBanks[this._initOptions.environment],
+      });
+      this._atomicCards = new BasisTheoryAtomicCards({
+        apiKey,
+        baseURL: SERVICES.atomicCards[this._initOptions.environment],
       });
       this._permissions = new BasisTheoryPermissions({
         apiKey,
@@ -132,6 +144,14 @@ export class BasisTheory {
 
   public get reactors(): BasisTheoryReactors {
     return assertInit(this._reactors);
+  }
+
+  public get atomicBanks(): BasisTheoryAtomicBanks {
+    return assertInit(this._atomicBanks);
+  }
+
+  public get atomicCards(): BasisTheoryAtomicCards {
+    return assertInit(this._atomicCards);
   }
 
   public get permissions(): BasisTheoryPermissions {

@@ -8,7 +8,7 @@ import {
   TokenData,
 } from './types';
 import {
-  transformTokensResponseCamelCase,
+  transformTokenResponseCamelCase,
   transformTokenRequestSnakeCase,
 } from '../common/utils';
 import {
@@ -24,9 +24,9 @@ export const BasisTheoryTokens = new CrudBuilder(
   class BasisTheoryTokens extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
       super({
-        ...options,
-        transformResponse: transformTokensResponseCamelCase,
+        transformResponse: transformTokenResponseCamelCase,
         transformRequest: transformTokenRequestSnakeCase,
+        ...options,
       });
     }
 

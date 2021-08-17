@@ -9,8 +9,9 @@ import type {
 import type { RequestOptions } from '../service';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
-import { Token } from '../tokens';
-import { Reactor } from '../reactors';
+import type { Reactor } from '../reactors';
+import type { Token } from '../tokens';
+import type { Atomic, ReactRequest } from '../atomic';
 
 export const assertInit = <T>(prop: T): NonNullable<T> => {
   if (prop === null || prop === undefined) {
@@ -45,6 +46,21 @@ export const transformReactorRequestSnakeCase: AxiosTransformer = (
   } as Reactor;
 };
 
+export const transformAtomicRequestSnakeCase: AxiosTransformer = <
+  T extends Atomic,
+  S extends Atomic
+>(
+  data: T
+): S | undefined => {
+  if (data === undefined) {
+    return undefined;
+  }
+  return {
+    ...snakecaseKeys(data, { deep: true }),
+    ...(data.metadata !== undefined ? { metadata: data.metadata } : {}),
+  } as S;
+};
+
 export const transformTokenRequestSnakeCase: AxiosTransformer = (
   token: Token
 ): Token | undefined => {
@@ -59,7 +75,23 @@ export const transformTokenRequestSnakeCase: AxiosTransformer = (
   } as Token;
 };
 
-export const transformTokensResponseCamelCase: AxiosTransformer = (
+export const transformAtomicReactionRequestSnakeCase: AxiosTransformer = (
+  request: ReactRequest
+): Token | undefined => {
+  if (request === undefined) {
+    return undefined;
+  }
+
+  return {
+    ...snakecaseKeys(request, { deep: true }),
+    ...(request.requestParameters !== undefined
+      ? { request_parameters: request.requestParameters }
+      : {}),
+    ...(request.metadata !== undefined ? { metadata: request.metadata } : {}),
+  } as Token;
+};
+
+export const transformTokenResponseCamelCase: AxiosTransformer = (
   token: Token
 ): Token | undefined => {
   if (token === undefined) {
@@ -97,6 +129,22 @@ export const transformResponseCamelCase: AxiosTransformer = <T, C>(
   return (camelcaseKeys(data, {
     deep: true,
   }) as unknown) as C;
+};
+
+export const transformAtomicResponseCamelCase: AxiosTransformer = <
+  T extends Atomic,
+  C extends Atomic
+>(
+  data: T
+): C | undefined => {
+  if (data === undefined) {
+    return undefined;
+  }
+
+  return ({
+    ...camelcaseKeys(data, { deep: true }),
+    ...(data.metadata !== undefined ? { metadata: data.metadata } : {}),
+  } as unknown) as C;
 };
 
 export const dataExtractor = <T>(res: AxiosResponse<T>): T => res?.data;
