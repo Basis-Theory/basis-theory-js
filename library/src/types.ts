@@ -14,6 +14,8 @@ export type Services =
   | 'applications'
   | 'reactorFormulas'
   | 'reactors'
+  | 'atomicBanks'
+  | 'atomicCards'
   | 'permissions'
   | 'logs'
   | 'tenants';

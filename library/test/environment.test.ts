@@ -57,9 +57,17 @@ describe('Environments', () => {
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
+      baseURL: SERVICES.atomicBanks[environment],
+    });
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: SERVICES.atomicCards[environment],
+    });
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
       baseURL: SERVICES.permissions[environment],
     });
-    expect(create).toHaveBeenCalledTimes(8);
+    expect(create).toHaveBeenCalledTimes(10);
   });
 
   it('should throw error if not properly initialized', () => {
