@@ -7,7 +7,6 @@ cd $(dirname $0)/../library
 
 pulumi login
 
-INFRA_DEV_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_DEV_STACK --json)
 INFRA_PROD_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_PROD_STACK --json)
 
 JS_HOST=$(echo $INFRA_PROD_STACK_OUTPUTS | jq -r '.hostNames.js')
