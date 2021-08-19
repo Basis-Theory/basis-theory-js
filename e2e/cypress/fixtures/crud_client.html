@@ -8,7 +8,9 @@
     <script>
       let bt;
       window.addEventListener('load', async function () {
-        bt = await BasisTheory.init('123456789', { environment: 'local' });
+        bt = await BasisTheory.init('123456789', {
+          apiBaseUrl: 'http://localhost:3333',
+        });
       });
 
       function kebabToCamel(str) {

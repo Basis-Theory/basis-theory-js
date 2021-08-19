@@ -51,6 +51,29 @@ describe('Elements', () => {
       delete window.BasisTheoryElements;
     });
 
+    it('should throw error for invalid base elements url', async () => {
+      const bt = new BasisTheory();
+
+      await expect(() =>
+        bt.init(chance.string(), {
+          elements: true,
+          elementsBaseUrl: chance.string(),
+        })
+      ).rejects.toThrowError('Invalid format for the given Elements base url.');
+    });
+
+    it('should resolve with a valid base elements url', async () => {
+      const bt = new BasisTheory();
+      const validUrl = ' https://basistheory.com';
+
+      expect(
+        bt.init(chance.string(), {
+          elements: true,
+          elementsBaseUrl: validUrl,
+        })
+      ).resolves.toBe(bt);
+    });
+
     it('should resolve to previously initialized BasisTheoryElements', async () => {
       let loadElements: () => unknown = jest.fn();
       jest.isolateModules(() => {
@@ -67,7 +90,7 @@ describe('Elements', () => {
 
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
-        DEFAULT_ELEMENTS_BASE_URL
+        new URL(DEFAULT_ELEMENTS_BASE_URL).toString()
       );
     });
 
@@ -204,7 +227,7 @@ describe('Elements', () => {
         expect(bt.elements).toBeDefined();
         expect(elementsInit).toHaveBeenCalledWith(
           'el-123',
-          DEFAULT_ELEMENTS_BASE_URL
+          new URL(DEFAULT_ELEMENTS_BASE_URL).toString()
         );
       });
     });

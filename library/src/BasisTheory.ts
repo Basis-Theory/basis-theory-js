@@ -50,50 +50,67 @@ export class BasisTheory {
       );
     }
     this._initStatus = 'in-progress';
+
     try {
       this._initOptions = Object.freeze({
         ...defaultInitOptions,
         ...options,
       });
+
+      let baseUrl = this._initOptions.apiBaseUrl;
+
+      try {
+        const baseUrlObject = new URL(this.initOptions.apiBaseUrl);
+        if (baseUrlObject.hostname === 'localhost') {
+          baseUrlObject.protocol = 'http';
+        } else {
+          baseUrlObject.protocol = 'https';
+        }
+
+        baseUrl = baseUrlObject.toString();
+      } catch (e) {
+        throw new Error('Invalid format for the given API base url.');
+      }
+
       this._tokens = new BasisTheoryTokens({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.tokens}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
       });
       this._atomic = new BasisTheoryAtomic({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.atomic}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.atomic, baseUrl).toString(),
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.applications}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.applications, baseUrl).toString(),
       });
       this._tenants = new BasisTheoryTenants({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.tenants}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.tenants, baseUrl).toString(),
       });
       this._logs = new BasisTheoryLogs({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.logs}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.logs, baseUrl).toString(),
       });
       this._reactorFormulas = new BasisTheoryReactorFormulas({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.reactorFormulas}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.reactorFormulas, baseUrl).toString(),
       });
       this._reactors = new BasisTheoryReactors({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.reactors}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.reactors, baseUrl).toString(),
       });
       this._atomicBanks = new BasisTheoryAtomicBanks({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.atomicBanks}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.atomicBanks, baseUrl).toString(),
       });
       this._atomicCards = new BasisTheoryAtomicCards({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.atomicCards}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.atomicCards, baseUrl).toString(),
       });
       this._permissions = new BasisTheoryPermissions({
         apiKey,
-        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.permissions}`,
+        baseURL: new URL(CLIENT_BASE_PATHS.permissions, baseUrl).toString(),
       });
 
       this._encryption = new BasisTheoryEncryptionAdapters();
@@ -110,10 +127,17 @@ export class BasisTheory {
   }
 
   private async loadElements(apiKey: string): Promise<void> {
+    let elementsBaseUrl: URL;
+    try {
+      elementsBaseUrl = new URL(this.initOptions.elementsBaseUrl);
+    } catch (e) {
+      throw new Error('Invalid format for the given Elements base url.');
+    }
+
     const elements = await loadElements();
     await (elements as BasisTheoryElementsInit).init(
       apiKey,
-      this.initOptions?.elementsBaseUrl
+      elementsBaseUrl.toString()
     );
     this.elements = elements;
   }
