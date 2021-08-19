@@ -1,4 +1,9 @@
-import { assertInit, loadElements, SERVICES } from './common';
+import { assertInit, loadElements } from './common';
+import {
+  CLIENT_BASE_PATHS,
+  DEFAULT_ELEMENTS_BASE_URL,
+  DEFAULT_BASE_URL,
+} from './common/constants';
 import { BasisTheoryAtomic } from './atomic';
 import type { BasisTheoryInitOptions, InitStatus } from './types';
 import { BasisTheoryApplications } from './applications';
@@ -14,8 +19,9 @@ import { BasisTheoryAtomicCards } from './atomic/cards';
 import { BasisTheoryPermissions } from './permissions';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
-  environment: 'production',
+  apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
+  elementsBaseUrl: DEFAULT_ELEMENTS_BASE_URL,
 };
 
 export class BasisTheory {
@@ -51,43 +57,43 @@ export class BasisTheory {
       });
       this._tokens = new BasisTheoryTokens({
         apiKey,
-        baseURL: SERVICES.tokens[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.tokens}`,
       });
       this._atomic = new BasisTheoryAtomic({
         apiKey,
-        baseURL: SERVICES.atomic[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.atomic}`,
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
-        baseURL: SERVICES.applications[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.applications}`,
       });
       this._tenants = new BasisTheoryTenants({
         apiKey,
-        baseURL: SERVICES.tenants[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.tenants}`,
       });
       this._logs = new BasisTheoryLogs({
         apiKey,
-        baseURL: SERVICES.logs[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.logs}`,
       });
       this._reactorFormulas = new BasisTheoryReactorFormulas({
         apiKey,
-        baseURL: SERVICES.reactorFormulas[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.reactorFormulas}`,
       });
       this._reactors = new BasisTheoryReactors({
         apiKey,
-        baseURL: SERVICES.reactors[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.reactors}`,
       });
       this._atomicBanks = new BasisTheoryAtomicBanks({
         apiKey,
-        baseURL: SERVICES.atomicBanks[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.atomicBanks}`,
       });
       this._atomicCards = new BasisTheoryAtomicCards({
         apiKey,
-        baseURL: SERVICES.atomicCards[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.atomicCards}`,
       });
       this._permissions = new BasisTheoryPermissions({
         apiKey,
-        baseURL: SERVICES.permissions[this._initOptions.environment],
+        baseURL: `${this._initOptions.apiBaseUrl}/${CLIENT_BASE_PATHS.permissions}`,
       });
 
       this._encryption = new BasisTheoryEncryptionAdapters();
@@ -107,7 +113,7 @@ export class BasisTheory {
     const elements = await loadElements();
     await (elements as BasisTheoryElementsInit).init(
       apiKey,
-      this.initOptions.environment
+      this.initOptions?.elementsBaseUrl
     );
     this.elements = elements;
   }

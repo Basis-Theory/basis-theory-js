@@ -1,24 +1,15 @@
 import axios from 'axios';
 import { BasisTheory } from '../src';
-import { SERVICES } from '../src/common';
-import { Chance } from 'chance';
-import type { ServiceEnvironment } from '../src/types';
+import { DEFAULT_BASE_URL, CLIENT_BASE_PATHS } from '../src/common';
 
-describe('Environments', () => {
-  const chance = new Chance();
-
-  it('should use environment map', async () => {
-    const environment = chance.pickone([
-      'production',
-      'sandbox',
-      'local',
-    ]) as ServiceEnvironment;
-
+describe('clients', () => {
+  it('should use base url and paths for all clients', async () => {
     const create = jest.spyOn(axios, 'create');
 
     await new BasisTheory().init('sb-key', {
-      environment,
+      apiBaseUrl: DEFAULT_BASE_URL,
     });
+
     const baseConfig = {
       headers: {
         'X-API-KEY': 'sb-key',
@@ -29,43 +20,43 @@ describe('Environments', () => {
 
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.tokens[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.tokens}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.atomic[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.atomic}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.applications[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.applications}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.tenants[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.tenants}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.logs[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.logs}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.reactorFormulas[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.reactorFormulas}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.reactors[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.reactors}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.atomicBanks[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.atomicBanks}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.atomicCards[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.atomicCards}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: SERVICES.permissions[environment],
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.permissions}`,
     });
     expect(create).toHaveBeenCalledTimes(10);
   });
@@ -73,7 +64,7 @@ describe('Environments', () => {
   it('should throw error if not properly initialized', () => {
     expect(() => {
       const bt = new BasisTheory();
-      bt.tokens.createToken('some data');
+      bt.tokens.create({ data: 'some data' });
     }).toThrowError();
   });
 });

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import type { BasisTheory as BasisTheoryType } from '../src';
 import { Chance } from 'chance';
+import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
+import { DEFAULT_ELEMENTS_BASE_URL } from './../src/common/constants';
 
 describe('Elements', () => {
   let chance: Chance.Chance;
@@ -64,7 +65,10 @@ describe('Elements', () => {
 
       await new BasisTheory().init('', { elements: true });
 
-      expect(expectedElements.init).toHaveBeenCalledWith('', 'production');
+      expect(expectedElements.init).toHaveBeenCalledWith(
+        '',
+        DEFAULT_ELEMENTS_BASE_URL
+      );
     });
 
     it('should reject if load elements throws error', () => {
@@ -198,7 +202,10 @@ describe('Elements', () => {
         await promise;
 
         expect(bt.elements).toBeDefined();
-        expect(elementsInit).toHaveBeenCalledWith('el-123', 'production');
+        expect(elementsInit).toHaveBeenCalledWith(
+          'el-123',
+          DEFAULT_ELEMENTS_BASE_URL
+        );
       });
     });
   });
