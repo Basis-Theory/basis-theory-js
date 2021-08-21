@@ -1,4 +1,4 @@
-# BasisTheory JS SDK (aka BasisTheory.js)
+# Basis Theory JS SDK (aka BasisTheory.js)
 
 [![Version](https://img.shields.io/npm/v/@basis-theory/basis-theory-js.svg)](https://www.npmjs.org/package/@basis-theory/basis-theory-js)
 [![Verify](https://github.com/Basis-Theory/basis-theory-js/actions/workflows/release.yml/badge.svg)](https://github.com/Basis-Theory/basis-theory-js/actions/workflows/release.yml)
