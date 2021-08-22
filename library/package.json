@@ -1,13 +1,13 @@
 {
   "name": "@basis-theory/basis-theory-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "Apache-2.0",
   "author": {
     "name": "Basis Theory",
     "email": "support@basistheory.com"
   },
-  "main": "dist/basis-theory-js.bundle.js",
+  "main": "dist/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -31,8 +31,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "camelcase-keys": "^6.2.2",
-    "core-js": "^3.8.3",
-    "process": "^0.11.10",
     "snake-case": "^3.0.4",
     "snakecase-keys": "^3.2.1"
   },
@@ -41,6 +39,7 @@
     "@babel/core": "^7.12.13",
     "@babel/plugin-proposal-class-properties": "^7.12.13",
     "@babel/plugin-transform-arrow-functions": "^7.12.13",
+    "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
     "@peculiar/webcrypto": "^1.1.6",
