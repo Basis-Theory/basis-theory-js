@@ -1,6 +1,6 @@
 import * as semver from 'semver';
 import * as path from 'path';
-import { version, main } from '../library/package.json';
+import { version } from '../library/package.json';
 
 // const stackName = pulumi.runtime.getStack();
 const major = semver.major(version);
@@ -21,7 +21,12 @@ export const indexJsName = indexName;
 export const versionedJsName = versionedName;
 export const blobVersion = version;
 export const blobDir = dir;
-export const bundlePath = path.resolve('../library', main);
+export const bundlePath = path.resolve(
+  '..',
+  'library',
+  'dist',
+  'basis-theory-js.bundle.js'
+);
 
 // Container file schema
 //
