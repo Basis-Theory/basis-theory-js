@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.1...v1.0.2) (2021-08-22)
+
+
+### Bug Fixes
+
+* use default axios transformers at both service/request levels ([b6f4eca](https://github.com/Basis-Theory/basis-theory-js/commit/b6f4eca8a9828b8ac5e7c97093d049a9694e36bf))
+
 ## [1.0.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.0...v1.0.1) (2021-08-22)
 
 
