@@ -1,23 +1,24 @@
 const fs = require('fs');
-const package = require('./package.json');
+const libPackage = require('./package.json');
 
 // remove not required fields
-delete package.devDependencies;
+delete libPackage.devDependencies;
+delete libPackage['size-limit'];
 
 // use only required temporary script in dist
-package.scripts = {
+libPackage.scripts = {
   postversion: 'cd .. && node bump.js',
 };
 
-// include all 'dist/*' files
-package.files = ['*'];
+// include all 'dist/*' files, but bundles
+libPackage.files = ['*', '!*.bundle.js'];
 
 // updates source flags removing 'dist' path
 ['main', 'module', 'typings'].forEach((prop) => {
-  package[prop] = package[prop].replace('dist/', '');
+  libPackage[prop] = libPackage[prop].replace('dist/', '');
 });
 
 fs.mkdirSync('./dist', { recursive: true });
 fs.copyFileSync('../README.md', './dist/README.md');
 fs.copyFileSync('../LICENSE', './dist/LICENSE');
-fs.writeFileSync('./dist/package.json', JSON.stringify(package, null, 2));
+fs.writeFileSync('./dist/package.json', JSON.stringify(libPackage, null, 2));

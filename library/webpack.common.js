@@ -39,7 +39,7 @@ const umd = merge(base, {
     filename: 'basis-theory-js.bundle.js',
     library: 'BasisTheory',
     libraryTarget: 'umd',
-    libraryExport: 'default',
+    libraryExport: '_instance',
   },
 });
 
