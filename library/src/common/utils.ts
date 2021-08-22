@@ -1,12 +1,13 @@
-import camelcaseKeys from 'camelcase-keys';
-import snakecaseKeys from 'snakecase-keys';
-import { snakeCase } from 'snake-case';
+import axios from 'axios';
 import type {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosTransformer,
 } from 'axios';
-import type { RequestOptions } from '../service';
+import camelcaseKeys from 'camelcase-keys';
+import snakecaseKeys from 'snakecase-keys';
+import { snakeCase } from 'snake-case';
+import type { RequestOptions, RequestTransformers } from '../service';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
 import type { Reactor } from '../reactors';
@@ -150,11 +151,32 @@ export const transformAtomicResponseCamelCase: AxiosTransformer = <
 export const dataExtractor = <T>(res: AxiosResponse<T>): T => res?.data;
 
 export const createRequestConfig = (
-  options?: RequestOptions
+  options?: RequestOptions,
+  transformers?: RequestTransformers
 ): AxiosRequestConfig | undefined => {
   if (!options) {
-    return undefined;
+    if (!transformers) {
+      return undefined;
+    } else {
+      return {
+        ...(transformers.transformRequest !== undefined
+          ? {
+              transformRequest: concatRequestTransformerWithDefault(
+                transformers.transformRequest
+              ),
+            }
+          : {}),
+        ...(transformers.transformResponse !== undefined
+          ? {
+              transformResponse: concatResponseTransformermWithDefault(
+                transformers.transformResponse
+              ),
+            }
+          : {}),
+      };
+    }
   }
+
   const { apiKey, correlationId } = options;
   const apiKeyHeader = apiKey
     ? {
@@ -171,7 +193,38 @@ export const createRequestConfig = (
       ...apiKeyHeader,
       ...correlationIdHeader,
     },
+    ...(transformers?.transformRequest !== undefined
+      ? {
+          transformRequest: concatRequestTransformerWithDefault(
+            transformers.transformRequest
+          ),
+        }
+      : {}),
+    ...(transformers?.transformResponse !== undefined
+      ? {
+          transformResponse: concatResponseTransformermWithDefault(
+            transformers.transformResponse
+          ),
+        }
+      : {}),
   };
+};
+
+export const concatRequestTransformerWithDefault = (
+  requestTransformer: AxiosTransformer | AxiosTransformer[]
+): AxiosTransformer | AxiosTransformer[] | undefined => {
+  return ([] as AxiosTransformer[]).concat(
+    requestTransformer,
+    axios.defaults.transformRequest as AxiosTransformer[]
+  );
+};
+
+export const concatResponseTransformermWithDefault = (
+  responseTransformer: AxiosTransformer | AxiosTransformer[]
+): AxiosTransformer | AxiosTransformer[] | undefined => {
+  return (axios.defaults.transformResponse as AxiosTransformer[]).concat(
+    responseTransformer
+  );
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types

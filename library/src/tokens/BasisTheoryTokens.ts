@@ -1,3 +1,4 @@
+import type { AxiosTransformer } from 'axios';
 import { dataExtractor } from '../common/utils';
 import {
   Token,
@@ -23,11 +24,17 @@ import { createRequestConfig, getQueryParams } from '../common';
 export const BasisTheoryTokens = new CrudBuilder(
   class BasisTheoryTokens extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      super({
-        transformResponse: transformTokenResponseCamelCase,
-        transformRequest: transformTokenRequestSnakeCase,
-        ...options,
-      });
+      options.transformRequest = ([] as AxiosTransformer[]).concat(
+        transformTokenRequestSnakeCase,
+        options.transformRequest || []
+      );
+
+      options.transformResponse = ([] as AxiosTransformer[]).concat(
+        transformTokenResponseCamelCase,
+        options.transformResponse || []
+      );
+
+      super(options);
     }
 
     /**

@@ -35,3 +35,8 @@ export interface RequestOptions {
   apiKey?: string;
   correlationId?: string;
 }
+
+export type RequestTransformers = Pick<
+  AxiosRequestConfig,
+  'transformRequest' | 'transformResponse'
+>;

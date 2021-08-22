@@ -89,18 +89,21 @@ describe('Atomic Banks', () => {
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onGet(`/${id}/decrypt`).reply(200, {
-        id,
-        tenant_id: tenantId,
-        type: 'bank',
-        bank: {
-          routing_number: routingNumber,
-          account_number: accountNumber,
-        },
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${id}/decrypt`).reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type: 'bank',
+          bank: {
+            routing_number: routingNumber,
+            account_number: accountNumber,
+          },
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(await bt.atomicBanks.retrieveDecrypted(id)).toStrictEqual({
         id,
@@ -135,18 +138,21 @@ describe('Atomic Banks', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet(`/${id}/decrypt`).reply(200, {
-        id,
-        tenant_id: tenantId,
-        type: 'bank',
-        bank: {
-          routing_number: routingNumber,
-          account_number: accountNumber,
-        },
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${id}/decrypt`).reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type: 'bank',
+          bank: {
+            routing_number: routingNumber,
+            account_number: accountNumber,
+          },
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicBanks.retrieveDecrypted(id, {
@@ -210,15 +216,18 @@ describe('Atomic Banks', () => {
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onPost(`/${id}/react`).reply(201, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onPost(`/${id}/react`).reply(
+        201,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicBanks.react(id, {
@@ -237,11 +246,13 @@ describe('Atomic Banks', () => {
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
-      expect(client.history.post[0].data).toStrictEqual({
-        reactor_id: reactorId,
-        request_parameters: requestParameters,
-        metadata: metadata,
-      });
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          reactor_id: reactorId,
+          request_parameters: requestParameters,
+          metadata: metadata,
+        })
+      );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
       });
@@ -273,15 +284,18 @@ describe('Atomic Banks', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onPost(`/${id}/react`).reply(201, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onPost(`/${id}/react`).reply(
+        201,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicBanks.react(
@@ -304,11 +318,13 @@ describe('Atomic Banks', () => {
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
-      expect(client.history.post[0].data).toStrictEqual({
-        reactor_id: reactorId,
-        request_parameters: requestParameters,
-        metadata: metadata,
-      });
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          reactor_id: reactorId,
+          request_parameters: requestParameters,
+          metadata: metadata,
+        })
+      );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
@@ -344,15 +360,18 @@ describe('Atomic Banks', () => {
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onGet(`/${atomicBankId}/reaction/${reactionTokenId}`).reply(200, {
-        id: reactionTokenId,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${atomicBankId}/reaction/${reactionTokenId}`).reply(
+        200,
+        JSON.stringify({
+          id: reactionTokenId,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicBanks.retrieveReaction(atomicBankId, reactionTokenId)
@@ -392,15 +411,18 @@ describe('Atomic Banks', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet(`/${atomicBankId}/reaction/${reactionTokenId}`).reply(200, {
-        id: reactionTokenId,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${atomicBankId}/reaction/${reactionTokenId}`).reply(
+        200,
+        JSON.stringify({
+          id: reactionTokenId,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicBanks.retrieveReaction(atomicBankId, reactionTokenId, {

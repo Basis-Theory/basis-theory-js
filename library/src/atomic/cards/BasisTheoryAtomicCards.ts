@@ -1,3 +1,4 @@
+import type { AxiosTransformer } from 'axios';
 import {
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
@@ -22,11 +23,17 @@ import { CrudBuilder } from '../../service/CrudBuilder';
 export const BasisTheoryAtomicCards = new CrudBuilder(
   class BasisTheoryAtomicCards extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      super({
-        transformRequest: transformAtomicRequestSnakeCase,
-        transformResponse: transformAtomicResponseCamelCase,
-        ...options,
-      });
+      options.transformRequest = ([] as AxiosTransformer[]).concat(
+        transformAtomicRequestSnakeCase,
+        options.transformRequest || []
+      );
+
+      options.transformResponse = ([] as AxiosTransformer[]).concat(
+        transformAtomicResponseCamelCase,
+        options.transformResponse || []
+      );
+
+      super(options);
     }
 
     public async retrieveDecrypted(
@@ -44,11 +51,14 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
       options?: RequestOptions
     ): Promise<Token> {
       return this.client
-        .post(`/${id}/react`, request, {
-          transformRequest: transformAtomicReactionRequestSnakeCase,
-          transformResponse: transformTokenResponseCamelCase,
-          ...createRequestConfig(options),
-        })
+        .post(
+          `/${id}/react`,
+          request,
+          createRequestConfig(options, {
+            transformRequest: transformAtomicReactionRequestSnakeCase,
+            transformResponse: transformTokenResponseCamelCase,
+          })
+        )
         .then(dataExtractor);
     }
 
@@ -58,10 +68,12 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
       options?: RequestOptions
     ): Promise<Token> {
       return this.client
-        .get(`/${atomicCardId}/reaction/${reactionTokenId}`, {
-          transformResponse: transformTokenResponseCamelCase,
-          ...createRequestConfig(options),
-        })
+        .get(
+          `/${atomicCardId}/reaction/${reactionTokenId}`,
+          createRequestConfig(options, {
+            transformResponse: transformTokenResponseCamelCase,
+          })
+        )
         .then(dataExtractor);
     }
   }

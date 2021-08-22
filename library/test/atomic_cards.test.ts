@@ -121,16 +121,19 @@ describe('Atomic Cards', () => {
         },
       };
 
-      client.onGet(`/${id}/decrypt`).reply(200, {
-        id,
-        tenant_id: tenantId,
-        type: 'card',
-        card,
-        billingDetails,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${id}/decrypt`).reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type: 'card',
+          card,
+          billingDetails,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(await bt.atomicCards.retrieveDecrypted(id)).toStrictEqual(
         transformAtomicResponseCamelCase({
@@ -151,59 +154,75 @@ describe('Atomic Cards', () => {
       });
     });
 
-    /*
-    it('should retrieve decrypted with options', async () => {
+    it('should retrieve decrypted w/ options', async () => {
       const id = chance.string();
       const tenantId = chance.string();
-      const type = chance.string() as BankType;
-      const routingNumber = chance.string();
-      const accountNumber = chance.string();
       const metadata = {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const card = {
+        number: chance.string(),
+        expiration_month: chance.integer(),
+        expiration_year: chance.integer(),
+        cvc: chance.string(),
+      };
+      const billingDetails = {
+        name: chance.string(),
+        email: chance.string(),
+        phone: chance.string(),
+        address: {
+          line1: chance.string(),
+          line2: chance.string(),
+          city: chance.string(),
+          state: chance.string(),
+          postal_code: chance.string(),
+          country: chance.string(),
+        },
+      };
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet(`/${id}/decrypt`).reply(200, {
-        id,
-        tenant_id: tenantId,
-        type,
-        bank: {
-          routing_number: routingNumber,
-          account_number: accountNumber,
-        },
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${id}/decrypt`).reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type: 'card',
+          card,
+          billingDetails,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
-        await bt.atomicBanks.retrieveDecrypted(id, {
+        await bt.atomicCards.retrieveDecrypted(id, {
           apiKey: _apiKey,
           correlationId,
         })
-      ).toStrictEqual({
-        id,
-        tenantId,
-        type,
-        bank: {
-          routingNumber,
-          accountNumber,
-        },
-        metadata,
-        createdAt,
-        createdBy,
-      });
+      ).toStrictEqual(
+        transformAtomicResponseCamelCase({
+          id,
+          tenant_id: tenantId,
+          type: 'card',
+          card,
+          billingDetails,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(`/${id}/decrypt`);
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
       });
-    });*/
+    });
 
     it('should reject with status >= 400 <= 599', async () => {
       const id = chance.string();
@@ -242,15 +261,18 @@ describe('Atomic Cards', () => {
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onPost(`/${id}/react`).reply(201, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onPost(`/${id}/react`).reply(
+        201,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicCards.react(id, {
@@ -269,11 +291,13 @@ describe('Atomic Cards', () => {
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
-      expect(client.history.post[0].data).toStrictEqual({
-        reactor_id: reactorId,
-        request_parameters: requestParameters,
-        metadata: metadata,
-      });
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          reactor_id: reactorId,
+          request_parameters: requestParameters,
+          metadata: metadata,
+        })
+      );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
       });
@@ -305,15 +329,18 @@ describe('Atomic Cards', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onPost(`/${id}/react`).reply(201, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onPost(`/${id}/react`).reply(
+        201,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicCards.react(
@@ -336,11 +363,13 @@ describe('Atomic Cards', () => {
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
-      expect(client.history.post[0].data).toStrictEqual({
-        reactor_id: reactorId,
-        request_parameters: requestParameters,
-        metadata: metadata,
-      });
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          reactor_id: reactorId,
+          request_parameters: requestParameters,
+          metadata: metadata,
+        })
+      );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
@@ -376,15 +405,18 @@ describe('Atomic Cards', () => {
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(200, {
-        id: reactionTokenId,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(
+        200,
+        JSON.stringify({
+          id: reactionTokenId,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicCards.retrieveReaction(atomicCardId, reactionTokenId)
@@ -424,15 +456,18 @@ describe('Atomic Cards', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(200, {
-        id: reactionTokenId,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(
+        200,
+        JSON.stringify({
+          id: reactionTokenId,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.atomicCards.retrieveReaction(atomicCardId, reactionTokenId, {
