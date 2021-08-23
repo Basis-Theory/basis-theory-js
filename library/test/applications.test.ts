@@ -49,10 +49,13 @@ describe('Applications', () => {
       const id = chance.string();
       const createdDate = chance.string();
 
-      client.onGet('/key').reply(200, {
-        id,
-        created_date: createdDate,
-      });
+      client.onGet('/key').reply(
+        200,
+        JSON.stringify({
+          id,
+          created_date: createdDate,
+        })
+      );
 
       const retrieveByKey = jest.spyOn(bt.applications, 'retrieveByKey');
 
@@ -81,10 +84,13 @@ describe('Applications', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet('/key').reply(200, {
-        id,
-        created_date: createdDate,
-      });
+      client.onGet('/key').reply(
+        200,
+        JSON.stringify({
+          id,
+          created_date: createdDate,
+        })
+      );
 
       expect(
         await bt.applications.retrieveByKey({
@@ -119,11 +125,14 @@ describe('Applications', () => {
       const key = chance.string();
       const modifiedDate = chance.string();
 
-      client.onPost(`${id}/regenerate`).reply(200, {
-        id,
-        key,
-        modified_date: modifiedDate,
-      });
+      client.onPost(`${id}/regenerate`).reply(
+        200,
+        JSON.stringify({
+          id,
+          key,
+          modified_date: modifiedDate,
+        })
+      );
 
       expect(await bt.applications.regenerateKey(id)).toEqual({
         id,
@@ -143,11 +152,14 @@ describe('Applications', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onPost(`${id}/regenerate`).reply(200, {
-        id,
-        key,
-        modified_date: modifiedDate,
-      });
+      client.onPost(`${id}/regenerate`).reply(
+        200,
+        JSON.stringify({
+          id,
+          key,
+          modified_date: modifiedDate,
+        })
+      );
 
       expect(
         await bt.applications.regenerateKey(id, {

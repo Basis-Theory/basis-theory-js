@@ -59,15 +59,18 @@ describe('Tokens', () => {
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onGet(id).reply(200, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        metadata,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(id).reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          metadata,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(await bt.tokens.retrieve(id)).toStrictEqual({
         id,
@@ -99,14 +102,17 @@ describe('Tokens', () => {
         }) as TokenType,
       };
 
-      client.onGet().reply(200, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet().reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.tokens.retrieve(id, query as RetrieveTokenQuery)
@@ -144,14 +150,17 @@ describe('Tokens', () => {
         }) as TokenType,
       };
 
-      client.onGet().reply(200, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet().reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.tokens.retrieve(id, query as RetrieveTokenQuery, {
@@ -197,14 +206,17 @@ describe('Tokens', () => {
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onGet(`/${id}/decrypt`).reply(200, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(`/${id}/decrypt`).reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(await bt.tokens.retrieveDecrypted(id)).toStrictEqual({
         id,
@@ -237,14 +249,17 @@ describe('Tokens', () => {
       };
       const url = `/${id}/decrypt${getQueryParams(query)}`;
 
-      client.onGet(url).reply(200, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(url).reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.tokens.retrieveDecrypted(id, query as RetrieveTokenQuery)
@@ -281,14 +296,17 @@ describe('Tokens', () => {
       };
       const url = `/${id}/decrypt${getQueryParams(query)}`;
 
-      client.onGet(url).reply(200, {
-        id,
-        tenant_id: tenantId,
-        type,
-        data,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onGet(url).reply(
+        200,
+        JSON.stringify({
+          id,
+          tenant_id: tenantId,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.tokens.retrieveDecrypted(id, query as RetrieveTokenQuery, {
@@ -330,15 +348,18 @@ describe('Tokens', () => {
       const pageSize = chance.integer();
       const totalPages = chance.integer();
 
-      client.onGet('/decrypt').reply(200, {
-        pagination: {
-          total_items: totalItems,
-          page_number: pageNumber,
-          page_size: pageSize,
-          total_pages: totalPages,
-        },
-        data: [],
-      });
+      client.onGet('/decrypt').reply(
+        200,
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+      );
 
       expect(await bt.tokens.listDecrypted()).toStrictEqual({
         pagination: {
@@ -375,15 +396,18 @@ describe('Tokens', () => {
       } as ListTokensQueryDecrypted;
       const url = `/decrypt${getQueryParams(query)}`;
 
-      client.onGet(url).reply(200, {
-        pagination: {
-          total_items: totalItems,
-          page_number: pageNumber,
-          page_size: pageSize,
-          total_pages: totalPages,
-        },
-        data: [],
-      });
+      client.onGet(url).reply(
+        200,
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+      );
 
       expect(
         await bt.tokens.listDecrypted(query as ListTokensQueryDecrypted)
@@ -424,15 +448,18 @@ describe('Tokens', () => {
       } as ListTokensQueryDecrypted;
       const url = `/decrypt${getQueryParams(query)}`;
 
-      client.onGet(url).reply(200, {
-        pagination: {
-          total_items: totalItems,
-          page_number: pageNumber,
-          page_size: pageSize,
-          total_pages: totalPages,
-        },
-        data: [],
-      });
+      client.onGet(url).reply(
+        200,
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+      );
 
       expect(
         await bt.tokens.listDecrypted(query as ListTokensQueryDecrypted, {
@@ -600,11 +627,14 @@ describe('Tokens', () => {
       const createdAt = chance.string();
       const createdBy = chance.string();
 
-      client.onPost(`/${parentId}/children`).reply(201, {
-        ...tokenPayload,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onPost(`/${parentId}/children`).reply(
+        201,
+        JSON.stringify({
+          ...tokenPayload,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(await bt.tokens.createChild(parentId, tokenPayload)).toStrictEqual(
         {
@@ -635,11 +665,14 @@ describe('Tokens', () => {
       const createdAt = chance.string();
       const createdBy = chance.string();
 
-      client.onPost(`/${parentId}/children`).reply(201, {
-        ...tokenPayload,
-        created_at: createdAt,
-        created_by: createdBy,
-      });
+      client.onPost(`/${parentId}/children`).reply(
+        201,
+        JSON.stringify({
+          ...tokenPayload,
+          created_at: createdAt,
+          created_by: createdBy,
+        })
+      );
 
       expect(
         await bt.tokens.createChild(parentId, tokenPayload, {
@@ -686,15 +719,18 @@ describe('Tokens', () => {
       const pageSize = chance.integer();
       const totalPages = chance.integer();
 
-      client.onGet(`/${parentId}/children`).reply(200, {
-        pagination: {
-          total_items: totalItems,
-          page_number: pageNumber,
-          page_size: pageSize,
-          total_pages: totalPages,
-        },
-        data: [],
-      });
+      client.onGet(`/${parentId}/children`).reply(
+        200,
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+      );
 
       expect(await bt.tokens.listChildren(parentId)).toStrictEqual({
         pagination: {
@@ -731,15 +767,18 @@ describe('Tokens', () => {
       } as ListTokensQuery;
       const url = `/${parentId}/children${getQueryParams(query)}`;
 
-      client.onGet(url).reply(200, {
-        pagination: {
-          total_items: totalItems,
-          page_number: pageNumber,
-          page_size: pageSize,
-          total_pages: totalPages,
-        },
-        data: [],
-      });
+      client.onGet(url).reply(
+        200,
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+      );
 
       expect(await bt.tokens.listChildren(parentId, query)).toStrictEqual({
         pagination: {
@@ -778,15 +817,18 @@ describe('Tokens', () => {
       } as ListTokensQuery;
       const url = `/${parentId}/children${getQueryParams(query)}`;
 
-      client.onGet(url).reply(200, {
-        pagination: {
-          total_items: totalItems,
-          page_number: pageNumber,
-          page_size: pageSize,
-          total_pages: totalPages,
-        },
-        data: [],
-      });
+      client.onGet(url).reply(
+        200,
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+      );
 
       expect(
         await bt.tokens.listChildren(parentId, query, {

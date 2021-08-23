@@ -34,13 +34,16 @@ describe('Tenants', () => {
       const createdAt = chance.string();
       const modifiedAt = chance.string();
 
-      client.onGet().reply(200, {
-        id,
-        owner_id: ownerId,
-        name: name,
-        created_at: createdAt,
-        modified_at: modifiedAt,
-      });
+      client.onGet().reply(
+        200,
+        JSON.stringify({
+          id,
+          owner_id: ownerId,
+          name: name,
+          created_at: createdAt,
+          modified_at: modifiedAt,
+        })
+      );
 
       expect(await bt.tenants.retrieve()).toEqual({
         id,
@@ -64,13 +67,16 @@ describe('Tenants', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet().reply(200, {
-        id,
-        owner_id: ownerId,
-        name: name,
-        created_at: createdAt,
-        modified_at: modifiedAt,
-      });
+      client.onGet().reply(
+        200,
+        JSON.stringify({
+          id,
+          owner_id: ownerId,
+          name: name,
+          created_at: createdAt,
+          modified_at: modifiedAt,
+        })
+      );
 
       expect(
         await bt.tenants.retrieve({ apiKey: _apiKey, correlationId })
@@ -103,7 +109,7 @@ describe('Tenants', () => {
     it('should update a tenant', async () => {
       const name = chance.string();
 
-      client.onPut().reply(200, { name });
+      client.onPut().reply(200, JSON.stringify({ name }));
 
       expect(await bt.tenants.update({ name })).toStrictEqual({
         name,
@@ -122,7 +128,7 @@ describe('Tenants', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onPut().reply(200, { name });
+      client.onPut().reply(200, JSON.stringify({ name }));
 
       expect(
         await bt.tenants.update({ name }, { apiKey: _apiKey, correlationId })

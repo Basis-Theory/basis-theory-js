@@ -90,10 +90,13 @@ export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
     } = param();
     const createdAt = chance.string();
 
-    client.onPost('/').reply(201, {
-      ...transformedCreatePayload,
-      created_at: createdAt,
-    });
+    client.onPost('/').reply(
+      201,
+      JSON.stringify({
+        ...transformedCreatePayload,
+        created_at: createdAt,
+      })
+    );
 
     expect(await service.create(createPayload)).toStrictEqual({
       ...createPayload,
@@ -118,10 +121,13 @@ export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
     } = param();
     const createdAt = chance.string();
 
-    client.onPost('/').reply(201, {
-      ...transformedCreatePayload,
-      created_at: createdAt,
-    });
+    client.onPost('/').reply(
+      201,
+      JSON.stringify({
+        ...transformedCreatePayload,
+        created_at: createdAt,
+      })
+    );
 
     expect(
       await service.create(createPayload, {
@@ -165,10 +171,13 @@ export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
     const { service, client } = param();
     const createdAt = chance.string();
 
-    client.onGet(id).reply(200, {
-      id,
-      created_at: createdAt,
-    });
+    client.onGet(id).reply(
+      200,
+      JSON.stringify({
+        id,
+        created_at: createdAt,
+      })
+    );
 
     expect(await service.retrieve(id)).toStrictEqual({
       id,
@@ -184,10 +193,13 @@ export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
     const { service, client } = param();
     const createdAt = chance.string();
 
-    client.onGet(id).reply(200, {
-      id,
-      created_at: createdAt,
-    });
+    client.onGet(id).reply(
+      200,
+      JSON.stringify({
+        id,
+        created_at: createdAt,
+      })
+    );
 
     expect(
       await service.retrieve(id, {
@@ -232,10 +244,13 @@ export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
     } = param();
     const updatedAt = chance.string();
 
-    client.onPut(id).reply(200, {
-      ...transformedUpdatePayload,
-      updated_at: updatedAt,
-    });
+    client.onPut(id).reply(
+      200,
+      JSON.stringify({
+        ...transformedUpdatePayload,
+        updated_at: updatedAt,
+      })
+    );
 
     expect(await service.update(id, updatePayload)).toStrictEqual({
       ...updatePayload,
@@ -259,10 +274,13 @@ export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
     } = param();
     const updatedAt = chance.string();
 
-    client.onPut(id).reply(200, {
-      ...transformedUpdatePayload,
-      updated_at: updatedAt,
-    });
+    client.onPut(id).reply(
+      200,
+      JSON.stringify({
+        ...transformedUpdatePayload,
+        updated_at: updatedAt,
+      })
+    );
 
     expect(
       await service.update(id, updatePayload, {
@@ -389,15 +407,18 @@ export const testList = <T>(param: () => TestListParam<T>) => {
   it('should list', async () => {
     const { service, client } = param();
 
-    client.onGet().reply(200, {
-      pagination: {
-        total_items: totalItems,
-        page_number: pageNumber,
-        page_size: pageSize,
-        total_pages: totalPages,
-      },
-      data: [],
-    });
+    client.onGet().reply(
+      200,
+      JSON.stringify({
+        pagination: {
+          total_items: totalItems,
+          page_number: pageNumber,
+          page_size: pageSize,
+          total_pages: totalPages,
+        },
+        data: [],
+      })
+    );
 
     expect(await service.list()).toStrictEqual({
       pagination: {
@@ -418,15 +439,18 @@ export const testList = <T>(param: () => TestListParam<T>) => {
   it('should list with query', async () => {
     const { service, client } = param();
 
-    client.onGet().reply(200, {
-      pagination: {
-        total_items: totalItems,
-        page_number: pageNumber,
-        page_size: pageSize,
-        total_pages: totalPages,
-      },
-      data: [],
-    });
+    client.onGet().reply(
+      200,
+      JSON.stringify({
+        pagination: {
+          total_items: totalItems,
+          page_number: pageNumber,
+          page_size: pageSize,
+          total_pages: totalPages,
+        },
+        data: [],
+      })
+    );
 
     expect(await service.list(query as PaginatedQuery)).toStrictEqual({
       pagination: {
@@ -449,15 +473,18 @@ export const testList = <T>(param: () => TestListParam<T>) => {
   it('should list with options', async () => {
     const { service, client } = param();
 
-    client.onGet().reply(200, {
-      pagination: {
-        total_items: totalItems,
-        page_number: pageNumber,
-        page_size: pageSize,
-        total_pages: totalPages,
-      },
-      data: [],
-    });
+    client.onGet().reply(
+      200,
+      JSON.stringify({
+        pagination: {
+          total_items: totalItems,
+          page_number: pageNumber,
+          page_size: pageSize,
+          total_pages: totalPages,
+        },
+        data: [],
+      })
+    );
 
     expect(
       await service.list(query as PaginatedQuery, { apiKey, correlationId })

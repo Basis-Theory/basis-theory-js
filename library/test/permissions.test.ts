@@ -34,13 +34,16 @@ describe('Permissions', () => {
       const description = chance.string();
       const applicationTypes = [chance.string() as ApplicationType];
 
-      client.onGet().reply(200, [
-        {
-          type,
-          description,
-          application_types: applicationTypes,
-        },
-      ]);
+      client.onGet().reply(
+        200,
+        JSON.stringify([
+          {
+            type,
+            description,
+            application_types: applicationTypes,
+          },
+        ])
+      );
 
       expect(await bt.permissions.list()).toEqual([
         {
@@ -63,13 +66,16 @@ describe('Permissions', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet().reply(200, [
-        {
-          type,
-          description,
-          application_types: applicationTypes,
-        },
-      ]);
+      client.onGet().reply(
+        200,
+        JSON.stringify([
+          {
+            type,
+            description,
+            application_types: applicationTypes,
+          },
+        ])
+      );
 
       expect(
         await bt.permissions.list({ apiKey: _apiKey, correlationId })
