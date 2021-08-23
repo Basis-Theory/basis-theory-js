@@ -2,7 +2,6 @@
 import { Chance } from 'chance';
 import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
-import { DEFAULT_ELEMENTS_BASE_URL } from './../src/common/constants';
 
 describe('Elements', () => {
   let chance: Chance.Chance;
@@ -64,7 +63,7 @@ describe('Elements', () => {
 
     it('should resolve with a valid base elements url', async () => {
       const bt = new BasisTheory();
-      const validUrl = ' https://basistheory.com';
+      const validUrl = chance.url({ protocol: 'https' });
 
       expect(
         bt.init(chance.string(), {
@@ -86,11 +85,15 @@ describe('Elements', () => {
       window.BasisTheoryElements = expectedElements;
       expect(await loadElements()).toBe(expectedElements);
 
-      await new BasisTheory().init('', { elements: true });
+      const baseUrl = chance.url({ protocol: 'https', path: '' });
+      await new BasisTheory().init('', {
+        elements: true,
+        elementsBaseUrl: baseUrl,
+      });
 
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
-        new URL(DEFAULT_ELEMENTS_BASE_URL).toString()
+        baseUrl.replace(/\/$/, '')
       );
     });
 
@@ -210,7 +213,11 @@ describe('Elements', () => {
       });
 
       it('should resolve successfully and have elements initialized', async () => {
-        const promise = bt.init('el-123', { elements: true });
+        const baseUrl = chance.url({ protocol: 'https', path: '' });
+        const promise = bt.init('el-123', {
+          elements: true,
+          elementsBaseUrl: baseUrl,
+        });
 
         expect(addEventListener.mock.calls[0]).toEqual([
           'load',
@@ -227,7 +234,7 @@ describe('Elements', () => {
         expect(bt.elements).toBeDefined();
         expect(elementsInit).toHaveBeenCalledWith(
           'el-123',
-          new URL(DEFAULT_ELEMENTS_BASE_URL).toString()
+          baseUrl.replace(/\/$/, '')
         );
       });
     });

@@ -67,7 +67,7 @@ export class BasisTheory {
           baseUrlObject.protocol = 'https';
         }
 
-        baseUrl = baseUrlObject.toString();
+        baseUrl = baseUrlObject.toString().replace(/\/$/, '');
       } catch (e) {
         throw new Error('Invalid format for the given API base url.');
       }
@@ -137,7 +137,7 @@ export class BasisTheory {
     const elements = await loadElements();
     await (elements as BasisTheoryElementsInit).init(
       apiKey,
-      elementsBaseUrl.toString()
+      elementsBaseUrl.toString().replace(/\/$/, '')
     );
     this.elements = elements;
   }

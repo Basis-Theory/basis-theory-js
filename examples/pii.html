@@ -29,8 +29,7 @@
       // here we are doing it when the window is properly loaded
       window.addEventListener('load', function () {
         BasisTheory.init(
-          '04ab9d12-4959-4c48-ba03-9ef722efcc5a', // pass your API Key
-          { apiBaseUrl: 'http://localhost:3333' } // and apiBaseUrl (optional)
+          '04ab9d12-4959-4c48-ba03-9ef722efcc5a' // pass your API Key
         ).then(function () {
           // Generate an ECIES key pair in a way we can access it later
           BasisTheory.encryption.browserEncryption.init({

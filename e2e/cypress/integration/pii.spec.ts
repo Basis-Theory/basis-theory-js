@@ -1,14 +1,34 @@
 context('PII example', () => {
   beforeEach(() => {
     cy.visit('examples/pii.html');
-    cy.intercept({
-      method: 'POST',
-      pathname: '/tokens',
-    }).as('createToken');
-    cy.intercept({
-      method: 'GET',
-      pathname: '/tokens/*',
-    }).as('getToken');
+    cy.intercept(
+      {
+        method: 'POST',
+        pathname: '/tokens',
+      },
+      (req) => {
+        const url = new URL(req.url);
+        if (url.hostname !== 'localhost') {
+          url.hostname = 'localhost';
+          url.port = '3333';
+          req.redirect(url.toString());
+        }
+      }
+    ).as('createToken');
+    cy.intercept(
+      {
+        method: 'GET',
+        pathname: '/tokens/*',
+      },
+      (req) => {
+        const url = new URL(req.url);
+        if (url.hostname !== 'localhost') {
+          url.hostname = 'localhost';
+          url.port = '3333';
+          req.redirect(url.toString());
+        }
+      }
+    ).as('getToken');
   });
 
   it('shoud load BasisTheory', () => {

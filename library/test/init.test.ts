@@ -1,8 +1,7 @@
 import { Chance } from 'chance';
-import { BasisTheory } from '../src';
-import { BasisTheoryElements } from '../src/elements';
-import { loadElements } from '../src/common/elements';
 import { mocked } from 'ts-jest/utils';
+import { BasisTheory } from '../src';
+import { loadElements } from '../src/common/elements';
 
 jest.mock('../src/common/elements');
 
@@ -40,7 +39,7 @@ describe('Init', () => {
 
   it('should accept a valid base API url', async () => {
     const bt = new BasisTheory();
-    const validUrl = 'https://basistheory.com';
+    const validUrl = chance.url({ protocol: 'https' });
 
     await expect(
       bt.init(chance.string(), { apiBaseUrl: validUrl })

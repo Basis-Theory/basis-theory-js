@@ -1,9 +1,16 @@
 context('Credit Card example', () => {
   beforeEach(() => {
     cy.visit('examples/credit_card.html');
-    cy.intercept({
-      pathname: '/atomic/cards',
-    }).as('createCreditCard');
+    cy.intercept(
+      {
+        pathname: '/atomic/cards',
+      },
+      (req) => {
+        if (req.url !== 'http://localhost:3333/atomic/cards') {
+          req.redirect('http://localhost:3333/atomic/cards');
+        }
+      }
+    ).as('createCreditCard');
   });
 
   it('shoud load BasisTheory', () => {
