@@ -1,5 +1,9 @@
+import { v4 as uuid } from 'uuid';
+
 context('PII example', () => {
   beforeEach(() => {
+    let encryptedData: string;
+
     cy.visit('examples/pii.html');
     cy.intercept(
       {
@@ -7,11 +11,15 @@ context('PII example', () => {
         pathname: '/tokens',
       },
       (req) => {
-        const url = new URL(req.url);
-        if (url.hostname !== 'localhost') {
-          url.hostname = 'localhost';
-          url.port = '3333';
-          req.redirect(url.toString());
+        if (!req.url.includes('localhost')) {
+          encryptedData = req.body.data;
+          req.reply({
+            statusCode: 201,
+            body: {
+              id: uuid(),
+              data: req.body.data,
+            },
+          });
         }
       }
     ).as('createToken');
@@ -21,11 +29,17 @@ context('PII example', () => {
         pathname: '/tokens/*',
       },
       (req) => {
-        const url = new URL(req.url);
-        if (url.hostname !== 'localhost') {
-          url.hostname = 'localhost';
-          url.port = '3333';
-          req.redirect(url.toString());
+        if (!req.url.includes('localhost')) {
+          const urlParts = req.url.split('/');
+          const id = urlParts.pop();
+
+          req.reply({
+            statusCode: 200,
+            body: {
+              id,
+              data: encryptedData,
+            },
+          });
         }
       }
     ).as('getToken');

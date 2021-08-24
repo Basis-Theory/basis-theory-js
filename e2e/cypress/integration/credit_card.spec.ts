@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 context('Credit Card example', () => {
   beforeEach(() => {
     cy.visit('examples/credit_card.html');
@@ -6,8 +8,24 @@ context('Credit Card example', () => {
         pathname: '/atomic/cards',
       },
       (req) => {
-        if (req.url !== 'http://localhost:3333/atomic/cards') {
-          req.redirect('http://localhost:3333/atomic/cards');
+        if (!req.url.includes('localhost')) {
+          const year = (new Date().getFullYear() + 1).toString();
+
+          req.reply({
+            statusCode: 201,
+            body: {
+              id: uuid(),
+              card: {
+                number: `${'X'.repeat(12)}4242`,
+                expiration_month: '10',
+                expiration_year: year,
+                cvc: 'XXX',
+              },
+              billing_details: {
+                name: 'John Doe',
+              },
+            },
+          });
         }
       }
     ).as('createCreditCard');
