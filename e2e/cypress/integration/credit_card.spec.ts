@@ -2,7 +2,14 @@ import { v4 as uuid } from 'uuid';
 
 context('Credit Card example', () => {
   beforeEach(() => {
+    cy.intercept('https://js.basistheory.com/', async (req) => {
+      req.redirect(
+        `${req.headers.referer}/library/dist/basis-theory-js.bundle.js`
+      );
+    });
+
     cy.visit('examples/credit_card.html');
+
     cy.intercept(
       {
         pathname: '/atomic/cards',

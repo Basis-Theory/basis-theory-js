@@ -2,9 +2,13 @@ import { v4 as uuid } from 'uuid';
 
 context('PII example', () => {
   beforeEach(() => {
-    let encryptedData: string;
-
+    cy.intercept('https://js.basistheory.com/', async (req) => {
+      req.redirect(
+        `${req.headers.referer}/library/dist/basis-theory-js.bundle.js`
+      );
+    });
     cy.visit('examples/pii.html');
+    let encryptedData: string;
     cy.intercept(
       {
         method: 'POST',
