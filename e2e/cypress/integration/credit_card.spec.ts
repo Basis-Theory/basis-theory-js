@@ -8,25 +8,23 @@ context('Credit Card example', () => {
         pathname: '/atomic/cards',
       },
       (req) => {
-        if (!req.url.includes('localhost')) {
-          const year = (new Date().getFullYear() + 1).toString();
+        const year = (new Date().getFullYear() + 1).toString();
 
-          req.reply({
-            statusCode: 201,
-            body: {
-              id: uuid(),
-              card: {
-                number: `${'X'.repeat(12)}4242`,
-                expiration_month: '10',
-                expiration_year: year,
-                cvc: 'XXX',
-              },
-              billing_details: {
-                name: 'John Doe',
-              },
+        req.reply({
+          statusCode: 201,
+          body: {
+            id: uuid(),
+            card: {
+              number: `${'X'.repeat(12)}4242`,
+              expiration_month: '10',
+              expiration_year: year,
+              cvc: 'XXX',
             },
-          });
-        }
+            billing_details: {
+              name: 'John Doe',
+            },
+          },
+        });
       }
     ).as('createCreditCard');
   });

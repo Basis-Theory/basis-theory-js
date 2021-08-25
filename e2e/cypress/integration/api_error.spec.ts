@@ -35,10 +35,10 @@ context('API error', () => {
       data = 'some error response';
 
     beforeEach(() => {
-      cy.intercept('/atomic/cards', {
+      cy.intercept('POST', '/atomic/cards', {
         statusCode: status,
         body: data,
-      }).as('atomic-cards');
+      });
     });
 
     it('should return error with the API status and data', () => {

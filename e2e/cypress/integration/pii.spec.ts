@@ -11,16 +11,14 @@ context('PII example', () => {
         pathname: '/tokens',
       },
       (req) => {
-        if (!req.url.includes('localhost')) {
-          encryptedData = req.body.data;
-          req.reply({
-            statusCode: 201,
-            body: {
-              id: uuid(),
-              data: req.body.data,
-            },
-          });
-        }
+        encryptedData = req.body.data;
+        req.reply({
+          statusCode: 201,
+          body: {
+            id: uuid(),
+            data: req.body.data,
+          },
+        });
       }
     ).as('createToken');
     cy.intercept(
@@ -29,18 +27,16 @@ context('PII example', () => {
         pathname: '/tokens/*',
       },
       (req) => {
-        if (!req.url.includes('localhost')) {
-          const urlParts = req.url.split('/');
-          const id = urlParts.pop();
+        const urlParts = req.url.split('/');
+        const id = urlParts.pop();
 
-          req.reply({
-            statusCode: 200,
-            body: {
-              id,
-              data: encryptedData,
-            },
-          });
-        }
+        req.reply({
+          statusCode: 200,
+          body: {
+            id,
+            data: encryptedData,
+          },
+        });
       }
     ).as('getToken');
   });
@@ -96,5 +92,3 @@ context('PII example', () => {
       });
   });
 });
-
-export {};

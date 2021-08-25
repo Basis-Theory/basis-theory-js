@@ -3,7 +3,7 @@
   <head>
     <title>PII example</title>
     <!-- Add BasisTheory SDK -->
-    <script src="../library/dist/basis-theory-js.bundle.js"></script>
+    <script src="https://js.basistheory.com/"></script>
   </head>
   <body>
     <style>
@@ -65,7 +65,7 @@
         BasisTheory.encryption.browserEncryption
           .encrypt(window.keyPair.publicKey, JSON.stringify(pii))
           .then(function (encrypted) {
-            BasisTheory.tokens.createToken(encrypted).then(function (res) {
+            BasisTheory.tokens.create({ data: encrypted }).then(function (res) {
               const token = res.id;
               // save the token so we can access it later
               window.token = token;
@@ -80,7 +80,7 @@
 
       function showData() {
         // retrieve our token data
-        BasisTheory.tokens.getToken(window.token).then(function (res) {
+        BasisTheory.tokens.retrieve(window.token).then(function (res) {
           const data = res.data;
           // decrypt it using our local private key
           BasisTheory.encryption.browserEncryption
