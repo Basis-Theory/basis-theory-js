@@ -49,6 +49,18 @@ await bt.applications.list(
 );
 ```
 
+### Setting a custom API Url
+
+You can set a custom API Url to be used across all clients when creating a new SDK instance.
+
+```javascript
+import { BasisTheory } from '@basis-theory/basis-theory-js';
+
+const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED', {
+  apiBaseUrl: 'https://api.somedomain.com',
+}); // replace with your application key and api base URL.
+```
+
 ## Development
 
 The provided scripts with the SDK will check for all dependencies, start docker, build the solution, and run all tests.
