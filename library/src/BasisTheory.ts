@@ -1,4 +1,9 @@
-import { assertInit, loadElements, SERVICES } from './common';
+import { assertInit, loadElements } from './common';
+import {
+  CLIENT_BASE_PATHS,
+  DEFAULT_ELEMENTS_BASE_URL,
+  DEFAULT_BASE_URL,
+} from './common/constants';
 import { BasisTheoryAtomic } from './atomic';
 import type { BasisTheoryInitOptions, InitStatus } from './types';
 import { BasisTheoryApplications } from './applications';
@@ -14,8 +19,9 @@ import { BasisTheoryAtomicCards } from './atomic/cards';
 import { BasisTheoryPermissions } from './permissions';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
-  environment: 'production',
+  apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
+  elementsBaseUrl: DEFAULT_ELEMENTS_BASE_URL,
 };
 
 export class BasisTheory {
@@ -44,50 +50,67 @@ export class BasisTheory {
       );
     }
     this._initStatus = 'in-progress';
+
     try {
       this._initOptions = Object.freeze({
         ...defaultInitOptions,
         ...options,
       });
+
+      let baseUrl = this._initOptions.apiBaseUrl;
+
+      try {
+        const baseUrlObject = new URL(this.initOptions.apiBaseUrl);
+        if (baseUrlObject.hostname === 'localhost') {
+          baseUrlObject.protocol = 'http';
+        } else {
+          baseUrlObject.protocol = 'https';
+        }
+
+        baseUrl = baseUrlObject.toString().replace(/\/$/, '');
+      } catch (e) {
+        throw new Error('Invalid format for the given API base url.');
+      }
+
       this._tokens = new BasisTheoryTokens({
         apiKey,
-        baseURL: SERVICES.tokens[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
       });
       this._atomic = new BasisTheoryAtomic({
         apiKey,
-        baseURL: SERVICES.atomic[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.atomic, baseUrl).toString(),
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
-        baseURL: SERVICES.applications[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.applications, baseUrl).toString(),
       });
       this._tenants = new BasisTheoryTenants({
         apiKey,
-        baseURL: SERVICES.tenants[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.tenants, baseUrl).toString(),
       });
       this._logs = new BasisTheoryLogs({
         apiKey,
-        baseURL: SERVICES.logs[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.logs, baseUrl).toString(),
       });
       this._reactorFormulas = new BasisTheoryReactorFormulas({
         apiKey,
-        baseURL: SERVICES.reactorFormulas[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.reactorFormulas, baseUrl).toString(),
       });
       this._reactors = new BasisTheoryReactors({
         apiKey,
-        baseURL: SERVICES.reactors[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.reactors, baseUrl).toString(),
       });
       this._atomicBanks = new BasisTheoryAtomicBanks({
         apiKey,
-        baseURL: SERVICES.atomicBanks[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.atomicBanks, baseUrl).toString(),
       });
       this._atomicCards = new BasisTheoryAtomicCards({
         apiKey,
-        baseURL: SERVICES.atomicCards[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.atomicCards, baseUrl).toString(),
       });
       this._permissions = new BasisTheoryPermissions({
         apiKey,
-        baseURL: SERVICES.permissions[this._initOptions.environment],
+        baseURL: new URL(CLIENT_BASE_PATHS.permissions, baseUrl).toString(),
       });
 
       this._encryption = new BasisTheoryEncryptionAdapters();
@@ -104,10 +127,17 @@ export class BasisTheory {
   }
 
   private async loadElements(apiKey: string): Promise<void> {
+    let elementsBaseUrl: URL;
+    try {
+      elementsBaseUrl = new URL(this.initOptions.elementsBaseUrl);
+    } catch (e) {
+      throw new Error('Invalid format for the given Elements base url.');
+    }
+
     const elements = await loadElements();
     await (elements as BasisTheoryElementsInit).init(
       apiKey,
-      this.initOptions.environment
+      elementsBaseUrl.toString().replace(/\/$/, '')
     );
     this.elements = elements;
   }

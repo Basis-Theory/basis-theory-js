@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import type { BasisTheory as BasisTheoryType } from '../src';
 import { Chance } from 'chance';
+import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
 
 describe('Elements', () => {
@@ -50,6 +50,29 @@ describe('Elements', () => {
       delete window.BasisTheoryElements;
     });
 
+    it('should throw error for invalid base elements url', async () => {
+      const bt = new BasisTheory();
+
+      await expect(() =>
+        bt.init(chance.string(), {
+          elements: true,
+          elementsBaseUrl: chance.string(),
+        })
+      ).rejects.toThrowError('Invalid format for the given Elements base url.');
+    });
+
+    it('should resolve with a valid base elements url', async () => {
+      const bt = new BasisTheory();
+      const validUrl = chance.url({ protocol: 'https' });
+
+      expect(
+        bt.init(chance.string(), {
+          elements: true,
+          elementsBaseUrl: validUrl,
+        })
+      ).resolves.toBe(bt);
+    });
+
     it('should resolve to previously initialized BasisTheoryElements', async () => {
       let loadElements: () => unknown = jest.fn();
       jest.isolateModules(() => {
@@ -62,9 +85,16 @@ describe('Elements', () => {
       window.BasisTheoryElements = expectedElements;
       expect(await loadElements()).toBe(expectedElements);
 
-      await new BasisTheory().init('', { elements: true });
+      const baseUrl = chance.url({ protocol: 'https', path: '' });
+      await new BasisTheory().init('', {
+        elements: true,
+        elementsBaseUrl: baseUrl,
+      });
 
-      expect(expectedElements.init).toHaveBeenCalledWith('', 'production');
+      expect(expectedElements.init).toHaveBeenCalledWith(
+        '',
+        baseUrl.replace(/\/$/, '')
+      );
     });
 
     it('should reject if load elements throws error', () => {
@@ -183,7 +213,11 @@ describe('Elements', () => {
       });
 
       it('should resolve successfully and have elements initialized', async () => {
-        const promise = bt.init('el-123', { elements: true });
+        const baseUrl = chance.url({ protocol: 'https', path: '' });
+        const promise = bt.init('el-123', {
+          elements: true,
+          elementsBaseUrl: baseUrl,
+        });
 
         expect(addEventListener.mock.calls[0]).toEqual([
           'load',
@@ -198,7 +232,10 @@ describe('Elements', () => {
         await promise;
 
         expect(bt.elements).toBeDefined();
-        expect(elementsInit).toHaveBeenCalledWith('el-123', 'production');
+        expect(elementsInit).toHaveBeenCalledWith(
+          'el-123',
+          baseUrl.replace(/\/$/, '')
+        );
       });
     });
   });

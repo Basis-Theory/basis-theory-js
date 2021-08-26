@@ -2,13 +2,7 @@ import type { BasisTheoryElements } from './elements';
 
 export type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
-export type ServiceEnvironment = 'production' | 'sandbox' | 'local';
-
-export type ServiceUrlMap = {
-  [key in ServiceEnvironment]: string;
-};
-
-export type Services =
+export type Clients =
   | 'tokens'
   | 'atomic'
   | 'applications'
@@ -20,8 +14,8 @@ export type Services =
   | 'logs'
   | 'tenants';
 
-export type ServicesMap = {
-  [key in Services]: ServiceUrlMap;
+export type ClientsBasePathMap = {
+  [key in Clients]: string;
 };
 
 export type Providers = 'BROWSER' | 'NODE';
@@ -41,8 +35,9 @@ export interface EncryptionOptions {
 }
 
 export interface BasisTheoryInitOptions {
-  environment?: ServiceEnvironment;
+  apiBaseUrl?: string;
   elements?: boolean;
+  elementsBaseUrl?: string;
 }
 
 declare global {

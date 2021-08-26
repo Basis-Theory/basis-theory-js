@@ -1,9 +1,39 @@
+import { v4 as uuid } from 'uuid';
+
 context('Credit Card example', () => {
   beforeEach(() => {
+    cy.intercept('https://js.basistheory.com/', async (req) => {
+      req.redirect(
+        `${req.headers.referer}/library/dist/basis-theory-js.bundle.js`
+      );
+    });
+
     cy.visit('examples/credit_card.html');
-    cy.intercept({
-      pathname: '/atomic/cards',
-    }).as('createCreditCard');
+
+    cy.intercept(
+      {
+        pathname: '/atomic/cards',
+      },
+      (req) => {
+        const year = (new Date().getFullYear() + 1).toString();
+
+        req.reply({
+          statusCode: 201,
+          body: {
+            id: uuid(),
+            card: {
+              number: `${'X'.repeat(12)}4242`,
+              expiration_month: '10',
+              expiration_year: year,
+              cvc: 'XXX',
+            },
+            billing_details: {
+              name: 'John Doe',
+            },
+          },
+        });
+      }
+    ).as('createCreditCard');
   });
 
   it('shoud load BasisTheory', () => {

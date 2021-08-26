@@ -1,14 +1,48 @@
+import { v4 as uuid } from 'uuid';
+
 context('PII example', () => {
   beforeEach(() => {
+    cy.intercept('https://js.basistheory.com/', async (req) => {
+      req.redirect(
+        `${req.headers.referer}/library/dist/basis-theory-js.bundle.js`
+      );
+    });
     cy.visit('examples/pii.html');
-    cy.intercept({
-      method: 'POST',
-      pathname: '/tokens',
-    }).as('createToken');
-    cy.intercept({
-      method: 'GET',
-      pathname: '/tokens/*',
-    }).as('getToken');
+    let encryptedData: string;
+    cy.intercept(
+      {
+        method: 'POST',
+        pathname: '/tokens',
+      },
+      (req) => {
+        encryptedData = req.body.data;
+        req.reply({
+          statusCode: 201,
+          body: {
+            id: uuid(),
+            data: req.body.data,
+          },
+        });
+      }
+    ).as('createToken');
+    cy.intercept(
+      {
+        method: 'GET',
+        pathname: '/tokens/*',
+      },
+      (req) => {
+        const urlParts = req.url.split('/');
+        const id = urlParts.pop();
+
+        req.reply({
+          statusCode: 200,
+          body: {
+            id,
+            data: encryptedData,
+          },
+        });
+      }
+    ).as('getToken');
   });
 
   it('shoud load BasisTheory', () => {
@@ -62,5 +96,3 @@ context('PII example', () => {
       });
   });
 });
-
-export {};
