@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.2...v1.1.0) (2021-08-26)
+
+
+### Features
+
+* add apiBaseUrl and elementsBaseUrl to configuration options ([#77](https://github.com/Basis-Theory/basis-theory-js/issues/77)) ([66765f2](https://github.com/Basis-Theory/basis-theory-js/commit/66765f22015c998f25fa01f4dd1acd23bf67a7e1))
+
 ## [1.0.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.1...v1.0.2) (2021-08-22)
 
 
