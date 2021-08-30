@@ -3,8 +3,8 @@ context('Elements example', () => {
     cy.intercept(/https:\/\/.+?\/elements/, {
       body: `
         window.BasisTheoryElements = {
-          init: (apiKey, environment) => {
-            alert("BasisTheoryElements " + apiKey + " " + environment);
+          init: (apiKey, baseUrl) => {
+            alert("BasisTheoryElements " + apiKey + " " + baseUrl);
           },
         };
         if (window.BasisTheory) {
@@ -14,7 +14,7 @@ context('Elements example', () => {
     cy.visit('examples/elements.html');
     cy.on('window:alert', (val) => {
       expect(val).to.equal(
-        `BasisTheoryElements 04ab9d12-4959-4c48-ba03-9ef722efcc5a local`
+        `BasisTheoryElements 04ab9d12-4959-4c48-ba03-9ef722efcc5a https://elements.basistheory.com`
       );
     });
   });
