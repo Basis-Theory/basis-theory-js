@@ -1,8 +1,9 @@
-import { BasisTheoryEncryption } from './BasisTheoryEncryption';
 import { assertInit } from '../common';
+import { BasisTheoryEncryption } from './BasisTheoryEncryption';
 
 export class BasisTheoryEncryptionAdapters {
   private _nodeEncryption?: BasisTheoryEncryption;
+
   private _browserEncryption?: BasisTheoryEncryption;
 
   public constructor() {

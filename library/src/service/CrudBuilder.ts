@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type,@typescript-eslint/no-explicit-any */
-import { BasisTheoryService } from './BasisTheoryService';
-import type { RequestOptions } from './types';
 import { createRequestConfig, dataExtractor, getQueryParams } from '../common';
-import type { PaginatedList, PaginatedQuery } from './types';
+import { BasisTheoryService } from './BasisTheoryService';
+import type { RequestOptions, PaginatedList, PaginatedQuery } from './types';
 
 type BasisTheoryServiceConstructor<
   T extends BasisTheoryService = BasisTheoryService
@@ -95,21 +94,25 @@ export class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
 
   public create<T, C>(): CrudBuilder<Class & ICreateConstructor<T, C>> {
     this.BaseService = Create<T, C, Class>(this.BaseService);
+
     return (this as unknown) as CrudBuilder<Class & ICreateConstructor<T, C>>;
   }
 
   public retrieve<T>(): CrudBuilder<Class & IRetrieveConstructor<T>> {
     this.BaseService = Retrieve<T, Class>(this.BaseService);
+
     return (this as unknown) as CrudBuilder<Class & IRetrieveConstructor<T>>;
   }
 
   public update<T, U>(): CrudBuilder<Class & IUpdateConstructor<T, U>> {
     this.BaseService = Update<T, U, Class>(this.BaseService);
+
     return (this as unknown) as CrudBuilder<Class & IUpdateConstructor<T, U>>;
   }
 
   public delete(): CrudBuilder<Class & IDeleteConstructor> {
     this.BaseService = Delete<Class>(this.BaseService);
+
     return (this as unknown) as CrudBuilder<Class & IDeleteConstructor>;
   }
 
@@ -117,6 +120,7 @@ export class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
     Class & IListConstructor<T, Q>
   > {
     this.BaseService = List<T, Q, Class>(this.BaseService);
+
     return (this as unknown) as CrudBuilder<Class & IListConstructor<T, Q>>;
   }
 

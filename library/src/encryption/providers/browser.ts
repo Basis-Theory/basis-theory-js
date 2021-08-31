@@ -1,5 +1,5 @@
-import type { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm, EncryptionOptions } from '../../types';
+import type { EncryptionAdapter, KeyPair } from '../types';
 import { arrayBufferToBase64String, base64StringToArrayBuffer } from './utils';
 
 let signAlgorithm: RsaHashedKeyGenParams;
@@ -19,14 +19,15 @@ function convertBinaryToPem(binaryData: ArrayBuffer, label: string): string {
   const base64Cert = arrayBufferToBase64String(binaryData);
   let pemCert = `-----BEGIN ${label} KEY-----\r\n`;
   let nextIndex = 0;
+
   while (nextIndex < base64Cert.length) {
-    if (nextIndex + 64 <= base64Cert.length) {
-      pemCert += `${base64Cert.substr(nextIndex, 64)}\r\n`;
-    } else {
-      pemCert += `${base64Cert.substr(nextIndex)}\r\n`;
-    }
+    pemCert +=
+      nextIndex + 64 <= base64Cert.length
+        ? `${base64Cert.substr(nextIndex, 64)}\r\n`
+        : `${base64Cert.slice(nextIndex)}\r\n`;
     nextIndex += 64;
   }
+
   pemCert += `-----END ${label} KEY-----\r\n`;
 
   return pemCert;
@@ -38,13 +39,14 @@ function convertPemToBinary(
 ): ArrayBuffer {
   const lines = pem.split('\n');
   let encoded = '';
-  for (let i = 0; i < lines.length; i++) {
+
+  for (const line of lines) {
     if (
-      lines[i].trim().length > 0 &&
-      lines[i].indexOf(`-BEGIN ${label} KEY-`) < 0 &&
-      lines[i].indexOf(`-END ${label} KEY-`) < 0
+      line.trim().length > 0 &&
+      !line.includes(`-BEGIN ${label} KEY-`) &&
+      !line.includes(`-END ${label} KEY-`)
     ) {
-      encoded = encoded + lines[i].trim();
+      encoded = encoded + line.trim();
     }
   }
 

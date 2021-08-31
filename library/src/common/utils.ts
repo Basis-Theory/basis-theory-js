@@ -1,23 +1,24 @@
-import axios from 'axios';
 import type {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosTransformer,
 } from 'axios';
+import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
-import snakecaseKeys from 'snakecase-keys';
 import { snakeCase } from 'snake-case';
-import type { RequestOptions, RequestTransformers } from '../service';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
-import { BasisTheoryApiError } from './BasisTheoryApiError';
-import type { Reactor } from '../reactors';
-import type { Token } from '../tokens';
+import snakecaseKeys from 'snakecase-keys';
 import type { Atomic, ReactRequest } from '../atomic';
+import type { Reactor } from '../reactors';
+import type { RequestOptions, RequestTransformers } from '../service';
+import type { Token } from '../tokens';
+import { BasisTheoryApiError } from './BasisTheoryApiError';
+import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
 
 export const assertInit = <T>(prop: T): NonNullable<T> => {
   if (prop === null || prop === undefined) {
     throw new Error('BasisTheory has not yet been properly initialized.');
   }
+
   return prop as NonNullable<T>;
 };
 
@@ -27,6 +28,7 @@ export const transformRequestSnakeCase: AxiosTransformer = <T, S>(
   if (data === undefined) {
     return undefined;
   }
+
   return snakecaseKeys(data, {
     deep: true,
   }) as S;
@@ -56,6 +58,7 @@ export const transformAtomicRequestSnakeCase: AxiosTransformer = <
   if (data === undefined) {
     return undefined;
   }
+
   return {
     ...snakecaseKeys(data, { deep: true }),
     ...(data.metadata !== undefined ? { metadata: data.metadata } : {}),
@@ -127,6 +130,7 @@ export const transformResponseCamelCase: AxiosTransformer = <T, C>(
   if (data === undefined) {
     return undefined;
   }
+
   return (camelcaseKeys(data, {
     deep: true,
   }) as unknown) as C;
@@ -157,24 +161,24 @@ export const createRequestConfig = (
   if (!options) {
     if (!transformers) {
       return undefined;
-    } else {
-      return {
-        ...(transformers.transformRequest !== undefined
-          ? {
-              transformRequest: concatRequestTransformerWithDefault(
-                transformers.transformRequest
-              ),
-            }
-          : {}),
-        ...(transformers.transformResponse !== undefined
-          ? {
-              transformResponse: concatResponseTransformermWithDefault(
-                transformers.transformResponse
-              ),
-            }
-          : {}),
-      };
     }
+
+    return {
+      ...(transformers.transformRequest !== undefined
+        ? {
+            transformRequest: concatRequestTransformerWithDefault(
+              transformers.transformRequest
+            ),
+          }
+        : {}),
+      ...(transformers.transformResponse !== undefined
+        ? {
+            transformResponse: concatResponseTransformermWithDefault(
+              transformers.transformResponse
+            ),
+          }
+        : {}),
+    };
   }
 
   const { apiKey, correlationId } = options;
@@ -188,6 +192,7 @@ export const createRequestConfig = (
         [BT_TRACE_ID_HEADER]: correlationId,
       }
     : {};
+
   return {
     headers: {
       ...apiKeyHeader,
@@ -212,20 +217,18 @@ export const createRequestConfig = (
 
 export const concatRequestTransformerWithDefault = (
   requestTransformer: AxiosTransformer | AxiosTransformer[]
-): AxiosTransformer | AxiosTransformer[] | undefined => {
-  return ([] as AxiosTransformer[]).concat(
+): AxiosTransformer | AxiosTransformer[] | undefined =>
+  ([] as AxiosTransformer[]).concat(
     requestTransformer,
     axios.defaults.transformRequest as AxiosTransformer[]
   );
-};
 
 export const concatResponseTransformermWithDefault = (
   responseTransformer: AxiosTransformer | AxiosTransformer[]
-): AxiosTransformer | AxiosTransformer[] | undefined => {
-  return (axios.defaults.transformResponse as AxiosTransformer[]).concat(
+): AxiosTransformer | AxiosTransformer[] | undefined =>
+  (axios.defaults.transformResponse as AxiosTransformer[]).concat(
     responseTransformer
   );
-};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
 export const errorInterceptor = (error: any): void => {
@@ -238,11 +241,12 @@ export const errorInterceptor = (error: any): void => {
 export function getQueryParams<Q>(query: Q): string {
   const keys = Object.keys(query) as (keyof Q)[];
 
-  if (keys.length > 0) {
+  if (keys.length) {
     const params = new URLSearchParams();
 
     const appendSafe = (key: string, value: unknown): void => {
       const type = typeof value;
+
       if (value === null || ['boolean', 'number', 'string'].includes(type)) {
         params.append(snakeCase(key), value as string);
       }

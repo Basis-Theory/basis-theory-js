@@ -75,6 +75,7 @@ describe('Elements', () => {
 
     it('should resolve to previously initialized BasisTheoryElements', async () => {
       let loadElements: () => unknown = jest.fn();
+
       jest.isolateModules(() => {
         ({ loadElements } = require('../src/common/elements'));
       });
@@ -82,10 +83,12 @@ describe('Elements', () => {
       const expectedElements = {
         init: jest.fn(),
       };
+
       window.BasisTheoryElements = expectedElements;
       expect(await loadElements()).toBe(expectedElements);
 
       const baseUrl = chance.url({ protocol: 'https', path: '' });
+
       await new BasisTheory().init('', {
         elements: true,
         elementsBaseUrl: baseUrl,
@@ -122,6 +125,7 @@ describe('Elements', () => {
         jest.mock('../src/common/script', () => ({
           findScript: () => {
             const script = document.createElement('script');
+
             return {
               ...script,
               addEventListener,
@@ -160,6 +164,7 @@ describe('Elements', () => {
 
       it('should reject when Elements can not load in window', () => {
         const promise = new BasisTheory().init('', { elements: true });
+
         loadCallback();
         expect(promise).rejects.toThrowError(
           'BasisTheoryElements did not load properly.'
@@ -168,6 +173,7 @@ describe('Elements', () => {
 
       it('should reject when Elements throw unknown error', () => {
         const promise = new BasisTheory().init('', { elements: true });
+
         errorCallback();
         expect(promise).rejects.toThrowError(
           'There was an unknown error when loading BasisTheoryElements'
@@ -177,6 +183,7 @@ describe('Elements', () => {
       it('should reject when Elements throw error', () => {
         const message = chance.string();
         const promise = new BasisTheory().init('', { elements: true });
+
         errorCallback({ error: new Error(message) });
         expect(promise).rejects.toThrowError(message);
       });
@@ -201,6 +208,7 @@ describe('Elements', () => {
           findScript: () => null,
           injectScript: () => {
             const script = document.createElement('script');
+
             return {
               ...script,
               addEventListener,

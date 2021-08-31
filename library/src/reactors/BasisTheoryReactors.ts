@@ -1,4 +1,8 @@
 import type { AxiosTransformer } from 'axios';
+import {
+  transformReactorResponseCamelCase,
+  transformReactorRequestSnakeCase,
+} from '../common/utils';
 import { BasisTheoryService } from '../service';
 import type { BasisTheoryServiceOptions } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
@@ -8,10 +12,6 @@ import type {
   UpdateReactorModel,
   ReactorQuery,
 } from './types';
-import {
-  transformReactorResponseCamelCase,
-  transformReactorRequestSnakeCase,
-} from './../common/utils';
 
 export const BasisTheoryReactors = new CrudBuilder(
   class BasisTheoryReactors extends BasisTheoryService {

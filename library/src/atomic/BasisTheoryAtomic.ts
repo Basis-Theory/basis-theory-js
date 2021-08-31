@@ -1,7 +1,7 @@
+import { dataExtractor } from '../common';
 import { BasisTheoryService } from '../service';
 import type { AtomicBank, CreateAtomicBankModel } from './banks/types';
 import type { AtomicCard, CreateAtomicCardModel } from './cards/types';
-import { dataExtractor } from '../common';
 
 /**
  * @deprecated use {@link BasisTheoryAtomicBanks} and {@link BasisTheoryAtomicCards} instead

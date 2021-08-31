@@ -1,7 +1,7 @@
-import { transformReactorRequestSnakeCase } from './../src/common/utils';
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import { BasisTheory } from '../src';
+import { transformReactorRequestSnakeCase } from '../src/common/utils';
 import { testCRUD, mockServiceClient } from './setup/utils';
 
 describe('Reactors', () => {

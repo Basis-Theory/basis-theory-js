@@ -1,11 +1,12 @@
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import type { TokenType } from '../src';
 import { BasisTheory } from '../src';
+import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 import {
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
-} from './../src/common/utils';
+} from '../src/common/utils';
 import {
   testCreate,
   testRetrieve,
@@ -15,7 +16,6 @@ import {
   mockServiceClient,
   testDelete,
 } from './setup/utils';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 
 describe('Atomic Cards', () => {
   let bt: BasisTheory;
@@ -295,7 +295,7 @@ describe('Atomic Cards', () => {
         JSON.stringify({
           reactor_id: reactorId,
           request_parameters: requestParameters,
-          metadata: metadata,
+          metadata,
         })
       );
       expect(client.history.post[0].headers).toMatchObject({
@@ -367,7 +367,7 @@ describe('Atomic Cards', () => {
         JSON.stringify({
           reactor_id: reactorId,
           request_parameters: requestParameters,
-          metadata: metadata,
+          metadata,
         })
       );
       expect(client.history.post[0].headers).toMatchObject({

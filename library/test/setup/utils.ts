@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type */
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
+import {
+  API_KEY_HEADER,
+  transformRequestSnakeCase,
+  BT_TRACE_ID_HEADER,
+} from '../../src/common';
 import type { PaginatedList } from '../../src/service';
-import { API_KEY_HEADER, transformRequestSnakeCase } from '../../src/common';
-import { BT_TRACE_ID_HEADER } from '../../src/common';
 import { PaginatedQuery } from '../../src/service';
 import {
   ICreate,

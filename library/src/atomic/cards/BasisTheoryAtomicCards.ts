@@ -1,24 +1,24 @@
 import type { AxiosTransformer } from 'axios';
 import {
-  transformAtomicRequestSnakeCase,
-  transformAtomicResponseCamelCase,
-} from './../../common/utils';
-import type { AtomicCard, CreateAtomicCardModel } from './types';
-import type {
-  BasisTheoryServiceOptions,
-  PaginatedQuery,
-  RequestOptions,
-} from '../../service';
-import type { ReactRequest } from '../types';
-import type { Token } from '../../tokens';
-import {
   createRequestConfig,
   dataExtractor,
   transformAtomicReactionRequestSnakeCase,
   transformTokenResponseCamelCase,
 } from '../../common';
+import {
+  transformAtomicRequestSnakeCase,
+  transformAtomicResponseCamelCase,
+} from '../../common/utils';
+import type {
+  BasisTheoryServiceOptions,
+  PaginatedQuery,
+  RequestOptions,
+} from '../../service';
 import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
+import type { Token } from '../../tokens';
+import type { ReactRequest } from '../types';
+import type { AtomicCard, CreateAtomicCardModel } from './types';
 
 export const BasisTheoryAtomicCards = new CrudBuilder(
   class BasisTheoryAtomicCards extends BasisTheoryService {

@@ -1,5 +1,5 @@
-import { findScript, injectScript } from './script';
 import { BasisTheoryElements } from '../elements';
+import { findScript, injectScript } from './script';
 
 let elementsPromise: Promise<BasisTheoryElements>;
 
@@ -12,13 +12,17 @@ export const loadElements = (): Promise<BasisTheoryElements> => {
             'Tried to load BasisTheoryElements in a non-DOM environment.'
           )
         );
+
         return;
       }
+
       if (window.BasisTheoryElements) {
         // TODO print console message
         resolve(window.BasisTheoryElements);
+
         return;
       }
+
       try {
         const url = `https://${process.env.JS_HOST}/elements`;
         let script = findScript(url);
@@ -26,6 +30,7 @@ export const loadElements = (): Promise<BasisTheoryElements> => {
         if (!script) {
           script = injectScript(url);
         }
+
         script.addEventListener('load', () => {
           if (window.BasisTheoryElements) {
             resolve(window.BasisTheoryElements);
@@ -44,9 +49,11 @@ export const loadElements = (): Promise<BasisTheoryElements> => {
         });
       } catch (error) {
         reject(error);
+
         return;
       }
     });
   }
+
   return elementsPromise;
 };

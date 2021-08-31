@@ -1,12 +1,4 @@
 import type { AxiosTransformer } from 'axios';
-import type { AtomicBank, CreateAtomicBankModel } from './types';
-import type {
-  BasisTheoryServiceOptions,
-  PaginatedQuery,
-  RequestOptions,
-} from '../../service';
-import type { ReactRequest } from '../types';
-import type { Token } from '../../tokens';
 import {
   createRequestConfig,
   dataExtractor,
@@ -15,8 +7,16 @@ import {
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
 } from '../../common';
+import type {
+  BasisTheoryServiceOptions,
+  PaginatedQuery,
+  RequestOptions,
+} from '../../service';
 import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
+import type { Token } from '../../tokens';
+import type { ReactRequest } from '../types';
+import type { AtomicBank, CreateAtomicBankModel } from './types';
 
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {

@@ -1,9 +1,8 @@
-import type { EncryptionAdapter } from './types';
+import type { Providers } from '../types';
+import { EncryptionOptions } from '../types';
 import { browserAdapter } from './providers/browser';
 import { nodeAdapter } from './providers/node';
-import type { Providers } from '../types';
-import type { KeyPair } from './types';
-import { EncryptionOptions } from '../types';
+import type { EncryptionAdapter, KeyPair } from './types';
 
 export class BasisTheoryEncryption implements EncryptionAdapter {
   private readonly adapter: EncryptionAdapter;
@@ -12,9 +11,11 @@ export class BasisTheoryEncryption implements EncryptionAdapter {
     switch (encryptionProvider) {
       case 'BROWSER':
         this.adapter = browserAdapter;
+
         break;
       case 'NODE':
         this.adapter = nodeAdapter;
+
         break;
       default:
         throw new Error(

@@ -1,12 +1,12 @@
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import { BasisTheory } from '../src';
-import type { TokenType } from '../src/tokens';
 import type {
   DataType,
   FormulaType,
   ReactorFormulaConfig,
 } from '../src/reactor-formulas/types';
+import type { TokenType } from '../src/tokens';
 import { testCRUD, mockServiceClient } from './setup/utils';
 
 describe('Reactor Formulas', () => {

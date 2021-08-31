@@ -1,4 +1,5 @@
 import type { PaginatedQuery } from '../service';
+
 export type Primitive = string | number | boolean | null;
 export type DataObject = {
   [member: string]: TokenData;

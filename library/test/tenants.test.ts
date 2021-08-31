@@ -1,12 +1,12 @@
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import { BasisTheory } from '../src';
+import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
 import {
   errorStatus,
   expectBasisTheoryApiError,
   mockServiceClient,
 } from './setup/utils';
-import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
 
 describe('Tenants', () => {
   let bt: BasisTheory;
@@ -39,7 +39,7 @@ describe('Tenants', () => {
         JSON.stringify({
           id,
           owner_id: ownerId,
-          name: name,
+          name,
           created_at: createdAt,
           modified_at: modifiedAt,
         })
@@ -72,7 +72,7 @@ describe('Tenants', () => {
         JSON.stringify({
           id,
           owner_id: ownerId,
-          name: name,
+          name,
           created_at: createdAt,
           modified_at: modifiedAt,
         })

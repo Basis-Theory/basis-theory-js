@@ -66,6 +66,7 @@ describe('clients', () => {
   it('should throw error if not properly initialized', () => {
     expect(() => {
       const bt = new BasisTheory();
+
       bt.tokens.create({ data: 'some data' });
     }).toThrowError();
   });
@@ -80,6 +81,7 @@ describe('clients', () => {
     });
 
     const mockClient = new MockAdapter(bt.tokens.client);
+
     mockClient.onGet(id).reply(200, {});
 
     await bt.tokens.retrieve(id);
@@ -98,6 +100,7 @@ describe('clients', () => {
     });
 
     const mockClient = new MockAdapter(bt.tokens.client);
+
     mockClient.onGet(id).reply(200, {});
 
     await bt.tokens.retrieve(id);

@@ -14,17 +14,17 @@ const JSDOMEnvironment = require('jest-environment-jsdom');
 
 class JSDOMExtendedEnvironment extends JSDOMEnvironment {
   constructor(config) {
-    super(
-      Object.assign({}, config, {
-        globals: Object.assign({}, config.globals, {
-          Uint32Array: Uint32Array,
-          Uint8Array: Uint8Array,
-          ArrayBuffer: ArrayBuffer,
-          TextEncoder: TextEncoder,
-          TextDecoder: TextDecoder,
-        }),
-      })
-    );
+    super({
+      ...config,
+      globals: {
+        ...config.globals,
+        Uint32Array,
+        Uint8Array,
+        ArrayBuffer,
+        TextEncoder,
+        TextDecoder,
+      },
+    });
     this.global.crypto = new Crypto();
   }
 }

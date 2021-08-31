@@ -1,6 +1,6 @@
+import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
-import MockAdapter from 'axios-mock-adapter';
 import { mockServiceClient } from './setup/utils';
 
 describe('Atomic', () => {

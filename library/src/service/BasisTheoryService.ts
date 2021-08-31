@@ -14,6 +14,7 @@ export abstract class BasisTheoryService<
 
   public constructor(options: T) {
     const { apiKey, baseURL } = options;
+
     this.client = axios.create({
       baseURL,
       headers: {

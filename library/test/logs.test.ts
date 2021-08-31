@@ -1,5 +1,5 @@
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import { BasisTheory } from '../src';
 import { testList, mockServiceClient } from './setup/utils';
 

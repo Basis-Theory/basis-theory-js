@@ -1,6 +1,6 @@
+import type { ReactorFormula } from '../reactor-formulas/types';
 import type { PaginatedQuery } from '../service';
 import type { TokenType } from '../tokens/types';
-import type { ReactorFormula } from './../reactor-formulas/types';
 
 export interface Reactor {
   id: string;

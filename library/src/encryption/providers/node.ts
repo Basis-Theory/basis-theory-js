@@ -4,8 +4,8 @@ import {
   privateDecrypt,
   constants,
 } from 'crypto';
-import { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm, EncryptionOptions } from '../../types';
+import { EncryptionAdapter, KeyPair } from '../types';
 
 let keySize: number;
 let algorithm: Algorithm;
@@ -52,6 +52,7 @@ async function encrypt(publicKey: string, data: string): Promise<string> {
     },
     Buffer.from(data)
   );
+
   return encrypted.toString('base64');
 }
 
@@ -64,6 +65,7 @@ async function decrypt(privateKey: string, data: string): Promise<string> {
     },
     Buffer.from(data, 'base64')
   );
+
   return decrypted.toString();
 }
 

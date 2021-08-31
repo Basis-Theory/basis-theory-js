@@ -1,5 +1,5 @@
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import type {
   ListTokensQueryDecrypted,
   RetrieveTokenQuery,
@@ -10,6 +10,13 @@ import type {
 } from '../src';
 import { BasisTheory } from '../src';
 import {
+  API_KEY_HEADER,
+  BT_TRACE_ID_HEADER,
+  getQueryParams,
+  transformTokenRequestSnakeCase,
+} from '../src/common';
+import { PaginatedList } from '../src/service';
+import {
   errorStatus,
   expectBasisTheoryApiError,
   mockServiceClient,
@@ -17,13 +24,6 @@ import {
   testDelete,
   testList,
 } from './setup/utils';
-import {
-  API_KEY_HEADER,
-  BT_TRACE_ID_HEADER,
-  getQueryParams,
-  transformTokenRequestSnakeCase,
-} from '../src/common';
-import { PaginatedList } from '../src/service';
 
 describe('Tokens', () => {
   let bt: BasisTheory;
@@ -888,14 +888,14 @@ describe('Tokens', () => {
   describe('delete', () => {
     testDelete(() => ({
       service: bt.tokens,
-      client: client,
+      client,
     }));
   });
 
   describe('list', () => {
     testList(() => ({
       service: bt.tokens,
-      client: client,
+      client,
     }));
   });
 

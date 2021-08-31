@@ -1,22 +1,22 @@
+import { BasisTheoryApplications } from './applications';
+import { BasisTheoryAtomic } from './atomic';
+import { BasisTheoryAtomicBanks } from './atomic/banks';
+import { BasisTheoryAtomicCards } from './atomic/cards';
 import { assertInit, loadElements } from './common';
 import {
   CLIENT_BASE_PATHS,
   DEFAULT_ELEMENTS_BASE_URL,
   DEFAULT_BASE_URL,
 } from './common/constants';
-import { BasisTheoryAtomic } from './atomic';
-import type { BasisTheoryInitOptions, InitStatus } from './types';
-import { BasisTheoryApplications } from './applications';
-import { BasisTheoryTokens } from './tokens';
-import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
-import { BasisTheoryTenants } from './tenants';
+import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import { BasisTheoryLogs } from './logs';
+import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
-import { BasisTheoryAtomicBanks } from './atomic/banks';
-import { BasisTheoryAtomicCards } from './atomic/cards';
-import { BasisTheoryPermissions } from './permissions';
+import { BasisTheoryTenants } from './tenants';
+import { BasisTheoryTokens } from './tokens';
+import type { BasisTheoryInitOptions, InitStatus } from './types';
 
 export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   apiBaseUrl: DEFAULT_BASE_URL,
@@ -26,18 +26,31 @@ export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
 
 export class BasisTheory {
   private _initStatus: InitStatus = 'not-started';
+
   private _initOptions?: Required<BasisTheoryInitOptions>;
+
   private _tokens?: BasisTheoryTokens;
+
   private _atomic?: BasisTheoryAtomic;
+
   private _encryption?: BasisTheoryEncryptionAdapters;
+
   private _elements?: BasisTheoryElements;
+
   private _applications?: BasisTheoryApplications;
+
   private _tenants?: BasisTheoryTenants;
+
   private _logs?: BasisTheoryLogs;
+
   private _reactorFormulas?: BasisTheoryReactorFormulas;
+
   private _reactors?: BasisTheoryReactors;
+
   private _atomicBanks?: BasisTheoryAtomicBanks;
+
   private _atomicCards?: BasisTheoryAtomicCards;
+
   private _permissions?: BasisTheoryPermissions;
 
   public async init(
@@ -49,6 +62,7 @@ export class BasisTheory {
         'This BasisTheory instance has been already initialized.'
       );
     }
+
     this._initStatus = 'in-progress';
 
     try {
@@ -61,6 +75,7 @@ export class BasisTheory {
 
       try {
         const baseUrlObject = new URL(this.initOptions.apiBaseUrl);
+
         if (baseUrlObject.hostname === 'localhost') {
           baseUrlObject.protocol = 'http';
         } else {
@@ -68,7 +83,7 @@ export class BasisTheory {
         }
 
         baseUrl = baseUrlObject.toString().replace(/\/$/, '');
-      } catch (e) {
+      } catch {
         throw new Error('Invalid format for the given API base url.');
       }
 
@@ -118,23 +133,27 @@ export class BasisTheory {
       if (this._initOptions.elements) {
         await this.loadElements(apiKey);
       }
+
       this._initStatus = 'done';
-    } catch (e) {
+    } catch (error) {
       this._initStatus = 'error';
-      throw e;
+      throw error;
     }
+
     return this;
   }
 
   private async loadElements(apiKey: string): Promise<void> {
     let elementsBaseUrl: URL;
+
     try {
       elementsBaseUrl = new URL(this.initOptions.elementsBaseUrl);
-    } catch (e) {
+    } catch {
       throw new Error('Invalid format for the given Elements base url.');
     }
 
     const elements = await loadElements();
+
     await (elements as BasisTheoryElementsInit).init(
       apiKey,
       elementsBaseUrl.toString().replace(/\/$/, '')

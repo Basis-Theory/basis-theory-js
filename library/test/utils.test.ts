@@ -1,13 +1,13 @@
+import type { AxiosResponse } from 'axios';
+import { Chance } from 'chance';
+import { API_KEY_HEADER } from '../dist/common';
+import { BT_TRACE_ID_HEADER } from '../src/common';
 import {
   errorInterceptor,
   dataExtractor,
   createRequestConfig,
 } from '../src/common/utils';
-import type { AxiosResponse } from 'axios';
-import { Chance } from 'chance';
 import type { RequestOptions } from '../src/service';
-import { API_KEY_HEADER } from '../dist/common';
-import { BT_TRACE_ID_HEADER } from '../src/common';
 
 describe('Utils', () => {
   let chance: Chance.Chance;
