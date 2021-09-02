@@ -24,30 +24,34 @@ import {
 export const BasisTheoryTokens = new CrudBuilder(
   class BasisTheoryTokens extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      options.transformRequest = ([] as AxiosTransformer[]).concat(
-        transformTokenRequestSnakeCase,
-        options.transformRequest || []
-      );
+      const _options = options;
 
-      options.transformResponse = ([] as AxiosTransformer[]).concat(
-        transformTokenResponseCamelCase,
-        options.transformResponse || []
-      );
+      _options.transformRequest = [
+        ...([] as AxiosTransformer[]),
+        ...[transformTokenRequestSnakeCase],
+        ...((options.transformRequest || []) as AxiosTransformer[]),
+      ];
 
-      super(options);
+      _options.transformResponse = [
+        ...([] as AxiosTransformer[]),
+        ...[transformTokenResponseCamelCase],
+        ...((options.transformResponse || []) as AxiosTransformer[]),
+      ];
+
+      super(_options);
     }
 
     /**
      * @deprecated use {@link create} instead
      */
-    public async createToken(data: TokenData): Promise<Token> {
+    public createToken(data: TokenData): Promise<Token> {
       return this.client.post('/', { data }).then(dataExtractor);
     }
 
     /**
      * @deprecated use {@link retrieve} instead
      */
-    public async getToken(id: string): Promise<Token> {
+    public getToken(id: string): Promise<Token> {
       return this.client.get(id).then(dataExtractor);
     }
 
@@ -58,7 +62,7 @@ export const BasisTheoryTokens = new CrudBuilder(
       await this.client.delete(id);
     }
 
-    public async retrieve(
+    public retrieve(
       id: string,
       query: RetrieveTokenQuery = {},
       options?: RequestOptions
@@ -70,7 +74,7 @@ export const BasisTheoryTokens = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async retrieveDecrypted(
+    public retrieveDecrypted(
       id: string,
       query: RetrieveTokenQuery = {},
       options?: RequestOptions
@@ -82,7 +86,7 @@ export const BasisTheoryTokens = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async listDecrypted(
+    public listDecrypted(
       query: ListTokensQueryDecrypted = {},
       options?: RequestOptions
     ): Promise<PaginatedList<Token>> {
@@ -113,7 +117,7 @@ export const BasisTheoryTokens = new CrudBuilder(
       await this.client.delete(url, createRequestConfig(options));
     }
 
-    public async createChild(
+    public createChild(
       parentId: string,
       token: CreateTokenModel,
       options?: RequestOptions
@@ -125,7 +129,7 @@ export const BasisTheoryTokens = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async listChildren(
+    public listChildren(
       parentId: string,
       query: ListTokensQuery = {},
       options?: RequestOptions

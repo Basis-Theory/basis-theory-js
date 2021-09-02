@@ -18,7 +18,7 @@ import { BasisTheoryTenants } from './tenants';
 import { BasisTheoryTokens } from './tokens';
 import type { BasisTheoryInitOptions, InitStatus } from './types';
 
-export const defaultInitOptions: Required<BasisTheoryInitOptions> = {
+const defaultInitOptions: Required<BasisTheoryInitOptions> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
   elementsBaseUrl: DEFAULT_ELEMENTS_BASE_URL,
@@ -82,7 +82,7 @@ export class BasisTheory {
           baseUrlObject.protocol = 'https';
         }
 
-        baseUrl = baseUrlObject.toString().replace(/\/$/, '');
+        baseUrl = baseUrlObject.toString().replace(/\/$/u, '');
       } catch {
         throw new Error('Invalid format for the given API base url.');
       }
@@ -156,11 +156,13 @@ export class BasisTheory {
 
     await (elements as BasisTheoryElementsInit).init(
       apiKey,
-      elementsBaseUrl.toString().replace(/\/$/, '')
+      elementsBaseUrl.toString().replace(/\/$/u, '')
     );
     this.elements = elements;
   }
 
+  // these should be set by the init call only.
+  /* eslint-disable accessor-pairs */
   public get initOptions(): Required<BasisTheoryInitOptions> {
     return assertInit(this._initOptions);
   }
@@ -175,14 +177,6 @@ export class BasisTheory {
 
   public get encryption(): BasisTheoryEncryptionAdapters {
     return assertInit(this._encryption);
-  }
-
-  public set elements(elements: BasisTheoryElements) {
-    this._elements = elements;
-  }
-
-  public get elements(): BasisTheoryElements {
-    return assertInit(this._elements);
   }
 
   public get applications(): BasisTheoryApplications {
@@ -215,5 +209,14 @@ export class BasisTheory {
 
   public get permissions(): BasisTheoryPermissions {
     return assertInit(this._permissions);
+  }
+  /* eslint-enable accessor-pairs */
+
+  public get elements(): BasisTheoryElements {
+    return assertInit(this._elements);
+  }
+
+  public set elements(elements: BasisTheoryElements) {
+    this._elements = elements;
   }
 }

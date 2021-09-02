@@ -21,20 +21,24 @@ import type { AtomicBank, CreateAtomicBankModel } from './types';
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      options.transformRequest = ([] as AxiosTransformer[]).concat(
-        transformAtomicRequestSnakeCase,
-        options.transformRequest || []
-      );
+      const _options = options;
 
-      options.transformResponse = ([] as AxiosTransformer[]).concat(
-        transformAtomicResponseCamelCase,
-        options.transformResponse || []
-      );
+      _options.transformRequest = [
+        ...([] as AxiosTransformer[]),
+        ...[transformAtomicRequestSnakeCase],
+        ...((options.transformRequest || []) as AxiosTransformer[]),
+      ];
 
-      super(options);
+      _options.transformResponse = [
+        ...([] as AxiosTransformer[]),
+        ...[transformAtomicResponseCamelCase],
+        ...((options.transformResponse || []) as AxiosTransformer[]),
+      ];
+
+      super(_options);
     }
 
-    public async retrieveDecrypted(
+    public retrieveDecrypted(
       id: string,
       options?: RequestOptions
     ): Promise<AtomicBank> {
@@ -43,7 +47,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async react(
+    public react(
       id: string,
       request: ReactRequest,
       options?: RequestOptions
@@ -60,7 +64,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async retrieveReaction(
+    public retrieveReaction(
       atomicBankId: string,
       reactionTokenId: string,
       options?: RequestOptions

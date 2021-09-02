@@ -2,11 +2,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import type { TokenType } from '../src';
 import { BasisTheory } from '../src';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 import {
+  API_KEY_HEADER,
+  BT_TRACE_ID_HEADER,
   transformAtomicRequestSnakeCase,
-  transformAtomicResponseCamelCase,
-} from '../src/common/utils';
+} from '../src/common';
 import {
   testCreate,
   testRetrieve,
@@ -17,7 +17,7 @@ import {
   testDelete,
 } from './setup/utils';
 
-describe('Atomic Cards', () => {
+describe('Atomic Banks', () => {
   let bt: BasisTheory;
   let chance: Chance.Chance;
   let apiKey: string;
@@ -27,7 +27,7 @@ describe('Atomic Cards', () => {
     chance = new Chance();
     apiKey = chance.string();
     bt = await new BasisTheory().init(apiKey);
-    client = mockServiceClient(bt.atomicCards);
+    client = mockServiceClient(bt.atomicBanks);
   });
 
   beforeEach(() => {
@@ -39,27 +39,13 @@ describe('Atomic Cards', () => {
     const _chance = new Chance();
 
     const createPayload = {
-      card: {
-        number: _chance.string(),
-        expirationMonth: _chance.integer(),
-        expirationYear: _chance.integer(),
-        cvc: _chance.string(),
-      },
-      billingDetails: {
-        name: _chance.string(),
-        email: _chance.string(),
-        phone: _chance.string(),
-        address: {
-          line1: _chance.string(),
-          line2: _chance.string(),
-          city: _chance.string(),
-          state: _chance.string(),
-          postalCode: _chance.string(),
-          country: _chance.string(),
-        },
+      bank: {
+        routingNumber: _chance.string(),
+        accountNumber: _chance.string(),
       },
       metadata: {
         camelCase: _chance.string(),
+        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
       },
     };
@@ -69,24 +55,24 @@ describe('Atomic Cards', () => {
     );
 
     testCreate(() => ({
-      service: bt.atomicCards,
+      service: bt.atomicBanks,
       client,
       createPayload,
       transformedCreatePayload,
     }));
 
     testRetrieve(() => ({
-      service: bt.atomicCards,
+      service: bt.atomicBanks,
       client,
     }));
 
     testDelete(() => ({
-      service: bt.atomicCards,
+      service: bt.atomicBanks,
       client,
     }));
 
     testList(() => ({
-      service: bt.atomicCards,
+      service: bt.atomicBanks,
       client,
     }));
   });
@@ -95,58 +81,46 @@ describe('Atomic Cards', () => {
     it('should retrieve decrypted', async () => {
       const id = chance.string();
       const tenantId = chance.string();
+      const routingNumber = chance.string();
+      const accountNumber = chance.string();
       const metadata = {
         camelCase: chance.string(),
+        // eslint-disable-next-line camelcase
         snake_case: chance.string(),
       };
       const createdBy = chance.string();
       const createdAt = chance.string();
-      const card = {
-        number: chance.string(),
-        expiration_month: chance.integer(),
-        expiration_year: chance.integer(),
-        cvc: chance.string(),
-      };
-      const billingDetails = {
-        name: chance.string(),
-        email: chance.string(),
-        phone: chance.string(),
-        address: {
-          line1: chance.string(),
-          line2: chance.string(),
-          city: chance.string(),
-          state: chance.string(),
-          postal_code: chance.string(),
-          country: chance.string(),
-        },
-      };
 
       client.onGet(`/${id}/decrypt`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
-          type: 'card',
-          card,
-          billingDetails,
+          type: 'bank',
+          bank: {
+            routing_number: routingNumber,
+            account_number: accountNumber,
+          },
           metadata,
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
-      expect(await bt.atomicCards.retrieveDecrypted(id)).toStrictEqual(
-        transformAtomicResponseCamelCase({
-          id,
-          tenant_id: tenantId,
-          type: 'card',
-          card,
-          billingDetails,
-          metadata,
-          created_at: createdAt,
-          created_by: createdBy,
-        })
-      );
+      expect(await bt.atomicBanks.retrieveDecrypted(id)).toStrictEqual({
+        id,
+        tenantId,
+        type: 'bank',
+        bank: {
+          routingNumber,
+          accountNumber,
+        },
+        metadata,
+        createdAt,
+        createdBy,
+      });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(`/${id}/decrypt`);
       expect(client.history.get[0].headers).toMatchObject({
@@ -154,68 +128,56 @@ describe('Atomic Cards', () => {
       });
     });
 
-    it('should retrieve decrypted w/ options', async () => {
+    it('should retrieve decrypted with options', async () => {
       const id = chance.string();
       const tenantId = chance.string();
+      const routingNumber = chance.string();
+      const accountNumber = chance.string();
       const metadata = {
         camelCase: chance.string(),
+        // eslint-disable-next-line camelcase
         snake_case: chance.string(),
       };
       const createdBy = chance.string();
       const createdAt = chance.string();
-      const card = {
-        number: chance.string(),
-        expiration_month: chance.integer(),
-        expiration_year: chance.integer(),
-        cvc: chance.string(),
-      };
-      const billingDetails = {
-        name: chance.string(),
-        email: chance.string(),
-        phone: chance.string(),
-        address: {
-          line1: chance.string(),
-          line2: chance.string(),
-          city: chance.string(),
-          state: chance.string(),
-          postal_code: chance.string(),
-          country: chance.string(),
-        },
-      };
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
       client.onGet(`/${id}/decrypt`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
-          type: 'card',
-          card,
-          billingDetails,
+          type: 'bank',
+          bank: {
+            routing_number: routingNumber,
+            account_number: accountNumber,
+          },
           metadata,
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
-        await bt.atomicCards.retrieveDecrypted(id, {
+        await bt.atomicBanks.retrieveDecrypted(id, {
           apiKey: _apiKey,
           correlationId,
         })
-      ).toStrictEqual(
-        transformAtomicResponseCamelCase({
-          id,
-          tenant_id: tenantId,
-          type: 'card',
-          card,
-          billingDetails,
-          metadata,
-          created_at: createdAt,
-          created_by: createdBy,
-        })
-      );
+      ).toStrictEqual({
+        id,
+        tenantId,
+        type: 'bank',
+        bank: {
+          routingNumber,
+          accountNumber,
+        },
+        metadata,
+        createdAt,
+        createdBy,
+      });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(`/${id}/decrypt`);
       expect(client.history.get[0].headers).toMatchObject({
@@ -230,7 +192,7 @@ describe('Atomic Cards', () => {
 
       client.onGet(`/${id}/decrypt`).reply(status);
 
-      const promise = bt.atomicCards.retrieveDecrypted(id);
+      const promise = bt.atomicBanks.retrieveDecrypted(id);
 
       await expectBasisTheoryApiError(promise, status);
     });
@@ -240,6 +202,10 @@ describe('Atomic Cards', () => {
     it('should react', async () => {
       const id = chance.string();
       const reactorId = chance.string();
+      const tenantId = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
       const requestParameters = {
         snake_case: chance.string(),
         camelCase: chance.string(),
@@ -252,17 +218,18 @@ describe('Atomic Cards', () => {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
       };
+      /* eslint-enable camelcase */
+
       const createdBy = chance.string();
       const createdAt = chance.string();
 
       client.onPost(`/${id}/react`).reply(
         201,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -272,10 +239,11 @@ describe('Atomic Cards', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
-        await bt.atomicCards.react(id, {
+        await bt.atomicBanks.react(id, {
           reactorId,
           requestParameters,
           metadata,
@@ -292,11 +260,13 @@ describe('Atomic Cards', () => {
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
       expect(client.history.post[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
         JSON.stringify({
           reactor_id: reactorId,
           request_parameters: requestParameters,
           metadata,
         })
+        /* eslint-enable camelcase */
       );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
@@ -306,6 +276,10 @@ describe('Atomic Cards', () => {
     it('should react with options', async () => {
       const id = chance.string();
       const reactorId = chance.string();
+      const tenantId = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
       const requestParameters = {
         snake_case: chance.string(),
         camelCase: chance.string(),
@@ -318,12 +292,12 @@ describe('Atomic Cards', () => {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
       };
+      /* eslint-enable camelcase */
+
       const createdBy = chance.string();
       const createdAt = chance.string();
       const _apiKey = chance.string();
@@ -331,6 +305,7 @@ describe('Atomic Cards', () => {
 
       client.onPost(`/${id}/react`).reply(
         201,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -340,17 +315,21 @@ describe('Atomic Cards', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
-        await bt.atomicCards.react(
+        await bt.atomicBanks.react(
           id,
           {
             reactorId,
             requestParameters,
             metadata,
           },
-          { apiKey: _apiKey, correlationId }
+          {
+            apiKey: _apiKey,
+            correlationId,
+          }
         )
       ).toStrictEqual({
         id,
@@ -364,11 +343,13 @@ describe('Atomic Cards', () => {
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
       expect(client.history.post[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
         JSON.stringify({
           reactor_id: reactorId,
           request_parameters: requestParameters,
           metadata,
         })
+        /* eslint-enable camelcase */
       );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
@@ -382,7 +363,7 @@ describe('Atomic Cards', () => {
 
       client.onPost(`/${id}/react`).reply(status);
 
-      const promise = bt.atomicCards.react(id, { reactorId: chance.string() });
+      const promise = bt.atomicBanks.react(id, { reactorId: chance.string() });
 
       await expectBasisTheoryApiError(promise, status);
     });
@@ -390,23 +371,26 @@ describe('Atomic Cards', () => {
 
   describe('retrieve reaction', () => {
     it('should retrieve reaction', async () => {
-      const atomicCardId = chance.string();
+      const atomicBankId = chance.string();
       const reactionTokenId = chance.string();
+      const tenantId = chance.string();
+      const type = chance.string() as TokenType;
+      /* eslint-disable camelcase */
       const metadata = {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
       };
+      /* eslint-enable camelcase */
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(
+      client.onGet(`/${atomicBankId}/reaction/${reactionTokenId}`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id: reactionTokenId,
           tenant_id: tenantId,
@@ -416,10 +400,11 @@ describe('Atomic Cards', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
-        await bt.atomicCards.retrieveReaction(atomicCardId, reactionTokenId)
+        await bt.atomicBanks.retrieveReaction(atomicBankId, reactionTokenId)
       ).toStrictEqual({
         id: reactionTokenId,
         tenantId,
@@ -431,7 +416,7 @@ describe('Atomic Cards', () => {
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
-        `/${atomicCardId}/reaction/${reactionTokenId}`
+        `/${atomicBankId}/reaction/${reactionTokenId}`
       );
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
@@ -439,25 +424,30 @@ describe('Atomic Cards', () => {
     });
 
     it('should retrieve reaction with options', async () => {
-      const atomicCardId = chance.string();
+      const atomicBankId = chance.string();
       const reactionTokenId = chance.string();
+      const tenantId = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
       const metadata = {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
       };
+      /* eslint-enable camelcase */
+
       const createdBy = chance.string();
       const createdAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(
+      client.onGet(`/${atomicBankId}/reaction/${reactionTokenId}`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id: reactionTokenId,
           tenant_id: tenantId,
@@ -467,10 +457,11 @@ describe('Atomic Cards', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
-        await bt.atomicCards.retrieveReaction(atomicCardId, reactionTokenId, {
+        await bt.atomicBanks.retrieveReaction(atomicBankId, reactionTokenId, {
           apiKey: _apiKey,
           correlationId,
         })
@@ -485,7 +476,7 @@ describe('Atomic Cards', () => {
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
-        `/${atomicCardId}/reaction/${reactionTokenId}`
+        `/${atomicBankId}/reaction/${reactionTokenId}`
       );
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
@@ -494,16 +485,16 @@ describe('Atomic Cards', () => {
     });
 
     it('should reject with status >= 400 <= 599', async () => {
-      const atomicCardId = chance.string();
+      const atomicBankId = chance.string();
       const reactionTokenId = chance.string();
       const status = errorStatus();
 
       client
-        .onGet(`/${atomicCardId}/reaction/${reactionTokenId}`)
+        .onGet(`/${atomicBankId}/reaction/${reactionTokenId}`)
         .reply(status);
 
-      const promise = bt.atomicCards.retrieveReaction(
-        atomicCardId,
+      const promise = bt.atomicBanks.retrieveReaction(
+        atomicBankId,
         reactionTokenId
       );
 

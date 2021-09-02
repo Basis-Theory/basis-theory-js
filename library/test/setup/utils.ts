@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type */
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import {
@@ -16,20 +15,20 @@ import {
   IUpdate,
 } from '../../src/service/CrudBuilder';
 
-export const describeif = (condition: boolean): typeof describe =>
+const describeif = (condition: boolean): typeof describe =>
   condition ? describe : describe.skip;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-export const mockServiceClient = (service: any): MockAdapter =>
+const mockServiceClient = (service: any): MockAdapter =>
   new MockAdapter(service.client);
 
-export const errorStatus = (): number =>
+const errorStatus = (): number =>
   new Chance().integer({
     min: 400,
     max: 599,
   });
 
-export const expectBasisTheoryApiError = <T>(
+const expectBasisTheoryApiError = <T>(
   promise: Promise<T>,
   status: number
 ): Promise<void> =>
@@ -65,21 +64,7 @@ type TestDeleteParam = TestParam<IDelete>;
 
 type TestListParam<T> = TestParam<IList<T, PaginatedQuery>>;
 
-export const testCRUD = <T, C, U>(
-  param: () => TestCreateParam<T, C> &
-    TestRetrieveParam<T> &
-    TestUpdateParam<T, U> &
-    TestDeleteParam &
-    TestListParam<T>
-): void => {
-  testCreate(param);
-  testRetrieve(param);
-  testUpdate(param);
-  testDelete(param);
-  testList(param);
-};
-
-export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
+const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
   const chance = new Chance();
   const correlationId = chance.string();
   const apiKey = chance.string();
@@ -164,7 +149,7 @@ export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
   });
 };
 
-export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
+const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -232,7 +217,7 @@ export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
   });
 };
 
-export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
+const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -316,7 +301,7 @@ export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
   });
 };
 
-export const testDelete = (param: () => TestDeleteParam) => {
+const testDelete = (param: () => TestDeleteParam): void => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -372,7 +357,7 @@ export const testDelete = (param: () => TestDeleteParam) => {
   });
 };
 
-export const testList = <T>(param: () => TestListParam<T>) => {
+const testList = <T>(param: () => TestListParam<T>): void => {
   const chance = new Chance();
   const correlationId = chance.string();
   const apiKey = chance.string();
@@ -490,7 +475,10 @@ export const testList = <T>(param: () => TestListParam<T>) => {
     );
 
     expect(
-      await service.list(query as PaginatedQuery, { apiKey, correlationId })
+      await service.list(query as PaginatedQuery, {
+        apiKey,
+        correlationId,
+      })
     ).toStrictEqual({
       pagination: {
         totalItems,
@@ -509,4 +497,31 @@ export const testList = <T>(param: () => TestListParam<T>) => {
       [BT_TRACE_ID_HEADER]: correlationId,
     });
   });
+};
+
+const testCRUD = <T, C, U>(
+  param: () => TestCreateParam<T, C> &
+    TestRetrieveParam<T> &
+    TestUpdateParam<T, U> &
+    TestDeleteParam &
+    TestListParam<T>
+): void => {
+  testCreate(param);
+  testRetrieve(param);
+  testUpdate(param);
+  testDelete(param);
+  testList(param);
+};
+
+export {
+  describeif,
+  mockServiceClient,
+  errorStatus,
+  expectBasisTheoryApiError,
+  testCRUD,
+  testCreate,
+  testRetrieve,
+  testUpdate,
+  testDelete,
+  testList,
 };

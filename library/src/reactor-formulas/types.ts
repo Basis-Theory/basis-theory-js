@@ -1,10 +1,10 @@
 import type { PaginatedQuery } from '../service';
 import type { TokenType } from '../tokens';
 
-export type FormulaType = 'official' | 'private';
-export type DataType = 'string' | 'boolean' | 'number';
+type FormulaType = 'official' | 'private';
+type DataType = 'string' | 'boolean' | 'number';
 
-export interface ReactorFormula {
+interface ReactorFormula {
   id: string;
   name: string;
   description?: string;
@@ -18,25 +18,35 @@ export interface ReactorFormula {
   modifiedAt?: string;
 }
 
-export interface ReactorFormulaConfig {
+interface ReactorFormulaConfig {
   name: string;
   description?: string;
   type: DataType;
 }
 
-export interface ReactorFormulaRequestParam {
+interface ReactorFormulaRequestParam {
   name: string;
   description?: string;
   type: DataType;
   optional?: boolean;
 }
 
-export type CreateReactorFormulaModel = Omit<
+type CreateReactorFormulaModel = Omit<
   ReactorFormula,
   'id' | 'createdAt' | 'modifiedAt'
 >;
 
-export interface ReactorFormulaQuery extends PaginatedQuery {
+interface ReactorFormulaQuery extends PaginatedQuery {
   name?: string;
   sourceTokenType?: TokenType;
 }
+
+export {
+  FormulaType,
+  DataType,
+  ReactorFormula,
+  ReactorFormulaConfig,
+  ReactorFormulaRequestParam,
+  CreateReactorFormulaModel,
+  ReactorFormulaQuery,
+};

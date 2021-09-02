@@ -17,7 +17,6 @@ export const loadElements = (): Promise<BasisTheoryElements> => {
       }
 
       if (window.BasisTheoryElements) {
-        // TODO print console message
         resolve(window.BasisTheoryElements);
 
         return;

@@ -73,7 +73,10 @@ describe('clients', () => {
 
   it('should be able to handle base URLs with trailing slash', async () => {
     const chance = new Chance();
-    const url = chance.url({ protocol: 'https', path: '' });
+    const url = chance.url({
+      protocol: 'https',
+      path: '',
+    });
     const id = chance.string();
 
     const bt = await new BasisTheory().init(chance.string(), {
@@ -92,7 +95,12 @@ describe('clients', () => {
 
   it('should be able to handle base URLs without trailing slash', async () => {
     const chance = new Chance();
-    const url = chance.url({ protocol: 'https', path: '' }).slice(0, -1);
+    const url = chance
+      .url({
+        protocol: 'https',
+        path: '',
+      })
+      .slice(0, -1);
     const id = chance.string();
 
     const bt = await new BasisTheory().init(chance.string(), {

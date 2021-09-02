@@ -13,7 +13,7 @@ export const BasisTheoryApplications = new CrudBuilder(
     /**
      * @deprecated use {@link retrieveByKey} instead
      */
-    public async getApplicationByKey(): Promise<Application> {
+    public getApplicationByKey(): Promise<Application> {
       return this.retrieveByKey();
     }
 

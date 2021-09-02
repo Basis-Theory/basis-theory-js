@@ -16,17 +16,21 @@ import type {
 export const BasisTheoryReactors = new CrudBuilder(
   class BasisTheoryReactors extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      options.transformRequest = ([] as AxiosTransformer[]).concat(
-        transformReactorRequestSnakeCase,
-        options.transformRequest || []
-      );
+      const _options = options;
 
-      options.transformResponse = ([] as AxiosTransformer[]).concat(
-        transformReactorResponseCamelCase,
-        options.transformResponse || []
-      );
+      _options.transformRequest = [
+        ...([] as AxiosTransformer[]),
+        ...[transformReactorRequestSnakeCase],
+        ...((options.transformRequest || []) as AxiosTransformer[]),
+      ];
 
-      super(options);
+      _options.transformResponse = [
+        ...([] as AxiosTransformer[]),
+        ...[transformReactorResponseCamelCase],
+        ...((options.transformResponse || []) as AxiosTransformer[]),
+      ];
+
+      super(_options);
     }
   }
 )

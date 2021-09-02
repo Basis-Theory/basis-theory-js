@@ -53,6 +53,7 @@ describe('Applications', () => {
         200,
         JSON.stringify({
           id,
+          // eslint-disable-next-line camelcase
           created_date: createdDate,
         })
       );
@@ -88,6 +89,7 @@ describe('Applications', () => {
         200,
         JSON.stringify({
           id,
+          // eslint-disable-next-line camelcase
           created_date: createdDate,
         })
       );
@@ -130,6 +132,7 @@ describe('Applications', () => {
         JSON.stringify({
           id,
           key,
+          // eslint-disable-next-line camelcase
           modified_date: modifiedDate,
         })
       );
@@ -157,6 +160,7 @@ describe('Applications', () => {
         JSON.stringify({
           id,
           key,
+          // eslint-disable-next-line camelcase
           modified_date: modifiedDate,
         })
       );

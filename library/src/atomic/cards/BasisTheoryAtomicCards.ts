@@ -23,20 +23,24 @@ import type { AtomicCard, CreateAtomicCardModel } from './types';
 export const BasisTheoryAtomicCards = new CrudBuilder(
   class BasisTheoryAtomicCards extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      options.transformRequest = ([] as AxiosTransformer[]).concat(
-        transformAtomicRequestSnakeCase,
-        options.transformRequest || []
-      );
+      const _options = options;
 
-      options.transformResponse = ([] as AxiosTransformer[]).concat(
-        transformAtomicResponseCamelCase,
-        options.transformResponse || []
-      );
+      _options.transformRequest = [
+        ...([] as AxiosTransformer[]),
+        ...[transformAtomicRequestSnakeCase],
+        ...((options.transformRequest || []) as AxiosTransformer[]),
+      ];
 
-      super(options);
+      _options.transformResponse = [
+        ...([] as AxiosTransformer[]),
+        ...[transformAtomicResponseCamelCase],
+        ...((options.transformResponse as AxiosTransformer[]) || []),
+      ];
+
+      super(_options);
     }
 
-    public async retrieveDecrypted(
+    public retrieveDecrypted(
       id: string,
       options?: RequestOptions
     ): Promise<AtomicCard> {
@@ -45,7 +49,7 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async react(
+    public react(
       id: string,
       request: ReactRequest,
       options?: RequestOptions
@@ -62,7 +66,7 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async retrieveReaction(
+    public retrieveReaction(
       atomicCardId: string,
       reactionTokenId: string,
       options?: RequestOptions

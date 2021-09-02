@@ -14,10 +14,12 @@ export class BasisTheoryEncryptionAdapters {
     }
   }
 
+  // eslint-disable-next-line accessor-pairs
   public get browserEncryption(): BasisTheoryEncryption {
     return assertInit(this._browserEncryption);
   }
 
+  // eslint-disable-next-line accessor-pairs
   public get nodeEncryption(): BasisTheoryEncryption {
     return assertInit(this._nodeEncryption);
   }

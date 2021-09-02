@@ -1,7 +1,7 @@
-export const findScript = (url: string): HTMLScriptElement | null =>
+const findScript = (url: string): HTMLScriptElement | null =>
   document.querySelector<HTMLScriptElement>(`script[src^="${url}"]`);
 
-export const injectScript = (url: string): HTMLScriptElement => {
+const injectScript = (url: string): HTMLScriptElement => {
   const script = document.createElement('script');
 
   script.src = url;
@@ -16,3 +16,5 @@ export const injectScript = (url: string): HTMLScriptElement => {
 
   return script;
 };
+
+export { findScript, injectScript };

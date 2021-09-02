@@ -1,12 +1,12 @@
 import type { AxiosRequestConfig } from 'axios';
 
-export interface BasisTheoryServiceOptions
+interface BasisTheoryServiceOptions
   extends Pick<AxiosRequestConfig, 'transformRequest' | 'transformResponse'> {
   apiKey: string;
   baseURL: string;
 }
 
-export interface PaginatedList<T> {
+interface PaginatedList<T> {
   pagination: {
     totalItems: number;
     pageNumber: number;
@@ -24,19 +24,27 @@ type QueryValue =
   | undefined
   | (number | string)[];
 
-export interface PaginatedQuery {
+interface PaginatedQuery {
   [key: string]: QueryValue;
   [key: number]: QueryValue;
   page?: number;
   size?: number;
 }
 
-export interface RequestOptions {
+interface RequestOptions {
   apiKey?: string;
   correlationId?: string;
 }
 
-export type RequestTransformers = Pick<
+type RequestTransformers = Pick<
   AxiosRequestConfig,
   'transformRequest' | 'transformResponse'
 >;
+
+export {
+  BasisTheoryServiceOptions,
+  PaginatedList,
+  PaginatedQuery,
+  RequestOptions,
+  RequestTransformers,
+};

@@ -1,25 +1,25 @@
 import type { Atomic } from '../types';
 
-export interface AtomicCard extends Atomic {
+interface AtomicCard extends Atomic {
   card: Card;
   billingDetails?: BillingDetails;
 }
 
-export interface Card {
+interface Card {
   number: string;
   expirationMonth: number;
   expirationYear: number;
   cvc?: string;
 }
 
-export interface BillingDetails {
+interface BillingDetails {
   name?: string;
   email?: string;
   phone?: string;
   address?: Address;
 }
 
-export interface Address {
+interface Address {
   line1?: string;
   line2?: string;
   city?: string;
@@ -28,7 +28,9 @@ export interface Address {
   country?: string;
 }
 
-export type CreateAtomicCardModel = Pick<
+type CreateAtomicCardModel = Pick<
   AtomicCard,
   'card' | 'billingDetails' | 'metadata'
 >;
+
+export { AtomicCard, Card, BillingDetails, Address, CreateAtomicCardModel };

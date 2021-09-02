@@ -1,15 +1,15 @@
 import type { PaginatedQuery } from '../service';
 
-export const APPLICATION_TYPES = [
+const APPLICATION_TYPES = [
   'server_to_server',
   'public',
   'elements',
   'management',
 ] as const;
 
-export type ApplicationType = typeof APPLICATION_TYPES[number];
+type ApplicationType = typeof APPLICATION_TYPES[number];
 
-export interface Application {
+interface Application {
   id: string;
   tenantId: string;
   name: string;
@@ -20,13 +20,22 @@ export interface Application {
   modifiedAt: string;
 }
 
-export type CreateApplicationModel = Pick<Application, 'name' | 'type'> &
+type CreateApplicationModel = Pick<Application, 'name' | 'type'> &
   Partial<Pick<Application, 'permissions'>>;
 
-export type UpdateApplicationModel = Partial<
+type UpdateApplicationModel = Partial<
   Pick<Application, 'name' | 'permissions'>
 >;
 
-export interface ApplicationQuery extends PaginatedQuery {
+interface ApplicationQuery extends PaginatedQuery {
   id?: string | string[];
 }
+
+export {
+  APPLICATION_TYPES,
+  ApplicationType,
+  Application,
+  CreateApplicationModel,
+  UpdateApplicationModel,
+  ApplicationQuery,
+};

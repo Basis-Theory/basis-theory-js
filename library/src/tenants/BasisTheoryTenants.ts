@@ -5,13 +5,13 @@ import type { Tenant, UpdateTenantModel } from './types';
 
 export const BasisTheoryTenants = new CrudBuilder(
   class BasisTheoryTenants extends BasisTheoryService {
-    public async retrieve(options?: RequestOptions): Promise<Tenant> {
+    public retrieve(options?: RequestOptions): Promise<Tenant> {
       return this.client
         .get('/', createRequestConfig(options))
         .then(dataExtractor);
     }
 
-    public async update(
+    public update(
       model: UpdateTenantModel,
       options?: RequestOptions
     ): Promise<Tenant> {

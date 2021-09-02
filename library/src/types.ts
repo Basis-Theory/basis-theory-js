@@ -1,8 +1,8 @@
 import type { BasisTheoryElements } from './elements';
 
-export type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
+type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
-export type Clients =
+type Clients =
   | 'tokens'
   | 'atomic'
   | 'applications'
@@ -14,27 +14,27 @@ export type Clients =
   | 'logs'
   | 'tenants';
 
-export type ClientsBasePathMap = {
+type ClientsBasePathMap = {
   [key in Clients]: string;
 };
 
-export type Providers = 'BROWSER' | 'NODE';
+type Providers = 'BROWSER' | 'NODE';
 
-export const algorithm = ['RSA', 'AES'] as const;
+const algorithm = ['RSA', 'AES'] as const;
 
-export type Algorithm = typeof algorithm[number];
+type Algorithm = typeof algorithm[number];
 
-export interface EncryptionProviderOptions {
+interface EncryptionProviderOptions {
   defaultKeySize: number;
   keyExpirationInDays: number;
 }
 
-export interface EncryptionOptions {
+interface EncryptionOptions {
   algorithm: Algorithm;
   options?: EncryptionProviderOptions;
 }
 
-export interface BasisTheoryInitOptions {
+interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
   elements?: boolean;
   elementsBaseUrl?: string;
@@ -45,3 +45,15 @@ declare global {
     BasisTheoryElements?: BasisTheoryElements;
   }
 }
+
+export {
+  InitStatus,
+  Clients,
+  ClientsBasePathMap,
+  Providers,
+  algorithm,
+  Algorithm,
+  EncryptionProviderOptions,
+  EncryptionOptions,
+  BasisTheoryInitOptions,
+};

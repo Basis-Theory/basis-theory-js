@@ -13,21 +13,26 @@ export abstract class BasisTheoryService<
   public readonly client: AxiosInstance;
 
   public constructor(options: T) {
-    const { apiKey, baseURL } = options;
+    const { apiKey, baseURL, transformRequest, transformResponse } = options;
 
     this.client = axios.create({
       baseURL,
       headers: {
         [API_KEY_HEADER]: apiKey,
       },
-      transformRequest: ([] as AxiosTransformer[]).concat(
-        options.transformRequest || transformRequestSnakeCase,
-        axios.defaults.transformRequest as AxiosTransformer[]
-      ),
-      transformResponse: (axios.defaults
-        .transformResponse as AxiosTransformer[]).concat(
-        options.transformResponse || transformResponseCamelCase
-      ),
+      transformRequest: [
+        ...([] as AxiosTransformer[]),
+        ...((transformRequest as AxiosTransformer[]) || [
+          transformRequestSnakeCase,
+        ]),
+        ...(axios.defaults.transformRequest as AxiosTransformer[]),
+      ],
+      transformResponse: [
+        ...(axios.defaults as AxiosTransformer[]),
+        ...((transformResponse as AxiosTransformer[]) || [
+          transformResponseCamelCase,
+        ]),
+      ],
     });
     this.client.interceptors.response.use(undefined, errorInterceptor);
   }

@@ -1,32 +1,34 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type,@typescript-eslint/no-explicit-any */
+/* eslint-disable max-classes-per-file, no-shadow */
 import { createRequestConfig, dataExtractor, getQueryParams } from '../common';
 import { BasisTheoryService } from './BasisTheoryService';
 import type { RequestOptions, PaginatedList, PaginatedQuery } from './types';
 
 type BasisTheoryServiceConstructor<
   T extends BasisTheoryService = BasisTheoryService
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 > = new (...params: any[]) => T;
 
-export type ICreate<T, C> = {
+type ICreate<T, C> = {
   create(model: C, options?: RequestOptions): Promise<T>;
 };
 
-export type IRetrieve<T> = {
+type IRetrieve<T> = {
   retrieve(id: string, options?: RequestOptions): Promise<T>;
 };
 
-export type IUpdate<T, U> = {
+type IUpdate<T, U> = {
   update(id: string, model: U, options?: RequestOptions): Promise<T>;
 };
 
-export type IDelete = {
+type IDelete = {
   delete(id: string, options?: RequestOptions): Promise<void>;
 };
 
-export type IList<T, Q extends PaginatedQuery> = {
+type IList<T, Q extends PaginatedQuery> = {
   list(query?: Q, options?: RequestOptions): Promise<PaginatedList<T>>;
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type ICreateConstructor<T, C> = new (...args: any[]) => ICreate<T, C>;
 type IRetrieveConstructor<T> = new (...args: any[]) => IRetrieve<T>;
 type IUpdateConstructor<T, U> = new (...args: any[]) => IUpdate<T, U>;
@@ -34,8 +36,9 @@ type IDeleteConstructor = new (...args: any[]) => IDelete;
 type IListConstructor<T, Q extends PaginatedQuery> = new (
   ...args: any[]
 ) => IList<T, Q>;
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
-const Create = <T, C, S extends BasisTheoryServiceConstructor>(Service: S) =>
+const Create = <T, C, S extends BasisTheoryServiceConstructor>(Service: S): S =>
   class Create extends Service implements ICreate<T, C> {
     public create(model: C, options?: RequestOptions): Promise<T> {
       return this.client
@@ -44,7 +47,7 @@ const Create = <T, C, S extends BasisTheoryServiceConstructor>(Service: S) =>
     }
   };
 
-const Retrieve = <T, S extends BasisTheoryServiceConstructor>(Service: S) =>
+const Retrieve = <T, S extends BasisTheoryServiceConstructor>(Service: S): S =>
   class Retrieve extends Service implements IRetrieve<T> {
     public retrieve(id: string, options?: RequestOptions): Promise<T> {
       return this.client
@@ -53,7 +56,7 @@ const Retrieve = <T, S extends BasisTheoryServiceConstructor>(Service: S) =>
     }
   };
 
-const Update = <T, U, S extends BasisTheoryServiceConstructor>(Service: S) =>
+const Update = <T, U, S extends BasisTheoryServiceConstructor>(Service: S): S =>
   class Update extends Service implements IUpdate<T, U> {
     public update(id: string, model: U, options?: RequestOptions): Promise<T> {
       return this.client
@@ -62,7 +65,7 @@ const Update = <T, U, S extends BasisTheoryServiceConstructor>(Service: S) =>
     }
   };
 
-const Delete = <S extends BasisTheoryServiceConstructor>(Service: S) =>
+const Delete = <S extends BasisTheoryServiceConstructor>(Service: S): S =>
   class Delete extends Service implements IDelete {
     public async delete(id: string, options?: RequestOptions): Promise<void> {
       await this.client.delete(id, createRequestConfig(options));
@@ -75,7 +78,7 @@ const List = <
   S extends BasisTheoryServiceConstructor
 >(
   Service: S
-) =>
+): S =>
   class List extends Service implements IList<T, Q> {
     public list(
       query: Q = {} as Q,
@@ -89,8 +92,12 @@ const List = <
     }
   };
 
-export class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
-  public constructor(private BaseService: Class) {}
+class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
+  private BaseService: Class;
+
+  public constructor(baseService: Class) {
+    this.BaseService = baseService;
+  }
 
   public create<T, C>(): CrudBuilder<Class & ICreateConstructor<T, C>> {
     this.BaseService = Create<T, C, Class>(this.BaseService);
@@ -128,3 +135,7 @@ export class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
     return this.BaseService;
   }
 }
+
+export { ICreate, IRetrieve, IUpdate, IDelete, IList, CrudBuilder };
+
+/* eslint-enable max-classes-per-file, no-shadow */

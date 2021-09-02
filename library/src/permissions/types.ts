@@ -1,6 +1,6 @@
 import type { ApplicationType } from '../applications';
 
-export const PERMISSION_TYPES = [
+const PERMISSION_TYPES = [
   'tenant:read',
   'tenant:update',
   'tenant:delete',
@@ -28,10 +28,12 @@ export const PERMISSION_TYPES = [
   'bank:decrypt',
 ] as const;
 
-export type PermissionType = typeof PERMISSION_TYPES[number];
+type PermissionType = typeof PERMISSION_TYPES[number];
 
-export interface Permission {
+interface Permission {
   type: PermissionType;
   description: string;
   applicationTypes: ApplicationType[];
 }
+
+export { PERMISSION_TYPES, PermissionType, Permission };

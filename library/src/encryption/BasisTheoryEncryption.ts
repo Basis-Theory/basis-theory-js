@@ -28,22 +28,23 @@ export class BasisTheoryEncryption implements EncryptionAdapter {
     return this.adapter.init(encryptionOptions);
   }
 
+  // eslint-disable-next-line accessor-pairs
   public get name(): string {
     return this.adapter.name;
   }
 
-  public async generateKeys(): Promise<KeyPair | string | unknown> {
+  public generateKeys(): Promise<KeyPair | string | unknown> {
     return this.adapter.generateKeys();
   }
 
-  public async encrypt(
+  public encrypt(
     encryptionKey: string,
     plainTextData: string
   ): Promise<string> {
     return this.adapter.encrypt(encryptionKey, plainTextData);
   }
 
-  public async decrypt(
+  public decrypt(
     decryptionKey: string,
     cipherTextData: string
   ): Promise<string> {

@@ -1,6 +1,6 @@
 import type { TokenType } from '../tokens';
 
-export interface Atomic {
+interface Atomic {
   id: string;
   tenantId: string;
   type: TokenType;
@@ -9,8 +9,10 @@ export interface Atomic {
   createdAt: string;
 }
 
-export interface ReactRequest {
+interface ReactRequest {
   reactorId: string;
   requestParameters?: Record<string, unknown>;
   metadata?: Record<string, string>;
 }
+
+export { Atomic, ReactRequest };
