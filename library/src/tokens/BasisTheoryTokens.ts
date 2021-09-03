@@ -29,13 +29,13 @@ export const BasisTheoryTokens = new CrudBuilder(
       _options.transformRequest = [
         ...([] as AxiosTransformer[]),
         ...[transformTokenRequestSnakeCase],
-        ...((options.transformRequest || []) as AxiosTransformer[]),
+        ...((options.transformRequest as AxiosTransformer[]) || []),
       ];
 
       _options.transformResponse = [
         ...([] as AxiosTransformer[]),
         ...[transformTokenResponseCamelCase],
-        ...((options.transformResponse || []) as AxiosTransformer[]),
+        ...((options.transformResponse as AxiosTransformer[]) || []),
       ];
 
       super(_options);
@@ -65,7 +65,7 @@ export const BasisTheoryTokens = new CrudBuilder(
     public retrieve(
       id: string,
       query: RetrieveTokenQuery = {},
-      options?: RequestOptions
+      options: RequestOptions = {}
     ): Promise<Token> {
       const url = `/${id}${getQueryParams(query)}`;
 
@@ -77,7 +77,7 @@ export const BasisTheoryTokens = new CrudBuilder(
     public retrieveDecrypted(
       id: string,
       query: RetrieveTokenQuery = {},
-      options?: RequestOptions
+      options: RequestOptions = {}
     ): Promise<Token> {
       const url = `/${id}/decrypt${getQueryParams(query)}`;
 
@@ -88,7 +88,7 @@ export const BasisTheoryTokens = new CrudBuilder(
 
     public listDecrypted(
       query: ListTokensQueryDecrypted = {},
-      options?: RequestOptions
+      options: RequestOptions = {}
     ): Promise<PaginatedList<Token>> {
       const url = `/decrypt${getQueryParams(query)}`;
 
@@ -132,7 +132,7 @@ export const BasisTheoryTokens = new CrudBuilder(
     public listChildren(
       parentId: string,
       query: ListTokensQuery = {},
-      options?: RequestOptions
+      options: RequestOptions = {}
     ): Promise<PaginatedList<Token>> {
       const url = `/${parentId}/children${getQueryParams(query)}`;
 

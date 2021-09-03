@@ -1,5 +1,3 @@
-///  <reference path="../support/index.d.ts" />
-
 context('API error', () => {
   beforeEach(() => {
     cy.visit('./e2e/cypress/fixtures/credit_card_api_error.html');

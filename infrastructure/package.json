@@ -5,6 +5,7 @@
   "description": "Basis Theory JS infrastructure",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "UNLISCENSED",
+  "files": [],
   "author": {
     "name": "Davi Aquino",
     "email": "davi@basistheory.com"
@@ -13,12 +14,12 @@
     "outputs": "ts-node outputs.ts"
   },
   "dependencies": {
-    "@pulumi/pulumi": "^2.0.0"
+    "@pulumi/pulumi": "^2.0.0",
+    "semver": "^7.3.4",
+    "ts-node": "^9.1.1"
   },
   "devDependencies": {
     "@types/node": "^10.0.0",
-    "@types/semver": "^7.3.4",
-    "semver": "^7.3.4",
-    "ts-node": "^9.1.1"
+    "@types/semver": "^7.3.4"
   }
 }

@@ -21,13 +21,13 @@ export const BasisTheoryReactors = new CrudBuilder(
       _options.transformRequest = [
         ...([] as AxiosTransformer[]),
         ...[transformReactorRequestSnakeCase],
-        ...((options.transformRequest || []) as AxiosTransformer[]),
+        ...((options.transformRequest as AxiosTransformer[]) || []),
       ];
 
       _options.transformResponse = [
         ...([] as AxiosTransformer[]),
         ...[transformReactorResponseCamelCase],
-        ...((options.transformResponse || []) as AxiosTransformer[]),
+        ...((options.transformResponse as AxiosTransformer[]) || []),
       ];
 
       super(_options);

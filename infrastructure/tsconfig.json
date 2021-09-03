@@ -13,5 +13,5 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "files": ["index.ts"]
+  "files": ["infrastructure.ts"]
 }

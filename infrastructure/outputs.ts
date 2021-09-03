@@ -1,13 +1,13 @@
+import * as fs from 'fs';
 import {
   blobDir,
   blobVersion,
   bundlePath,
   indexJsName,
   versionedJsName,
-} from './';
+} from './infrastructure';
 
-import * as fs from 'fs';
-
+// eslint-disable-next-line no-console
 console.log('Generating outputs.json file');
 
 fs.writeFileSync(

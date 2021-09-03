@@ -27,6 +27,7 @@ describe('Reactors', () => {
     const createPayload = {
       name: _chance.string(),
       configuration: {
+        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -38,6 +39,7 @@ describe('Reactors', () => {
     const updatePayload = {
       name: _chance.string(),
       configuration: {
+        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -46,6 +48,7 @@ describe('Reactors', () => {
     const transformedCreatePayload = transformReactorRequestSnakeCase(
       createPayload
     );
+
     const transformedUpdatePayload = transformReactorRequestSnakeCase(
       updatePayload
     );

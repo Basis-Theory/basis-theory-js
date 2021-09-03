@@ -1,9 +1,9 @@
+import axios from 'axios';
 import type {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosTransformer,
 } from 'axios';
-import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
@@ -15,7 +15,8 @@ import { BasisTheoryApiError } from './BasisTheoryApiError';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
 
 const assertInit = <T>(prop: T): NonNullable<T> => {
-  if (prop === undefined) {
+  // eslint-disable-next-line unicorn/no-null
+  if (prop === null || prop === undefined) {
     throw new Error('BasisTheory has not yet been properly initialized.');
   }
 
@@ -43,7 +44,7 @@ const transformReactorRequestSnakeCase: AxiosTransformer = (
 
   return {
     ...snakecaseKeys(reactor, { deep: true }),
-    ...(typeof reactor.configuration !== 'undefined'
+    ...(reactor.configuration !== undefined
       ? { configuration: reactor.configuration }
       : {}),
   } as Reactor;
@@ -61,9 +62,7 @@ const transformAtomicRequestSnakeCase: AxiosTransformer = <
 
   return {
     ...snakecaseKeys(data, { deep: true }),
-    ...(typeof data.metadata !== 'undefined'
-      ? { metadata: data.metadata }
-      : {}),
+    ...(data.metadata !== undefined ? { metadata: data.metadata } : {}),
   } as S;
 };
 
@@ -76,10 +75,8 @@ const transformTokenRequestSnakeCase: AxiosTransformer = (
 
   return {
     ...snakecaseKeys(token, { deep: true }),
-    ...(typeof token.data !== 'undefined' ? { data: token.data } : {}),
-    ...(typeof token.metadata !== 'undefined'
-      ? { metadata: token.metadata }
-      : {}),
+    ...(token.data !== undefined ? { data: token.data } : {}),
+    ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
   } as Token;
 };
 
@@ -92,13 +89,11 @@ const transformAtomicReactionRequestSnakeCase: AxiosTransformer = (
 
   return {
     ...snakecaseKeys(request, { deep: true }),
-    ...(typeof request.requestParameters !== 'undefined'
+    ...(request.requestParameters !== undefined
       ? // eslint-disable-next-line camelcase
         { request_parameters: request.requestParameters }
       : {}),
-    ...(typeof request.metadata !== 'undefined'
-      ? { metadata: request.metadata }
-      : {}),
+    ...(request.metadata !== undefined ? { metadata: request.metadata } : {}),
   } as Token;
 };
 
@@ -111,10 +106,8 @@ const transformTokenResponseCamelCase: AxiosTransformer = (
 
   return {
     ...camelcaseKeys(token, { deep: true }),
-    ...(typeof token.data !== 'undefined' ? { data: token.data } : {}),
-    ...(typeof token.metadata !== 'undefined'
-      ? { metadata: token.metadata }
-      : {}),
+    ...(token.data !== undefined ? { data: token.data } : {}),
+    ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
   } as Token;
 };
 
@@ -127,7 +120,7 @@ const transformReactorResponseCamelCase: AxiosTransformer = (
 
   return {
     ...camelcaseKeys(reactor, { deep: true }),
-    ...(typeof reactor.configuration !== 'undefined'
+    ...(reactor.configuration !== undefined
       ? { configuration: reactor.configuration }
       : {}),
   } as Reactor;
@@ -157,9 +150,7 @@ const transformAtomicResponseCamelCase: AxiosTransformer = <
 
   return ({
     ...camelcaseKeys(data, { deep: true }),
-    ...(typeof data.metadata !== 'undefined'
-      ? { metadata: data.metadata }
-      : {}),
+    ...(data.metadata !== undefined ? { metadata: data.metadata } : {}),
   } as unknown) as C;
 };
 
@@ -169,7 +160,7 @@ const concatRequestTransformerWithDefault = (
   requestTransformer: AxiosTransformer | AxiosTransformer[]
 ): AxiosTransformer | AxiosTransformer[] | undefined => [
   ...([] as AxiosTransformer[]),
-  ...(requestTransformer as AxiosTransformer[]),
+  ...([requestTransformer] as AxiosTransformer[]),
   ...(axios.defaults.transformRequest as AxiosTransformer[]),
 ];
 
@@ -177,15 +168,15 @@ const concatResponseTransformermWithDefault = (
   responseTransformer: AxiosTransformer | AxiosTransformer[]
 ): AxiosTransformer | AxiosTransformer[] | undefined => [
   ...(axios.defaults.transformResponse as AxiosTransformer[]),
-  ...(responseTransformer as AxiosTransformer[]),
+  ...([responseTransformer] as AxiosTransformer[]),
 ];
 
 const createRequestConfig = (
   options?: RequestOptions,
   transformers?: RequestTransformers
 ): AxiosRequestConfig | undefined => {
-  if (typeof options === 'undefined') {
-    if (typeof transformers === 'undefined') {
+  if (!options) {
+    if (!transformers) {
       return undefined;
     }
 
@@ -241,7 +232,7 @@ const createRequestConfig = (
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
 const errorInterceptor = (error: any): void => {
   const status = error.response?.status || -1;
   const data = error.response?.data;
@@ -258,10 +249,8 @@ const getQueryParams = <Q>(query: Q): string => {
     const appendSafe = (key: string, value: unknown): void => {
       const type = typeof value;
 
-      if (
-        type === 'undefined' ||
-        ['boolean', 'number', 'string'].includes(type)
-      ) {
+      // eslint-disable-next-line unicorn/no-null
+      if (value === null || ['boolean', 'number', 'string'].includes(type)) {
         params.append(snakeCase(key), value as string);
       }
     };

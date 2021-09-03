@@ -28,7 +28,7 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
       _options.transformRequest = [
         ...([] as AxiosTransformer[]),
         ...[transformAtomicRequestSnakeCase],
-        ...((options.transformRequest || []) as AxiosTransformer[]),
+        ...((options.transformRequest as AxiosTransformer[]) || []),
       ];
 
       _options.transformResponse = [

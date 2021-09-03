@@ -21,6 +21,7 @@ describe('Utils', () => {
       expect(
         dataExtractor((undefined as unknown) as AxiosResponse)
       ).toBeUndefined();
+      // eslint-disable-next-line unicorn/no-null
       expect(dataExtractor((null as unknown) as AxiosResponse)).toBeUndefined();
     });
     it('should extract data', () => {
@@ -35,6 +36,7 @@ describe('Utils', () => {
     it('should handle falsy data', () => {
       expect(createRequestConfig(undefined)).toBeUndefined();
       expect(
+        // eslint-disable-next-line unicorn/no-null
         createRequestConfig((null as unknown) as RequestOptions)
       ).toBeUndefined();
     });
@@ -59,7 +61,7 @@ describe('Utils', () => {
   });
 
   describe('error interceptor', () => {
-    it('should throw BasisTheoryApiError with response status and response data', async () => {
+    it('should throw BasisTheoryApiError with response status and response data', () => {
       const expectedError = {
         message: 'some error message',
         response: {
@@ -81,7 +83,7 @@ describe('Utils', () => {
         expect(error).toHaveProperty('data', expectedError.response.data);
       }
     });
-    it('should throw BasisTheoryApiError with -1 for the status and an undefined for data', async () => {
+    it('should throw BasisTheoryApiError with -1 for the status and an undefined for data', () => {
       const errorMessage = 'some error message';
 
       try {

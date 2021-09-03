@@ -1,3 +1,6 @@
+// eslint-disable-next-line spaced-comment
+///  <reference path="../support/index.d.ts" />
+
 context('Atomic Cards', () => {
   it('should create', () => {
     cy.testCreate('atomic/cards');

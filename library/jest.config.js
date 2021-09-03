@@ -9,7 +9,7 @@ module.exports = {
     {
       ...common,
       displayName: 'jsdom',
-      testEnvironment: './test/setup/JSDOMExtendedEnvironment.js',
+      testEnvironment: './test/setup/JsDomExtendedEnvironment.js',
     },
     {
       ...common,

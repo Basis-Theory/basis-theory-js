@@ -82,7 +82,7 @@ const List = <
   class List extends Service implements IList<T, Q> {
     public list(
       query: Q = {} as Q,
-      options?: RequestOptions
+      options: RequestOptions = {} as RequestOptions
     ): Promise<PaginatedList<T>> {
       const url = `/${getQueryParams(query)}`;
 
@@ -100,24 +100,28 @@ class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
   }
 
   public create<T, C>(): CrudBuilder<Class & ICreateConstructor<T, C>> {
+    // eslint-disable-next-line new-cap
     this.BaseService = Create<T, C, Class>(this.BaseService);
 
     return (this as unknown) as CrudBuilder<Class & ICreateConstructor<T, C>>;
   }
 
   public retrieve<T>(): CrudBuilder<Class & IRetrieveConstructor<T>> {
+    // eslint-disable-next-line new-cap
     this.BaseService = Retrieve<T, Class>(this.BaseService);
 
     return (this as unknown) as CrudBuilder<Class & IRetrieveConstructor<T>>;
   }
 
   public update<T, U>(): CrudBuilder<Class & IUpdateConstructor<T, U>> {
+    // eslint-disable-next-line new-cap
     this.BaseService = Update<T, U, Class>(this.BaseService);
 
     return (this as unknown) as CrudBuilder<Class & IUpdateConstructor<T, U>>;
   }
 
   public delete(): CrudBuilder<Class & IDeleteConstructor> {
+    // eslint-disable-next-line new-cap
     this.BaseService = Delete<Class>(this.BaseService);
 
     return (this as unknown) as CrudBuilder<Class & IDeleteConstructor>;
@@ -126,6 +130,7 @@ class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
   public list<T, Q extends PaginatedQuery>(): CrudBuilder<
     Class & IListConstructor<T, Q>
   > {
+    // eslint-disable-next-line new-cap
     this.BaseService = List<T, Q, Class>(this.BaseService);
 
     return (this as unknown) as CrudBuilder<Class & IListConstructor<T, Q>>;

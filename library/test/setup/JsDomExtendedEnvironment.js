@@ -21,7 +21,9 @@ class JSDOMExtendedEnvironment extends JSDOMEnvironment {
         Uint32Array,
         Uint8Array,
         ArrayBuffer,
+        // eslint-disable-next-line node/no-unsupported-features/node-builtins
         TextEncoder,
+        // eslint-disable-next-line node/no-unsupported-features/node-builtins
         TextDecoder,
       },
     });

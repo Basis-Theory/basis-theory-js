@@ -2,8 +2,8 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import {
   API_KEY_HEADER,
-  transformRequestSnakeCase,
   BT_TRACE_ID_HEADER,
+  transformRequestSnakeCase,
 } from '../../src/common';
 import type { PaginatedList } from '../../src/service';
 import { PaginatedQuery } from '../../src/service';
@@ -82,6 +82,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
       201,
       JSON.stringify({
         ...transformedCreatePayload,
+        // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
     );
@@ -113,6 +114,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
       201,
       JSON.stringify({
         ...transformedCreatePayload,
+        // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
     );
@@ -163,6 +165,7 @@ const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
       200,
       JSON.stringify({
         id,
+        // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
     );
@@ -185,6 +188,7 @@ const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
       200,
       JSON.stringify({
         id,
+        // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
     );
@@ -236,6 +240,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
       200,
       JSON.stringify({
         ...transformedUpdatePayload,
+        // eslint-disable-next-line camelcase
         updated_at: updatedAt,
       })
     );
@@ -266,6 +271,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
       200,
       JSON.stringify({
         ...transformedUpdatePayload,
+        // eslint-disable-next-line camelcase
         updated_at: updatedAt,
       })
     );
@@ -313,6 +319,7 @@ const testDelete = (param: () => TestDeleteParam): void => {
 
     client.onDelete(id).reply(204, {
       id,
+      // eslint-disable-next-line camelcase
       created_at: createdAt,
     });
 
@@ -329,6 +336,7 @@ const testDelete = (param: () => TestDeleteParam): void => {
 
     client.onDelete(id).reply(204, {
       id,
+      // eslint-disable-next-line camelcase
       created_at: createdAt,
     });
 
@@ -370,18 +378,28 @@ const testList = <T>(param: () => TestListParam<T>): void => {
   const query = {
     page,
     size,
+    // eslint-disable-next-line unicorn/no-null
     nul: null,
     und: undefined,
-    camelCase: chance.string({ alpha: true, numeric: true }),
+    camelCase: chance.string({
+      alpha: true,
+      numeric: true,
+    }),
     bool: chance.bool(),
     int: chance.integer(),
     float: chance.floating(),
-    str: chance.string({ alpha: true, numeric: true }),
+    str: chance.string({
+      alpha: true,
+      numeric: true,
+    }),
     arr: [
       chance.bool(),
       chance.integer(),
       chance.floating(),
-      chance.string({ alpha: true, numeric: true }),
+      chance.string({
+        alpha: true,
+        numeric: true,
+      }),
       [chance.string()],
       {},
     ],
@@ -397,6 +415,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
 
     client.onGet().reply(
       200,
+      /* eslint-disable camelcase */
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -406,6 +425,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
         },
         data: [],
       })
+      /* eslint-enable camelcase */
     );
 
     expect(await service.list()).toStrictEqual({
@@ -429,6 +449,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
 
     client.onGet().reply(
       200,
+      /* eslint-disable camelcase */
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -438,9 +459,12 @@ const testList = <T>(param: () => TestListParam<T>): void => {
         },
         data: [],
       })
+      /* eslint-enable camelcase */
     );
 
-    expect(await service.list(query as PaginatedQuery)).toStrictEqual({
+    expect(
+      await service.list((query as unknown) as PaginatedQuery)
+    ).toStrictEqual({
       pagination: {
         totalItems,
         pageNumber,
@@ -463,6 +487,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
 
     client.onGet().reply(
       200,
+      /* eslint-disable camelcase */
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -472,10 +497,11 @@ const testList = <T>(param: () => TestListParam<T>): void => {
         },
         data: [],
       })
+      /* eslint-enable camelcase */
     );
 
     expect(
-      await service.list(query as PaginatedQuery, {
+      await service.list((query as unknown) as PaginatedQuery, {
         apiKey,
         correlationId,
       })

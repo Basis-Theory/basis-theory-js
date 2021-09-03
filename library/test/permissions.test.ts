@@ -40,6 +40,7 @@ describe('Permissions', () => {
           {
             type,
             description,
+            // eslint-disable-next-line camelcase
             application_types: applicationTypes,
           },
         ])
@@ -72,13 +73,17 @@ describe('Permissions', () => {
           {
             type,
             description,
+            // eslint-disable-next-line camelcase
             application_types: applicationTypes,
           },
         ])
       );
 
       expect(
-        await bt.permissions.list({ apiKey: _apiKey, correlationId })
+        await bt.permissions.list({
+          apiKey: _apiKey,
+          correlationId,
+        })
       ).toEqual([
         {
           type,

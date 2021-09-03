@@ -256,6 +256,10 @@ describe('Atomic Cards', () => {
     it('should react', async () => {
       const id = chance.string();
       const reactorId = chance.string();
+      const tenantId = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
       const requestParameters = {
         snake_case: chance.string(),
         camelCase: chance.string(),
@@ -268,17 +272,18 @@ describe('Atomic Cards', () => {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
       };
+      /* eslint-enable camelcase */
+
       const createdBy = chance.string();
       const createdAt = chance.string();
 
       client.onPost(`/${id}/react`).reply(
         201,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -288,6 +293,7 @@ describe('Atomic Cards', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -308,11 +314,13 @@ describe('Atomic Cards', () => {
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
       expect(client.history.post[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
         JSON.stringify({
           reactor_id: reactorId,
           request_parameters: requestParameters,
           metadata,
         })
+        /* eslint-enable camelcase */
       );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
@@ -322,6 +330,10 @@ describe('Atomic Cards', () => {
     it('should react with options', async () => {
       const id = chance.string();
       const reactorId = chance.string();
+      const tenantId = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
       const requestParameters = {
         snake_case: chance.string(),
         camelCase: chance.string(),
@@ -334,12 +346,12 @@ describe('Atomic Cards', () => {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
       };
+      /* eslint-enable camelcase */
+
       const createdBy = chance.string();
       const createdAt = chance.string();
       const _apiKey = chance.string();
@@ -347,6 +359,7 @@ describe('Atomic Cards', () => {
 
       client.onPost(`/${id}/react`).reply(
         201,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -356,6 +369,7 @@ describe('Atomic Cards', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -366,7 +380,10 @@ describe('Atomic Cards', () => {
             requestParameters,
             metadata,
           },
-          { apiKey: _apiKey, correlationId }
+          {
+            apiKey: _apiKey,
+            correlationId,
+          }
         )
       ).toStrictEqual({
         id,
@@ -380,11 +397,13 @@ describe('Atomic Cards', () => {
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
       expect(client.history.post[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
         JSON.stringify({
           reactor_id: reactorId,
           request_parameters: requestParameters,
           metadata,
         })
+        /* eslint-enable camelcase */
       );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
@@ -408,21 +427,26 @@ describe('Atomic Cards', () => {
     it('should retrieve reaction', async () => {
       const atomicCardId = chance.string();
       const reactionTokenId = chance.string();
+      const tenantId = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
       const metadata = {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
       };
+      /* eslint-enable camelcase */
+
       const createdBy = chance.string();
       const createdAt = chance.string();
 
       client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id: reactionTokenId,
           tenant_id: tenantId,
@@ -432,6 +456,7 @@ describe('Atomic Cards', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -457,16 +482,20 @@ describe('Atomic Cards', () => {
     it('should retrieve reaction with options', async () => {
       const atomicCardId = chance.string();
       const reactionTokenId = chance.string();
+      const tenantId = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
       const metadata = {
         camelCase: chance.string(),
         snake_case: chance.string(),
       };
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
       };
+      /* eslint-enable camelcase */
+
       const createdBy = chance.string();
       const createdAt = chance.string();
       const _apiKey = chance.string();
@@ -474,6 +503,7 @@ describe('Atomic Cards', () => {
 
       client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id: reactionTokenId,
           tenant_id: tenantId,
@@ -483,6 +513,7 @@ describe('Atomic Cards', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(

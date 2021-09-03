@@ -36,6 +36,7 @@ describe('Tenants', () => {
 
       client.onGet().reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           owner_id: ownerId,
@@ -43,6 +44,7 @@ describe('Tenants', () => {
           created_at: createdAt,
           modified_at: modifiedAt,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(await bt.tenants.retrieve()).toEqual({
@@ -69,6 +71,7 @@ describe('Tenants', () => {
 
       client.onGet().reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           owner_id: ownerId,
@@ -76,10 +79,14 @@ describe('Tenants', () => {
           created_at: createdAt,
           modified_at: modifiedAt,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
-        await bt.tenants.retrieve({ apiKey: _apiKey, correlationId })
+        await bt.tenants.retrieve({
+          apiKey: _apiKey,
+          correlationId,
+        })
       ).toEqual({
         id,
         ownerId,
@@ -131,7 +138,13 @@ describe('Tenants', () => {
       client.onPut().reply(200, JSON.stringify({ name }));
 
       expect(
-        await bt.tenants.update({ name }, { apiKey: _apiKey, correlationId })
+        await bt.tenants.update(
+          { name },
+          {
+            apiKey: _apiKey,
+            correlationId,
+          }
+        )
       ).toStrictEqual({
         name,
       });

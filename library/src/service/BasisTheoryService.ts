@@ -28,7 +28,7 @@ export abstract class BasisTheoryService<
         ...(axios.defaults.transformRequest as AxiosTransformer[]),
       ],
       transformResponse: [
-        ...(axios.defaults as AxiosTransformer[]),
+        ...(axios.defaults.transformResponse as AxiosTransformer[]),
         ...((transformResponse as AxiosTransformer[]) || [
           transformResponseCamelCase,
         ]),

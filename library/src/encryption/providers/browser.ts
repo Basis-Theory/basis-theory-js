@@ -23,7 +23,7 @@ const convertBinaryToPem = (binaryData: ArrayBuffer, label: string): string => {
   while (nextIndex < base64Cert.length) {
     pemCert +=
       nextIndex + 64 <= base64Cert.length
-        ? `${base64Cert.substr(nextIndex, 64)}\r\n`
+        ? `${base64Cert.slice(nextIndex, 64)}\r\n`
         : `${base64Cert.slice(nextIndex)}\r\n`;
     nextIndex += 64;
   }
@@ -107,6 +107,8 @@ const encrypt = async (publicKey: string, data: string): Promise<string> => {
   const encrypted = await window.crypto.subtle.encrypt(
     { name: signAlgorithm.name },
     key,
+    // ignoring as this is soon to be deprecated
+    // eslint-disable-next-line node/no-unsupported-features/node-builtins
     new TextEncoder().encode(data).buffer
   );
 
@@ -121,6 +123,8 @@ const decrypt = async (privateKey: string, data: string): Promise<string> => {
     base64StringToArrayBuffer(data)
   );
 
+  // ignoring as this is soon to be deprecated
+  // eslint-disable-next-line node/no-unsupported-features/node-builtins
   return new TextDecoder().decode(decrypted);
 };
 

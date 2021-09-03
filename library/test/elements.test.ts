@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Chance } from 'chance';
 import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
@@ -7,7 +6,7 @@ describe('Elements', () => {
   let chance: Chance.Chance;
   let BasisTheory: typeof BasisTheoryType;
 
-  const loadModule = () => {
+  const loadModule = (): void => {
     jest.resetModules();
     ({ BasisTheory } = require('../src'));
   };
@@ -21,6 +20,7 @@ describe('Elements', () => {
     const bt = await new BasisTheory().init('');
 
     expect(() => {
+      // eslint-disable-next-line no-unused-expressions
       bt.elements;
     }).toThrowError();
   });
@@ -29,6 +29,7 @@ describe('Elements', () => {
     const bt = await new BasisTheory().init('', { elements: false });
 
     expect(() => {
+      // eslint-disable-next-line no-unused-expressions
       bt.elements;
     }).toThrowError();
   });
@@ -61,7 +62,7 @@ describe('Elements', () => {
       ).rejects.toThrowError('Invalid format for the given Elements base url.');
     });
 
-    it('should resolve with a valid base elements url', async () => {
+    it('should resolve with a valid base elements url', () => {
       const bt = new BasisTheory();
       const validUrl = chance.url({ protocol: 'https' });
 
@@ -87,7 +88,10 @@ describe('Elements', () => {
       window.BasisTheoryElements = expectedElements;
       expect(await loadElements()).toBe(expectedElements);
 
-      const baseUrl = chance.url({ protocol: 'https', path: '' });
+      const baseUrl = chance.url({
+        protocol: 'https',
+        path: '',
+      });
 
       await new BasisTheory().init('', {
         elements: true,
@@ -96,7 +100,7 @@ describe('Elements', () => {
 
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
-        baseUrl.replace(/\/$/, '')
+        baseUrl.replace(/\/$/u, '')
       );
     });
 
@@ -104,7 +108,7 @@ describe('Elements', () => {
       const message = 'load error';
 
       jest.mock('../src/common/script', () => ({
-        findScript: () => {
+        findScript: (): void => {
           throw new Error(message);
         },
       }));
@@ -123,7 +127,7 @@ describe('Elements', () => {
 
       beforeEach(() => {
         jest.mock('../src/common/script', () => ({
-          findScript: () => {
+          findScript: (): unknown => {
             const script = document.createElement('script');
 
             return {
@@ -205,8 +209,8 @@ describe('Elements', () => {
         });
 
         jest.mock('../src/common/script', () => ({
-          findScript: () => null,
-          injectScript: () => {
+          findScript: (): unknown => undefined,
+          injectScript: (): unknown => {
             const script = document.createElement('script');
 
             return {
@@ -221,7 +225,10 @@ describe('Elements', () => {
       });
 
       it('should resolve successfully and have elements initialized', async () => {
-        const baseUrl = chance.url({ protocol: 'https', path: '' });
+        const baseUrl = chance.url({
+          protocol: 'https',
+          path: '',
+        });
         const promise = bt.init('el-123', {
           elements: true,
           elementsBaseUrl: baseUrl,
@@ -242,7 +249,7 @@ describe('Elements', () => {
         expect(bt.elements).toBeDefined();
         expect(elementsInit).toHaveBeenCalledWith(
           'el-123',
-          baseUrl.replace(/\/$/, '')
+          baseUrl.replace(/\/$/u, '')
         );
       });
     });

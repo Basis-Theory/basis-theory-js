@@ -26,13 +26,13 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
       _options.transformRequest = [
         ...([] as AxiosTransformer[]),
         ...[transformAtomicRequestSnakeCase],
-        ...((options.transformRequest || []) as AxiosTransformer[]),
+        ...((options.transformRequest as AxiosTransformer[]) || []),
       ];
 
       _options.transformResponse = [
         ...([] as AxiosTransformer[]),
         ...[transformAtomicResponseCamelCase],
-        ...((options.transformResponse || []) as AxiosTransformer[]),
+        ...((options.transformResponse as AxiosTransformer[]) || []),
       ];
 
       super(_options);
