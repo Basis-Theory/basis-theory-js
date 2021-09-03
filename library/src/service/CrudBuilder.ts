@@ -1,4 +1,4 @@
-/* eslint-disable max-classes-per-file, no-shadow */
+/* eslint-disable max-classes-per-file, @typescript-eslint/no-shadow */
 import { createRequestConfig, dataExtractor, getQueryParams } from '../common';
 import { BasisTheoryService } from './BasisTheoryService';
 import type { RequestOptions, PaginatedList, PaginatedQuery } from './types';
@@ -143,4 +143,4 @@ class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
 
 export { ICreate, IRetrieve, IUpdate, IDelete, IList, CrudBuilder };
 
-/* eslint-enable max-classes-per-file, no-shadow */
+/* eslint-enable max-classes-per-file, @typescript-eslint/no-shadow */
