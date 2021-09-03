@@ -30,7 +30,7 @@
     "postinstall": "husky install"
   },
   "devDependencies": {
-    "@basis-theory/eslint-config": "^1.0.1",
+    "@basis-theory/eslint-config": "^1.0.2",
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
     "@semantic-release/changelog": "^5.0.1",

@@ -1190,10 +1190,10 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
-"@basis-theory/eslint-config@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@basis-theory/eslint-config/-/eslint-config-1.0.1.tgz#3e7274a27b447d31381e2cb88a2c51a9d7e3d297"
-  integrity sha512-VEoQeEJR9hlrEcSpscxIQaauamJAdD566RxLyjA7/r1hPtXIvGf/YWE567T7X3aL9mQfGLNETkHSt/92e9PGpQ==
+"@basis-theory/eslint-config@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@basis-theory/eslint-config/-/eslint-config-1.0.2.tgz#63caeafa937d0cee3d6b7af879cb4adc770696cd"
+  integrity sha512-Rkh6btIVsqBcOW5bHIkvQSD4dPXT5MJkzoXnH6nPAxjWz78M5uN3glDo6YZLbCyll6KmxyNS/F2CXTT0wMC2Ww==
   dependencies:
     "@rushstack/eslint-patch" "^1.0.6"
     "@trivago/prettier-plugin-sort-imports" "^2.0.4"

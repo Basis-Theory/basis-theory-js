@@ -71,13 +71,6 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           IS_PR_WORKFLOW: true
 
-      - name: Lint
-        uses: wearerequired/lint-action@v1.7.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          eslint: true
-          prettier: true
-
       - name: Monitor coverage
         uses: slavcodev/coverage-monitor-action@1.2.0
         with:
