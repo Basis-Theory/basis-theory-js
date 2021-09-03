@@ -1190,9 +1190,20 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
-"@basis-theory/eslint-config@link:../basis-theory-eslint-config":
-  version "0.0.0"
-  uid ""
+"@basis-theory/eslint-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@basis-theory/eslint-config/-/eslint-config-1.0.0.tgz#e5b0370ee027398f9b7510e34f43a0a20911a361"
+  integrity sha512-MHDDsEP2qfFyDQa5xO9ArIWtNpkozPNosWcxlp3SZfyZ3LQ9HJ5CJ0Klm8Kkz0iegmreXhacec0LphDTKfkTkA==
+  dependencies:
+    "@rushstack/eslint-patch" "^1.0.6"
+    "@trivago/prettier-plugin-sort-imports" "^2.0.4"
+    "@typescript-eslint/eslint-plugin" "^4.30.0"
+    "@typescript-eslint/parser" "^4.30.0"
+    dot-prop "^6.0.1"
+    eslint-config-get-off-my-lawn "^6.0.1"
+    eslint-config-prettier "^8.3.0"
+    eslint-plugin-prettier "^4.0.0"
+    read-pkg-up "7.0.1"
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
@@ -1911,7 +1922,7 @@
   resolved "https://registry.yarnpkg.com/@pulumi/query/-/query-0.3.0.tgz#f496608e86a18c3dd31b6c533408e2441c29071d"
   integrity sha512-xfo+yLRM2zVjVEA4p23IjQWzyWl1ZhWOGobsBqRpIarzLvwNH/RAGaoehdxlhx4X92302DrpdIFgTICMN4P38w==
 
-"@rushstack/eslint-patch@1.0.6":
+"@rushstack/eslint-patch@1.0.6", "@rushstack/eslint-patch@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.6.tgz#023d72a5c4531b4ce204528971700a78a85a0c50"
   integrity sha512-Myxw//kzromB9yWgS8qYGuGVf91oBUUJpNvy5eM50sqvmKLbKjwLxohJnkWGTeeI9v9IBMtPLxz5Gc60FIfvCA==

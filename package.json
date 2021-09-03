@@ -19,7 +19,8 @@
     "build": "yarn workspace @basis-theory/basis-theory-js build",
     "cypress:ci": "cypress run --headless -b chrome",
     "cypress:open": "cypress open",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint . --quiet --ignore-path .gitignore",
+    "lint:fix": "eslint . --fix --ignore-path .gitignore",
     "release": "yarn workspace @basis-theory/basis-theory-js release",
     "start": "yarn workspace @basis-theory/basis-theory-js start",
     "test": "yarn workspace @basis-theory/basis-theory-js run test",
@@ -29,7 +30,7 @@
     "postinstall": "husky install"
   },
   "devDependencies": {
-    "@basis-theory/eslint-config": "link:../basis-theory-eslint-config",
+    "@basis-theory/eslint-config": "^1.0.0",
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
     "@semantic-release/changelog": "^5.0.1",
