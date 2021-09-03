@@ -23,7 +23,7 @@ const convertBinaryToPem = (binaryData: ArrayBuffer, label: string): string => {
   while (nextIndex < base64Cert.length) {
     pemCert +=
       nextIndex + 64 <= base64Cert.length
-        ? `${base64Cert.slice(nextIndex, 64)}\r\n`
+        ? `${base64Cert.slice(nextIndex, nextIndex + 64)}\r\n`
         : `${base64Cert.slice(nextIndex)}\r\n`;
 
     nextIndex += 64;
