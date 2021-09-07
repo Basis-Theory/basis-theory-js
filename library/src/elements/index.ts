@@ -8,4 +8,4 @@ interface BasisTheoryElementsInit extends BasisTheoryElements {
   ) => Promise<BasisTheoryElements>;
 }
 
-export { BasisTheoryElements, BasisTheoryElementsInit };
+export type { BasisTheoryElements, BasisTheoryElementsInit };

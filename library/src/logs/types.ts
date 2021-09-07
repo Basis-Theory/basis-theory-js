@@ -17,4 +17,4 @@ interface LogQuery extends PaginatedQuery {
   endDate?: string;
 }
 
-export { Log, LogQuery };
+export type { Log, LogQuery };

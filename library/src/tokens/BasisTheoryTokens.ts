@@ -26,17 +26,17 @@ export const BasisTheoryTokens = new CrudBuilder(
     public constructor(options: BasisTheoryServiceOptions) {
       const _options = options;
 
-      _options.transformRequest = [
-        ...([] as AxiosTransformer[]),
-        ...[transformTokenRequestSnakeCase],
-        ...((options.transformRequest as AxiosTransformer[]) || []),
-      ];
+      // eslint-disable-next-line unicorn/prefer-spread
+      _options.transformRequest = ([] as AxiosTransformer[]).concat(
+        transformTokenRequestSnakeCase,
+        options.transformRequest || []
+      );
 
-      _options.transformResponse = [
-        ...([] as AxiosTransformer[]),
-        ...[transformTokenResponseCamelCase],
-        ...((options.transformResponse as AxiosTransformer[]) || []),
-      ];
+      // eslint-disable-next-line unicorn/prefer-spread
+      _options.transformResponse = ([] as AxiosTransformer[]).concat(
+        transformTokenResponseCamelCase,
+        options.transformResponse || []
+      );
 
       super(_options);
     }

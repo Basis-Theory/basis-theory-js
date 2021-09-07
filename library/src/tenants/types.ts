@@ -8,4 +8,4 @@ interface Tenant {
 
 type UpdateTenantModel = Pick<Tenant, 'name'>;
 
-export { Tenant, UpdateTenantModel };
+export type { Tenant, UpdateTenantModel };

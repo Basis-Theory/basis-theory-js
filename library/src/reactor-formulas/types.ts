@@ -41,7 +41,7 @@ interface ReactorFormulaQuery extends PaginatedQuery {
   sourceTokenType?: TokenType;
 }
 
-export {
+export type {
   FormulaType,
   DataType,
   ReactorFormula,

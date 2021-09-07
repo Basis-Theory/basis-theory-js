@@ -21,19 +21,21 @@ import type { AtomicBank, CreateAtomicBankModel } from './types';
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      const _options = options;
+      const _options = {
+        ...options,
+      };
 
-      _options.transformRequest = [
-        ...([] as AxiosTransformer[]),
-        ...[transformAtomicRequestSnakeCase],
-        ...((options.transformRequest as AxiosTransformer[]) || []),
-      ];
+      // eslint-disable-next-line unicorn/prefer-spread
+      _options.transformRequest = ([] as AxiosTransformer[]).concat(
+        transformAtomicRequestSnakeCase,
+        options.transformRequest || []
+      );
 
-      _options.transformResponse = [
-        ...([] as AxiosTransformer[]),
-        ...[transformAtomicResponseCamelCase],
-        ...((options.transformResponse as AxiosTransformer[]) || []),
-      ];
+      // eslint-disable-next-line unicorn/prefer-spread
+      _options.transformResponse = ([] as AxiosTransformer[]).concat(
+        transformAtomicResponseCamelCase,
+        options.transformResponse || []
+      );
 
       super(_options);
     }

@@ -15,4 +15,4 @@ interface ReactRequest {
   metadata?: Record<string, string>;
 }
 
-export { Atomic, ReactRequest };
+export type { Atomic, ReactRequest };

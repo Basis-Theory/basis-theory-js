@@ -141,6 +141,7 @@ class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
   }
 }
 
-export { ICreate, IRetrieve, IUpdate, IDelete, IList, CrudBuilder };
+export { CrudBuilder };
+export type { ICreate, IRetrieve, IUpdate, IDelete, IList };
 
 /* eslint-enable max-classes-per-file, @typescript-eslint/no-shadow */

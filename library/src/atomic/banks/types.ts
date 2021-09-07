@@ -11,4 +11,4 @@ interface AtomicBank extends Atomic {
 
 type CreateAtomicBankModel = Pick<AtomicBank, 'bank' | 'metadata'>;
 
-export { Bank, AtomicBank, CreateAtomicBankModel };
+export type { Bank, AtomicBank, CreateAtomicBankModel };

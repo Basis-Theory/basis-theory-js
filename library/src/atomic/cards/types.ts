@@ -33,4 +33,10 @@ type CreateAtomicCardModel = Pick<
   'card' | 'billingDetails' | 'metadata'
 >;
 
-export { AtomicCard, Card, BillingDetails, Address, CreateAtomicCardModel };
+export type {
+  AtomicCard,
+  Card,
+  BillingDetails,
+  Address,
+  CreateAtomicCardModel,
+};

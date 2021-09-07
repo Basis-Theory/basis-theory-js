@@ -52,7 +52,7 @@ interface ListTokensQueryDecrypted extends ListTokensQuery {
   decryptType?: TokenType | TokenType[];
 }
 
-export {
+export type {
   Primitive,
   DataObject,
   DataArray,

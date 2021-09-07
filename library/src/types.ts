@@ -46,12 +46,13 @@ declare global {
   }
 }
 
-export {
+export { algorithm };
+
+export type {
   InitStatus,
   Clients,
   ClientsBasePathMap,
   Providers,
-  algorithm,
   Algorithm,
   EncryptionProviderOptions,
   EncryptionOptions,

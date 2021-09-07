@@ -24,4 +24,4 @@ interface ReactorQuery extends PaginatedQuery {
   sourceTokenType?: TokenType;
 }
 
-export { Reactor, CreateReactorModel, UpdateReactorModel, ReactorQuery };
+export type { Reactor, CreateReactorModel, UpdateReactorModel, ReactorQuery };

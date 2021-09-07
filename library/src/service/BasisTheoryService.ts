@@ -20,19 +20,16 @@ export abstract class BasisTheoryService<
       headers: {
         [API_KEY_HEADER]: apiKey,
       },
-      transformRequest: [
-        ...([] as AxiosTransformer[]),
-        ...((transformRequest as AxiosTransformer[]) || [
-          transformRequestSnakeCase,
-        ]),
-        ...(axios.defaults.transformRequest as AxiosTransformer[]),
-      ],
-      transformResponse: [
-        ...(axios.defaults.transformResponse as AxiosTransformer[]),
-        ...((transformResponse as AxiosTransformer[]) || [
-          transformResponseCamelCase,
-        ]),
-      ],
+      /* eslint-disable unicorn/prefer-spread */
+      transformRequest: ([] as AxiosTransformer[]).concat(
+        transformRequest || transformRequestSnakeCase,
+        axios.defaults.transformRequest as AxiosTransformer[]
+      ),
+      transformResponse: (axios.defaults
+        .transformResponse as AxiosTransformer[]).concat(
+        transformResponse || transformResponseCamelCase
+      ),
+      /* eslint-enable unicorn/prefer-spread */
     });
     this.client.interceptors.response.use(undefined, errorInterceptor);
   }

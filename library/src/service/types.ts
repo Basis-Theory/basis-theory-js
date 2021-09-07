@@ -41,7 +41,7 @@ type RequestTransformers = Pick<
   'transformRequest' | 'transformResponse'
 >;
 
-export {
+export type {
   BasisTheoryServiceOptions,
   PaginatedList,
   PaginatedQuery,

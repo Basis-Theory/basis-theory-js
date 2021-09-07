@@ -36,4 +36,5 @@ interface Permission {
   applicationTypes: ApplicationType[];
 }
 
-export { PERMISSION_TYPES, PermissionType, Permission };
+export { PERMISSION_TYPES };
+export type { PermissionType, Permission };
