@@ -1,6 +1,6 @@
+import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
-import MockAdapter from 'axios-mock-adapter';
 import { mockServiceClient } from './setup/utils';
 
 describe('Atomic', () => {
@@ -43,6 +43,7 @@ describe('Atomic', () => {
 
       client.onPost('/cards').reply(201, {
         id: chance.string(),
+        // eslint-disable-next-line camelcase
         created_at: chance.string(),
       });
 
@@ -53,6 +54,7 @@ describe('Atomic', () => {
 
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
         JSON.stringify({
           card: {
             number: '12345678910111213',
@@ -74,6 +76,7 @@ describe('Atomic', () => {
             },
           },
         })
+        /* eslint-enable camelcase */
       );
       expect(token).toStrictEqual({
         id: expect.any(String),
@@ -91,6 +94,7 @@ describe('Atomic', () => {
 
       client.onPost('/banks').reply(201, {
         id: chance.string(),
+        // eslint-disable-next-line camelcase
         created_at: chance.string(),
       });
       const token = await bt.atomic.storeBank({
@@ -101,8 +105,10 @@ describe('Atomic', () => {
       expect(client.history.post[0].data).toStrictEqual(
         JSON.stringify({
           bank: {
+            /* eslint-disable camelcase */
             account_number: '123456789',
             routing_number: '12345679012',
+            /* eslint-enable camelcase */
           },
         })
       );

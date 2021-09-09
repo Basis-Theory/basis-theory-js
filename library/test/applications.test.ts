@@ -1,14 +1,14 @@
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import type { ApplicationType } from '../src';
 import { BasisTheory } from '../src';
+import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 import {
   testCRUD,
   errorStatus,
   expectBasisTheoryApiError,
   mockServiceClient,
 } from './setup/utils';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 
 describe('Applications', () => {
   let bt: BasisTheory;
@@ -53,6 +53,7 @@ describe('Applications', () => {
         200,
         JSON.stringify({
           id,
+          // eslint-disable-next-line camelcase
           created_date: createdDate,
         })
       );
@@ -88,6 +89,7 @@ describe('Applications', () => {
         200,
         JSON.stringify({
           id,
+          // eslint-disable-next-line camelcase
           created_date: createdDate,
         })
       );
@@ -130,6 +132,7 @@ describe('Applications', () => {
         JSON.stringify({
           id,
           key,
+          // eslint-disable-next-line camelcase
           modified_date: modifiedDate,
         })
       );
@@ -157,6 +160,7 @@ describe('Applications', () => {
         JSON.stringify({
           id,
           key,
+          // eslint-disable-next-line camelcase
           modified_date: modifiedDate,
         })
       );

@@ -1,12 +1,14 @@
 import type { Atomic } from '../types';
 
-export interface Bank {
+interface Bank {
   routingNumber: string;
   accountNumber: string;
 }
 
-export interface AtomicBank extends Atomic {
+interface AtomicBank extends Atomic {
   bank: Bank;
 }
 
-export type CreateAtomicBankModel = Pick<AtomicBank, 'bank' | 'metadata'>;
+type CreateAtomicBankModel = Pick<AtomicBank, 'bank' | 'metadata'>;
+
+export type { Bank, AtomicBank, CreateAtomicBankModel };

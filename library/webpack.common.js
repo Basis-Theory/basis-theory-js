@@ -24,7 +24,7 @@ const base = {
     rules: [
       {
         include: [path.resolve(__dirname, 'src')],
-        test: /\.(ts|js)x?$/,
+        test: /\.(ts|js)x?$/u,
         loader: 'babel-loader',
         options: babelConfig,
       },

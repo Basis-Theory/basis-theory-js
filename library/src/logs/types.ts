@@ -1,6 +1,6 @@
 import type { PaginatedQuery } from '../service';
 
-export interface Log {
+interface Log {
   tenantId: string;
   applicationId: string;
   entityType: string;
@@ -10,9 +10,11 @@ export interface Log {
   createdAt: string;
 }
 
-export interface LogQuery extends PaginatedQuery {
+interface LogQuery extends PaginatedQuery {
   entityType?: string;
   entityId?: string;
   startDate?: string;
   endDate?: string;
 }
+
+export type { Log, LogQuery };

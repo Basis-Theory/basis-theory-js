@@ -1,7 +1,7 @@
-import { transformReactorRequestSnakeCase } from './../src/common/utils';
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import { BasisTheory } from '../src';
+import { transformReactorRequestSnakeCase } from '../src/common/utils';
 import { testCRUD, mockServiceClient } from './setup/utils';
 
 describe('Reactors', () => {
@@ -27,6 +27,7 @@ describe('Reactors', () => {
     const createPayload = {
       name: _chance.string(),
       configuration: {
+        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -38,6 +39,7 @@ describe('Reactors', () => {
     const updatePayload = {
       name: _chance.string(),
       configuration: {
+        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -46,6 +48,7 @@ describe('Reactors', () => {
     const transformedCreatePayload = transformReactorRequestSnakeCase(
       createPayload
     );
+
     const transformedUpdatePayload = transformReactorRequestSnakeCase(
       updatePayload
     );

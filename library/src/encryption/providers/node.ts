@@ -4,18 +4,18 @@ import {
   privateDecrypt,
   constants,
 } from 'crypto';
-import { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm, EncryptionOptions } from '../../types';
+import { EncryptionAdapter, KeyPair } from '../types';
 
 let keySize: number;
 let algorithm: Algorithm;
 
-function init(nodeEncryption: EncryptionOptions): void {
+const init = (nodeEncryption: EncryptionOptions): void => {
   keySize = nodeEncryption?.options?.defaultKeySize ?? 4096;
   algorithm = nodeEncryption?.algorithm ?? 'RSA';
-}
+};
 
-function generateRSAKeys(): Promise<KeyPair> {
+const generateRSAKeys = (): Promise<KeyPair> => {
   const { publicKey, privateKey } = generateKeyPairSync('rsa', {
     modulusLength: keySize,
     publicKeyEncoding: {
@@ -28,8 +28,11 @@ function generateRSAKeys(): Promise<KeyPair> {
     },
   });
 
-  return Promise.resolve({ publicKey, privateKey });
-}
+  return Promise.resolve({
+    publicKey,
+    privateKey,
+  });
+};
 
 const generateKeyMap: Record<
   Algorithm,
@@ -39,11 +42,10 @@ const generateKeyMap: Record<
   AES: () => Promise.reject(),
 };
 
-async function generateKeys(): Promise<KeyPair | string | unknown> {
-  return generateKeyMap[algorithm]();
-}
+const generateKeys = (): Promise<KeyPair | string | unknown> =>
+  generateKeyMap[algorithm]();
 
-async function encrypt(publicKey: string, data: string): Promise<string> {
+const encrypt = (publicKey: string, data: string): Promise<string> => {
   const encrypted = publicEncrypt(
     {
       key: publicKey,
@@ -52,10 +54,11 @@ async function encrypt(publicKey: string, data: string): Promise<string> {
     },
     Buffer.from(data)
   );
-  return encrypted.toString('base64');
-}
 
-async function decrypt(privateKey: string, data: string): Promise<string> {
+  return Promise.resolve(encrypted.toString('base64'));
+};
+
+const decrypt = (privateKey: string, data: string): Promise<string> => {
   const decrypted = privateDecrypt(
     {
       key: privateKey,
@@ -64,8 +67,9 @@ async function decrypt(privateKey: string, data: string): Promise<string> {
     },
     Buffer.from(data, 'base64')
   );
-  return decrypted.toString();
-}
+
+  return Promise.resolve(decrypted.toString());
+};
 
 export const nodeAdapter: EncryptionAdapter = {
   name: 'node',

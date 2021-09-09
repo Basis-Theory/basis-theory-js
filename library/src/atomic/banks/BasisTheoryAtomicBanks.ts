@@ -1,12 +1,4 @@
 import type { AxiosTransformer } from 'axios';
-import type { AtomicBank, CreateAtomicBankModel } from './types';
-import type {
-  BasisTheoryServiceOptions,
-  PaginatedQuery,
-  RequestOptions,
-} from '../../service';
-import type { ReactRequest } from '../types';
-import type { Token } from '../../tokens';
 import {
   createRequestConfig,
   dataExtractor,
@@ -15,26 +7,40 @@ import {
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
 } from '../../common';
+import type {
+  BasisTheoryServiceOptions,
+  PaginatedQuery,
+  RequestOptions,
+} from '../../service';
 import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
+import type { Token } from '../../tokens';
+import type { ReactRequest } from '../types';
+import type { AtomicBank, CreateAtomicBankModel } from './types';
 
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      options.transformRequest = ([] as AxiosTransformer[]).concat(
+      const _options = {
+        ...options,
+      };
+
+      // eslint-disable-next-line unicorn/prefer-spread
+      _options.transformRequest = ([] as AxiosTransformer[]).concat(
         transformAtomicRequestSnakeCase,
         options.transformRequest || []
       );
 
-      options.transformResponse = ([] as AxiosTransformer[]).concat(
+      // eslint-disable-next-line unicorn/prefer-spread
+      _options.transformResponse = ([] as AxiosTransformer[]).concat(
         transformAtomicResponseCamelCase,
         options.transformResponse || []
       );
 
-      super(options);
+      super(_options);
     }
 
-    public async retrieveDecrypted(
+    public retrieveDecrypted(
       id: string,
       options?: RequestOptions
     ): Promise<AtomicBank> {
@@ -43,7 +49,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async react(
+    public react(
       id: string,
       request: ReactRequest,
       options?: RequestOptions
@@ -60,7 +66,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public async retrieveReaction(
+    public retrieveReaction(
       atomicBankId: string,
       reactionTokenId: string,
       options?: RequestOptions

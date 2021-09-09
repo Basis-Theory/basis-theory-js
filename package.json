@@ -14,11 +14,13 @@
     "e2e",
     "infrastructure"
   ],
+  "prettier": "@basis-theory/eslint-config/prettier",
   "scripts": {
     "build": "yarn workspace @basis-theory/basis-theory-js build",
     "cypress:ci": "cypress run --headless -b chrome",
     "cypress:open": "cypress open",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint . --quiet --ignore-path .gitignore",
+    "lint:fix": "eslint . --fix --ignore-path .gitignore",
     "release": "yarn workspace @basis-theory/basis-theory-js release",
     "start": "yarn workspace @basis-theory/basis-theory-js start",
     "test": "yarn workspace @basis-theory/basis-theory-js run test",
@@ -28,6 +30,7 @@
     "postinstall": "husky install"
   },
   "devDependencies": {
+    "@basis-theory/eslint-config": "^1.0.2",
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
     "@semantic-release/changelog": "^5.0.1",
@@ -36,13 +39,9 @@
     "@semantic-release/github": "^7.2.0",
     "@semantic-release/npm": "^7.0.10",
     "@semantic-release/release-notes-generator": "^9.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.15.0",
-    "@typescript-eslint/parser": "^4.15.0",
     "concurrently": "5.3.0",
     "cypress": "^8.3.1",
-    "eslint": "^7.19.0",
-    "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint": "^7.32.0",
     "husky": "^5.1.1",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",

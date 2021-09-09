@@ -1,3 +1,6 @@
+// eslint-disable-next-line spaced-comment
+///  <reference path="../support/index.d.ts" />
+
 context('Reactor Formulas', () => {
   it('should create', () => {
     cy.testCreate('reactor-formulas');

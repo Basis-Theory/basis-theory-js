@@ -66,13 +66,17 @@ describe('clients', () => {
   it('should throw error if not properly initialized', () => {
     expect(() => {
       const bt = new BasisTheory();
+
       bt.tokens.create({ data: 'some data' });
     }).toThrowError();
   });
 
   it('should be able to handle base URLs with trailing slash', async () => {
     const chance = new Chance();
-    const url = chance.url({ protocol: 'https', path: '' });
+    const url = chance.url({
+      protocol: 'https',
+      path: '',
+    });
     const id = chance.string();
 
     const bt = await new BasisTheory().init(chance.string(), {
@@ -80,6 +84,7 @@ describe('clients', () => {
     });
 
     const mockClient = new MockAdapter(bt.tokens.client);
+
     mockClient.onGet(id).reply(200, {});
 
     await bt.tokens.retrieve(id);
@@ -90,7 +95,12 @@ describe('clients', () => {
 
   it('should be able to handle base URLs without trailing slash', async () => {
     const chance = new Chance();
-    const url = chance.url({ protocol: 'https', path: '' }).slice(0, -1);
+    const url = chance
+      .url({
+        protocol: 'https',
+        path: '',
+      })
+      .slice(0, -1);
     const id = chance.string();
 
     const bt = await new BasisTheory().init(chance.string(), {
@@ -98,6 +108,7 @@ describe('clients', () => {
     });
 
     const mockClient = new MockAdapter(bt.tokens.client);
+
     mockClient.onGet(id).reply(200, {});
 
     await bt.tokens.retrieve(id);

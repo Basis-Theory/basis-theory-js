@@ -1,5 +1,5 @@
-import { BasisTheory, KeyPair } from '../src';
 import isBase64 from 'is-base64';
+import { BasisTheory, KeyPair } from '../src';
 
 describe('Encryption', () => {
   let bt: BasisTheory;

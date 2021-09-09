@@ -1,11 +1,11 @@
-import type { EncryptionAdapter, KeyPair } from '../types';
 import type { Algorithm, EncryptionOptions } from '../../types';
+import type { EncryptionAdapter, KeyPair } from '../types';
 import { arrayBufferToBase64String, base64StringToArrayBuffer } from './utils';
 
 let signAlgorithm: RsaHashedKeyGenParams;
 let algorithm: Algorithm;
 
-function init(browserEncryption: EncryptionOptions): void {
+const init = (browserEncryption: EncryptionOptions): void => {
   signAlgorithm = {
     name: 'RSA-OAEP',
     modulusLength: browserEncryption?.options?.defaultKeySize ?? 4096,
@@ -13,49 +13,53 @@ function init(browserEncryption: EncryptionOptions): void {
     hash: 'SHA-256',
   };
   algorithm = browserEncryption?.algorithm ?? 'RSA';
-}
+};
 
-function convertBinaryToPem(binaryData: ArrayBuffer, label: string): string {
+const convertBinaryToPem = (binaryData: ArrayBuffer, label: string): string => {
   const base64Cert = arrayBufferToBase64String(binaryData);
   let pemCert = `-----BEGIN ${label} KEY-----\r\n`;
   let nextIndex = 0;
+
   while (nextIndex < base64Cert.length) {
-    if (nextIndex + 64 <= base64Cert.length) {
-      pemCert += `${base64Cert.substr(nextIndex, 64)}\r\n`;
-    } else {
-      pemCert += `${base64Cert.substr(nextIndex)}\r\n`;
-    }
+    pemCert +=
+      nextIndex + 64 <= base64Cert.length
+        ? `${base64Cert.slice(nextIndex, nextIndex + 64)}\r\n`
+        : `${base64Cert.slice(nextIndex)}\r\n`;
+
     nextIndex += 64;
   }
+
   pemCert += `-----END ${label} KEY-----\r\n`;
 
   return pemCert;
-}
+};
 
-function convertPemToBinary(
+const convertPemToBinary = (
   pem: string,
   label: 'PUBLIC' | 'PRIVATE'
-): ArrayBuffer {
+): ArrayBuffer => {
   const lines = pem.split('\n');
   let encoded = '';
-  for (let i = 0; i < lines.length; i++) {
+
+  for (const line of lines) {
     if (
-      lines[i].trim().length > 0 &&
-      lines[i].indexOf(`-BEGIN ${label} KEY-`) < 0 &&
-      lines[i].indexOf(`-END ${label} KEY-`) < 0
+      line.trim().length > 0 &&
+      !line.includes(`-BEGIN ${label} KEY-`) &&
+      !line.includes(`-END ${label} KEY-`)
     ) {
-      encoded = encoded + lines[i].trim();
+      encoded = encoded + line.trim();
     }
   }
 
   return base64StringToArrayBuffer(encoded);
-}
+};
 
-async function generateRSAKeys(): Promise<KeyPair> {
+const generateRSAKeys = async (): Promise<KeyPair> => {
   const keyPair = await window.crypto.subtle.generateKey(signAlgorithm, true, [
     'encrypt',
     'decrypt',
   ]);
+
   const exportedPublic = await window.crypto.subtle.exportKey(
     'spki',
     keyPair.publicKey
@@ -69,7 +73,7 @@ async function generateRSAKeys(): Promise<KeyPair> {
     publicKey: convertBinaryToPem(exportedPublic, 'PUBLIC'),
     privateKey: convertBinaryToPem(exportedPrivate, 'PRIVATE'),
   };
-}
+};
 
 const generateKeyMap: Record<
   Algorithm,
@@ -79,42 +83,40 @@ const generateKeyMap: Record<
   AES: () => Promise.reject(),
 };
 
-async function generateKeys(): Promise<KeyPair | string | unknown> {
-  return generateKeyMap[algorithm]();
-}
+const generateKeys = (): Promise<KeyPair | string | unknown> =>
+  generateKeyMap[algorithm]();
 
-async function loadPublicKey(pem: string): Promise<CryptoKey> {
-  return await window.crypto.subtle.importKey(
+const loadPublicKey = (pem: string): Promise<CryptoKey> =>
+  window.crypto.subtle.importKey(
     'spki',
     convertPemToBinary(pem, 'PUBLIC'),
     signAlgorithm,
     true,
     ['encrypt']
   );
-}
 
-async function loadPrivateKey(pem: string): Promise<CryptoKey> {
-  return window.crypto.subtle.importKey(
+const loadPrivateKey = (pem: string): Promise<CryptoKey> =>
+  window.crypto.subtle.importKey(
     'pkcs8',
     convertPemToBinary(pem, 'PRIVATE'),
     signAlgorithm,
     true,
     ['decrypt']
   );
-}
 
-async function encrypt(publicKey: string, data: string): Promise<string> {
+const encrypt = async (publicKey: string, data: string): Promise<string> => {
   const key = await loadPublicKey(publicKey);
   const encrypted = await window.crypto.subtle.encrypt(
     { name: signAlgorithm.name },
     key,
+    // eslint-disable-next-line node/no-unsupported-features/node-builtins
     new TextEncoder().encode(data).buffer
   );
 
   return arrayBufferToBase64String(encrypted);
-}
+};
 
-async function decrypt(privateKey: string, data: string): Promise<string> {
+const decrypt = async (privateKey: string, data: string): Promise<string> => {
   const key = await loadPrivateKey(privateKey);
   const decrypted = await window.crypto.subtle.decrypt(
     { name: signAlgorithm.name },
@@ -122,8 +124,9 @@ async function decrypt(privateKey: string, data: string): Promise<string> {
     base64StringToArrayBuffer(data)
   );
 
+  // eslint-disable-next-line node/no-unsupported-features/node-builtins
   return new TextDecoder().decode(decrypted);
-}
+};
 
 export const browserAdapter: EncryptionAdapter = {
   name: 'browser',

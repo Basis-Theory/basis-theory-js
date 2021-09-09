@@ -1,5 +1,5 @@
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
 import type {
   ListTokensQueryDecrypted,
   RetrieveTokenQuery,
@@ -10,6 +10,13 @@ import type {
 } from '../src';
 import { BasisTheory } from '../src';
 import {
+  API_KEY_HEADER,
+  BT_TRACE_ID_HEADER,
+  getQueryParams,
+  transformTokenRequestSnakeCase,
+} from '../src/common';
+import { PaginatedList } from '../src/service';
+import {
   errorStatus,
   expectBasisTheoryApiError,
   mockServiceClient,
@@ -17,13 +24,6 @@ import {
   testDelete,
   testList,
 } from './setup/utils';
-import {
-  API_KEY_HEADER,
-  BT_TRACE_ID_HEADER,
-  getQueryParams,
-  transformTokenRequestSnakeCase,
-} from '../src/common';
-import { PaginatedList } from '../src/service';
 
 describe('Tokens', () => {
   let bt: BasisTheory;
@@ -48,6 +48,8 @@ describe('Tokens', () => {
       const id = chance.string();
       const tenantId = chance.string();
       const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
       const data = {
         camelCaseParameter: chance.string(),
         snake_case_parameter: chance.string(),
@@ -56,11 +58,14 @@ describe('Tokens', () => {
         camelCaseParameter: chance.string(),
         snake_case_parameter: chance.string(),
       };
+      /* eslint-enable camelcase */
+
       const createdBy = chance.string();
       const createdAt = chance.string();
 
       client.onGet(id).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -70,6 +75,7 @@ describe('Tokens', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(await bt.tokens.retrieve(id)).toStrictEqual({
@@ -104,6 +110,7 @@ describe('Tokens', () => {
 
       client.onGet().reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -112,6 +119,7 @@ describe('Tokens', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -152,6 +160,7 @@ describe('Tokens', () => {
 
       client.onGet().reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -160,6 +169,7 @@ describe('Tokens', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -208,6 +218,7 @@ describe('Tokens', () => {
 
       client.onGet(`/${id}/decrypt`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -216,6 +227,7 @@ describe('Tokens', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(await bt.tokens.retrieveDecrypted(id)).toStrictEqual({
@@ -251,6 +263,7 @@ describe('Tokens', () => {
 
       client.onGet(url).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -259,6 +272,7 @@ describe('Tokens', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -298,6 +312,7 @@ describe('Tokens', () => {
 
       client.onGet(url).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           tenant_id: tenantId,
@@ -306,6 +321,7 @@ describe('Tokens', () => {
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -350,6 +366,7 @@ describe('Tokens', () => {
 
       client.onGet('/decrypt').reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           pagination: {
             total_items: totalItems,
@@ -359,6 +376,7 @@ describe('Tokens', () => {
           },
           data: [],
         })
+        /* eslint-enable camelcase */
       );
 
       expect(await bt.tokens.listDecrypted()).toStrictEqual({
@@ -385,19 +403,29 @@ describe('Tokens', () => {
       const query = {
         page: chance.integer(),
         size: chance.integer(),
-        id: chance.string({ alpha: true, numeric: true }),
-        type: chance.string({ alpha: true, numeric: true }) as TokenType,
+        id: chance.string({
+          alpha: true,
+          numeric: true,
+        }),
+        type: chance.string({
+          alpha: true,
+          numeric: true,
+        }) as TokenType,
         children: chance.bool(),
         childrenType: chance.string({
           alpha: true,
           numeric: true,
         }) as TokenType,
-        decryptType: chance.string({ alpha: true, numeric: true }) as TokenType,
+        decryptType: chance.string({
+          alpha: true,
+          numeric: true,
+        }) as TokenType,
       } as ListTokensQueryDecrypted;
       const url = `/decrypt${getQueryParams(query)}`;
 
       client.onGet(url).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           pagination: {
             total_items: totalItems,
@@ -407,6 +435,7 @@ describe('Tokens', () => {
           },
           data: [],
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -437,19 +466,29 @@ describe('Tokens', () => {
       const query = {
         page: chance.integer(),
         size: chance.integer(),
-        id: chance.string({ alpha: true, numeric: true }),
-        type: chance.string({ alpha: true, numeric: true }) as TokenType,
+        id: chance.string({
+          alpha: true,
+          numeric: true,
+        }),
+        type: chance.string({
+          alpha: true,
+          numeric: true,
+        }) as TokenType,
         children: chance.bool(),
         childrenType: chance.string({
           alpha: true,
           numeric: true,
         }) as TokenType,
-        decryptType: chance.string({ alpha: true, numeric: true }) as TokenType,
+        decryptType: chance.string({
+          alpha: true,
+          numeric: true,
+        }) as TokenType,
       } as ListTokensQueryDecrypted;
       const url = `/decrypt${getQueryParams(query)}`;
 
       client.onGet(url).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           pagination: {
             total_items: totalItems,
@@ -459,6 +498,7 @@ describe('Tokens', () => {
           },
           data: [],
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -613,6 +653,8 @@ describe('Tokens', () => {
   describe('create child', () => {
     it('should create child token for a token', async () => {
       const parentId = chance.string();
+
+      /* eslint-disable camelcase */
       const tokenPayload = {
         data: {
           camelCaseParameter: chance.string(),
@@ -623,17 +665,20 @@ describe('Tokens', () => {
           snake_case_parameter: chance.string(),
         },
       } as CreateTokenModel;
+      /* eslint-enable camelcase */
 
       const createdAt = chance.string();
       const createdBy = chance.string();
 
       client.onPost(`/${parentId}/children`).reply(
         201,
+        /* eslint-disable camelcase */
         JSON.stringify({
           ...tokenPayload,
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(await bt.tokens.createChild(parentId, tokenPayload)).toStrictEqual(
@@ -667,11 +712,13 @@ describe('Tokens', () => {
 
       client.onPost(`/${parentId}/children`).reply(
         201,
+        /* eslint-disable camelcase */
         JSON.stringify({
           ...tokenPayload,
           created_at: createdAt,
           created_by: createdBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -721,6 +768,7 @@ describe('Tokens', () => {
 
       client.onGet(`/${parentId}/children`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           pagination: {
             total_items: totalItems,
@@ -730,6 +778,7 @@ describe('Tokens', () => {
           },
           data: [],
         })
+        /* eslint-enable camelcase */
       );
 
       expect(await bt.tokens.listChildren(parentId)).toStrictEqual({
@@ -757,8 +806,14 @@ describe('Tokens', () => {
       const query = {
         page: chance.integer(),
         size: chance.integer(),
-        id: chance.string({ alpha: true, numeric: true }),
-        type: chance.string({ alpha: true, numeric: true }) as TokenType,
+        id: chance.string({
+          alpha: true,
+          numeric: true,
+        }),
+        type: chance.string({
+          alpha: true,
+          numeric: true,
+        }) as TokenType,
         children: chance.bool(),
         childrenType: chance.string({
           alpha: true,
@@ -769,6 +824,7 @@ describe('Tokens', () => {
 
       client.onGet(url).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           pagination: {
             total_items: totalItems,
@@ -778,6 +834,7 @@ describe('Tokens', () => {
           },
           data: [],
         })
+        /* eslint-enable camelcase */
       );
 
       expect(await bt.tokens.listChildren(parentId, query)).toStrictEqual({
@@ -807,8 +864,14 @@ describe('Tokens', () => {
       const query = {
         page: chance.integer(),
         size: chance.integer(),
-        id: chance.string({ alpha: true, numeric: true }),
-        type: chance.string({ alpha: true, numeric: true }) as TokenType,
+        id: chance.string({
+          alpha: true,
+          numeric: true,
+        }),
+        type: chance.string({
+          alpha: true,
+          numeric: true,
+        }) as TokenType,
         children: chance.bool(),
         childrenType: chance.string({
           alpha: true,
@@ -819,6 +882,7 @@ describe('Tokens', () => {
 
       client.onGet(url).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           pagination: {
             total_items: totalItems,
@@ -828,6 +892,7 @@ describe('Tokens', () => {
           },
           data: [],
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -866,6 +931,8 @@ describe('Tokens', () => {
 
   describe('create', () => {
     const _chance = new Chance();
+
+    /* eslint-disable camelcase */
     const createPayload = {
       data: {
         camelCaseParameter: _chance.string(),
@@ -876,6 +943,7 @@ describe('Tokens', () => {
         snake_case_parameter: _chance.string(),
       },
     };
+    /* eslint-enable camelcase */
 
     testCreate(() => ({
       service: bt.tokens,
@@ -888,24 +956,26 @@ describe('Tokens', () => {
   describe('delete', () => {
     testDelete(() => ({
       service: bt.tokens,
-      client: client,
+      client,
     }));
   });
 
   describe('list', () => {
     testList(() => ({
       service: bt.tokens,
-      client: client,
+      client,
     }));
   });
 
   describe('legacy/deprecated', () => {
     it('should create a new token', async () => {
+      /* eslint-disable camelcase */
       client.onPost('/').reply(201, {
         id: chance.string(),
         tenant_id: chance.string(),
         created_at: chance.string(),
       });
+      /* eslint-enable camelcase */
 
       const data = chance.string();
 
@@ -927,11 +997,13 @@ describe('Tokens', () => {
     it('should retrieve a token', async () => {
       const id = chance.string();
 
+      /* eslint-disable camelcase */
       client.onGet(`/${id}`).reply(200, {
         id: chance.string(),
         tenant_id: chance.string(),
         created_at: chance.string(),
       });
+      /* eslint-enable camelcase */
 
       const token = await bt.tokens.getToken(id);
 

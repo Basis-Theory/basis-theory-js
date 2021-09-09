@@ -1,19 +1,19 @@
+import { createRequestConfig, dataExtractor } from '../common';
+import { BasisTheoryService, RequestOptions } from '../service';
+import { CrudBuilder } from '../service/CrudBuilder';
 import type {
   Application,
   ApplicationQuery,
   CreateApplicationModel,
   UpdateApplicationModel,
 } from './types';
-import { createRequestConfig, dataExtractor } from '../common';
-import { BasisTheoryService, RequestOptions } from '../service';
-import { CrudBuilder } from '../service/CrudBuilder';
 
 export const BasisTheoryApplications = new CrudBuilder(
   class BasisTheoryApplications extends BasisTheoryService {
     /**
      * @deprecated use {@link retrieveByKey} instead
      */
-    public async getApplicationByKey(): Promise<Application> {
+    public getApplicationByKey(): Promise<Application> {
       return this.retrieveByKey();
     }
 

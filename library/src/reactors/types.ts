@@ -1,8 +1,8 @@
+import type { ReactorFormula } from '../reactor-formulas/types';
 import type { PaginatedQuery } from '../service';
 import type { TokenType } from '../tokens/types';
-import type { ReactorFormula } from './../reactor-formulas/types';
 
-export interface Reactor {
+interface Reactor {
   id: string;
   tenantId: string;
   name: string;
@@ -12,14 +12,16 @@ export interface Reactor {
   modifiedAt: string;
 }
 
-export type CreateReactorModel = Pick<Reactor, 'name' | 'configuration'> & {
+type CreateReactorModel = Pick<Reactor, 'name' | 'configuration'> & {
   formula: Pick<ReactorFormula, 'id'>;
 };
 
-export type UpdateReactorModel = Pick<Reactor, 'name' | 'configuration'>;
+type UpdateReactorModel = Pick<Reactor, 'name' | 'configuration'>;
 
-export interface ReactorQuery extends PaginatedQuery {
+interface ReactorQuery extends PaginatedQuery {
   id?: string | string[];
   name?: string;
   sourceTokenType?: TokenType;
 }
+
+export type { Reactor, CreateReactorModel, UpdateReactorModel, ReactorQuery };

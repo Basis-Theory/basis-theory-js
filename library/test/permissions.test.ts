@@ -1,14 +1,14 @@
-import { Chance } from 'chance';
 import MockAdapter from 'axios-mock-adapter';
-import type { ApplicationType } from '../src/applications/types';
-import type { PermissionType } from './../src/permissions/types';
+import { Chance } from 'chance';
 import { BasisTheory } from '../src';
+import type { ApplicationType } from '../src/applications/types';
+import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
+import type { PermissionType } from '../src/permissions/types';
 import {
   errorStatus,
   expectBasisTheoryApiError,
   mockServiceClient,
 } from './setup/utils';
-import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
 
 describe('Permissions', () => {
   let bt: BasisTheory;
@@ -40,6 +40,7 @@ describe('Permissions', () => {
           {
             type,
             description,
+            // eslint-disable-next-line camelcase
             application_types: applicationTypes,
           },
         ])
@@ -72,13 +73,17 @@ describe('Permissions', () => {
           {
             type,
             description,
+            // eslint-disable-next-line camelcase
             application_types: applicationTypes,
           },
         ])
       );
 
       expect(
-        await bt.permissions.list({ apiKey: _apiKey, correlationId })
+        await bt.permissions.list({
+          apiKey: _apiKey,
+          correlationId,
+        })
       ).toEqual([
         {
           type,

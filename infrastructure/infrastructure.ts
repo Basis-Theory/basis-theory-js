@@ -1,5 +1,5 @@
-import * as semver from 'semver';
 import * as path from 'path';
+import * as semver from 'semver';
 import { version } from '../library/package.json';
 
 // const stackName = pulumi.runtime.getStack();
@@ -8,6 +8,7 @@ const prerelease = semver.prerelease(version);
 
 // resolve blob dir (name prefix) based on version
 let dir: string;
+
 if (prerelease) {
   [dir] = prerelease;
 } else {
@@ -17,16 +18,18 @@ if (prerelease) {
 const indexName = `${dir}/index.js`;
 const versionedName = `${dir}/${version}.js`;
 
-export const indexJsName = indexName;
-export const versionedJsName = versionedName;
-export const blobVersion = version;
-export const blobDir = dir;
-export const bundlePath = path.resolve(
+const indexJsName = indexName;
+const versionedJsName = versionedName;
+const blobVersion = version;
+const blobDir = dir;
+const bundlePath = path.resolve(
   '..',
   'library',
   'dist',
   'basis-theory-js.bundle.js'
 );
+
+export { indexJsName, versionedJsName, blobVersion, blobDir, bundlePath };
 
 // Container file schema
 //

@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 context('Credit Card example', () => {
   beforeEach(() => {
-    cy.intercept('https://js.basistheory.com/', async (req) => {
+    cy.intercept('https://js.basistheory.com/', (req) => {
       req.redirect(
         `${req.headers.referer}/library/dist/basis-theory-js.bundle.js`
       );
@@ -17,6 +17,7 @@ context('Credit Card example', () => {
       (req) => {
         const year = (new Date().getFullYear() + 1).toString();
 
+        /* eslint-disable camelcase */
         req.reply({
           statusCode: 201,
           body: {
@@ -32,6 +33,7 @@ context('Credit Card example', () => {
             },
           },
         });
+        /* eslint-enable camelcase */
       }
     ).as('createCreditCard');
   });
@@ -58,6 +60,7 @@ context('Credit Card example', () => {
 
   it('should be able to submit form with minimum information and get masked information back', () => {
     const year = (new Date().getFullYear() + 1).toString();
+
     cy.get('form').find('#holder_name').type('John Doe');
     cy.get('form').find('#card_number').type('4242424242424242');
     cy.get('form').find('#expiration_month').type('10');

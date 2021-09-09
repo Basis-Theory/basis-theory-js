@@ -1,3 +1,6 @@
+// eslint-disable-next-line spaced-comment
+///  <reference path="../support/index.d.ts" />
+
 context('Tenants', () => {
   it('should retrieve', () => {
     cy.testRetrieveNoId('tenants/self');

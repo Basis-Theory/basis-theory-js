@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type */
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
+import {
+  API_KEY_HEADER,
+  BT_TRACE_ID_HEADER,
+  transformRequestSnakeCase,
+} from '../../src/common';
 import type { PaginatedList } from '../../src/service';
-import { API_KEY_HEADER, transformRequestSnakeCase } from '../../src/common';
-import { BT_TRACE_ID_HEADER } from '../../src/common';
 import { PaginatedQuery } from '../../src/service';
 import {
   ICreate,
@@ -13,20 +15,20 @@ import {
   IUpdate,
 } from '../../src/service/CrudBuilder';
 
-export const describeif = (condition: boolean): typeof describe =>
+const describeif = (condition: boolean): typeof describe =>
   condition ? describe : describe.skip;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-export const mockServiceClient = (service: any): MockAdapter =>
+const mockServiceClient = (service: any): MockAdapter =>
   new MockAdapter(service.client);
 
-export const errorStatus = (): number =>
+const errorStatus = (): number =>
   new Chance().integer({
     min: 400,
     max: 599,
   });
 
-export const expectBasisTheoryApiError = <T>(
+const expectBasisTheoryApiError = <T>(
   promise: Promise<T>,
   status: number
 ): Promise<void> =>
@@ -62,21 +64,7 @@ type TestDeleteParam = TestParam<IDelete>;
 
 type TestListParam<T> = TestParam<IList<T, PaginatedQuery>>;
 
-export const testCRUD = <T, C, U>(
-  param: () => TestCreateParam<T, C> &
-    TestRetrieveParam<T> &
-    TestUpdateParam<T, U> &
-    TestDeleteParam &
-    TestListParam<T>
-): void => {
-  testCreate(param);
-  testRetrieve(param);
-  testUpdate(param);
-  testDelete(param);
-  testList(param);
-};
-
-export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
+const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
   const chance = new Chance();
   const correlationId = chance.string();
   const apiKey = chance.string();
@@ -94,6 +82,7 @@ export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
       201,
       JSON.stringify({
         ...transformedCreatePayload,
+        // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
     );
@@ -125,6 +114,7 @@ export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
       201,
       JSON.stringify({
         ...transformedCreatePayload,
+        // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
     );
@@ -161,7 +151,7 @@ export const testCreate = <T, C>(param: () => TestCreateParam<T, C>) => {
   });
 };
 
-export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
+const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -175,6 +165,7 @@ export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
       200,
       JSON.stringify({
         id,
+        // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
     );
@@ -197,6 +188,7 @@ export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
       200,
       JSON.stringify({
         id,
+        // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
     );
@@ -229,7 +221,7 @@ export const testRetrieve = <T>(param: () => TestRetrieveParam<T>) => {
   });
 };
 
-export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
+const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -248,6 +240,7 @@ export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
       200,
       JSON.stringify({
         ...transformedUpdatePayload,
+        // eslint-disable-next-line camelcase
         updated_at: updatedAt,
       })
     );
@@ -278,6 +271,7 @@ export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
       200,
       JSON.stringify({
         ...transformedUpdatePayload,
+        // eslint-disable-next-line camelcase
         updated_at: updatedAt,
       })
     );
@@ -313,7 +307,7 @@ export const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>) => {
   });
 };
 
-export const testDelete = (param: () => TestDeleteParam) => {
+const testDelete = (param: () => TestDeleteParam): void => {
   const chance = new Chance();
   const id = chance.string();
   const correlationId = chance.string();
@@ -325,6 +319,7 @@ export const testDelete = (param: () => TestDeleteParam) => {
 
     client.onDelete(id).reply(204, {
       id,
+      // eslint-disable-next-line camelcase
       created_at: createdAt,
     });
 
@@ -341,6 +336,7 @@ export const testDelete = (param: () => TestDeleteParam) => {
 
     client.onDelete(id).reply(204, {
       id,
+      // eslint-disable-next-line camelcase
       created_at: createdAt,
     });
 
@@ -369,7 +365,7 @@ export const testDelete = (param: () => TestDeleteParam) => {
   });
 };
 
-export const testList = <T>(param: () => TestListParam<T>) => {
+const testList = <T>(param: () => TestListParam<T>): void => {
   const chance = new Chance();
   const correlationId = chance.string();
   const apiKey = chance.string();
@@ -382,18 +378,28 @@ export const testList = <T>(param: () => TestListParam<T>) => {
   const query = {
     page,
     size,
+    // eslint-disable-next-line unicorn/no-null
     nul: null,
     und: undefined,
-    camelCase: chance.string({ alpha: true, numeric: true }),
+    camelCase: chance.string({
+      alpha: true,
+      numeric: true,
+    }),
     bool: chance.bool(),
     int: chance.integer(),
     float: chance.floating(),
-    str: chance.string({ alpha: true, numeric: true }),
+    str: chance.string({
+      alpha: true,
+      numeric: true,
+    }),
     arr: [
       chance.bool(),
       chance.integer(),
       chance.floating(),
-      chance.string({ alpha: true, numeric: true }),
+      chance.string({
+        alpha: true,
+        numeric: true,
+      }),
       [chance.string()],
       {},
     ],
@@ -409,6 +415,7 @@ export const testList = <T>(param: () => TestListParam<T>) => {
 
     client.onGet().reply(
       200,
+      /* eslint-disable camelcase */
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -418,6 +425,7 @@ export const testList = <T>(param: () => TestListParam<T>) => {
         },
         data: [],
       })
+      /* eslint-enable camelcase */
     );
 
     expect(await service.list()).toStrictEqual({
@@ -441,6 +449,7 @@ export const testList = <T>(param: () => TestListParam<T>) => {
 
     client.onGet().reply(
       200,
+      /* eslint-disable camelcase */
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -450,9 +459,12 @@ export const testList = <T>(param: () => TestListParam<T>) => {
         },
         data: [],
       })
+      /* eslint-enable camelcase */
     );
 
-    expect(await service.list(query as PaginatedQuery)).toStrictEqual({
+    expect(
+      await service.list((query as unknown) as PaginatedQuery)
+    ).toStrictEqual({
       pagination: {
         totalItems,
         pageNumber,
@@ -475,6 +487,7 @@ export const testList = <T>(param: () => TestListParam<T>) => {
 
     client.onGet().reply(
       200,
+      /* eslint-disable camelcase */
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -484,10 +497,14 @@ export const testList = <T>(param: () => TestListParam<T>) => {
         },
         data: [],
       })
+      /* eslint-enable camelcase */
     );
 
     expect(
-      await service.list(query as PaginatedQuery, { apiKey, correlationId })
+      await service.list((query as unknown) as PaginatedQuery, {
+        apiKey,
+        correlationId,
+      })
     ).toStrictEqual({
       pagination: {
         totalItems,
@@ -506,4 +523,31 @@ export const testList = <T>(param: () => TestListParam<T>) => {
       [BT_TRACE_ID_HEADER]: correlationId,
     });
   });
+};
+
+const testCRUD = <T, C, U>(
+  param: () => TestCreateParam<T, C> &
+    TestRetrieveParam<T> &
+    TestUpdateParam<T, U> &
+    TestDeleteParam &
+    TestListParam<T>
+): void => {
+  testCreate(param);
+  testRetrieve(param);
+  testUpdate(param);
+  testDelete(param);
+  testList(param);
+};
+
+export {
+  describeif,
+  mockServiceClient,
+  errorStatus,
+  expectBasisTheoryApiError,
+  testCRUD,
+  testCreate,
+  testRetrieve,
+  testUpdate,
+  testDelete,
+  testList,
 };

@@ -1,4 +1,4 @@
-export interface Tenant {
+interface Tenant {
   id: string;
   ownerId: string;
   name: string;
@@ -6,4 +6,6 @@ export interface Tenant {
   modifiedAt: string;
 }
 
-export type UpdateTenantModel = Pick<Tenant, 'name'>;
+type UpdateTenantModel = Pick<Tenant, 'name'>;
+
+export type { Tenant, UpdateTenantModel };

@@ -1,9 +1,8 @@
-import type { EncryptionAdapter } from './types';
+import type { Providers } from '../types';
+import { EncryptionOptions } from '../types';
 import { browserAdapter } from './providers/browser';
 import { nodeAdapter } from './providers/node';
-import type { Providers } from '../types';
-import type { KeyPair } from './types';
-import { EncryptionOptions } from '../types';
+import type { EncryptionAdapter, KeyPair } from './types';
 
 export class BasisTheoryEncryption implements EncryptionAdapter {
   private readonly adapter: EncryptionAdapter;
@@ -12,9 +11,11 @@ export class BasisTheoryEncryption implements EncryptionAdapter {
     switch (encryptionProvider) {
       case 'BROWSER':
         this.adapter = browserAdapter;
+
         break;
       case 'NODE':
         this.adapter = nodeAdapter;
+
         break;
       default:
         throw new Error(
@@ -27,22 +28,23 @@ export class BasisTheoryEncryption implements EncryptionAdapter {
     return this.adapter.init(encryptionOptions);
   }
 
+  // eslint-disable-next-line accessor-pairs
   public get name(): string {
     return this.adapter.name;
   }
 
-  public async generateKeys(): Promise<KeyPair | string | unknown> {
+  public generateKeys(): Promise<KeyPair | string | unknown> {
     return this.adapter.generateKeys();
   }
 
-  public async encrypt(
+  public encrypt(
     encryptionKey: string,
     plainTextData: string
   ): Promise<string> {
     return this.adapter.encrypt(encryptionKey, plainTextData);
   }
 
-  public async decrypt(
+  public decrypt(
     decryptionKey: string,
     cipherTextData: string
   ): Promise<string> {

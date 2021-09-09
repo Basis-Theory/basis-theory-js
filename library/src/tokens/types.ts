@@ -1,29 +1,25 @@
 import type { PaginatedQuery } from '../service';
-export type Primitive = string | number | boolean | null;
-export type DataObject = {
+
+type Primitive = string | number | boolean | null;
+type DataObject = {
   [member: string]: TokenData;
 };
-export type DataArray = Array<TokenData>;
-export type TokenData = Primitive | DataObject | DataArray;
+type DataArray = Array<TokenData>;
+type TokenData = Primitive | DataObject | DataArray;
 
-export type TokenType =
-  | 'token'
-  | 'card'
-  | 'bank'
-  | 'card:reaction'
-  | 'bank:reaction';
+type TokenType = 'token' | 'card' | 'bank' | 'card:reaction' | 'bank:reaction';
 
-export interface TokenEncryptionKey {
+interface TokenEncryptionKey {
   key: string;
   alg: string;
 }
 
-export interface TokenEncryption {
+interface TokenEncryption {
   cek: TokenEncryptionKey;
   kek: TokenEncryptionKey;
 }
 
-export interface Token {
+interface Token {
   id: string;
   tenantId: string;
   type?: TokenType;
@@ -35,23 +31,38 @@ export interface Token {
   createdAt: string;
 }
 
-export type CreateTokenModel = Pick<
+type CreateTokenModel = Pick<
   Token,
   'type' | 'data' | 'metadata' | 'encryption' | 'children'
 >;
 
-export interface RetrieveTokenQuery {
+interface RetrieveTokenQuery {
   children?: boolean;
   childrenType?: TokenType | TokenType[];
 }
 
-export interface ListTokensQuery extends PaginatedQuery {
+interface ListTokensQuery extends PaginatedQuery {
   id?: string | string[];
   type?: TokenType | TokenType[];
   children?: boolean;
   childrenType?: TokenType | TokenType[];
 }
 
-export interface ListTokensQueryDecrypted extends ListTokensQuery {
+interface ListTokensQueryDecrypted extends ListTokensQuery {
   decryptType?: TokenType | TokenType[];
 }
+
+export type {
+  Primitive,
+  DataObject,
+  DataArray,
+  TokenData,
+  TokenType,
+  TokenEncryptionKey,
+  TokenEncryption,
+  Token,
+  CreateTokenModel,
+  RetrieveTokenQuery,
+  ListTokensQuery,
+  ListTokensQueryDecrypted,
+};

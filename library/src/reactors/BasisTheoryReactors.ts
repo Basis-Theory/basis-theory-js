@@ -1,4 +1,8 @@
 import type { AxiosTransformer } from 'axios';
+import {
+  transformReactorResponseCamelCase,
+  transformReactorRequestSnakeCase,
+} from '../common/utils';
 import { BasisTheoryService } from '../service';
 import type { BasisTheoryServiceOptions } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
@@ -8,25 +12,27 @@ import type {
   UpdateReactorModel,
   ReactorQuery,
 } from './types';
-import {
-  transformReactorResponseCamelCase,
-  transformReactorRequestSnakeCase,
-} from './../common/utils';
 
 export const BasisTheoryReactors = new CrudBuilder(
   class BasisTheoryReactors extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
-      options.transformRequest = ([] as AxiosTransformer[]).concat(
+      const _options = {
+        ...options,
+      };
+
+      // eslint-disable-next-line unicorn/prefer-spread
+      _options.transformRequest = ([] as AxiosTransformer[]).concat(
         transformReactorRequestSnakeCase,
         options.transformRequest || []
       );
 
-      options.transformResponse = ([] as AxiosTransformer[]).concat(
+      // eslint-disable-next-line unicorn/prefer-spread
+      _options.transformResponse = ([] as AxiosTransformer[]).concat(
         transformReactorResponseCamelCase,
         options.transformResponse || []
       );
 
-      super(options);
+      super(_options);
     }
   }
 )

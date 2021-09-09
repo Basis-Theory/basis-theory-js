@@ -1,16 +1,17 @@
-import { describeif } from './setup/utils';
 import { findScript, injectScript } from '../src/common/script';
+import { describeif } from './setup/utils';
 
 describe('Script', () => {
   describeif(typeof window === 'object')('scripts', () => {
     afterEach(() => {
-      document.getElementsByTagName('html')[0].innerHTML = '';
+      document.querySelectorAll('html')[0].innerHTML = '';
     });
 
     it('should find existing script', () => {
       const existingScript = document.createElement('script');
+
       existingScript.src = 'source?param=1';
-      document.head.appendChild(existingScript);
+      document.head.append(existingScript);
 
       expect(findScript('source')).toBe(existingScript);
     });
