@@ -12,7 +12,7 @@ import {
   RequestOptions,
 } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
-import {
+import type {
   Token,
   CreateTokenModel,
   ListTokensQuery,
