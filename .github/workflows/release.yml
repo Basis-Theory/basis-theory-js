@@ -40,12 +40,21 @@ jobs:
         env:
           CYPRESS_INSTALL_BINARY: 0
 
-      - name: Cache Cypress
+      - id: read-package-json
+        name: Read package.json
+        run: |
+          content=`cat package.json`
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=packageJson::$content"
+
+      - name: Cache Cypress Binaries
         id: cache-cypress
         uses: actions/cache@v2
         with:
           path: ~/.cache/Cypress
-          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+          key: cypress-cache-v2-${{ runner.os }}-${{ fromJson(steps.read-package-json.outputs.packageJson).devDependencies.cypress }}
 
       # Install and check Cypress binary
       - run: yarn run cypress install
@@ -58,6 +67,8 @@ jobs:
 
       - name: Verify
         run: make verify
+        env:
+          SKIP_INSTALL: 1 # install with cache was done already
 
       - name: Upload failed e2e tests screenshots
         uses: actions/upload-artifact@v2

@@ -7,8 +7,6 @@ cd $(dirname $0)/..
 
 yarn lint
 
-echo "Running unit tests..."
-
 # unit
 yarn test --coverage
 # e2e
