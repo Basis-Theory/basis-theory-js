@@ -29,7 +29,7 @@
     "test:cov": "jest --coverage"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "camelcase-keys": "^6.2.2",
     "snake-case": "^3.0.4",
     "snakecase-keys": "^3.2.1"
