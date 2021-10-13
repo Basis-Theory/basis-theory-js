@@ -46,6 +46,7 @@ describe('Tokens', () => {
   describe('retrieve', () => {
     it('should retrieve', async () => {
       const id = chance.string();
+      const fingerprint = chance.string();
       const tenantId = chance.string();
       const type = chance.string() as TokenType;
 
@@ -69,6 +70,7 @@ describe('Tokens', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type,
           data,
           metadata,
@@ -81,6 +83,7 @@ describe('Tokens', () => {
       expect(await bt.tokens.retrieve(id)).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type,
         data,
         metadata,
@@ -95,6 +98,7 @@ describe('Tokens', () => {
 
     it('should retrieve with query', async () => {
       const id = chance.string();
+      const fingerprint = chance.string();
       const tenantId = chance.string();
       const type = chance.string() as TokenType;
       const data = chance.string();
@@ -114,6 +118,7 @@ describe('Tokens', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type,
           data,
           created_at: createdAt,
@@ -127,6 +132,7 @@ describe('Tokens', () => {
       ).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type,
         data,
         createdAt,
@@ -146,6 +152,7 @@ describe('Tokens', () => {
       const correlationId = chance.string();
       const id = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const type = chance.string() as TokenType;
       const data = chance.string();
       const createdBy = chance.string();
@@ -164,6 +171,7 @@ describe('Tokens', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type,
           data,
           created_at: createdAt,
@@ -180,6 +188,7 @@ describe('Tokens', () => {
       ).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type,
         data,
         createdAt,
@@ -211,6 +220,7 @@ describe('Tokens', () => {
     it('should retrieve decrypted', async () => {
       const id = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const type = chance.string() as TokenType;
       const data = chance.string();
       const createdBy = chance.string();
@@ -222,6 +232,7 @@ describe('Tokens', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type,
           data,
           created_at: createdAt,
@@ -233,6 +244,7 @@ describe('Tokens', () => {
       expect(await bt.tokens.retrieveDecrypted(id)).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type,
         data,
         createdAt,
@@ -248,6 +260,7 @@ describe('Tokens', () => {
     it('should retrieve decrypted with query', async () => {
       const id = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const type = chance.string() as TokenType;
       const data = chance.string();
       const createdBy = chance.string();
@@ -267,6 +280,7 @@ describe('Tokens', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type,
           data,
           created_at: createdAt,
@@ -280,6 +294,7 @@ describe('Tokens', () => {
       ).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type,
         data,
         createdAt,
@@ -297,6 +312,7 @@ describe('Tokens', () => {
       const correlationId = chance.string();
       const id = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const type = chance.string() as TokenType;
       const data = chance.string();
       const createdBy = chance.string();
@@ -316,6 +332,7 @@ describe('Tokens', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type,
           data,
           created_at: createdAt,
@@ -332,6 +349,7 @@ describe('Tokens', () => {
       ).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type,
         data,
         createdAt,

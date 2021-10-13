@@ -81,6 +81,7 @@ describe('Atomic Banks', () => {
     it('should retrieve decrypted', async () => {
       const id = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const routingNumber = chance.string();
       const accountNumber = chance.string();
       const metadata = {
@@ -97,6 +98,7 @@ describe('Atomic Banks', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type: 'bank',
           bank: {
             routing_number: routingNumber,
@@ -112,6 +114,7 @@ describe('Atomic Banks', () => {
       expect(await bt.atomicBanks.retrieveDecrypted(id)).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type: 'bank',
         bank: {
           routingNumber,
@@ -131,6 +134,7 @@ describe('Atomic Banks', () => {
     it('should retrieve decrypted with options', async () => {
       const id = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const routingNumber = chance.string();
       const accountNumber = chance.string();
       const metadata = {
@@ -149,6 +153,7 @@ describe('Atomic Banks', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type: 'bank',
           bank: {
             routing_number: routingNumber,
@@ -169,6 +174,7 @@ describe('Atomic Banks', () => {
       ).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type: 'bank',
         bank: {
           routingNumber,

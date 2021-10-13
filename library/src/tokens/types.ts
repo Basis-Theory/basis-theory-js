@@ -24,6 +24,7 @@ interface Token {
   tenantId: string;
   type?: TokenType;
   data: TokenData;
+  fingerprint?: string;
   metadata?: Record<string, string>;
   encryption?: TokenEncryption;
   children?: Token[];

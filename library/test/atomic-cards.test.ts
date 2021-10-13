@@ -96,6 +96,7 @@ describe('Atomic Cards', () => {
     it('should retrieve decrypted', async () => {
       const id = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
 
@@ -131,6 +132,7 @@ describe('Atomic Cards', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type: 'card',
           card,
           billingDetails,
@@ -146,6 +148,7 @@ describe('Atomic Cards', () => {
         transformAtomicResponseCamelCase({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type: 'card',
           card,
           billingDetails,
@@ -165,6 +168,7 @@ describe('Atomic Cards', () => {
     it('should retrieve decrypted w/ options', async () => {
       const id = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
 
@@ -203,6 +207,7 @@ describe('Atomic Cards', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type: 'card',
           card,
           billingDetails,
@@ -223,6 +228,7 @@ describe('Atomic Cards', () => {
         transformAtomicResponseCamelCase({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type: 'card',
           card,
           billingDetails,
@@ -257,6 +263,7 @@ describe('Atomic Cards', () => {
       const id = chance.string();
       const reactorId = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const type = chance.string() as TokenType;
 
       /* eslint-disable camelcase */
@@ -287,6 +294,7 @@ describe('Atomic Cards', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type,
           data,
           metadata,
@@ -305,6 +313,7 @@ describe('Atomic Cards', () => {
       ).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type,
         data,
         metadata,
@@ -331,6 +340,7 @@ describe('Atomic Cards', () => {
       const id = chance.string();
       const reactorId = chance.string();
       const tenantId = chance.string();
+      const fingerprint = chance.string();
       const type = chance.string() as TokenType;
 
       /* eslint-disable camelcase */
@@ -363,6 +373,7 @@ describe('Atomic Cards', () => {
         JSON.stringify({
           id,
           tenant_id: tenantId,
+          fingerprint,
           type,
           data,
           metadata,
@@ -388,6 +399,7 @@ describe('Atomic Cards', () => {
       ).toStrictEqual({
         id,
         tenantId,
+        fingerprint,
         type,
         data,
         metadata,
