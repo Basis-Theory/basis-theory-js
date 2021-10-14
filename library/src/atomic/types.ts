@@ -4,6 +4,7 @@ interface Atomic {
   id: string;
   tenantId: string;
   type: TokenType;
+  fingerprint: string;
   metadata?: Record<string, string>;
   createdBy: string;
   createdAt: string;
