@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.1.0...v1.2.0) (2021-10-14)
+
+
+### Features
+
+* adds fingerprint properties to token, card, and bank response ([#102](https://github.com/Basis-Theory/basis-theory-js/issues/102)) ([2039443](https://github.com/Basis-Theory/basis-theory-js/commit/20394436d8dc3689308fc06cd9169681490d6384))
+
 # [1.1.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.0.2...v1.1.0) (2021-08-26)
 
 
