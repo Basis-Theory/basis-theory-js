@@ -674,6 +674,7 @@ describe('Tokens', () => {
 
       /* eslint-disable camelcase */
       const tokenPayload = {
+        type: 'token',
         data: {
           camelCaseParameter: chance.string(),
           snake_case_parameter: chance.string(),
@@ -764,6 +765,7 @@ describe('Tokens', () => {
     it('should reject with status >= 400 <= 599', async () => {
       const parentId = chance.string();
       const tokenPayload = {
+        type: 'token' as TokenType,
         data: chance.string(),
       };
       const status = errorStatus();
@@ -952,6 +954,7 @@ describe('Tokens', () => {
 
     /* eslint-disable camelcase */
     const createPayload = {
+      type: 'token' as TokenType,
       data: {
         camelCaseParameter: _chance.string(),
         snake_case_parameter: _chance.string(),
