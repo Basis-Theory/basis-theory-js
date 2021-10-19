@@ -22,7 +22,7 @@ interface TokenEncryption {
 interface Token {
   id: string;
   tenantId: string;
-  type?: TokenType;
+  type: TokenType;
   data: TokenData;
   fingerprint?: string;
   metadata?: Record<string, string>;
