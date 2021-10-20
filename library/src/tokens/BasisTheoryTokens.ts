@@ -18,7 +18,6 @@ import type {
   ListTokensQuery,
   RetrieveTokenQuery,
   ListTokensQueryDecrypted,
-  TokenData,
 } from './types';
 
 export const BasisTheoryTokens = new CrudBuilder(
@@ -39,27 +38,6 @@ export const BasisTheoryTokens = new CrudBuilder(
       );
 
       super(_options);
-    }
-
-    /**
-     * @deprecated use {@link create} instead
-     */
-    public createToken(data: TokenData): Promise<Token> {
-      return this.client.post('/', { data }).then(dataExtractor);
-    }
-
-    /**
-     * @deprecated use {@link retrieve} instead
-     */
-    public getToken(id: string): Promise<Token> {
-      return this.client.get(id).then(dataExtractor);
-    }
-
-    /**
-     * @deprecated use {@link delete} instead
-     */
-    public async deleteToken(id: string): Promise<void> {
-      await this.client.delete(id);
     }
 
     public retrieve(
