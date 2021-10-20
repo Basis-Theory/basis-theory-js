@@ -7,8 +7,8 @@ interface AtomicCard extends Atomic {
 
 interface Card {
   number: string;
-  expirationMonth: number;
-  expirationYear: number;
+  expirationMonth?: number;
+  expirationYear?: number;
   cvc?: string;
 }
 
