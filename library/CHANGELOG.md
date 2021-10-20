@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.2.0...v1.3.0) (2021-10-20)
+
+
+### Features
+
+* makes card expiration date fields optional ([#108](https://github.com/Basis-Theory/basis-theory-js/issues/108)) ([d4c58a0](https://github.com/Basis-Theory/basis-theory-js/commit/d4c58a063d2902336adffde93be1df0cd0c626ac))
+
 # [1.2.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.1.0...v1.2.0) (2021-10-14)
 
 
