@@ -65,16 +65,18 @@
         BasisTheory.encryption.browserEncryption
           .encrypt(window.keyPair.publicKey, JSON.stringify(pii))
           .then(function (encrypted) {
-            BasisTheory.tokens.create({ data: encrypted }).then(function (res) {
-              const token = res.id;
-              // save the token so we can access it later
-              window.token = token;
+            BasisTheory.tokens
+              .create({ type: 'token', data: encrypted })
+              .then(function (res) {
+                const token = res.id;
+                // save the token so we can access it later
+                window.token = token;
 
-              // display "Show token data" button
-              document.getElementById('show_data').style.display = 'initial';
+                // display "Show token data" button
+                document.getElementById('show_data').style.display = 'initial';
 
-              form.reset(); // we can reset our form
-            });
+                form.reset(); // we can reset our form
+              });
           });
       }
 
