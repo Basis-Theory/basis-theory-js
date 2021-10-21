@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.3.0...v1.4.0) (2021-10-21)
+
+
+### Features
+
+* require type on Token interface ([#107](https://github.com/Basis-Theory/basis-theory-js/issues/107)) ([e83df26](https://github.com/Basis-Theory/basis-theory-js/commit/e83df26b02df6c30af6f15e6ea7b6ac9e16513ce))
+
 # [1.3.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.2.0...v1.3.0) (2021-10-20)
 
 
