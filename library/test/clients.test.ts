@@ -67,7 +67,10 @@ describe('clients', () => {
     expect(() => {
       const bt = new BasisTheory();
 
-      bt.tokens.create({ data: 'some data' });
+      bt.tokens.create({
+        type: 'token',
+        data: 'some data',
+      });
     }).toThrowError();
   });
 

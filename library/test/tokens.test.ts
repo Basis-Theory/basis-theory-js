@@ -674,6 +674,7 @@ describe('Tokens', () => {
 
       /* eslint-disable camelcase */
       const tokenPayload = {
+        type: 'token',
         data: {
           camelCaseParameter: chance.string(),
           snake_case_parameter: chance.string(),
@@ -763,7 +764,8 @@ describe('Tokens', () => {
 
     it('should reject with status >= 400 <= 599', async () => {
       const parentId = chance.string();
-      const tokenPayload = {
+      const tokenPayload: CreateTokenModel = {
+        type: 'token',
         data: chance.string(),
       };
       const status = errorStatus();
@@ -951,7 +953,8 @@ describe('Tokens', () => {
     const _chance = new Chance();
 
     /* eslint-disable camelcase */
-    const createPayload = {
+    const createPayload: CreateTokenModel = {
+      type: 'token',
       data: {
         camelCaseParameter: _chance.string(),
         snake_case_parameter: _chance.string(),
@@ -983,64 +986,5 @@ describe('Tokens', () => {
       service: bt.tokens,
       client,
     }));
-  });
-
-  describe('legacy/deprecated', () => {
-    it('should create a new token', async () => {
-      /* eslint-disable camelcase */
-      client.onPost('/').reply(201, {
-        id: chance.string(),
-        tenant_id: chance.string(),
-        created_at: chance.string(),
-      });
-      /* eslint-enable camelcase */
-
-      const data = chance.string();
-
-      const token = await bt.tokens.createToken(data);
-
-      expect(client.history.post.length).toBe(1);
-      expect(client.history.post[0].data).toStrictEqual(
-        JSON.stringify({
-          data,
-        })
-      );
-      expect(token).toStrictEqual({
-        id: expect.any(String),
-        tenantId: expect.any(String),
-        createdAt: expect.any(String),
-      });
-    });
-
-    it('should retrieve a token', async () => {
-      const id = chance.string();
-
-      /* eslint-disable camelcase */
-      client.onGet(`/${id}`).reply(200, {
-        id: chance.string(),
-        tenant_id: chance.string(),
-        created_at: chance.string(),
-      });
-      /* eslint-enable camelcase */
-
-      const token = await bt.tokens.getToken(id);
-
-      expect(client.history.get.length).toBe(1);
-      expect(token).toStrictEqual({
-        id: expect.any(String),
-        tenantId: expect.any(String),
-        createdAt: expect.any(String),
-      });
-    });
-
-    it('should delete a token', async () => {
-      const id = chance.string();
-
-      client.onDelete(`/${id}`).reply(204);
-
-      await bt.tokens.deleteToken(id);
-
-      expect(client.history.delete.length).toBe(1);
-    });
   });
 });
