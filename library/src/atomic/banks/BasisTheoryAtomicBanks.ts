@@ -73,7 +73,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
     ): Promise<Token> {
       return this.client
         .get(
-          `/${atomicBankId}/reaction/${reactionTokenId}`,
+          `/${atomicBankId}/reactions/${reactionTokenId}`,
           createRequestConfig(options, {
             transformResponse: transformTokenResponseCamelCase,
           })

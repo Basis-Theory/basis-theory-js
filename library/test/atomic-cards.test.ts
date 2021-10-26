@@ -456,7 +456,7 @@ describe('Atomic Cards', () => {
       const createdBy = chance.string();
       const createdAt = chance.string();
 
-      client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(
+      client.onGet(`/${atomicCardId}/reactions/${reactionTokenId}`).reply(
         200,
         /* eslint-disable camelcase */
         JSON.stringify({
@@ -484,7 +484,7 @@ describe('Atomic Cards', () => {
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
-        `/${atomicCardId}/reaction/${reactionTokenId}`
+        `/${atomicCardId}/reactions/${reactionTokenId}`
       );
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
@@ -513,7 +513,7 @@ describe('Atomic Cards', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onGet(`/${atomicCardId}/reaction/${reactionTokenId}`).reply(
+      client.onGet(`/${atomicCardId}/reactions/${reactionTokenId}`).reply(
         200,
         /* eslint-disable camelcase */
         JSON.stringify({
@@ -544,7 +544,7 @@ describe('Atomic Cards', () => {
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
-        `/${atomicCardId}/reaction/${reactionTokenId}`
+        `/${atomicCardId}/reactions/${reactionTokenId}`
       );
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
@@ -558,7 +558,7 @@ describe('Atomic Cards', () => {
       const status = errorStatus();
 
       client
-        .onGet(`/${atomicCardId}/reaction/${reactionTokenId}`)
+        .onGet(`/${atomicCardId}/reactions/${reactionTokenId}`)
         .reply(status);
 
       const promise = bt.atomicCards.retrieveReaction(
