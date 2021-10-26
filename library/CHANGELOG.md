@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.4.0...v1.4.1) (2021-10-26)
+
+
+### Bug Fixes
+
+* correct url for retrieving card and bank reactions by id ([#112](https://github.com/Basis-Theory/basis-theory-js/issues/112)) ([16ebc78](https://github.com/Basis-Theory/basis-theory-js/commit/16ebc7896a1ae7fe9630557ef96447f8217c72fb))
+
 # [1.4.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.3.0...v1.4.0) (2021-10-21)
 
 
