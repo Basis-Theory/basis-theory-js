@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.4.1...v1.5.0) (2021-10-27)
+
+
+### Features
+
+* add retrieveUsageReport to BasisTheoryTenants ([#113](https://github.com/Basis-Theory/basis-theory-js/issues/113)) ([a776990](https://github.com/Basis-Theory/basis-theory-js/commit/a77699059c9c8db14c926375c4e9b1ceae19fb4e))
+
 ## [1.4.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.4.0...v1.4.1) (2021-10-26)
 
 
