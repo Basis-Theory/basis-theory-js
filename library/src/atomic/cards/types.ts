@@ -33,10 +33,16 @@ type CreateAtomicCardModel = Pick<
   'card' | 'billingDetails' | 'metadata'
 >;
 
+interface UpdateAtomicCardModel {
+  billingDetails?: BillingDetails;
+  card?: Partial<Card>;
+}
+
 export type {
   AtomicCard,
   Card,
   BillingDetails,
   Address,
   CreateAtomicCardModel,
+  UpdateAtomicCardModel,
 };

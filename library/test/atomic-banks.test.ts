@@ -2,6 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import type { TokenType } from '../src';
 import { BasisTheory } from '../src';
+import { AtomicBank, UpdateAtomicBankModel } from '../src/atomic/banks';
 import {
   API_KEY_HEADER,
   BT_TRACE_ID_HEADER,
@@ -75,6 +76,99 @@ describe('Atomic Banks', () => {
       service: bt.atomicBanks,
       client,
     }));
+  });
+
+  describe('update', () => {
+    let atomicBankId: string;
+    let updateBankRequest: UpdateAtomicBankModel;
+    let expectedUpdatedBank: AtomicBank;
+
+    beforeEach(() => {
+      atomicBankId = chance.string();
+      updateBankRequest = {
+        bank: {
+          accountNumber: chance.string(),
+          routingNumber: chance.string(),
+        },
+      };
+      expectedUpdatedBank = {
+        bank: {
+          accountNumber: chance.string(),
+          routingNumber: chance.string(),
+        },
+        createdBy: chance.string(),
+        createdAt: chance.string(),
+        id: atomicBankId,
+        type: 'bank',
+        tenantId: chance.string(),
+        fingerprint: chance.string(),
+      };
+    });
+
+    it('should update an atomic bank', async () => {
+      client
+        .onPatch(`/${atomicBankId}`)
+        .reply(200, JSON.stringify(expectedUpdatedBank));
+
+      expect(
+        await bt.atomicBanks.update(atomicBankId, updateBankRequest)
+      ).toStrictEqual(expectedUpdatedBank);
+      expect(client.history.patch.length).toBe(1);
+      expect(client.history.patch[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          bank: {
+            account_number: updateBankRequest.bank.accountNumber,
+            routing_number: updateBankRequest.bank.routingNumber,
+          },
+        })
+        /* eslint-enable camelcase */
+      );
+      expect(client.history.patch[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
+
+    it('should update with options', async () => {
+      const _apiKey = chance.string();
+      const correlationId = chance.string();
+
+      client
+        .onPatch(`/${atomicBankId}`)
+        .reply(200, JSON.stringify(expectedUpdatedBank));
+
+      expect(
+        await bt.atomicBanks.update(atomicBankId, updateBankRequest, {
+          apiKey: _apiKey,
+          correlationId,
+        })
+      ).toStrictEqual(expectedUpdatedBank);
+      expect(client.history.patch.length).toBe(1);
+      expect(client.history.patch[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          bank: {
+            account_number: updateBankRequest.bank.accountNumber,
+            routing_number: updateBankRequest.bank.routingNumber,
+          },
+        })
+        /* eslint-enable camelcase */
+      );
+      expect(client.history.patch[0].headers).toMatchObject({
+        [API_KEY_HEADER]: _apiKey,
+        [BT_TRACE_ID_HEADER]: correlationId,
+      });
+    });
+
+    it('should reject with status >= 400 <= 599', async () => {
+      const status = errorStatus();
+
+      client.onPatch(`/${atomicBankId}`).reply(status);
+
+      const promise = bt.atomicBanks.update(atomicBankId, updateBankRequest);
+
+      await expectBasisTheoryApiError(promise, status);
+    });
   });
 
   describe('retrieve decrypted', () => {

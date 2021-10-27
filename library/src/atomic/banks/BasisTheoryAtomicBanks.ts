@@ -16,7 +16,11 @@ import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
 import type { Token } from '../../tokens';
 import type { ReactRequest } from '../types';
-import type { AtomicBank, CreateAtomicBankModel } from './types';
+import type {
+  AtomicBank,
+  CreateAtomicBankModel,
+  UpdateAtomicBankModel,
+} from './types';
 
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {
@@ -38,6 +42,16 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
       );
 
       super(_options);
+    }
+
+    public update(
+      id: string,
+      request: UpdateAtomicBankModel,
+      options?: RequestOptions
+    ): Promise<AtomicBank> {
+      return this.client
+        .patch(`/${id}`, request, createRequestConfig(options))
+        .then(dataExtractor);
     }
 
     public retrieveDecrypted(

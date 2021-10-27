@@ -18,7 +18,11 @@ import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
 import type { Token } from '../../tokens';
 import type { ReactRequest } from '../types';
-import type { AtomicCard, CreateAtomicCardModel } from './types';
+import type {
+  AtomicCard,
+  CreateAtomicCardModel,
+  UpdateAtomicCardModel,
+} from './types';
 
 export const BasisTheoryAtomicCards = new CrudBuilder(
   class BasisTheoryAtomicCards extends BasisTheoryService {
@@ -40,6 +44,16 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
       );
 
       super(_options);
+    }
+
+    public update(
+      id: string,
+      request: UpdateAtomicCardModel,
+      options?: RequestOptions
+    ): Promise<AtomicCard> {
+      return this.client
+        .patch(`/${id}`, request, createRequestConfig(options))
+        .then(dataExtractor);
     }
 
     public retrieveDecrypted(

@@ -2,6 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import type { TokenType } from '../src';
 import { BasisTheory } from '../src';
+import { AtomicCard, UpdateAtomicCardModel } from '../src/atomic/cards';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 import {
   transformAtomicRequestSnakeCase,
@@ -90,6 +91,115 @@ describe('Atomic Cards', () => {
       service: bt.atomicCards,
       client,
     }));
+  });
+
+  describe('update', () => {
+    let atomicCardId: string;
+    let updateCardRequest: UpdateAtomicCardModel;
+    let expectedUpdatedCard: AtomicCard;
+
+    beforeEach(() => {
+      atomicCardId = chance.string();
+      updateCardRequest = {
+        card: {
+          number: chance.string(),
+          expirationMonth: chance.integer(),
+          expirationYear: chance.integer(),
+        },
+        billingDetails: {
+          email: chance.email(),
+        },
+      };
+      expectedUpdatedCard = {
+        card: {
+          number: chance.string(),
+          expirationMonth: chance.integer(),
+          expirationYear: chance.integer(),
+        },
+        billingDetails: {
+          email: chance.email(),
+        },
+        createdBy: chance.string(),
+        createdAt: chance.string(),
+        id: atomicCardId,
+        type: 'card',
+        tenantId: chance.string(),
+        fingerprint: chance.string(),
+      };
+    });
+
+    it('should update an atomic card', async () => {
+      client
+        .onPatch(`/${atomicCardId}`)
+        .reply(200, JSON.stringify(expectedUpdatedCard));
+
+      expect(
+        await bt.atomicCards.update(atomicCardId, updateCardRequest)
+      ).toStrictEqual(expectedUpdatedCard);
+      expect(client.history.patch.length).toBe(1);
+      expect(client.history.patch[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          card: {
+            number: updateCardRequest.card?.number,
+            expiration_month: updateCardRequest.card?.expirationMonth,
+            expiration_year: updateCardRequest.card?.expirationYear,
+          },
+          billing_details: {
+            email: updateCardRequest.billingDetails?.email,
+          },
+        })
+        /* eslint-enable camelcase */
+      );
+      expect(client.history.patch[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
+
+    it('should update with options', async () => {
+      const _apiKey = chance.string();
+      const correlationId = chance.string();
+
+      client
+        .onPatch(`/${atomicCardId}`)
+        .reply(200, JSON.stringify(expectedUpdatedCard));
+
+      expect(
+        await bt.atomicCards.update(atomicCardId, updateCardRequest, {
+          apiKey: _apiKey,
+          correlationId,
+        })
+      ).toStrictEqual(expectedUpdatedCard);
+      expect(client.history.patch.length).toBe(1);
+      expect(client.history.patch[0].data).toStrictEqual(
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          card: {
+            number: updateCardRequest.card?.number,
+            expiration_month: updateCardRequest.card?.expirationMonth,
+            expiration_year: updateCardRequest.card?.expirationYear,
+          },
+          billing_details: {
+            email: updateCardRequest.billingDetails?.email,
+          },
+        })
+        /* eslint-enable camelcase */
+      );
+      expect(client.history.patch[0].headers).toMatchObject({
+        [API_KEY_HEADER]: _apiKey,
+        [BT_TRACE_ID_HEADER]: correlationId,
+      });
+    });
+
+    it('should reject with status >= 400 <= 599', async () => {
+      const status = errorStatus();
+
+      client.onPatch(`/${atomicCardId}`).reply(status);
+
+      const promise = bt.atomicCards.update(atomicCardId, updateCardRequest);
+
+      await expectBasisTheoryApiError(promise, status);
+    });
   });
 
   describe('retrieve decrypted', () => {
