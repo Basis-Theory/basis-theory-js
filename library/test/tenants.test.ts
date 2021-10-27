@@ -209,4 +209,108 @@ describe('Tenants', () => {
       await expectBasisTheoryApiError(promise, status);
     });
   });
+
+  describe('retrieve tenant usage report', () => {
+    it('should retrieve tenant usage report', async () => {
+      const expectedUsageReport = {
+        tokenReport: {
+          enrichmentLimit: chance.integer(),
+          freeEnrichedTokenLimit: chance.integer(),
+          numberOfEnrichedTokens: chance.integer(),
+          numberOfEnrichments: chance.integer(),
+          metricsByType: {
+            token: {
+              count: chance.integer(),
+              lastCreatedAt: chance.string(),
+            },
+          },
+        },
+      };
+
+      client.onGet('/reports/usage').reply(
+        200,
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          token_report: {
+            enrichment_limit: expectedUsageReport.tokenReport.enrichmentLimit,
+            free_enriched_token_limit:
+              expectedUsageReport.tokenReport.freeEnrichedTokenLimit,
+            number_of_enriched_tokens:
+              expectedUsageReport.tokenReport.numberOfEnrichedTokens,
+            number_of_enrichments:
+              expectedUsageReport.tokenReport.numberOfEnrichments,
+            metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
+          },
+        })
+        /* eslint-enable camelcase */
+      );
+
+      expect(await bt.tenants.retrieveUsageReport()).toEqual(
+        expectedUsageReport
+      );
+      expect(client.history.get.length).toBe(1);
+      expect(client.history.get[0].headers).toMatchObject({
+        [API_KEY_HEADER]: apiKey,
+      });
+    });
+
+    it('should retrieve tenant usage report with options', async () => {
+      const _apiKey = chance.string();
+      const correlationId = chance.string();
+      const expectedUsageReport = {
+        tokenReport: {
+          enrichmentLimit: chance.integer(),
+          freeEnrichedTokenLimit: chance.integer(),
+          numberOfEnrichedTokens: chance.integer(),
+          numberOfEnrichments: chance.integer(),
+          metricsByType: {
+            token: {
+              count: chance.integer(),
+              lastCreatedAt: chance.string(),
+            },
+          },
+        },
+      };
+
+      client.onGet('/reports/usage').reply(
+        200,
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          token_report: {
+            enrichment_limit: expectedUsageReport.tokenReport.enrichmentLimit,
+            free_enriched_token_limit:
+              expectedUsageReport.tokenReport.freeEnrichedTokenLimit,
+            number_of_enriched_tokens:
+              expectedUsageReport.tokenReport.numberOfEnrichedTokens,
+            number_of_enrichments:
+              expectedUsageReport.tokenReport.numberOfEnrichments,
+            metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
+          },
+        })
+        /* eslint-enable camelcase */
+      );
+
+      expect(
+        await bt.tenants.retrieveUsageReport({
+          apiKey: _apiKey,
+          correlationId,
+        })
+      ).toEqual(expectedUsageReport);
+      expect(client.history.get.length).toBe(1);
+      expect(client.history.get[0].headers).toMatchObject({
+        [API_KEY_HEADER]: _apiKey,
+        [BT_TRACE_ID_HEADER]: correlationId,
+      });
+    });
+
+    it('should reject with status >= 400 <= 599', async () => {
+      const status = errorStatus();
+
+      client.onGet('/reports/usage').reply(status);
+
+      const promise = bt.tenants.retrieveUsageReport();
+
+      await expectBasisTheoryApiError(promise, status);
+    });
+  });
 });

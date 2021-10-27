@@ -8,4 +8,27 @@ interface Tenant {
 
 type UpdateTenantModel = Pick<Tenant, 'name'>;
 
-export type { Tenant, UpdateTenantModel };
+interface TenantUsageReport {
+  tokenReport: TokenReport;
+}
+
+interface TokenReport {
+  enrichmentLimit?: number;
+  freeEnrichedTokenLimit?: number;
+  metricsByType: Record<string, TokenTypeMetrics>;
+  numberOfEnrichedTokens: number;
+  numberOfEnrichments: number;
+}
+
+interface TokenTypeMetrics {
+  count: number;
+  lastCreatedAt?: string;
+}
+
+export type {
+  Tenant,
+  UpdateTenantModel,
+  TenantUsageReport,
+  TokenReport,
+  TokenTypeMetrics,
+};
