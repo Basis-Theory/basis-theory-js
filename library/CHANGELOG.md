@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.5.0...v1.6.0) (2021-10-28)
+
+
+### Features
+
+* add update methods for AtomicBanks and AtomicCards ([#114](https://github.com/Basis-Theory/basis-theory-js/issues/114)) ([0dcbb04](https://github.com/Basis-Theory/basis-theory-js/commit/0dcbb048b9476aa06d4f974d1ffa584fb784ecd8))
+
 # [1.5.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.4.1...v1.5.0) (2021-10-27)
 
 
