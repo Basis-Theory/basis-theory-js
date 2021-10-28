@@ -1,4 +1,5 @@
 import type { PaginatedQuery } from '../service';
+import type { Auditable } from '../types';
 
 type Primitive = string | number | boolean | null;
 type DataObject = {
@@ -19,7 +20,7 @@ interface TokenEncryption {
   kek: TokenEncryptionKey;
 }
 
-interface Token {
+interface Token extends Auditable {
   id: string;
   tenantId: string;
   type: TokenType;
@@ -28,8 +29,6 @@ interface Token {
   metadata?: Record<string, string>;
   encryption?: TokenEncryption;
   children?: Token[];
-  createdBy: string;
-  createdAt: string;
 }
 
 type CreateTokenModel = Pick<

@@ -1,9 +1,9 @@
-interface Tenant {
+import type { Auditable } from '../types';
+
+interface Tenant extends Auditable {
   id: string;
   ownerId: string;
   name: string;
-  createdAt: string;
-  modifiedAt: string;
 }
 
 type UpdateTenantModel = Pick<Tenant, 'name'>;

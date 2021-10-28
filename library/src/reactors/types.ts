@@ -1,15 +1,14 @@
 import type { ReactorFormula } from '../reactor-formulas/types';
 import type { PaginatedQuery } from '../service';
 import type { TokenType } from '../tokens/types';
+import type { Auditable } from '../types';
 
-interface Reactor {
+interface Reactor extends Auditable {
   id: string;
   tenantId: string;
   name: string;
   formula: ReactorFormula;
   configuration: Record<string, string>;
-  createdAt: string;
-  modifiedAt: string;
 }
 
 type CreateReactorModel = Pick<Reactor, 'name' | 'configuration'> & {

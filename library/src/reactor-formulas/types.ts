@@ -1,10 +1,11 @@
 import type { PaginatedQuery } from '../service';
 import type { TokenType } from '../tokens';
+import type { Auditable } from '../types';
 
 type FormulaType = 'official' | 'private';
 type DataType = 'string' | 'boolean' | 'number';
 
-interface ReactorFormula {
+interface ReactorFormula extends Auditable {
   id: string;
   name: string;
   description?: string;
@@ -14,8 +15,6 @@ interface ReactorFormula {
   code: string;
   configuration: ReactorFormulaConfig[];
   requestParameters: ReactorFormulaRequestParam[];
-  createdAt: string;
-  modifiedAt?: string;
 }
 
 interface ReactorFormulaConfig {
@@ -33,7 +32,7 @@ interface ReactorFormulaRequestParam {
 
 type CreateReactorFormulaModel = Omit<
   ReactorFormula,
-  'id' | 'createdAt' | 'modifiedAt'
+  'id' | 'createdAt' | 'createdBy' | 'modifiedAt' | 'modifiedBy'
 >;
 
 interface ReactorFormulaQuery extends PaginatedQuery {
