@@ -31,7 +31,9 @@ describe('Tenants', () => {
       const id = chance.string();
       const ownerId = chance.string();
       const name = chance.string();
+      const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
       const modifiedAt = chance.string();
 
       client.onGet().reply(
@@ -42,7 +44,9 @@ describe('Tenants', () => {
           owner_id: ownerId,
           name,
           created_at: createdAt,
+          created_by: createdBy,
           modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -52,7 +56,9 @@ describe('Tenants', () => {
         ownerId,
         name,
         createdAt,
+        createdBy,
         modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].headers).toMatchObject({
@@ -64,7 +70,9 @@ describe('Tenants', () => {
       const id = chance.string();
       const ownerId = chance.string();
       const name = chance.string();
+      const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
       const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
@@ -77,7 +85,9 @@ describe('Tenants', () => {
           owner_id: ownerId,
           name,
           created_at: createdAt,
+          created_by: createdBy,
           modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -92,7 +102,9 @@ describe('Tenants', () => {
         ownerId,
         name,
         createdAt,
+        createdBy,
         modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].headers).toMatchObject({

@@ -47,15 +47,22 @@ describe('Applications', () => {
   describe('get by key', () => {
     it('should get by key', async () => {
       const id = chance.string();
-      const createdDate = chance.string();
+      const createdBy = chance.string();
+      const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onGet('/key').reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
-          // eslint-disable-next-line camelcase
-          created_date: createdDate,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
+        /* eslint-enable camelcase */
       );
 
       const retrieveByKey = jest.spyOn(bt.applications, 'retrieveByKey');
@@ -63,11 +70,17 @@ describe('Applications', () => {
       // should call retrieveByKey, and not have own implementation
       expect(await bt.applications.getApplicationByKey()).toEqual({
         id,
-        createdDate,
+        createdAt,
+        createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(await bt.applications.retrieveByKey()).toEqual({
         id,
-        createdDate,
+        createdAt,
+        createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(retrieveByKey).toHaveBeenCalledTimes(2);
       expect(client.history.get.length).toBe(2);
@@ -81,17 +94,24 @@ describe('Applications', () => {
 
     it('should get by key with options', async () => {
       const id = chance.string();
-      const createdDate = chance.string();
+      const createdBy = chance.string();
+      const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
       client.onGet('/key').reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
-          // eslint-disable-next-line camelcase
-          created_date: createdDate,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -101,7 +121,10 @@ describe('Applications', () => {
         })
       ).toEqual({
         id,
-        createdDate,
+        createdAt,
+        createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].headers).toMatchObject({
@@ -125,22 +148,32 @@ describe('Applications', () => {
     it('should regenerate key', async () => {
       const id = chance.string();
       const key = chance.string();
-      const modifiedDate = chance.string();
+      const createdBy = chance.string();
+      const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onPost(`${id}/regenerate`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           key,
-          // eslint-disable-next-line camelcase
-          modified_date: modifiedDate,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(await bt.applications.regenerateKey(id)).toEqual({
         id,
         key,
-        modifiedDate,
+        createdAt,
+        createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].headers).toMatchObject({
@@ -151,18 +184,25 @@ describe('Applications', () => {
     it('should regenerate key with options', async () => {
       const id = chance.string();
       const key = chance.string();
-      const modifiedDate = chance.string();
+      const createdBy = chance.string();
+      const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
       client.onPost(`${id}/regenerate`).reply(
         200,
+        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           key,
-          // eslint-disable-next-line camelcase
-          modified_date: modifiedDate,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
+        /* eslint-enable camelcase */
       );
 
       expect(
@@ -173,7 +213,10 @@ describe('Applications', () => {
       ).toEqual({
         id,
         key,
-        modifiedDate,
+        createdAt,
+        createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].headers).toMatchObject({
