@@ -98,6 +98,8 @@ describe('Atomic Banks', () => {
         },
         createdBy: chance.string(),
         createdAt: chance.string(),
+        modifiedBy: chance.string(),
+        modifiedAt: chance.string(),
         id: atomicBankId,
         type: 'bank',
         tenantId: chance.string(),
@@ -185,6 +187,8 @@ describe('Atomic Banks', () => {
       };
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onGet(`/${id}/decrypt`).reply(
         200,
@@ -201,6 +205,8 @@ describe('Atomic Banks', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -217,6 +223,8 @@ describe('Atomic Banks', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(`/${id}/decrypt`);
@@ -238,6 +246,8 @@ describe('Atomic Banks', () => {
       };
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
@@ -256,6 +266,8 @@ describe('Atomic Banks', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -277,6 +289,8 @@ describe('Atomic Banks', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(`/${id}/decrypt`);
@@ -326,6 +340,8 @@ describe('Atomic Banks', () => {
 
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onPost(`/${id}/react`).reply(
         201,
@@ -338,6 +354,8 @@ describe('Atomic Banks', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -356,6 +374,8 @@ describe('Atomic Banks', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
@@ -400,6 +420,8 @@ describe('Atomic Banks', () => {
 
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
@@ -414,6 +436,8 @@ describe('Atomic Banks', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -439,6 +463,8 @@ describe('Atomic Banks', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
@@ -487,6 +513,8 @@ describe('Atomic Banks', () => {
       /* eslint-enable camelcase */
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onGet(`/${atomicBankId}/reactions/${reactionTokenId}`).reply(
         200,
@@ -499,6 +527,8 @@ describe('Atomic Banks', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -513,6 +543,8 @@ describe('Atomic Banks', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
@@ -542,6 +574,8 @@ describe('Atomic Banks', () => {
 
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
@@ -556,6 +590,8 @@ describe('Atomic Banks', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -573,6 +609,8 @@ describe('Atomic Banks', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
