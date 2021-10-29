@@ -40,6 +40,13 @@ interface BasisTheoryInitOptions {
   elementsBaseUrl?: string;
 }
 
+interface Auditable {
+  createdBy?: string;
+  createdAt?: string;
+  modifiedBy?: string;
+  modifiedAt?: string;
+}
+
 declare global {
   interface Window {
     BasisTheoryElements?: BasisTheoryElements;
@@ -57,4 +64,5 @@ export type {
   EncryptionProviderOptions,
   EncryptionOptions,
   BasisTheoryInitOptions,
+  Auditable,
 };

@@ -121,6 +121,8 @@ describe('Atomic Cards', () => {
         },
         createdBy: chance.string(),
         createdAt: chance.string(),
+        modifiedBy: chance.string(),
+        modifiedAt: chance.string(),
         id: atomicCardId,
         type: 'card',
         tenantId: chance.string(),
@@ -209,6 +211,8 @@ describe('Atomic Cards', () => {
       const fingerprint = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       /* eslint-disable camelcase */
       const metadata = {
@@ -249,6 +253,8 @@ describe('Atomic Cards', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -265,6 +271,8 @@ describe('Atomic Cards', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -281,6 +289,8 @@ describe('Atomic Cards', () => {
       const fingerprint = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       /* eslint-disable camelcase */
       const metadata = {
@@ -324,6 +334,8 @@ describe('Atomic Cards', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -345,6 +357,8 @@ describe('Atomic Cards', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -397,6 +411,8 @@ describe('Atomic Cards', () => {
 
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onPost(`/${id}/react`).reply(
         201,
@@ -410,6 +426,8 @@ describe('Atomic Cards', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -429,6 +447,8 @@ describe('Atomic Cards', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
@@ -474,6 +494,8 @@ describe('Atomic Cards', () => {
 
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
@@ -489,6 +511,8 @@ describe('Atomic Cards', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -515,6 +539,8 @@ describe('Atomic Cards', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
@@ -565,6 +591,8 @@ describe('Atomic Cards', () => {
 
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onGet(`/${atomicCardId}/reactions/${reactionTokenId}`).reply(
         200,
@@ -577,6 +605,8 @@ describe('Atomic Cards', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -591,6 +621,8 @@ describe('Atomic Cards', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
@@ -620,6 +652,8 @@ describe('Atomic Cards', () => {
 
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
@@ -634,6 +668,8 @@ describe('Atomic Cards', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -651,6 +687,8 @@ describe('Atomic Cards', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(

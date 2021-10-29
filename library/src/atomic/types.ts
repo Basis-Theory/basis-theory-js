@@ -1,13 +1,12 @@
 import type { TokenType } from '../tokens';
+import type { Auditable } from '../types';
 
-interface Atomic {
+interface Atomic extends Auditable {
   id: string;
   tenantId: string;
   type: TokenType;
   fingerprint: string;
   metadata?: Record<string, string>;
-  createdBy: string;
-  createdAt: string;
 }
 
 interface ReactRequest {

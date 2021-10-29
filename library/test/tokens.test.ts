@@ -63,6 +63,8 @@ describe('Tokens', () => {
 
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onGet(id).reply(
         200,
@@ -76,6 +78,8 @@ describe('Tokens', () => {
           metadata,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -89,6 +93,8 @@ describe('Tokens', () => {
         metadata,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].headers).toMatchObject({
@@ -104,6 +110,8 @@ describe('Tokens', () => {
       const data = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const query = {
         children: chance.bool(),
         childrenType: chance.string({
@@ -123,6 +131,8 @@ describe('Tokens', () => {
           data,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -137,6 +147,8 @@ describe('Tokens', () => {
         data,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
@@ -157,6 +169,8 @@ describe('Tokens', () => {
       const data = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const query = {
         children: chance.bool(),
         childrenType: chance.string({
@@ -176,6 +190,8 @@ describe('Tokens', () => {
           data,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -193,6 +209,8 @@ describe('Tokens', () => {
         data,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(
@@ -225,6 +243,8 @@ describe('Tokens', () => {
       const data = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onGet(`/${id}/decrypt`).reply(
         200,
@@ -237,6 +257,8 @@ describe('Tokens', () => {
           data,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -249,6 +271,8 @@ describe('Tokens', () => {
         data,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(`/${id}/decrypt`);
@@ -265,6 +289,8 @@ describe('Tokens', () => {
       const data = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const query = {
         children: chance.bool(),
         childrenType: chance.string({
@@ -285,6 +311,8 @@ describe('Tokens', () => {
           data,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -299,6 +327,8 @@ describe('Tokens', () => {
         data,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(url);
@@ -317,6 +347,8 @@ describe('Tokens', () => {
       const data = chance.string();
       const createdBy = chance.string();
       const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
       const query = {
         children: chance.bool(),
         childrenType: chance.string({
@@ -337,6 +369,8 @@ describe('Tokens', () => {
           data,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -354,6 +388,8 @@ describe('Tokens', () => {
         data,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
       expect(client.history.get[0].url).toStrictEqual(url);
@@ -688,6 +724,8 @@ describe('Tokens', () => {
 
       const createdAt = chance.string();
       const createdBy = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onPost(`/${parentId}/children`).reply(
         201,
@@ -696,6 +734,8 @@ describe('Tokens', () => {
           ...tokenPayload,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -705,6 +745,8 @@ describe('Tokens', () => {
           ...tokenPayload,
           createdAt,
           createdBy,
+          modifiedAt,
+          modifiedBy,
         }
       );
 
@@ -728,6 +770,8 @@ describe('Tokens', () => {
 
       const createdAt = chance.string();
       const createdBy = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
 
       client.onPost(`/${parentId}/children`).reply(
         201,
@@ -736,6 +780,8 @@ describe('Tokens', () => {
           ...tokenPayload,
           created_at: createdAt,
           created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
         })
         /* eslint-enable camelcase */
       );
@@ -749,6 +795,8 @@ describe('Tokens', () => {
         ...tokenPayload,
         createdAt,
         createdBy,
+        modifiedAt,
+        modifiedBy,
       });
 
       expect(client.history.post.length).toBe(1);

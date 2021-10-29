@@ -1,4 +1,5 @@
 import type { PaginatedQuery } from '../service';
+import type { Auditable } from '../types';
 
 const APPLICATION_TYPES = [
   'server_to_server',
@@ -9,15 +10,13 @@ const APPLICATION_TYPES = [
 
 type ApplicationType = typeof APPLICATION_TYPES[number];
 
-interface Application {
+interface Application extends Auditable {
   id: string;
   tenantId: string;
   name: string;
   key?: string;
   type: ApplicationType;
   permissions: string[];
-  createdAt: string;
-  modifiedAt: string;
 }
 
 type CreateApplicationModel = Pick<Application, 'name' | 'type'> &
