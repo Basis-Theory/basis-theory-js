@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.6.0...v1.7.0) (2021-10-29)
+
+
+### Features
+
+* Standardizing audit fields across entities ([#115](https://github.com/Basis-Theory/basis-theory-js/issues/115)) ([5cfa3b6](https://github.com/Basis-Theory/basis-theory-js/commit/5cfa3b6686a036784d7ec30370f1f1ef6ef842e1))
+
 # [1.6.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.5.0...v1.6.0) (2021-10-28)
 
 
