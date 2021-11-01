@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.8.0...v1.9.0) (2021-11-01)
+
+
+### Features
+
+* remove enrichment fields from tenant usage report ([#122](https://github.com/Basis-Theory/basis-theory-js/issues/122)) ([266c99a](https://github.com/Basis-Theory/basis-theory-js/commit/266c99a7e9c612e7f3c0f06613c012ad434c92e0))
+
 # [1.8.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.7.0...v1.8.0) (2021-11-01)
 
 
