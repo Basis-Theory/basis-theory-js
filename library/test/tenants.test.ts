@@ -230,10 +230,6 @@ describe('Tenants', () => {
     beforeEach(() => {
       expectedUsageReport = {
         tokenReport: {
-          enrichmentLimit: chance.integer(),
-          freeEnrichedTokenLimit: chance.integer(),
-          numberOfEnrichedTokens: chance.integer(),
-          numberOfEnrichments: chance.integer(),
           metricsByType: {
             [chance.string({
               alpha: true,
@@ -249,13 +245,6 @@ describe('Tenants', () => {
       /* eslint-disable camelcase */
       expectedUsageReportJson = JSON.stringify({
         token_report: {
-          enrichment_limit: expectedUsageReport.tokenReport.enrichmentLimit,
-          free_enriched_token_limit:
-            expectedUsageReport.tokenReport.freeEnrichedTokenLimit,
-          number_of_enriched_tokens:
-            expectedUsageReport.tokenReport.numberOfEnrichedTokens,
-          number_of_enrichments:
-            expectedUsageReport.tokenReport.numberOfEnrichments,
           metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
           monthly_active_tokens:
             expectedUsageReport.tokenReport.monthlyActiveTokens,
