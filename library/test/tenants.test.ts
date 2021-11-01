@@ -2,6 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
 import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
+import { TenantUsageReport } from '../src/tenants';
 import {
   errorStatus,
   expectBasisTheoryApiError,
@@ -223,39 +224,48 @@ describe('Tenants', () => {
   });
 
   describe('retrieve tenant usage report', () => {
-    it('should retrieve tenant usage report', async () => {
-      const expectedUsageReport = {
+    let expectedUsageReport: TenantUsageReport;
+    let expectedUsageReportJson: string;
+
+    beforeEach(() => {
+      expectedUsageReport = {
         tokenReport: {
           enrichmentLimit: chance.integer(),
           freeEnrichedTokenLimit: chance.integer(),
           numberOfEnrichedTokens: chance.integer(),
           numberOfEnrichments: chance.integer(),
           metricsByType: {
-            token: {
+            [chance.string({
+              alpha: true,
+              casing: 'lower',
+            })]: {
               count: chance.integer(),
               lastCreatedAt: chance.string(),
             },
           },
+          monthlyActiveTokens: chance.integer(),
         },
       };
+      /* eslint-disable camelcase */
+      expectedUsageReportJson = JSON.stringify({
+        token_report: {
+          enrichment_limit: expectedUsageReport.tokenReport.enrichmentLimit,
+          free_enriched_token_limit:
+            expectedUsageReport.tokenReport.freeEnrichedTokenLimit,
+          number_of_enriched_tokens:
+            expectedUsageReport.tokenReport.numberOfEnrichedTokens,
+          number_of_enrichments:
+            expectedUsageReport.tokenReport.numberOfEnrichments,
+          metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
+          monthly_active_tokens:
+            expectedUsageReport.tokenReport.monthlyActiveTokens,
+        },
+      });
+      /* eslint-enable camelcase */
+    });
 
-      client.onGet('/reports/usage').reply(
-        200,
-        /* eslint-disable camelcase */
-        JSON.stringify({
-          token_report: {
-            enrichment_limit: expectedUsageReport.tokenReport.enrichmentLimit,
-            free_enriched_token_limit:
-              expectedUsageReport.tokenReport.freeEnrichedTokenLimit,
-            number_of_enriched_tokens:
-              expectedUsageReport.tokenReport.numberOfEnrichedTokens,
-            number_of_enrichments:
-              expectedUsageReport.tokenReport.numberOfEnrichments,
-            metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
-          },
-        })
-        /* eslint-enable camelcase */
-      );
+    it('should retrieve tenant usage report', async () => {
+      client.onGet('/reports/usage').reply(200, expectedUsageReportJson);
 
       expect(await bt.tenants.retrieveUsageReport()).toEqual(
         expectedUsageReport
@@ -269,38 +279,8 @@ describe('Tenants', () => {
     it('should retrieve tenant usage report with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
-      const expectedUsageReport = {
-        tokenReport: {
-          enrichmentLimit: chance.integer(),
-          freeEnrichedTokenLimit: chance.integer(),
-          numberOfEnrichedTokens: chance.integer(),
-          numberOfEnrichments: chance.integer(),
-          metricsByType: {
-            token: {
-              count: chance.integer(),
-              lastCreatedAt: chance.string(),
-            },
-          },
-        },
-      };
 
-      client.onGet('/reports/usage').reply(
-        200,
-        /* eslint-disable camelcase */
-        JSON.stringify({
-          token_report: {
-            enrichment_limit: expectedUsageReport.tokenReport.enrichmentLimit,
-            free_enriched_token_limit:
-              expectedUsageReport.tokenReport.freeEnrichedTokenLimit,
-            number_of_enriched_tokens:
-              expectedUsageReport.tokenReport.numberOfEnrichedTokens,
-            number_of_enrichments:
-              expectedUsageReport.tokenReport.numberOfEnrichments,
-            metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
-          },
-        })
-        /* eslint-enable camelcase */
-      );
+      client.onGet('/reports/usage').reply(200, expectedUsageReportJson);
 
       expect(
         await bt.tenants.retrieveUsageReport({
