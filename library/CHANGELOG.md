@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.7.0...v1.8.0) (2021-11-01)
+
+
+### Features
+
+* add monthly_active_tokens to TenantUsageReport ([#116](https://github.com/Basis-Theory/basis-theory-js/issues/116)) ([1055f94](https://github.com/Basis-Theory/basis-theory-js/commit/1055f94f4db664db6687e958fbb4de780dc58062))
+
 # [1.7.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.6.0...v1.7.0) (2021-10-29)
 
 
