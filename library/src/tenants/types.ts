@@ -13,12 +13,8 @@ interface TenantUsageReport {
 }
 
 interface TokenReport {
-  enrichmentLimit?: number;
-  freeEnrichedTokenLimit?: number;
   metricsByType: Record<string, TokenTypeMetrics>;
   monthlyActiveTokens: number;
-  numberOfEnrichedTokens: number;
-  numberOfEnrichments: number;
 }
 
 interface TokenTypeMetrics {
