@@ -14,6 +14,7 @@ interface TenantUsageReport {
 
 interface TokenReport {
   metricsByType: Record<string, TokenTypeMetrics>;
+  includedMonthlyActiveTokens: number;
   monthlyActiveTokens: number;
 }
 

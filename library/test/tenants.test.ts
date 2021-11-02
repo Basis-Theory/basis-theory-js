@@ -239,6 +239,7 @@ describe('Tenants', () => {
               lastCreatedAt: chance.string(),
             },
           },
+          includedMonthlyActiveTokens: chance.integer(),
           monthlyActiveTokens: chance.integer(),
         },
       };
@@ -248,6 +249,8 @@ describe('Tenants', () => {
           metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
           monthly_active_tokens:
             expectedUsageReport.tokenReport.monthlyActiveTokens,
+          included_monthly_active_tokens:
+            expectedUsageReport.tokenReport.includedMonthlyActiveTokens,
         },
       });
       /* eslint-enable camelcase */
