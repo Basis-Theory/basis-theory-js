@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.9.0...v1.10.0) (2021-11-02)
+
+
+### Features
+
+* add included monthly active tokens field to tenant usage report ([#123](https://github.com/Basis-Theory/basis-theory-js/issues/123)) ([f5447dc](https://github.com/Basis-Theory/basis-theory-js/commit/f5447dcaaff1e105796c3c2e2fec423ea398f018))
+
 # [1.9.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.8.0...v1.9.0) (2021-11-01)
 
 
