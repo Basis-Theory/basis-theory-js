@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.10.0...v1.11.0) (2021-11-03)
+
+
+### Features
+
+* add actor_id and actor_type to Log response model ([#124](https://github.com/Basis-Theory/basis-theory-js/issues/124)) ([fef0d30](https://github.com/Basis-Theory/basis-theory-js/commit/fef0d30e8d5a42b8e6a615df79d69f135037e2f7))
+
 # [1.10.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.9.0...v1.10.0) (2021-11-02)
 
 
