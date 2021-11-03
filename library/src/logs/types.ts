@@ -2,7 +2,8 @@ import type { PaginatedQuery } from '../service';
 
 interface Log {
   tenantId: string;
-  applicationId: string;
+  actorId?: string;
+  actorType?: string;
   entityType: string;
   entityId: string;
   operation: string;
