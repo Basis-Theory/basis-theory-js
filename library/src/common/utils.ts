@@ -35,13 +35,7 @@ const transformRequestSnakeCase: AxiosTransformer = <T, S>(
   }) as S;
 };
 
-const proxyRawResponse: AxiosTransformer = <T>(data: T): T | undefined => {
-  if (typeof data === 'undefined') {
-    return undefined;
-  }
-
-  return data;
-};
+const proxyRawResponse: AxiosTransformer = <T>(data: T): T | undefined => data;
 
 const transformReactorRequestSnakeCase: AxiosTransformer = (
   reactor: Reactor
