@@ -3,7 +3,7 @@ import {
   createRequestConfig,
   dataExtractor,
   transformAtomicReactionRequestSnakeCase,
-  transformTokenResponseCamelCase,
+  proxyRawResponse,
 } from '../../common';
 import {
   transformAtomicRequestSnakeCase,
@@ -16,8 +16,7 @@ import type {
 } from '../../service';
 import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
-import type { Token } from '../../tokens';
-import type { ReactRequest } from '../types';
+import type { ReactRequest, ReactResponse } from '../types';
 import type {
   AtomicCard,
   CreateAtomicCardModel,
@@ -69,29 +68,14 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
       id: string,
       request: ReactRequest,
       options?: RequestOptions
-    ): Promise<Token> {
+    ): Promise<ReactResponse> {
       return this.client
         .post(
           `/${id}/react`,
           request,
           createRequestConfig(options, {
             transformRequest: transformAtomicReactionRequestSnakeCase,
-            transformResponse: transformTokenResponseCamelCase,
-          })
-        )
-        .then(dataExtractor);
-    }
-
-    public retrieveReaction(
-      atomicCardId: string,
-      reactionTokenId: string,
-      options?: RequestOptions
-    ): Promise<Token> {
-      return this.client
-        .get(
-          `/${atomicCardId}/reactions/${reactionTokenId}`,
-          createRequestConfig(options, {
-            transformResponse: transformTokenResponseCamelCase,
+            transformResponse: proxyRawResponse,
           })
         )
         .then(dataExtractor);

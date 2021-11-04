@@ -1,4 +1,4 @@
-import type { TokenType } from '../tokens';
+import type { DataObject, TokenType } from '../tokens';
 import type { Auditable } from '../types';
 
 interface Atomic extends Auditable {
@@ -12,7 +12,11 @@ interface Atomic extends Auditable {
 interface ReactRequest {
   reactorId: string;
   requestParameters?: Record<string, unknown>;
-  metadata?: Record<string, string>;
 }
 
-export type { Atomic, ReactRequest };
+interface ReactResponse {
+  tokens: DataObject;
+  raw: DataObject;
+}
+
+export type { Atomic, ReactRequest, ReactResponse };

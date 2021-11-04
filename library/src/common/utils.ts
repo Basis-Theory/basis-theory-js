@@ -35,6 +35,14 @@ const transformRequestSnakeCase: AxiosTransformer = <T, S>(
   }) as S;
 };
 
+const proxyRawResponse: AxiosTransformer = <T>(data: T): T | undefined => {
+  if (typeof data === 'undefined') {
+    return undefined;
+  }
+
+  return data;
+};
+
 const transformReactorRequestSnakeCase: AxiosTransformer = (
   reactor: Reactor
 ): Reactor | undefined => {
@@ -93,7 +101,6 @@ const transformAtomicReactionRequestSnakeCase: AxiosTransformer = (
       ? // eslint-disable-next-line camelcase
         { request_parameters: request.requestParameters }
       : {}),
-    ...(request.metadata !== undefined ? { metadata: request.metadata } : {}),
   } as Token;
 };
 
@@ -276,6 +283,7 @@ const getQueryParams = <Q>(query: Q): string => {
 export {
   assertInit,
   transformRequestSnakeCase,
+  proxyRawResponse,
   transformReactorRequestSnakeCase,
   transformAtomicRequestSnakeCase,
   transformTokenRequestSnakeCase,
