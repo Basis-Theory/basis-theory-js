@@ -399,10 +399,6 @@ describe('Atomic Cards', () => {
           camelCase: chance.string(),
         },
       };
-      const metadata = {
-        camelCase: chance.string(),
-        snake_case: chance.string(),
-      };
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
@@ -415,19 +411,21 @@ describe('Atomic Cards', () => {
       const modifiedAt = chance.string();
 
       client.onPost(`/${id}/react`).reply(
-        201,
+        200,
         /* eslint-disable camelcase */
         JSON.stringify({
-          id,
-          tenant_id: tenantId,
-          fingerprint,
-          type,
-          data,
-          metadata,
-          created_at: createdAt,
-          created_by: createdBy,
-          modified_at: modifiedAt,
-          modified_by: modifiedBy,
+          tokens: {
+            id,
+            tenant_id: tenantId,
+            fingerprint,
+            type,
+            data,
+            created_at: createdAt,
+            created_by: createdBy,
+            modified_at: modifiedAt,
+            modified_by: modifiedBy,
+          },
+          raw: data,
         })
         /* eslint-enable camelcase */
       );
@@ -436,19 +434,22 @@ describe('Atomic Cards', () => {
         await bt.atomicCards.react(id, {
           reactorId,
           requestParameters,
-          metadata,
         })
       ).toStrictEqual({
-        id,
-        tenantId,
-        fingerprint,
-        type,
-        data,
-        metadata,
-        createdAt,
-        createdBy,
-        modifiedAt,
-        modifiedBy,
+        /* eslint-disable camelcase */
+        tokens: {
+          id,
+          tenant_id: tenantId,
+          fingerprint,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
+        },
+        raw: data,
+        /* eslint-enable camelcase */
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
@@ -457,7 +458,6 @@ describe('Atomic Cards', () => {
         JSON.stringify({
           reactor_id: reactorId,
           request_parameters: requestParameters,
-          metadata,
         })
         /* eslint-enable camelcase */
       );
@@ -482,10 +482,6 @@ describe('Atomic Cards', () => {
           camelCase: chance.string(),
         },
       };
-      const metadata = {
-        camelCase: chance.string(),
-        snake_case: chance.string(),
-      };
       const data = {
         snake_case: chance.string(),
         camelCase: chance.string(),
@@ -500,19 +496,21 @@ describe('Atomic Cards', () => {
       const correlationId = chance.string();
 
       client.onPost(`/${id}/react`).reply(
-        201,
+        200,
         /* eslint-disable camelcase */
         JSON.stringify({
-          id,
-          tenant_id: tenantId,
-          fingerprint,
-          type,
-          data,
-          metadata,
-          created_at: createdAt,
-          created_by: createdBy,
-          modified_at: modifiedAt,
-          modified_by: modifiedBy,
+          tokens: {
+            id,
+            tenant_id: tenantId,
+            fingerprint,
+            type,
+            data,
+            created_at: createdAt,
+            created_by: createdBy,
+            modified_at: modifiedAt,
+            modified_by: modifiedBy,
+          },
+          raw: data,
         })
         /* eslint-enable camelcase */
       );
@@ -523,7 +521,6 @@ describe('Atomic Cards', () => {
           {
             reactorId,
             requestParameters,
-            metadata,
           },
           {
             apiKey: _apiKey,
@@ -531,16 +528,20 @@ describe('Atomic Cards', () => {
           }
         )
       ).toStrictEqual({
-        id,
-        tenantId,
-        fingerprint,
-        type,
-        data,
-        metadata,
-        createdAt,
-        createdBy,
-        modifiedAt,
-        modifiedBy,
+        /* eslint-disable camelcase */
+        tokens: {
+          id,
+          tenant_id: tenantId,
+          fingerprint,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
+        },
+        raw: data,
+        /* eslint-enable camelcase */
       });
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${id}/react`);
@@ -549,7 +550,6 @@ describe('Atomic Cards', () => {
         JSON.stringify({
           reactor_id: reactorId,
           request_parameters: requestParameters,
-          metadata,
         })
         /* eslint-enable camelcase */
       );
@@ -566,153 +566,6 @@ describe('Atomic Cards', () => {
       client.onPost(`/${id}/react`).reply(status);
 
       const promise = bt.atomicCards.react(id, { reactorId: chance.string() });
-
-      await expectBasisTheoryApiError(promise, status);
-    });
-  });
-
-  describe('retrieve reaction', () => {
-    it('should retrieve reaction', async () => {
-      const atomicCardId = chance.string();
-      const reactionTokenId = chance.string();
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
-
-      /* eslint-disable camelcase */
-      const metadata = {
-        camelCase: chance.string(),
-        snake_case: chance.string(),
-      };
-      const data = {
-        snake_case: chance.string(),
-        camelCase: chance.string(),
-      };
-      /* eslint-enable camelcase */
-
-      const createdBy = chance.string();
-      const createdAt = chance.string();
-      const modifiedBy = chance.string();
-      const modifiedAt = chance.string();
-
-      client.onGet(`/${atomicCardId}/reactions/${reactionTokenId}`).reply(
-        200,
-        /* eslint-disable camelcase */
-        JSON.stringify({
-          id: reactionTokenId,
-          tenant_id: tenantId,
-          type,
-          data,
-          metadata,
-          created_at: createdAt,
-          created_by: createdBy,
-          modified_at: modifiedAt,
-          modified_by: modifiedBy,
-        })
-        /* eslint-enable camelcase */
-      );
-
-      expect(
-        await bt.atomicCards.retrieveReaction(atomicCardId, reactionTokenId)
-      ).toStrictEqual({
-        id: reactionTokenId,
-        tenantId,
-        type,
-        data,
-        metadata,
-        createdAt,
-        createdBy,
-        modifiedAt,
-        modifiedBy,
-      });
-      expect(client.history.get.length).toBe(1);
-      expect(client.history.get[0].url).toStrictEqual(
-        `/${atomicCardId}/reactions/${reactionTokenId}`
-      );
-      expect(client.history.get[0].headers).toMatchObject({
-        [API_KEY_HEADER]: expect.any(String),
-      });
-    });
-
-    it('should retrieve reaction with options', async () => {
-      const atomicCardId = chance.string();
-      const reactionTokenId = chance.string();
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
-
-      /* eslint-disable camelcase */
-      const metadata = {
-        camelCase: chance.string(),
-        snake_case: chance.string(),
-      };
-      const data = {
-        snake_case: chance.string(),
-        camelCase: chance.string(),
-      };
-      /* eslint-enable camelcase */
-
-      const createdBy = chance.string();
-      const createdAt = chance.string();
-      const modifiedBy = chance.string();
-      const modifiedAt = chance.string();
-      const _apiKey = chance.string();
-      const correlationId = chance.string();
-
-      client.onGet(`/${atomicCardId}/reactions/${reactionTokenId}`).reply(
-        200,
-        /* eslint-disable camelcase */
-        JSON.stringify({
-          id: reactionTokenId,
-          tenant_id: tenantId,
-          type,
-          data,
-          metadata,
-          created_at: createdAt,
-          created_by: createdBy,
-          modified_at: modifiedAt,
-          modified_by: modifiedBy,
-        })
-        /* eslint-enable camelcase */
-      );
-
-      expect(
-        await bt.atomicCards.retrieveReaction(atomicCardId, reactionTokenId, {
-          apiKey: _apiKey,
-          correlationId,
-        })
-      ).toStrictEqual({
-        id: reactionTokenId,
-        tenantId,
-        type,
-        data,
-        metadata,
-        createdAt,
-        createdBy,
-        modifiedAt,
-        modifiedBy,
-      });
-      expect(client.history.get.length).toBe(1);
-      expect(client.history.get[0].url).toStrictEqual(
-        `/${atomicCardId}/reactions/${reactionTokenId}`
-      );
-      expect(client.history.get[0].headers).toMatchObject({
-        [API_KEY_HEADER]: _apiKey,
-        [BT_TRACE_ID_HEADER]: correlationId,
-      });
-    });
-
-    it('should reject with status >= 400 <= 599', async () => {
-      const atomicCardId = chance.string();
-      const reactionTokenId = chance.string();
-      const status = errorStatus();
-
-      client
-        .onGet(`/${atomicCardId}/reactions/${reactionTokenId}`)
-        .reply(status);
-
-      const promise = bt.atomicCards.retrieveReaction(
-        atomicCardId,
-        reactionTokenId
-      );
 
       await expectBasisTheoryApiError(promise, status);
     });

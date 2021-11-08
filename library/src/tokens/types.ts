@@ -8,7 +8,7 @@ type DataObject = {
 type DataArray = Array<TokenData>;
 type TokenData = Primitive | DataObject | DataArray;
 
-type TokenType = 'token' | 'card' | 'bank' | 'card:reaction' | 'bank:reaction';
+type TokenType = 'token' | 'card' | 'bank';
 
 interface TokenEncryptionKey {
   key: string;
