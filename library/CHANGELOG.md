@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.11.0...v1.12.0) (2021-11-08)
+
+
+### Features
+
+* use new react response schema and remove get reaction by id ([#125](https://github.com/Basis-Theory/basis-theory-js/issues/125)) ([2353adb](https://github.com/Basis-Theory/basis-theory-js/commit/2353adb9cdfa55b32b2b382ef7ca19e56038bda9))
+
 # [1.11.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.10.0...v1.11.0) (2021-11-03)
 
 
