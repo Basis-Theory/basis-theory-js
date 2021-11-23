@@ -46,19 +46,6 @@ describe('Atomic Cards', () => {
         expirationYear: _chance.integer(),
         cvc: _chance.string(),
       },
-      billingDetails: {
-        name: _chance.string(),
-        email: _chance.string(),
-        phone: _chance.string(),
-        address: {
-          line1: _chance.string(),
-          line2: _chance.string(),
-          city: _chance.string(),
-          state: _chance.string(),
-          postalCode: _chance.string(),
-          country: _chance.string(),
-        },
-      },
       metadata: {
         camelCase: _chance.string(),
         // eslint-disable-next-line camelcase
@@ -106,18 +93,12 @@ describe('Atomic Cards', () => {
           expirationMonth: chance.integer(),
           expirationYear: chance.integer(),
         },
-        billingDetails: {
-          email: chance.email(),
-        },
       };
       expectedUpdatedCard = {
         card: {
           number: chance.string(),
           expirationMonth: chance.integer(),
           expirationYear: chance.integer(),
-        },
-        billingDetails: {
-          email: chance.email(),
         },
         createdBy: chance.string(),
         createdAt: chance.string(),
@@ -146,9 +127,6 @@ describe('Atomic Cards', () => {
             number: updateCardRequest.card?.number,
             expiration_month: updateCardRequest.card?.expirationMonth,
             expiration_year: updateCardRequest.card?.expirationYear,
-          },
-          billing_details: {
-            email: updateCardRequest.billingDetails?.email,
           },
         })
         /* eslint-enable camelcase */
@@ -180,9 +158,6 @@ describe('Atomic Cards', () => {
             number: updateCardRequest.card?.number,
             expiration_month: updateCardRequest.card?.expirationMonth,
             expiration_year: updateCardRequest.card?.expirationYear,
-          },
-          billing_details: {
-            email: updateCardRequest.billingDetails?.email,
           },
         })
         /* eslint-enable camelcase */
@@ -225,19 +200,6 @@ describe('Atomic Cards', () => {
         expiration_year: chance.integer(),
         cvc: chance.string(),
       };
-      const billingDetails = {
-        name: chance.string(),
-        email: chance.string(),
-        phone: chance.string(),
-        address: {
-          line1: chance.string(),
-          line2: chance.string(),
-          city: chance.string(),
-          state: chance.string(),
-          postal_code: chance.string(),
-          country: chance.string(),
-        },
-      };
       /* eslint-enable camelcase */
 
       client.onGet(`/${id}/decrypt`).reply(
@@ -249,7 +211,6 @@ describe('Atomic Cards', () => {
           fingerprint,
           type: 'card',
           card,
-          billingDetails,
           metadata,
           created_at: createdAt,
           created_by: createdBy,
@@ -267,7 +228,6 @@ describe('Atomic Cards', () => {
           fingerprint,
           type: 'card',
           card,
-          billingDetails,
           metadata,
           created_at: createdAt,
           created_by: createdBy,
@@ -303,19 +263,6 @@ describe('Atomic Cards', () => {
         expiration_year: chance.integer(),
         cvc: chance.string(),
       };
-      const billingDetails = {
-        name: chance.string(),
-        email: chance.string(),
-        phone: chance.string(),
-        address: {
-          line1: chance.string(),
-          line2: chance.string(),
-          city: chance.string(),
-          state: chance.string(),
-          postal_code: chance.string(),
-          country: chance.string(),
-        },
-      };
       /* eslint-enable camelcase */
 
       const _apiKey = chance.string();
@@ -330,7 +277,6 @@ describe('Atomic Cards', () => {
           fingerprint,
           type: 'card',
           card,
-          billingDetails,
           metadata,
           created_at: createdAt,
           created_by: createdBy,
@@ -353,7 +299,6 @@ describe('Atomic Cards', () => {
           fingerprint,
           type: 'card',
           card,
-          billingDetails,
           metadata,
           created_at: createdAt,
           created_by: createdBy,

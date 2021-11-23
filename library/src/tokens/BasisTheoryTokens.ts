@@ -16,7 +16,6 @@ import type {
   Token,
   CreateTokenModel,
   ListTokensQuery,
-  RetrieveTokenQuery,
   ListTokensQueryDecrypted,
 } from './types';
 
@@ -40,12 +39,8 @@ export const BasisTheoryTokens = new CrudBuilder(
       super(_options);
     }
 
-    public retrieve(
-      id: string,
-      query: RetrieveTokenQuery = {},
-      options: RequestOptions = {}
-    ): Promise<Token> {
-      const url = `/${id}${getQueryParams(query)}`;
+    public retrieve(id: string, options: RequestOptions = {}): Promise<Token> {
+      const url = `/${id}`;
 
       return this.client
         .get(url, createRequestConfig(options))
@@ -54,10 +49,9 @@ export const BasisTheoryTokens = new CrudBuilder(
 
     public retrieveDecrypted(
       id: string,
-      query: RetrieveTokenQuery = {},
       options: RequestOptions = {}
     ): Promise<Token> {
-      const url = `/${id}/decrypt${getQueryParams(query)}`;
+      const url = `/${id}/decrypt`;
 
       return this.client
         .get(url, createRequestConfig(options))

@@ -2,7 +2,6 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import type {
   ListTokensQueryDecrypted,
-  RetrieveTokenQuery,
   Token,
   TokenType,
   CreateTokenModel,
@@ -55,6 +54,10 @@ describe('Tokens', () => {
         camelCaseParameter: chance.string(),
         snake_case_parameter: chance.string(),
       };
+      const mask = {
+        camelCaseParameter: chance.string(),
+        snake_case_parameter: chance.string(),
+      };
       const metadata = {
         camelCaseParameter: chance.string(),
         snake_case_parameter: chance.string(),
@@ -75,6 +78,7 @@ describe('Tokens', () => {
           fingerprint,
           type,
           data,
+          mask,
           metadata,
           created_at: createdAt,
           created_by: createdBy,
@@ -90,6 +94,7 @@ describe('Tokens', () => {
         fingerprint,
         type,
         data,
+        mask,
         metadata,
         createdAt,
         createdBy,
@@ -97,63 +102,6 @@ describe('Tokens', () => {
         modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
-      expect(client.history.get[0].headers).toMatchObject({
-        [API_KEY_HEADER]: expect.any(String),
-      });
-    });
-
-    it('should retrieve with query', async () => {
-      const id = chance.string();
-      const fingerprint = chance.string();
-      const tenantId = chance.string();
-      const type = chance.string() as TokenType;
-      const data = chance.string();
-      const createdBy = chance.string();
-      const createdAt = chance.string();
-      const modifiedBy = chance.string();
-      const modifiedAt = chance.string();
-      const query = {
-        children: chance.bool(),
-        childrenType: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
-      };
-
-      client.onGet().reply(
-        200,
-        /* eslint-disable camelcase */
-        JSON.stringify({
-          id,
-          tenant_id: tenantId,
-          fingerprint,
-          type,
-          data,
-          created_at: createdAt,
-          created_by: createdBy,
-          modified_at: modifiedAt,
-          modified_by: modifiedBy,
-        })
-        /* eslint-enable camelcase */
-      );
-
-      expect(
-        await bt.tokens.retrieve(id, query as RetrieveTokenQuery)
-      ).toStrictEqual({
-        id,
-        tenantId,
-        fingerprint,
-        type,
-        data,
-        createdAt,
-        createdBy,
-        modifiedAt,
-        modifiedBy,
-      });
-      expect(client.history.get.length).toBe(1);
-      expect(client.history.get[0].url).toStrictEqual(
-        `/${id}?children=${query.children}&children_type=${query.childrenType}`
-      );
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
       });
@@ -171,13 +119,6 @@ describe('Tokens', () => {
       const createdAt = chance.string();
       const modifiedBy = chance.string();
       const modifiedAt = chance.string();
-      const query = {
-        children: chance.bool(),
-        childrenType: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
-      };
 
       client.onGet().reply(
         200,
@@ -197,7 +138,7 @@ describe('Tokens', () => {
       );
 
       expect(
-        await bt.tokens.retrieve(id, query as RetrieveTokenQuery, {
+        await bt.tokens.retrieve(id, {
           apiKey: _apiKey,
           correlationId,
         })
@@ -213,9 +154,7 @@ describe('Tokens', () => {
         modifiedBy,
       });
       expect(client.history.get.length).toBe(1);
-      expect(client.history.get[0].url).toStrictEqual(
-        `/${id}?children=${query.children}&children_type=${query.childrenType}`
-      );
+      expect(client.history.get[0].url).toStrictEqual(`/${id}`);
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
@@ -281,62 +220,6 @@ describe('Tokens', () => {
       });
     });
 
-    it('should retrieve decrypted with query', async () => {
-      const id = chance.string();
-      const tenantId = chance.string();
-      const fingerprint = chance.string();
-      const type = chance.string() as TokenType;
-      const data = chance.string();
-      const createdBy = chance.string();
-      const createdAt = chance.string();
-      const modifiedBy = chance.string();
-      const modifiedAt = chance.string();
-      const query = {
-        children: chance.bool(),
-        childrenType: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
-      };
-      const url = `/${id}/decrypt${getQueryParams(query)}`;
-
-      client.onGet(url).reply(
-        200,
-        /* eslint-disable camelcase */
-        JSON.stringify({
-          id,
-          tenant_id: tenantId,
-          fingerprint,
-          type,
-          data,
-          created_at: createdAt,
-          created_by: createdBy,
-          modified_at: modifiedAt,
-          modified_by: modifiedBy,
-        })
-        /* eslint-enable camelcase */
-      );
-
-      expect(
-        await bt.tokens.retrieveDecrypted(id, query as RetrieveTokenQuery)
-      ).toStrictEqual({
-        id,
-        tenantId,
-        fingerprint,
-        type,
-        data,
-        createdAt,
-        createdBy,
-        modifiedAt,
-        modifiedBy,
-      });
-      expect(client.history.get.length).toBe(1);
-      expect(client.history.get[0].url).toStrictEqual(url);
-      expect(client.history.get[0].headers).toMatchObject({
-        [API_KEY_HEADER]: expect.any(String),
-      });
-    });
-
     it('should retrieve decrypted with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
@@ -349,14 +232,7 @@ describe('Tokens', () => {
       const createdAt = chance.string();
       const modifiedBy = chance.string();
       const modifiedAt = chance.string();
-      const query = {
-        children: chance.bool(),
-        childrenType: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
-      };
-      const url = `/${id}/decrypt${getQueryParams(query)}`;
+      const url = `/${id}/decrypt`;
 
       client.onGet(url).reply(
         200,
@@ -376,7 +252,7 @@ describe('Tokens', () => {
       );
 
       expect(
-        await bt.tokens.retrieveDecrypted(id, query as RetrieveTokenQuery, {
+        await bt.tokens.retrieveDecrypted(id, {
           apiKey: _apiKey,
           correlationId,
         })
@@ -465,11 +341,6 @@ describe('Tokens', () => {
           alpha: true,
           numeric: true,
         }) as TokenType,
-        children: chance.bool(),
-        childrenType: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
         decryptType: chance.string({
           alpha: true,
           numeric: true,
@@ -525,11 +396,6 @@ describe('Tokens', () => {
           numeric: true,
         }),
         type: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
-        children: chance.bool(),
-        childrenType: chance.string({
           alpha: true,
           numeric: true,
         }) as TokenType,
@@ -882,11 +748,6 @@ describe('Tokens', () => {
           alpha: true,
           numeric: true,
         }) as TokenType,
-        children: chance.bool(),
-        childrenType: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
       } as ListTokensQuery;
       const url = `/${parentId}/children${getQueryParams(query)}`;
 
@@ -937,11 +798,6 @@ describe('Tokens', () => {
           numeric: true,
         }),
         type: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
-        children: chance.bool(),
-        childrenType: chance.string({
           alpha: true,
           numeric: true,
         }) as TokenType,

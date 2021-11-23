@@ -26,6 +26,10 @@ describe('clients', () => {
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.tokenize}`,
+    });
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.atomic}`,
     });
     expect(create).toHaveBeenCalledWith({
@@ -60,7 +64,7 @@ describe('clients', () => {
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.permissions}`,
     });
-    expect(create).toHaveBeenCalledTimes(10);
+    expect(create).toHaveBeenCalledTimes(11);
   });
 
   it('should throw error if not properly initialized', () => {

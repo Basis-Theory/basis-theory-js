@@ -3,7 +3,7 @@ import {
   createRequestConfig,
   dataExtractor,
   transformAtomicReactionRequestSnakeCase,
-  proxyRawResponse,
+  proxyRaw,
 } from '../../common';
 import {
   transformAtomicRequestSnakeCase,
@@ -75,7 +75,7 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
           request,
           createRequestConfig(options, {
             transformRequest: transformAtomicReactionRequestSnakeCase,
-            transformResponse: proxyRawResponse,
+            transformResponse: proxyRaw,
           })
         )
         .then(dataExtractor);
