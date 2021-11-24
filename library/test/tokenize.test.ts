@@ -59,6 +59,7 @@ describe('Tokenize', () => {
 
       expect(await bt.tokenize.tokenize(tokens)).toEqual(tokens);
       expect(client.history.post.length).toBe(1);
+      expect(client.history.post[0].data).toStrictEqual(JSON.stringify(tokens));
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: apiKey,
       });
@@ -103,6 +104,7 @@ describe('Tokenize', () => {
         })
       ).toEqual(tokens);
       expect(client.history.post.length).toBe(1);
+      expect(client.history.post[0].data).toStrictEqual(JSON.stringify(tokens));
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
