@@ -11,44 +11,40 @@ import {
   BasisTheoryServiceOptions,
   RequestOptions,
 } from '../service';
-import { CrudBuilder } from '../service/CrudBuilder';
 import type { TokenData } from '../tokens/types';
 
-export const BasisTheoryTokenize = new CrudBuilder(
-  class BasisTheoryTokenize extends BasisTheoryService {
-    public constructor(options: BasisTheoryServiceOptions) {
-      const _options = options;
+export class BasisTheoryTokenize extends BasisTheoryService {
+  public constructor(options: BasisTheoryServiceOptions) {
+    const _options = options;
 
-      // eslint-disable-next-line unicorn/prefer-spread
-      _options.transformRequest = ([] as AxiosTransformer[]).concat(
-        transformTokenRequestSnakeCase,
-        options.transformRequest || []
-      );
+    // eslint-disable-next-line unicorn/prefer-spread
+    _options.transformRequest = ([] as AxiosTransformer[]).concat(
+      transformTokenRequestSnakeCase,
+      options.transformRequest || []
+    );
 
-      // eslint-disable-next-line unicorn/prefer-spread
-      _options.transformResponse = ([] as AxiosTransformer[]).concat(
-        transformTokenResponseCamelCase,
-        options.transformResponse || []
-      );
+    // eslint-disable-next-line unicorn/prefer-spread
+    _options.transformResponse = ([] as AxiosTransformer[]).concat(
+      transformTokenResponseCamelCase,
+      options.transformResponse || []
+    );
 
-      super(_options);
-    }
-
-    public tokenize(
-      tokens: TokenData,
-      options: RequestOptions = {}
-    ): Promise<TokenData> {
-      return this.client
-        .post(
-          '/',
-          tokens,
-          createRequestConfig(options, {
-            transformRequest: proxyRaw,
-            transformResponse: proxyRaw,
-          })
-        )
-        .then(dataExtractor);
-    }
+    super(_options);
   }
-).build();
 
+  public tokenize(
+    tokens: TokenData,
+    options: RequestOptions = {}
+  ): Promise<TokenData> {
+    return this.client
+      .post(
+        '/',
+        tokens,
+        createRequestConfig(options, {
+          transformRequest: proxyRaw,
+          transformResponse: proxyRaw,
+        })
+      )
+      .then(dataExtractor);
+  }
+}
