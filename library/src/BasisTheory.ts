@@ -15,6 +15,7 @@ import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheoryTenants } from './tenants';
+import { BasisTheoryTokenize } from './tokenize';
 import { BasisTheoryTokens } from './tokens';
 import type { BasisTheoryInitOptions, InitStatus } from './types';
 
@@ -30,6 +31,8 @@ export class BasisTheory {
   private _initOptions?: Required<BasisTheoryInitOptions>;
 
   private _tokens?: BasisTheoryTokens;
+
+  private _tokenize?: BasisTheoryTokenize;
 
   private _atomic?: BasisTheoryAtomic;
 
@@ -90,6 +93,10 @@ export class BasisTheory {
       this._tokens = new BasisTheoryTokens({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
+      });
+      this._tokenize = new BasisTheoryTokenize({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.tokenize, baseUrl).toString(),
       });
       this._atomic = new BasisTheoryAtomic({
         apiKey,
@@ -169,6 +176,10 @@ export class BasisTheory {
 
   public get tokens(): BasisTheoryTokens {
     return assertInit(this._tokens);
+  }
+
+  public get tokenize(): BasisTheoryTokenize {
+    return assertInit(this._tokenize);
   }
 
   public get atomic(): BasisTheoryAtomic {

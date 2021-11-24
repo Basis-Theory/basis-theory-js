@@ -26,26 +26,19 @@ interface Token extends Auditable {
   type: TokenType;
   data: TokenData;
   fingerprint?: string;
+  mask?: DataObject;
   metadata?: Record<string, string>;
   encryption?: TokenEncryption;
-  children?: Token[];
 }
 
 type CreateTokenModel = Pick<
   Token,
-  'type' | 'data' | 'metadata' | 'encryption' | 'children'
+  'type' | 'data' | 'metadata' | 'encryption'
 >;
-
-interface RetrieveTokenQuery {
-  children?: boolean;
-  childrenType?: TokenType | TokenType[];
-}
 
 interface ListTokensQuery extends PaginatedQuery {
   id?: string | string[];
   type?: TokenType | TokenType[];
-  children?: boolean;
-  childrenType?: TokenType | TokenType[];
 }
 
 interface ListTokensQueryDecrypted extends ListTokensQuery {
@@ -62,7 +55,6 @@ export type {
   TokenEncryption,
   Token,
   CreateTokenModel,
-  RetrieveTokenQuery,
   ListTokensQuery,
   ListTokensQueryDecrypted,
 };

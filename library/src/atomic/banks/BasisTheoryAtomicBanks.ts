@@ -3,7 +3,7 @@ import {
   createRequestConfig,
   dataExtractor,
   transformAtomicReactionRequestSnakeCase,
-  proxyRawResponse,
+  proxyRaw,
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
 } from '../../common';
@@ -73,7 +73,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
           request,
           createRequestConfig(options, {
             transformRequest: transformAtomicReactionRequestSnakeCase,
-            transformResponse: proxyRawResponse,
+            transformResponse: proxyRaw,
           })
         )
         .then(dataExtractor);

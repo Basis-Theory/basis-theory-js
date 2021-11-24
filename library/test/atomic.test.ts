@@ -27,19 +27,6 @@ describe('Atomic', () => {
         expirationYear: 29,
         cvc: '123',
       };
-      const billingDetails = {
-        name: 'John Doe',
-        email: 'john.doe@basistheory.com',
-        phone: '+12035555555',
-        address: {
-          city: 'Honolulu',
-          country: 'US',
-          line1: '123 Chill street',
-          line2: 'Unit A',
-          postalCode: '11111',
-          state: 'HI',
-        },
-      };
 
       client.onPost('/cards').reply(201, {
         id: chance.string(),
@@ -49,7 +36,6 @@ describe('Atomic', () => {
 
       const token = await bt.atomic.storeCreditCard({
         card: creditCardInfo,
-        billingDetails,
       });
 
       expect(client.history.post.length).toBe(1);
@@ -61,19 +47,6 @@ describe('Atomic', () => {
             expiration_month: 12,
             expiration_year: 29,
             cvc: '123',
-          },
-          billing_details: {
-            name: 'John Doe',
-            email: 'john.doe@basistheory.com',
-            phone: '+12035555555',
-            address: {
-              city: 'Honolulu',
-              country: 'US',
-              line1: '123 Chill street',
-              line2: 'Unit A',
-              postal_code: '11111',
-              state: 'HI',
-            },
           },
         })
         /* eslint-enable camelcase */

@@ -55,30 +55,10 @@
 
         // extract data from form elements
         const number = document.getElementById('card_number').value;
-        const name = document.getElementById('holder_name').value;
         const expirationMonth = document.getElementById('expiration_month')
           .value;
         const expirationYear = document.getElementById('expiration_year').value;
         const cvc = document.getElementById('cvc').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const line1 = document.getElementById('line1').value;
-        const line2 = document.getElementById('line2').value;
-        const city = document.getElementById('city').value;
-        const state = document.getElementById('state').value;
-        const postalCode = document.getElementById('postal_code').value;
-        const country = document.getElementById('country').value;
-
-        const address = {
-          line1,
-          line2,
-          city,
-          state,
-          postalCode,
-          country,
-        };
-
-        const hasAddress = Object.keys(address).some((key) => address[key]);
 
         const paymentInfo = {
           card: {
@@ -86,12 +66,6 @@
             expirationMonth,
             expirationYear,
             cvc,
-          },
-          billingDetails: {
-            name,
-            email: email || undefined,
-            phone: phone || undefined,
-            address: hasAddress ? address : undefined,
           },
         };
 
@@ -107,7 +81,6 @@
       function handleNewCard(data) {
         const wrapper = document.getElementById('cards_wrapper');
         const newCardDiv = document.createElement('div');
-        const name = data.billingDetails ? data.billingDetails.name : '';
         const expiration =
           data.card.expirationMonth + '/' + data.card.expirationYear;
         newCardDiv.className = 'card';
@@ -136,10 +109,6 @@
     <!-- We don't want the form to reload the page; hence `return false` -->
     <form onsubmit="onSubmit(event); return false;">
       <h2 class="header">Add New Credit Card</h2>
-      <div>
-        <label for="holder_name" class="mr-1">Holder Name:</label>
-        <input class="span2" type="text" id="holder_name" name="holder_name" />
-      </div>
       <div>
         <label for="card_number" class="mr-1">Card Number:</label>
         <input
@@ -179,41 +148,6 @@
           minlength="3"
           maxlength="4"
           size="3"
-        />
-      </div>
-      <div>
-        <label for="email" class="mr-1">Email:</label>
-        <input type="email" id="email" name="email" />
-      </div>
-      <div>
-        <label for="phone" class="mr-1">Phone:</label>
-        <input type="tel" id="phone" name="phone" />
-      </div>
-      <div>
-        <label for="line1" class="mr-1">Address (line 1):</label>
-        <input type="text" id="line1" name="line1" />
-      </div>
-      <div>
-        <label for="line2" class="mr-1">Address (line 2):</label>
-        <input type="text" id="line2" name="line2" />
-      </div>
-      <div>
-        <label for="city" class="mr-1">City:</label>
-        <input type="text" id="city" name="city" size="8" />
-        <label for="state" class="mr-1">State:</label>
-        <input type="text" id="state" name="state" size="8" />
-      </div>
-      <div>
-        <label for="postal_code" class="mr-1">Postal Code:</label>
-        <input type="text" id="postal_code" name="postal_code" size="8" />
-        <label for="country" class="mr-1">Country:</label>
-        <input
-          type="text"
-          id="country"
-          name="country"
-          size="2"
-          maxlength="2"
-          minlength="2"
         />
       </div>
       <div class="submit">
