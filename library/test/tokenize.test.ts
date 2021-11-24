@@ -34,7 +34,7 @@ describe('Tokenize', () => {
         last_name: chance.string(),
         card: {
           type: 'card',
-          card: {
+          data: {
             number: chance.string(),
             expiration_month: chance.integer(),
             expiration_year: chance.integer(),
@@ -53,11 +53,36 @@ describe('Tokenize', () => {
           },
         ],
       };
+
+      const tokenResponse = {
+        first_name: chance.guid(),
+        last_name: chance.guid(),
+        card: {
+          id: chance.guid(),
+          type: 'card',
+          mask: {
+            number: chance.string(),
+            expiration_month: chance.integer(),
+            expiration_year: chance.integer(),
+          },
+          metadata: {
+            camelCase: chance.string(),
+            snake_case: chance.string(),
+          },
+        },
+        random_tokens: [
+          chance.guid(),
+          {
+            id: chance.guid(),
+            type: 'token',
+          },
+        ],
+      };
       /* eslint-enable camelcase */
 
-      client.onPost('/').reply(200, JSON.stringify(tokens));
+      client.onPost('/').reply(200, JSON.stringify(tokenResponse));
 
-      expect(await bt.tokenize.tokenize(tokens)).toEqual(tokens);
+      expect(await bt.tokenize.tokenize(tokens)).toEqual(tokenResponse);
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].data).toStrictEqual(JSON.stringify(tokens));
       expect(client.history.post[0].headers).toMatchObject({
@@ -74,7 +99,7 @@ describe('Tokenize', () => {
         last_name: chance.string(),
         card: {
           type: 'card',
-          card: {
+          data: {
             number: chance.string(),
             expiration_month: chance.integer(),
             expiration_year: chance.integer(),
@@ -93,16 +118,41 @@ describe('Tokenize', () => {
           },
         ],
       };
+
+      const tokenResponse = {
+        first_name: chance.guid(),
+        last_name: chance.guid(),
+        card: {
+          id: chance.guid(),
+          type: 'card',
+          mask: {
+            number: chance.string(),
+            expiration_month: chance.integer(),
+            expiration_year: chance.integer(),
+          },
+          metadata: {
+            camelCase: chance.string(),
+            snake_case: chance.string(),
+          },
+        },
+        random_tokens: [
+          chance.guid(),
+          {
+            id: chance.guid(),
+            type: 'token',
+          },
+        ],
+      };
       /* eslint-enable camelcase */
 
-      client.onPost('/').reply(200, JSON.stringify(tokens));
+      client.onPost('/').reply(200, JSON.stringify(tokenResponse));
 
       expect(
         await bt.tokenize.tokenize(tokens, {
           apiKey: _apiKey,
           correlationId,
         })
-      ).toEqual(tokens);
+      ).toEqual(tokenResponse);
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].data).toStrictEqual(JSON.stringify(tokens));
       expect(client.history.post[0].headers).toMatchObject({
