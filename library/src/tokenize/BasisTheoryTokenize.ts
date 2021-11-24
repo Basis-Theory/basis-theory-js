@@ -52,4 +52,3 @@ export const BasisTheoryTokenize = new CrudBuilder(
   }
 ).build();
 
-export type BasisTheoryTokenize = InstanceType<typeof BasisTheoryTokenize>;
