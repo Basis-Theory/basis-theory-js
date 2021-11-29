@@ -8,11 +8,9 @@ context('API error', () => {
 
   context('network error/network offline', () => {
     beforeEach(() => {
-      cy.goOffline();
-    });
-
-    afterEach(() => {
-      cy.goOnline();
+      cy.intercept('POST', '/atomic/cards', {
+        forceNetworkError: true,
+      });
     });
 
     it('should return error with status of -1 and data of undefined', () => {
