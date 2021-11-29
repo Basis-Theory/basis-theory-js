@@ -35,7 +35,7 @@ const transformRequestSnakeCase: AxiosTransformer = <T, S>(
   }) as S;
 };
 
-const proxyRawResponse: AxiosTransformer = <T>(data: T): T | undefined => data;
+const proxyRaw: AxiosTransformer = <T>(data: T): T | undefined => data;
 
 const transformReactorRequestSnakeCase: AxiosTransformer = (
   reactor: Reactor
@@ -78,6 +78,7 @@ const transformTokenRequestSnakeCase: AxiosTransformer = (
   return {
     ...snakecaseKeys(token, { deep: true }),
     ...(token.data !== undefined ? { data: token.data } : {}),
+    ...(token.mask !== undefined ? { mask: token.mask } : {}),
     ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
   } as Token;
 };
@@ -108,6 +109,7 @@ const transformTokenResponseCamelCase: AxiosTransformer = (
   return {
     ...camelcaseKeys(token, { deep: true }),
     ...(token.data !== undefined ? { data: token.data } : {}),
+    ...(token.mask !== undefined ? { mask: token.mask } : {}),
     ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
   } as Token;
 };
@@ -277,7 +279,7 @@ const getQueryParams = <Q>(query: Q): string => {
 export {
   assertInit,
   transformRequestSnakeCase,
-  proxyRawResponse,
+  proxyRaw,
   transformReactorRequestSnakeCase,
   transformAtomicRequestSnakeCase,
   transformTokenRequestSnakeCase,

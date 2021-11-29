@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.12.0...v1.13.0) (2021-11-24)
+
+
+### Features
+
+* add tokenize endpoint, remove billing details, removes children filters ([#127](https://github.com/Basis-Theory/basis-theory-js/issues/127)) ([b4746a3](https://github.com/Basis-Theory/basis-theory-js/commit/b4746a328ca89b354a7e6b8f476171de999f4ea3))
+
 # [1.12.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.11.0...v1.12.0) (2021-11-08)
 
 

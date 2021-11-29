@@ -28,9 +28,6 @@ context('Credit Card example', () => {
               expiration_year: year,
               cvc: 'XXX',
             },
-            billing_details: {
-              name: 'John Doe',
-            },
           },
         });
         /* eslint-enable camelcase */
@@ -44,24 +41,14 @@ context('Credit Card example', () => {
 
   it('should have all credit card form fields', () => {
     cy.get('form').should('have.length', 1);
-    cy.get('form').find('#holder_name').should('exist');
     cy.get('form').find('#expiration_month').should('exist');
     cy.get('form').find('#expiration_year').should('exist');
     cy.get('form').find('#cvc').should('exist');
-    cy.get('form').find('#email').should('exist');
-    cy.get('form').find('#phone').should('exist');
-    cy.get('form').find('#line1').should('exist');
-    cy.get('form').find('#line2').should('exist');
-    cy.get('form').find('#city').should('exist');
-    cy.get('form').find('#state').should('exist');
-    cy.get('form').find('#postal_code').should('exist');
-    cy.get('form').find('#country').should('exist');
   });
 
   it('should be able to submit form with minimum information and get masked information back', () => {
     const year = (new Date().getFullYear() + 1).toString();
 
-    cy.get('form').find('#holder_name').type('John Doe');
     cy.get('form').find('#card_number').type('4242424242424242');
     cy.get('form').find('#expiration_month').type('10');
     cy.get('form').find('#expiration_year').type(year);
