@@ -84,6 +84,15 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_RELEASE_TOKEN }}
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
+      - name: Dispatch integration tests run
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Verify
+          repo: Basis-Theory/basis-theory-js-examples
+          token: ${{ secrets.WORKFLOW_DISPATCH_TOKEN }}
+          ref: master
+          inputs: '{ "source": "Basis-Theory/basis-theory-js" }'
+
       - name: Slack Deploy / Release Alert
         uses: 8398a7/action-slack@v3
         if: always()
