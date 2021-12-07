@@ -11,7 +11,7 @@ import {
   BasisTheoryServiceOptions,
   RequestOptions,
 } from '../service';
-import type { TokenData } from '../tokens/types';
+import { TokenizeData } from './types';
 
 export class BasisTheoryTokenize extends BasisTheoryService {
   public constructor(options: BasisTheoryServiceOptions) {
@@ -33,9 +33,9 @@ export class BasisTheoryTokenize extends BasisTheoryService {
   }
 
   public tokenize(
-    tokens: TokenData,
+    tokens: TokenizeData,
     options: RequestOptions = {}
-  ): Promise<TokenData> {
+  ): Promise<TokenizeData> {
     return this.client
       .post(
         '/',
