@@ -11,7 +11,7 @@ import {
   BasisTheoryServiceOptions,
   RequestOptions,
 } from '../service';
-import { TokenizeData } from './types';
+import type { TokenizeData } from './types';
 
 export class BasisTheoryTokenize extends BasisTheoryService {
   public constructor(options: BasisTheoryServiceOptions) {
