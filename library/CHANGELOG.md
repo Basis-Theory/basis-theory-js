@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.13.0...v1.13.1) (2021-12-07)
+
+
+### Bug Fixes
+
+* tokenize types ([#135](https://github.com/Basis-Theory/basis-theory-js/issues/135)) ([1f0124d](https://github.com/Basis-Theory/basis-theory-js/commit/1f0124dba9b3599ddd24c192bdf19205029a3b39))
+
 # [1.13.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.12.0...v1.13.0) (2021-11-24)
 
 
