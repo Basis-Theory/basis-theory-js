@@ -29,6 +29,7 @@
     "test:cov": "jest --coverage"
   },
   "dependencies": {
+    "@basis-theory/basis-theory-elements-interfaces": "link:../basis-theory-elements-interfaces/dist",
     "axios": "^0.21.2",
     "camelcase-keys": "^6.2.2",
     "snake-case": "^3.0.4",

@@ -1,17 +1,14 @@
+import type { TokenizeData } from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';
 import { createRequestConfig } from '../common';
 import {
   dataExtractor,
-  transformTokenResponseCamelCase,
-  transformTokenRequestSnakeCase,
   proxyRaw,
+  transformTokenRequestSnakeCase,
+  transformTokenResponseCamelCase,
 } from '../common/utils';
-import {
-  BasisTheoryService,
-  BasisTheoryServiceOptions,
-  RequestOptions,
-} from '../service';
-import type { TokenizeData } from './types';
+import { BasisTheoryService, BasisTheoryServiceOptions } from '../service';
 
 export class BasisTheoryTokenize extends BasisTheoryService {
   public constructor(options: BasisTheoryServiceOptions) {

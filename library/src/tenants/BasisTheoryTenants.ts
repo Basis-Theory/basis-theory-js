@@ -1,7 +1,12 @@
+import type {
+  Tenant,
+  TenantUsageReport,
+  UpdateTenant,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk/services';
 import { createRequestConfig, dataExtractor } from '../common';
-import { BasisTheoryService, RequestOptions } from '../service';
+import { BasisTheoryService } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
-import type { Tenant, TenantUsageReport, UpdateTenantModel } from './types';
 
 export const BasisTheoryTenants = new CrudBuilder(
   class BasisTheoryTenants extends BasisTheoryService {
@@ -12,7 +17,7 @@ export const BasisTheoryTenants = new CrudBuilder(
     }
 
     public update(
-      model: UpdateTenantModel,
+      model: UpdateTenant,
       options?: RequestOptions
     ): Promise<Tenant> {
       return this.client

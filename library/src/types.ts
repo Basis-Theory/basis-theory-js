@@ -1,4 +1,4 @@
-import type { BasisTheoryElements } from './elements';
+import type { BasisTheoryElements } from '@basis-theory/basis-theory-elements-interfaces/elements';
 
 type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
@@ -37,15 +37,15 @@ interface EncryptionOptions {
 
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
-  elements?: boolean;
-  elementsBaseUrl?: string;
 }
 
-interface Auditable {
-  createdBy?: string;
-  createdAt?: string;
-  modifiedBy?: string;
-  modifiedAt?: string;
+interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {
+  elements?: false;
+}
+
+interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
+  elements: true;
+  elementsBaseUrl?: string;
 }
 
 declare global {
@@ -65,5 +65,6 @@ export type {
   EncryptionProviderOptions,
   EncryptionOptions,
   BasisTheoryInitOptions,
-  Auditable,
+  BasisTheoryInitOptionsWithoutElements,
+  BasisTheoryInitOptionsWithElements,
 };

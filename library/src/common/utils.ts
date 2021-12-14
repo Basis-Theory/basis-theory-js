@@ -1,16 +1,20 @@
-import axios from 'axios';
+import type {
+  Reactor,
+  ReactRequest,
+  Token,
+  TokenBase,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk/services';
 import type {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosTransformer,
 } from 'axios';
+import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
-import type { Atomic, ReactRequest } from '../atomic';
-import type { Reactor } from '../reactors';
-import type { RequestOptions, RequestTransformers } from '../service';
-import type { Token } from '../tokens';
+import { RequestTransformers } from '../service';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
 
@@ -53,8 +57,8 @@ const transformReactorRequestSnakeCase: AxiosTransformer = (
 };
 
 const transformAtomicRequestSnakeCase: AxiosTransformer = <
-  T extends Atomic,
-  S extends Atomic
+  T extends TokenBase,
+  S extends TokenBase
 >(
   data: T
 ): S | undefined => {
@@ -142,8 +146,8 @@ const transformResponseCamelCase: AxiosTransformer = <T, C>(
 };
 
 const transformAtomicResponseCamelCase: AxiosTransformer = <
-  T extends Atomic,
-  C extends Atomic
+  T extends TokenBase,
+  C extends TokenBase
 >(
   data: T
 ): C | undefined => {

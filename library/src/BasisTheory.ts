@@ -1,40 +1,64 @@
+import type {
+  AtomicBanks as ElementsAtomicBanks,
+  AtomicCards as ElementsAtomicCards,
+  BaseElement,
+  BasisTheoryElements,
+  BasisTheoryElementsInit,
+  ElementType,
+  Tokenize as ElementsTokenize,
+  Tokens as ElementsTokens,
+} from '@basis-theory/basis-theory-elements-interfaces/elements';
+import type {
+  Applications,
+  AtomicBanks,
+  AtomicCards,
+  BasisTheory as IBasisTheory,
+  BasisTheoryInit,
+  Logs,
+  Permissions,
+  ReactorFormulas,
+  Reactors,
+  Tenants,
+  Tokenize,
+  Tokens,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { BasisTheoryApplications } from './applications';
-import { BasisTheoryAtomic } from './atomic';
 import { BasisTheoryAtomicBanks } from './atomic/banks';
-import { BasisTheoryAtomicCards } from './atomic/cards';
 import { assertInit, loadElements } from './common';
 import {
   CLIENT_BASE_PATHS,
-  DEFAULT_ELEMENTS_BASE_URL,
   DEFAULT_BASE_URL,
+  DEFAULT_ELEMENTS_BASE_URL,
 } from './common/constants';
-import type { BasisTheoryElements, BasisTheoryElementsInit } from './elements';
+import { delegateAtomicCards, delegateTokenize } from './elements';
+import { delegateTokens } from './elements/tokens';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheoryTenants } from './tenants';
-import { BasisTheoryTokenize } from './tokenize';
-import { BasisTheoryTokens } from './tokens';
-import type { BasisTheoryInitOptions, InitStatus } from './types';
+import type {
+  BasisTheoryInitOptions,
+  BasisTheoryInitOptionsWithElements,
+  BasisTheoryInitOptionsWithoutElements,
+  InitStatus,
+} from './types';
 
-const defaultInitOptions: Required<BasisTheoryInitOptions> = {
+const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
-  elementsBaseUrl: DEFAULT_ELEMENTS_BASE_URL,
 };
 
-export class BasisTheory {
+export class BasisTheory
+  implements BasisTheoryInit, IBasisTheory, BasisTheoryElements {
   private _initStatus: InitStatus = 'not-started';
 
   private _initOptions?: Required<BasisTheoryInitOptions>;
 
-  private _tokens?: BasisTheoryTokens;
+  private _tokens?: Tokens & ElementsTokens;
 
-  private _tokenize?: BasisTheoryTokenize;
-
-  private _atomic?: BasisTheoryAtomic;
+  private _tokenize?: Tokenize & ElementsTokenize;
 
   private _encryption?: BasisTheoryEncryptionAdapters;
 
@@ -52,14 +76,24 @@ export class BasisTheory {
 
   private _atomicBanks?: BasisTheoryAtomicBanks;
 
-  private _atomicCards?: BasisTheoryAtomicCards;
+  private _atomicCards?: AtomicCards & ElementsAtomicCards;
 
   private _permissions?: BasisTheoryPermissions;
+
+  public init(
+    apiKey: string,
+    options?: BasisTheoryInitOptionsWithoutElements
+  ): Promise<IBasisTheory>;
+
+  public init(
+    apiKey: string,
+    options: BasisTheoryInitOptionsWithElements
+  ): Promise<IBasisTheory & BasisTheoryElements>;
 
   public async init(
     apiKey: string,
     options: BasisTheoryInitOptions = {}
-  ): Promise<BasisTheory> {
+  ): Promise<IBasisTheory & BasisTheoryElements> {
     if (this._initStatus !== 'not-started' && this._initStatus !== 'error') {
       throw new Error(
         'This BasisTheory instance has been already initialized.'
@@ -90,17 +124,17 @@ export class BasisTheory {
         throw new Error('Invalid format for the given API base url.');
       }
 
-      this._tokens = new BasisTheoryTokens({
+      if ((this._initOptions as BasisTheoryInitOptionsWithElements).elements) {
+        await this.loadElements(apiKey);
+      }
+
+      this._tokens = new (delegateTokens(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
       });
-      this._tokenize = new BasisTheoryTokenize({
+      this._tokenize = new (delegateTokenize(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokenize, baseUrl).toString(),
-      });
-      this._atomic = new BasisTheoryAtomic({
-        apiKey,
-        baseURL: new URL(CLIENT_BASE_PATHS.atomic, baseUrl).toString(),
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
@@ -126,7 +160,7 @@ export class BasisTheory {
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.atomicBanks, baseUrl).toString(),
       });
-      this._atomicCards = new BasisTheoryAtomicCards({
+      this._atomicCards = new (delegateAtomicCards(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.atomicCards, baseUrl).toString(),
       });
@@ -137,10 +171,6 @@ export class BasisTheory {
 
       this._encryption = new BasisTheoryEncryptionAdapters();
 
-      if (this._initOptions.elements) {
-        await this.loadElements(apiKey);
-      }
-
       this._initStatus = 'done';
     } catch (error) {
       this._initStatus = 'error';
@@ -150,11 +180,21 @@ export class BasisTheory {
     return this;
   }
 
+  public createElement<
+    T extends ElementType
+    // O extends CustomizableElementOptions
+  >(): BaseElement<T> {
+    throw new Error('Not yet implemented');
+  }
+
   private async loadElements(apiKey: string): Promise<void> {
     let elementsBaseUrl: URL;
 
     try {
-      elementsBaseUrl = new URL(this.initOptions.elementsBaseUrl);
+      elementsBaseUrl = new URL(
+        (this.initOptions as BasisTheoryInitOptionsWithElements)
+          .elementsBaseUrl || DEFAULT_ELEMENTS_BASE_URL
+      );
     } catch {
       throw new Error('Invalid format for the given Elements base url.');
     }
@@ -174,51 +214,50 @@ export class BasisTheory {
     return assertInit(this._initOptions);
   }
 
-  public get tokens(): BasisTheoryTokens {
+  public get tokens(): Tokens & ElementsTokens {
     return assertInit(this._tokens);
   }
 
-  public get tokenize(): BasisTheoryTokenize {
+  public get tokenize(): Tokenize & ElementsTokenize {
     return assertInit(this._tokenize);
   }
 
-  public get atomic(): BasisTheoryAtomic {
-    return assertInit(this._atomic);
-  }
-
+  /**
+   * @deprecated
+   */
   public get encryption(): BasisTheoryEncryptionAdapters {
     return assertInit(this._encryption);
   }
 
-  public get applications(): BasisTheoryApplications {
+  public get applications(): Applications {
     return assertInit(this._applications);
   }
 
-  public get tenants(): BasisTheoryTenants {
+  public get tenants(): Tenants {
     return assertInit(this._tenants);
   }
 
-  public get logs(): BasisTheoryLogs {
+  public get logs(): Logs {
     return assertInit(this._logs);
   }
 
-  public get reactorFormulas(): BasisTheoryReactorFormulas {
+  public get reactorFormulas(): ReactorFormulas {
     return assertInit(this._reactorFormulas);
   }
 
-  public get reactors(): BasisTheoryReactors {
+  public get reactors(): Reactors {
     return assertInit(this._reactors);
   }
 
-  public get atomicBanks(): BasisTheoryAtomicBanks {
+  public get atomicBanks(): AtomicBanks & ElementsAtomicBanks {
     return assertInit(this._atomicBanks);
   }
 
-  public get atomicCards(): BasisTheoryAtomicCards {
+  public get atomicCards(): AtomicCards & ElementsAtomicCards {
     return assertInit(this._atomicCards);
   }
 
-  public get permissions(): BasisTheoryPermissions {
+  public get permissions(): Permissions {
     return assertInit(this._permissions);
   }
   /* eslint-enable accessor-pairs */
