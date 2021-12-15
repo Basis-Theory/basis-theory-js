@@ -1,13 +1,18 @@
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import type {
+  CreateTokenModel,
+  ListTokensQuery,
   ListTokensQueryDecrypted,
   Token,
   TokenType,
-  CreateTokenModel,
-  ListTokensQuery,
 } from '../src';
-import { BasisTheory } from '../src';
+import {
+  BasisTheory,
+  DataClassification,
+  DataImpact,
+  DataRestrictionPolicy,
+} from '../src';
 import {
   API_KEY_HEADER,
   BT_TRACE_ID_HEADER,
@@ -862,6 +867,11 @@ describe('Tokens', () => {
       data: {
         camelCaseParameter: _chance.string(),
         snake_case_parameter: _chance.string(),
+      },
+      privacy: {
+        impactLevel: DataImpact.HIGH,
+        classification: DataClassification.PCI,
+        restrictionPolicy: DataRestrictionPolicy.REDACT,
       },
       metadata: {
         camelCaseParameter: _chance.string(),
