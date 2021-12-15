@@ -4,7 +4,6 @@ import type {
   BasisTheoryElements,
   BasisTheoryElementsInit,
   CardElement,
-  CreateTextElementOptions,
   CustomizableElementOptions,
   ElementType,
   TextElement,
@@ -88,22 +87,20 @@ export class BasisTheory
 
   private _permissions?: BasisTheoryPermissions;
 
-  // TODO fix init declaration if using class directly
-
   public init(
     apiKey: string,
     options?: BasisTheoryInitOptionsWithoutElements
-  ): Promise<BasisTheory>;
+  ): Promise<IBasisTheory>;
 
   public init(
     apiKey: string,
     options: BasisTheoryInitOptionsWithElements
-  ): Promise<BasisTheory & BasisTheoryElements>;
+  ): Promise<IBasisTheory & BasisTheoryElements>;
 
   public async init(
     apiKey: string,
     options: BasisTheoryInitOptions = {}
-  ): Promise<IBasisTheory | (IBasisTheory & BasisTheoryElements)> {
+  ): Promise<IBasisTheory & BasisTheoryElements> {
     if (this._initStatus !== 'not-started' && this._initStatus !== 'error') {
       throw new Error(
         'This BasisTheory instance has been already initialized.'
@@ -190,16 +187,17 @@ export class BasisTheory
     return this;
   }
 
-  // TODO figure conditional types for this one too
-  public createElement<O extends CustomizableElementOptions | undefined>(
+  public createElement(
     type: ElementType,
-    options: O
+    options: CustomizableElementOptions
   ): CardElement | TextElement {
     if (!this._elements) {
       throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
     }
 
     // the cast below is to avoid unnecessary conditional calls to elements
+    // the underlying elements function called will be the same, no matter the
+    // element type
     return this._elements.createElement(type as 'card', options);
   }
 
