@@ -11,7 +11,8 @@ import type {
   RequestOptions,
   AtomicCards,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryAtomicCards } from '../atomic';
+import { BasisTheoryAtomicCards } from '../../atomic';
+import { ELEMENTS_INIT_ERROR_MESSAGE } from '../constants';
 import { hasElement } from './utils';
 
 const delegateAtomicCards = (
@@ -34,9 +35,7 @@ const delegateAtomicCards = (
           );
         }
 
-        throw new Error(
-          'BasisTheory was not initialized with "elements: true"'
-        );
+        throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
       }
 
       return super.create(payload as CreateAtomicCard, requestOptions);

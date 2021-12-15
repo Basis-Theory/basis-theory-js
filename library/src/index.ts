@@ -7,6 +7,10 @@ import { BasisTheory } from './BasisTheory';
  */
 export const _instance: BasisTheoryInit = new BasisTheory();
 
+_instance.init('', { elements: true }).then((bt) => {
+  bt.createElement('text', { targetId: '' });
+});
+
 export * from './BasisTheory';
 export * from './encryption';
 export * from './applications';

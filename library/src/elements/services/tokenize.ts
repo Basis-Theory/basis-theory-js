@@ -8,7 +8,8 @@ import type {
   RequestOptions,
   Tokenize,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryTokenize } from '../tokenize';
+import { BasisTheoryTokenize } from '../../tokenize';
+import { ELEMENTS_INIT_ERROR_MESSAGE } from '../constants';
 import { hasElement } from './utils';
 
 const delegateTokenize = (
@@ -31,9 +32,7 @@ const delegateTokenize = (
           );
         }
 
-        throw new Error(
-          'BasisTheory was not initialized with "elements: true"'
-        );
+        throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
       }
 
       return super.tokenize(payload as TokenizeData, requestOptions);

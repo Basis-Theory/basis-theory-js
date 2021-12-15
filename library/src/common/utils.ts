@@ -82,7 +82,6 @@ const transformTokenRequestSnakeCase: AxiosTransformer = (
   return {
     ...snakecaseKeys(token, { deep: true }),
     ...(token.data !== undefined ? { data: token.data } : {}),
-    ...(token.mask !== undefined ? { mask: token.mask } : {}),
     ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
   } as Token;
 };
@@ -113,7 +112,6 @@ const transformTokenResponseCamelCase: AxiosTransformer = (
   return {
     ...camelcaseKeys(token, { deep: true }),
     ...(token.data !== undefined ? { data: token.data } : {}),
-    ...(token.mask !== undefined ? { mask: token.mask } : {}),
     ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
   } as Token;
 };

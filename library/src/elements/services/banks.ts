@@ -11,7 +11,8 @@ import type {
   RequestOptions,
   AtomicBanks,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryAtomicBanks } from '../atomic';
+import { BasisTheoryAtomicBanks } from '../../atomic';
+import { ELEMENTS_INIT_ERROR_MESSAGE } from '../constants';
 import { hasElement } from './utils';
 
 const delegateAtomicBanks = (
@@ -34,9 +35,7 @@ const delegateAtomicBanks = (
           );
         }
 
-        throw new Error(
-          'BasisTheory was not initialized with "elements: true"'
-        );
+        throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
       }
 
       return super.create(payload as CreateAtomicBank, requestOptions);

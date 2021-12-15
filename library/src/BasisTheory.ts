@@ -1,10 +1,13 @@
 import type {
   AtomicBanks as ElementsAtomicBanks,
   AtomicCards as ElementsAtomicCards,
-  BaseElement,
   BasisTheoryElements,
   BasisTheoryElementsInit,
+  CardElement,
+  CreateTextElementOptions,
+  CustomizableElementOptions,
   ElementType,
+  TextElement,
   Tokenize as ElementsTokenize,
   Tokens as ElementsTokens,
 } from '@basis-theory/basis-theory-elements-interfaces/elements';
@@ -23,15 +26,20 @@ import type {
   Tokens,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { BasisTheoryApplications } from './applications';
-import { BasisTheoryAtomicBanks } from './atomic/banks';
-import { assertInit, loadElements } from './common';
+import { assertInit } from './common';
 import {
   CLIENT_BASE_PATHS,
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
 } from './common/constants';
-import { delegateAtomicCards, delegateTokenize } from './elements';
-import { delegateTokens } from './elements/tokens';
+import {
+  delegateAtomicBanks,
+  delegateAtomicCards,
+  delegateTokenize,
+  delegateTokens,
+  loadElements,
+} from './elements';
+import { ELEMENTS_INIT_ERROR_MESSAGE } from './elements/constants';
 import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryPermissions } from './permissions';
@@ -74,26 +82,28 @@ export class BasisTheory
 
   private _reactors?: BasisTheoryReactors;
 
-  private _atomicBanks?: BasisTheoryAtomicBanks;
+  private _atomicBanks?: AtomicBanks & ElementsAtomicBanks;
 
   private _atomicCards?: AtomicCards & ElementsAtomicCards;
 
   private _permissions?: BasisTheoryPermissions;
 
+  // TODO fix init declaration if using class directly
+
   public init(
     apiKey: string,
     options?: BasisTheoryInitOptionsWithoutElements
-  ): Promise<IBasisTheory>;
+  ): Promise<BasisTheory>;
 
   public init(
     apiKey: string,
     options: BasisTheoryInitOptionsWithElements
-  ): Promise<IBasisTheory & BasisTheoryElements>;
+  ): Promise<BasisTheory & BasisTheoryElements>;
 
   public async init(
     apiKey: string,
     options: BasisTheoryInitOptions = {}
-  ): Promise<IBasisTheory & BasisTheoryElements> {
+  ): Promise<IBasisTheory | (IBasisTheory & BasisTheoryElements)> {
     if (this._initStatus !== 'not-started' && this._initStatus !== 'error') {
       throw new Error(
         'This BasisTheory instance has been already initialized.'
@@ -156,7 +166,7 @@ export class BasisTheory
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.reactors, baseUrl).toString(),
       });
-      this._atomicBanks = new BasisTheoryAtomicBanks({
+      this._atomicBanks = new (delegateAtomicBanks(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.atomicBanks, baseUrl).toString(),
       });
@@ -180,11 +190,17 @@ export class BasisTheory
     return this;
   }
 
-  public createElement<
-    T extends ElementType
-    // O extends CustomizableElementOptions
-  >(): BaseElement<T> {
-    throw new Error('Not yet implemented');
+  // TODO figure conditional types for this one too
+  public createElement<O extends CustomizableElementOptions | undefined>(
+    type: ElementType,
+    options: O
+  ): CardElement | TextElement {
+    if (!this._elements) {
+      throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
+    }
+
+    // the cast below is to avoid unnecessary conditional calls to elements
+    return this._elements.createElement(type as 'card', options);
   }
 
   private async loadElements(apiKey: string): Promise<void> {

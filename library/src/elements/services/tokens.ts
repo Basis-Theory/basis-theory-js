@@ -11,7 +11,8 @@ import type {
   RequestOptions,
   Tokens,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryTokens } from '../tokens';
+import { BasisTheoryTokens } from '../../tokens';
+import { ELEMENTS_INIT_ERROR_MESSAGE } from '../constants';
 import { hasElement } from './utils';
 
 const delegateTokens = (
@@ -34,9 +35,7 @@ const delegateTokens = (
           );
         }
 
-        throw new Error(
-          'BasisTheory was not initialized with "elements: true"'
-        );
+        throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
       }
 
       return super.create(payload as CreateToken, requestOptions);
