@@ -1,9 +1,9 @@
 const ELEMENT_CLASS_NAMES = new Set(['CardElement', 'TextElement']);
 
-const hasElement = (object: unknown): boolean => {
-  if (object && typeof object === 'object') {
+const hasElement = (payload: unknown): boolean => {
+  if (payload && typeof payload === 'object') {
     return (
-      Object.entries(object).find(([, value]) => {
+      Object.entries(payload).find(([, value]) => {
         if (ELEMENT_CLASS_NAMES.has(value?.constructor?.name)) {
           return true;
         }
