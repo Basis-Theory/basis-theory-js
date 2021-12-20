@@ -1,9 +1,12 @@
+import type {
+  PermissionType,
+  ApplicationType,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
-import type { ApplicationType } from '../src/applications/types';
 import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
-import type { PermissionType } from '../src/permissions/types';
 import {
   errorStatus,
   expectBasisTheoryApiError,
@@ -11,10 +14,10 @@ import {
 } from './setup/utils';
 
 describe('Permissions', () => {
-  let bt: BasisTheory;
-  let chance: Chance.Chance;
-  let apiKey: string;
-  let client: MockAdapter;
+  let bt: IBasisTheory,
+    chance: Chance.Chance,
+    apiKey: string,
+    client: MockAdapter;
 
   beforeAll(async () => {
     chance = new Chance();

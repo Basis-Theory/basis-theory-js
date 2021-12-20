@@ -1,11 +1,7 @@
-import {
-  BasisTheoryElements,
-  CreateAtomicBank,
-} from '@Basis-Theory/basis-theory-elements-interfaces/elements';
+import { BasisTheoryElements } from '@Basis-Theory/basis-theory-elements-interfaces/elements';
 import {
   PaginatedQuery,
   PaginatedList,
-  RequestOptions,
   Create,
   Tokenize,
 } from '@Basis-Theory/basis-theory-elements-interfaces/sdk';
