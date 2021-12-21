@@ -6,38 +6,37 @@ import { describeif } from './setup/utils';
 
 describe('Elements', () => {
   const chance = new Chance();
+  let BasisTheory: typeof BasisTheoryType;
+
+  const loadModule = (): void => {
+    jest.resetModules();
+    ({ BasisTheory } = require('../src'));
+  };
 
   beforeEach(() => {
-    jest.resetModules();
+    loadModule();
   });
 
   it('should not load elements with default options', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { BasisTheory } = require('../src');
     const bt = await new BasisTheory().init('');
 
     expect(() => {
       // eslint-disable-next-line no-unused-expressions
-      bt.elements;
+      ((bt as unknown) as { elements: unknown }).elements;
     }).toThrowError();
   });
 
   it('should not load elements with elements=false', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { BasisTheory } = require('../src');
     const bt = await new BasisTheory().init('', { elements: false });
 
     expect(() => {
       // eslint-disable-next-line no-unused-expressions
-      bt.elements;
+      ((bt as unknown) as { elements: unknown }).elements;
     }).toThrowError();
   });
 
   describeif(typeof window !== 'object')('in a windowless environment', () => {
     it('should not load elements ', () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { BasisTheory } = require('../src');
-
       expect(() =>
         new BasisTheory().init('', {
           elements: true,
@@ -54,8 +53,6 @@ describe('Elements', () => {
     });
 
     it('should throw error for invalid base elements url', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { BasisTheory } = require('../src');
       const bt = new BasisTheory();
 
       await expect(() =>
@@ -67,8 +64,6 @@ describe('Elements', () => {
     });
 
     it('should resolve with a valid base elements url', () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { BasisTheory } = require('../src');
       const bt = new BasisTheory();
       const validUrl = chance.url({ protocol: 'https' });
 
@@ -81,8 +76,6 @@ describe('Elements', () => {
     });
 
     it('should resolve to previously initialized BasisTheoryElements', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { BasisTheory } = require('../src');
       let loadElements: () => unknown = jest.fn();
 
       jest.isolateModules(() => {
@@ -121,8 +114,7 @@ describe('Elements', () => {
         },
       }));
 
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { BasisTheory } = require('../src');
+      loadModule();
 
       expect(
         new BasisTheory().init('', { elements: true })
@@ -153,11 +145,11 @@ describe('Elements', () => {
             errorCallback = callback;
           }
         });
+
+        loadModule();
       });
 
       it('should resolve successfully', async () => {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { BasisTheory } = require('../src');
         const promise = new BasisTheory().init('', { elements: true });
 
         expect(addEventListener.mock.calls[0]).toEqual([
@@ -178,8 +170,6 @@ describe('Elements', () => {
       });
 
       it('should reject when Elements can not load in window', () => {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { BasisTheory } = require('../src');
         const promise = new BasisTheory().init('', { elements: true });
 
         loadCallback();
@@ -189,8 +179,6 @@ describe('Elements', () => {
       });
 
       it('should reject when Elements throw unknown error', () => {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { BasisTheory } = require('../src');
         const promise = new BasisTheory().init('', { elements: true });
 
         errorCallback();
@@ -200,8 +188,6 @@ describe('Elements', () => {
       });
 
       it('should reject when Elements throw error', () => {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { BasisTheory } = require('../src');
         const message = chance.string();
         const promise = new BasisTheory().init('', { elements: true });
 
@@ -213,13 +199,7 @@ describe('Elements', () => {
     describe('when mounting a new script tag', () => {
       let addEventListener: jest.Mock<void>;
       let loadCallback: () => void;
-      let bt: {
-        elements: BasisTheoryElements;
-        init?: (
-          apiKey: string,
-          options: BasisTheoryInitOptionsWithElements
-        ) => Promise<BasisTheoryType & BasisTheoryElements>;
-      };
+      let bt: BasisTheoryType;
       const elementsInit = jest.fn();
 
       beforeEach(() => {
@@ -229,9 +209,7 @@ describe('Elements', () => {
             window.BasisTheoryElements = ({
               init: elementsInit,
             } as unknown) as BasisTheoryElements;
-            bt = {
-              elements: window.BasisTheoryElements,
-            };
+            bt.elements = window.BasisTheoryElements as BasisTheoryType;
           }
         });
 
@@ -247,9 +225,7 @@ describe('Elements', () => {
           },
         }));
 
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { BasisTheory } = require('../src');
-
+        loadModule();
         bt = new BasisTheory();
       });
 

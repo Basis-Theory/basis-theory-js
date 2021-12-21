@@ -276,6 +276,9 @@ export class BasisTheory
   }
   /* eslint-enable accessor-pairs */
 
+  /**
+   * @deprecated
+   */
   public get elements(): BasisTheoryElements {
     return assertInit(this._elements);
   }

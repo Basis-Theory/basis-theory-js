@@ -57,10 +57,6 @@ describe('Tokens', () => {
         camelCaseParameter: chance.string(),
         snake_case_parameter: chance.string(),
       };
-      const mask = {
-        camelCaseParameter: chance.string(),
-        snake_case_parameter: chance.string(),
-      };
       const metadata = {
         camelCaseParameter: chance.string(),
         snake_case_parameter: chance.string(),
@@ -81,7 +77,6 @@ describe('Tokens', () => {
           fingerprint,
           type,
           data,
-          mask,
           metadata,
           created_at: createdAt,
           created_by: createdBy,
@@ -97,7 +92,6 @@ describe('Tokens', () => {
         fingerprint,
         type,
         data,
-        mask,
         metadata,
         createdAt,
         createdBy,

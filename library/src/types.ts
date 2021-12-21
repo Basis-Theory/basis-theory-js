@@ -5,7 +5,6 @@ type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 type Clients =
   | 'tokens'
   | 'tokenize'
-  | 'atomic'
   | 'applications'
   | 'reactorFormulas'
   | 'reactors'
