@@ -1,5 +1,5 @@
-import { BasisTheoryElements } from '@basis-theory/basis-theory-elements-interfaces/elements';
-import {
+import type { BasisTheoryElements } from '@basis-theory/basis-theory-elements-interfaces/elements';
+import type {
   PaginatedQuery,
   PaginatedList,
   Create,
