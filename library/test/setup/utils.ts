@@ -1,10 +1,10 @@
-import { BasisTheoryElements } from '@Basis-Theory/basis-theory-elements-interfaces/elements';
+import { BasisTheoryElements } from '@basis-theory/basis-theory-elements-interfaces/elements';
 import {
   PaginatedQuery,
   PaginatedList,
   Create,
   Tokenize,
-} from '@Basis-Theory/basis-theory-elements-interfaces/sdk';
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import {

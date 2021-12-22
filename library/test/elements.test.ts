@@ -1,5 +1,4 @@
 import { BasisTheoryElements } from '@basis-theory/basis-theory-elements-interfaces/elements';
-import { BasisTheoryInitOptionsWithElements } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { Chance } from 'chance';
 import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
