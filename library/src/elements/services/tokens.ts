@@ -1,6 +1,6 @@
 import type {
   Tokens as ElementsTokens,
-  BasisTheoryElements,
+  BasisTheoryElementsInternal,
   CreateToken as ElementsCreateToken,
 } from '@basis-theory/basis-theory-elements-interfaces/elements';
 import type {
@@ -12,11 +12,9 @@ import type {
   Tokens,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { BasisTheoryTokens } from '../../tokens';
-import { ELEMENTS_INIT_ERROR_MESSAGE } from '../constants';
-import { hasElement } from './utils';
 
 const delegateTokens = (
-  elements?: BasisTheoryElements
+  elements?: BasisTheoryElementsInternal
 ): new (
   ...args: ConstructorParameters<typeof BasisTheoryTokens>
 ) => ElementsTokens & Tokens =>
@@ -27,15 +25,11 @@ const delegateTokens = (
       payload: CreateToken | ElementsCreateToken,
       requestOptions?: RequestOptions
     ): Promise<Token> {
-      if (hasElement(payload)) {
-        if (elements) {
-          return elements.tokens.create(
-            payload as ElementsCreateToken,
-            requestOptions
-          );
-        }
-
-        throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
+      if (elements?.hasElement(payload)) {
+        return elements.tokens.create(
+          payload as ElementsCreateToken,
+          requestOptions
+        );
       }
 
       return super.create(payload as CreateToken, requestOptions);

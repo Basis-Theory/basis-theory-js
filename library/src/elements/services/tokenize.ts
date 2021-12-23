@@ -1,6 +1,6 @@
 import type {
   Tokenize as ElementsTokenize,
-  BasisTheoryElements,
+  BasisTheoryElementsInternal,
   TokenizeData as ElementsTokenizeData,
 } from '@basis-theory/basis-theory-elements-interfaces/elements';
 import type { TokenizeData } from '@basis-theory/basis-theory-elements-interfaces/models';
@@ -9,11 +9,9 @@ import type {
   Tokenize,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { BasisTheoryTokenize } from '../../tokenize';
-import { ELEMENTS_INIT_ERROR_MESSAGE } from '../constants';
-import { hasElement } from './utils';
 
 const delegateTokenize = (
-  elements?: BasisTheoryElements
+  elements?: BasisTheoryElementsInternal
 ): new (
   ...args: ConstructorParameters<typeof BasisTheoryTokenize>
 ) => ElementsTokenize & Tokenize =>
@@ -24,15 +22,11 @@ const delegateTokenize = (
       payload: ElementsTokenizeData | TokenizeData,
       requestOptions?: RequestOptions
     ): Promise<TokenizeData> {
-      if (hasElement(payload)) {
-        if (elements) {
-          return elements.tokenize.tokenize(
-            payload as ElementsTokenizeData,
-            requestOptions
-          );
-        }
-
-        throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
+      if (elements?.hasElement(payload)) {
+        return elements.tokenize.tokenize(
+          payload as ElementsTokenizeData,
+          requestOptions
+        );
       }
 
       return super.tokenize(payload as TokenizeData, requestOptions);

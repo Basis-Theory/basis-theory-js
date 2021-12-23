@@ -1,4 +1,4 @@
-import { BasisTheoryElements } from '@basis-theory/basis-theory-elements-interfaces/elements';
+import type { BasisTheoryElementsInternal } from '@basis-theory/basis-theory-elements-interfaces/elements';
 import { Chance } from 'chance';
 import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
@@ -85,7 +85,7 @@ describe('Elements', () => {
         init: jest.fn(),
       } as unknown) as BasisTheoryType;
 
-      window.BasisTheoryElements = expectedElements as BasisTheoryElements;
+      window.BasisTheoryElements = (expectedElements as unknown) as BasisTheoryElementsInternal;
       expect(await loadElements()).toBe(expectedElements);
 
       const baseUrl = chance.url({
@@ -162,7 +162,7 @@ describe('Elements', () => {
 
         window.BasisTheoryElements = ({
           init: jest.fn(),
-        } as unknown) as BasisTheoryElements;
+        } as unknown) as BasisTheoryElementsInternal;
 
         loadCallback();
         await expect(promise).resolves.toBeDefined();
@@ -207,8 +207,8 @@ describe('Elements', () => {
             loadCallback = callback;
             window.BasisTheoryElements = ({
               init: elementsInit,
-            } as unknown) as BasisTheoryElements;
-            bt.elements = window.BasisTheoryElements as BasisTheoryType;
+            } as unknown) as BasisTheoryElementsInternal;
+            bt.elements = window.BasisTheoryElements as BasisTheoryElementsInternal;
           }
         });
 

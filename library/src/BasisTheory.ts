@@ -2,7 +2,7 @@ import type {
   AtomicBanks as ElementsAtomicBanks,
   AtomicCards as ElementsAtomicCards,
   BasisTheoryElements,
-  BasisTheoryElementsInit,
+  BasisTheoryElementsInternal,
   CardElement,
   CustomizableElementOptions,
   ElementType,
@@ -69,7 +69,7 @@ export class BasisTheory
 
   private _encryption?: BasisTheoryEncryptionAdapters;
 
-  private _elements?: BasisTheoryElements;
+  private _elements?: BasisTheoryElementsInternal;
 
   private _applications?: BasisTheoryApplications;
 
@@ -215,7 +215,7 @@ export class BasisTheory
 
     const elements = await loadElements();
 
-    await (elements as BasisTheoryElementsInit).init(
+    await (elements as BasisTheoryElementsInternal).init(
       apiKey,
       elementsBaseUrl.toString().replace(/\/$/u, '')
     );
@@ -284,6 +284,6 @@ export class BasisTheory
   }
 
   public set elements(elements: BasisTheoryElements) {
-    this._elements = elements;
+    this._elements = elements as BasisTheoryElementsInternal;
   }
 }

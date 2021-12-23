@@ -1,4 +1,4 @@
-import type { BasisTheoryElements } from '@basis-theory/basis-theory-elements-interfaces/elements';
+import type { BasisTheoryElementsInternal } from '@basis-theory/basis-theory-elements-interfaces/elements';
 
 type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
@@ -49,7 +49,7 @@ interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
 
 declare global {
   interface Window {
-    BasisTheoryElements?: BasisTheoryElements;
+    BasisTheoryElements?: BasisTheoryElementsInternal;
   }
 }
 
