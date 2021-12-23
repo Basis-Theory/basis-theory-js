@@ -1,9 +1,10 @@
+import type { BasisTheoryElementsInternal } from '@basis-theory/basis-theory-elements-interfaces/elements';
 import { Chance } from 'chance';
 import type { BasisTheory as BasisTheoryType } from '../src';
 import { describeif } from './setup/utils';
 
 describe('Elements', () => {
-  let chance: Chance.Chance;
+  const chance = new Chance();
   let BasisTheory: typeof BasisTheoryType;
 
   const loadModule = (): void => {
@@ -12,7 +13,6 @@ describe('Elements', () => {
   };
 
   beforeEach(() => {
-    chance = new Chance();
     loadModule();
   });
 
@@ -21,7 +21,7 @@ describe('Elements', () => {
 
     expect(() => {
       // eslint-disable-next-line no-unused-expressions
-      bt.elements;
+      ((bt as unknown) as { elements: unknown }).elements;
     }).toThrowError();
   });
 
@@ -30,7 +30,7 @@ describe('Elements', () => {
 
     expect(() => {
       // eslint-disable-next-line no-unused-expressions
-      bt.elements;
+      ((bt as unknown) as { elements: unknown }).elements;
     }).toThrowError();
   });
 
@@ -78,14 +78,14 @@ describe('Elements', () => {
       let loadElements: () => unknown = jest.fn();
 
       jest.isolateModules(() => {
-        ({ loadElements } = require('../src/common/elements'));
+        ({ loadElements } = require('../src/elements'));
       });
 
-      const expectedElements = {
+      const expectedElements = ({
         init: jest.fn(),
-      };
+      } as unknown) as BasisTheoryType;
 
-      window.BasisTheoryElements = expectedElements;
+      window.BasisTheoryElements = (expectedElements as unknown) as BasisTheoryElementsInternal;
       expect(await loadElements()).toBe(expectedElements);
 
       const baseUrl = chance.url({
@@ -107,7 +107,7 @@ describe('Elements', () => {
     it('should reject if load elements throws error', () => {
       const message = 'load error';
 
-      jest.mock('../src/common/script', () => ({
+      jest.mock('../src/elements/script', () => ({
         findScript: (): void => {
           throw new Error(message);
         },
@@ -126,7 +126,7 @@ describe('Elements', () => {
       let errorCallback: (event?: unknown) => void;
 
       beforeEach(() => {
-        jest.mock('../src/common/script', () => ({
+        jest.mock('../src/elements/script', () => ({
           findScript: (): unknown => {
             const script = document.createElement('script');
 
@@ -160,7 +160,9 @@ describe('Elements', () => {
           expect.any(Function),
         ]);
 
-        window.BasisTheoryElements = { init: jest.fn() };
+        window.BasisTheoryElements = ({
+          init: jest.fn(),
+        } as unknown) as BasisTheoryElementsInternal;
 
         loadCallback();
         await expect(promise).resolves.toBeDefined();
@@ -203,12 +205,14 @@ describe('Elements', () => {
         addEventListener = jest.fn((event: string, callback: () => void) => {
           if (event === 'load') {
             loadCallback = callback;
-            window.BasisTheoryElements = { init: elementsInit };
-            bt.elements = window.BasisTheoryElements;
+            window.BasisTheoryElements = ({
+              init: elementsInit,
+            } as unknown) as BasisTheoryElementsInternal;
+            bt.elements = window.BasisTheoryElements as BasisTheoryElementsInternal;
           }
         });
 
-        jest.mock('../src/common/script', () => ({
+        jest.mock('../src/elements/script', () => ({
           findScript: (): unknown => undefined,
           injectScript: (): unknown => {
             const script = document.createElement('script');
@@ -229,7 +233,7 @@ describe('Elements', () => {
           protocol: 'https',
           path: '',
         });
-        const promise = bt.init('el-123', {
+        const promise = bt.init?.('el-123', {
           elements: true,
           elementsBaseUrl: baseUrl,
         });

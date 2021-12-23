@@ -1,12 +1,16 @@
+import type {
+  Token,
+  CreateToken,
+  TokenType,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type {
+  BasisTheory as IBasisTheory,
+  ListDecryptedTokensQuery,
+  PaginatedList,
+  ListTokensQuery,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import type {
-  ListTokensQueryDecrypted,
-  Token,
-  TokenType,
-  CreateTokenModel,
-  ListTokensQuery,
-} from '../src';
 import { BasisTheory } from '../src';
 import {
   API_KEY_HEADER,
@@ -14,7 +18,6 @@ import {
   getQueryParams,
   transformTokenRequestSnakeCase,
 } from '../src/common';
-import { PaginatedList } from '../src/service';
 import {
   errorStatus,
   expectBasisTheoryApiError,
@@ -25,10 +28,10 @@ import {
 } from './setup/utils';
 
 describe('Tokens', () => {
-  let bt: BasisTheory;
-  let chance: Chance.Chance;
-  let apiKey: string;
-  let client: MockAdapter;
+  let bt: IBasisTheory,
+    chance: Chance.Chance,
+    apiKey: string,
+    client: MockAdapter;
 
   beforeAll(async () => {
     chance = new Chance();
@@ -54,10 +57,6 @@ describe('Tokens', () => {
         camelCaseParameter: chance.string(),
         snake_case_parameter: chance.string(),
       };
-      const mask = {
-        camelCaseParameter: chance.string(),
-        snake_case_parameter: chance.string(),
-      };
       const metadata = {
         camelCaseParameter: chance.string(),
         snake_case_parameter: chance.string(),
@@ -78,7 +77,6 @@ describe('Tokens', () => {
           fingerprint,
           type,
           data,
-          mask,
           metadata,
           created_at: createdAt,
           created_by: createdBy,
@@ -94,7 +92,6 @@ describe('Tokens', () => {
         fingerprint,
         type,
         data,
-        mask,
         metadata,
         createdAt,
         createdBy,
@@ -345,7 +342,7 @@ describe('Tokens', () => {
           alpha: true,
           numeric: true,
         }) as TokenType,
-      } as ListTokensQueryDecrypted;
+      } as ListDecryptedTokensQuery;
       const url = `/decrypt${getQueryParams(query)}`;
 
       client.onGet(url).reply(
@@ -364,7 +361,7 @@ describe('Tokens', () => {
       );
 
       expect(
-        await bt.tokens.listDecrypted(query as ListTokensQueryDecrypted)
+        await bt.tokens.listDecrypted(query as ListDecryptedTokensQuery)
       ).toStrictEqual({
         pagination: {
           totalItems,
@@ -403,7 +400,7 @@ describe('Tokens', () => {
           alpha: true,
           numeric: true,
         }) as TokenType,
-      } as ListTokensQueryDecrypted;
+      } as ListDecryptedTokensQuery;
       const url = `/decrypt${getQueryParams(query)}`;
 
       client.onGet(url).reply(
@@ -422,7 +419,7 @@ describe('Tokens', () => {
       );
 
       expect(
-        await bt.tokens.listDecrypted(query as ListTokensQueryDecrypted, {
+        await bt.tokens.listDecrypted(query as ListDecryptedTokensQuery, {
           apiKey: _apiKey,
           correlationId,
         })
@@ -585,7 +582,7 @@ describe('Tokens', () => {
           camelCaseParameter: chance.string(),
           snake_case_parameter: chance.string(),
         },
-      } as CreateTokenModel;
+      } as CreateToken;
       /* eslint-enable camelcase */
 
       const createdAt = chance.string();
@@ -632,7 +629,7 @@ describe('Tokens', () => {
       const parentId = chance.string();
       const tokenPayload = {
         data: chance.string(),
-      } as CreateTokenModel;
+      } as CreateToken;
 
       const createdAt = chance.string();
       const createdBy = chance.string();
@@ -678,7 +675,7 @@ describe('Tokens', () => {
 
     it('should reject with status >= 400 <= 599', async () => {
       const parentId = chance.string();
-      const tokenPayload: CreateTokenModel = {
+      const tokenPayload: CreateToken = {
         type: 'token',
         data: chance.string(),
       };
@@ -857,7 +854,7 @@ describe('Tokens', () => {
     const _chance = new Chance();
 
     /* eslint-disable camelcase */
-    const createPayload: CreateTokenModel = {
+    const createPayload: CreateToken = {
       type: 'token',
       data: {
         camelCaseParameter: _chance.string(),

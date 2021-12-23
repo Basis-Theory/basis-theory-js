@@ -1,25 +1,26 @@
+import type {
+  AtomicBank,
+  CreateAtomicBank,
+  ReactRequest,
+  ReactResponse,
+  UpdateAtomicBank,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type {
+  PaginatedQuery,
+  RequestOptions,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';
 import {
   createRequestConfig,
   dataExtractor,
-  transformAtomicReactionRequestSnakeCase,
   proxyRaw,
+  transformAtomicReactionRequestSnakeCase,
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
 } from '../../common';
-import type {
-  BasisTheoryServiceOptions,
-  PaginatedQuery,
-  RequestOptions,
-} from '../../service';
+import type { BasisTheoryServiceOptions } from '../../service';
 import { BasisTheoryService } from '../../service';
 import { CrudBuilder } from '../../service/CrudBuilder';
-import type { ReactRequest, ReactResponse } from '../types';
-import type {
-  AtomicBank,
-  CreateAtomicBankModel,
-  UpdateAtomicBankModel,
-} from './types';
 
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {
@@ -45,7 +46,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
 
     public update(
       id: string,
-      request: UpdateAtomicBankModel,
+      request: UpdateAtomicBank,
       options?: RequestOptions
     ): Promise<AtomicBank> {
       return this.client
@@ -80,7 +81,7 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
     }
   }
 )
-  .create<AtomicBank, CreateAtomicBankModel>()
+  .create<AtomicBank, CreateAtomicBank>()
   .retrieve<AtomicBank>()
   .delete()
   .list<AtomicBank, PaginatedQuery>()

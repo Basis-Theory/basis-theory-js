@@ -1,19 +1,19 @@
+import type {
+  CreateReactorFormula,
+  ReactorFormula,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { ListReactorFormulaQuery } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { BasisTheoryService } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
-import type {
-  CreateReactorFormulaModel,
-  ReactorFormula,
-  ReactorFormulaQuery,
-} from './types';
 
 export const BasisTheoryReactorFormulas = new CrudBuilder(
   class BasisTheoryReactorFormulas extends BasisTheoryService {}
 )
-  .create<ReactorFormula, CreateReactorFormulaModel>()
+  .create<ReactorFormula, CreateReactorFormula>()
   .retrieve<ReactorFormula>()
-  .update<ReactorFormula, CreateReactorFormulaModel>()
+  .update<ReactorFormula, CreateReactorFormula>()
   .delete()
-  .list<ReactorFormula, ReactorFormulaQuery>()
+  .list<ReactorFormula, ListReactorFormulaQuery>()
   .build();
 
 export type BasisTheoryReactorFormulas = InstanceType<

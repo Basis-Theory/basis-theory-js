@@ -1,11 +1,10 @@
-import type { BasisTheoryElements } from './elements';
+import type { BasisTheoryElementsInternal } from '@basis-theory/basis-theory-elements-interfaces/elements';
 
 type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
 type Clients =
   | 'tokens'
   | 'tokenize'
-  | 'atomic'
   | 'applications'
   | 'reactorFormulas'
   | 'reactors'
@@ -37,20 +36,20 @@ interface EncryptionOptions {
 
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
-  elements?: boolean;
-  elementsBaseUrl?: string;
 }
 
-interface Auditable {
-  createdBy?: string;
-  createdAt?: string;
-  modifiedBy?: string;
-  modifiedAt?: string;
+interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {
+  elements?: false;
+}
+
+interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
+  elements: true;
+  elementsBaseUrl?: string;
 }
 
 declare global {
   interface Window {
-    BasisTheoryElements?: BasisTheoryElements;
+    BasisTheoryElements?: BasisTheoryElementsInternal;
   }
 }
 
@@ -65,5 +64,6 @@ export type {
   EncryptionProviderOptions,
   EncryptionOptions,
   BasisTheoryInitOptions,
-  Auditable,
+  BasisTheoryInitOptionsWithoutElements,
+  BasisTheoryInitOptionsWithElements,
 };

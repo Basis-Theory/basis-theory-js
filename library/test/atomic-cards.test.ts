@@ -1,8 +1,12 @@
+import type {
+  AtomicCard,
+  UpdateAtomicCard,
+  TokenType,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import type { TokenType } from '../src';
 import { BasisTheory } from '../src';
-import { AtomicCard, UpdateAtomicCardModel } from '../src/atomic/cards';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 import {
   transformAtomicRequestSnakeCase,
@@ -19,10 +23,10 @@ import {
 } from './setup/utils';
 
 describe('Atomic Cards', () => {
-  let bt: BasisTheory;
-  let chance: Chance.Chance;
-  let apiKey: string;
-  let client: MockAdapter;
+  let bt: IBasisTheory,
+    chance: Chance.Chance,
+    apiKey: string,
+    client: MockAdapter;
 
   beforeAll(async () => {
     chance = new Chance();
@@ -82,7 +86,7 @@ describe('Atomic Cards', () => {
 
   describe('update', () => {
     let atomicCardId: string;
-    let updateCardRequest: UpdateAtomicCardModel;
+    let updateCardRequest: UpdateAtomicCard;
     let expectedUpdatedCard: AtomicCard;
 
     beforeEach(() => {

@@ -30,8 +30,8 @@
           },
         };
 
-        BasisTheory.atomic
-          .storeCreditCard(paymentInfo)
+        BasisTheory.atomicCards
+          .create(paymentInfo)
           .then(function (data) {
             // should not fall into here
           })

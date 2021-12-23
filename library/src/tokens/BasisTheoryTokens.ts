@@ -1,3 +1,13 @@
+import type {
+  Token,
+  CreateToken,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type {
+  PaginatedList,
+  RequestOptions,
+  ListDecryptedTokensQuery,
+  ListTokensQuery,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';
 import { createRequestConfig, getQueryParams } from '../common';
 import {
@@ -5,19 +15,8 @@ import {
   transformTokenResponseCamelCase,
   transformTokenRequestSnakeCase,
 } from '../common/utils';
-import {
-  BasisTheoryService,
-  BasisTheoryServiceOptions,
-  PaginatedList,
-  RequestOptions,
-} from '../service';
+import { BasisTheoryService, BasisTheoryServiceOptions } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
-import type {
-  Token,
-  CreateTokenModel,
-  ListTokensQuery,
-  ListTokensQueryDecrypted,
-} from './types';
 
 export const BasisTheoryTokens = new CrudBuilder(
   class BasisTheoryTokens extends BasisTheoryService {
@@ -59,7 +58,7 @@ export const BasisTheoryTokens = new CrudBuilder(
     }
 
     public listDecrypted(
-      query: ListTokensQueryDecrypted = {},
+      query: ListDecryptedTokensQuery = {},
       options: RequestOptions = {}
     ): Promise<PaginatedList<Token>> {
       const url = `/decrypt${getQueryParams(query)}`;
@@ -91,7 +90,7 @@ export const BasisTheoryTokens = new CrudBuilder(
 
     public createChild(
       parentId: string,
-      token: CreateTokenModel,
+      token: CreateToken,
       options?: RequestOptions
     ): Promise<Token> {
       const url = `/${parentId}/children`;
@@ -114,7 +113,7 @@ export const BasisTheoryTokens = new CrudBuilder(
     }
   }
 )
-  .create<Token, CreateTokenModel>()
+  .create<Token, CreateToken>()
   .delete()
   .list<Token, ListTokensQuery>()
   .build();

@@ -1,3 +1,9 @@
+import type {
+  Reactor,
+  CreateReactor,
+  UpdateReactor,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { ListReactorQuery } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';
 import {
   transformReactorResponseCamelCase,
@@ -6,12 +12,6 @@ import {
 import { BasisTheoryService } from '../service';
 import type { BasisTheoryServiceOptions } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
-import type {
-  Reactor,
-  CreateReactorModel,
-  UpdateReactorModel,
-  ReactorQuery,
-} from './types';
 
 export const BasisTheoryReactors = new CrudBuilder(
   class BasisTheoryReactors extends BasisTheoryService {
@@ -36,11 +36,11 @@ export const BasisTheoryReactors = new CrudBuilder(
     }
   }
 )
-  .create<Reactor, CreateReactorModel>()
+  .create<Reactor, CreateReactor>()
   .retrieve<Reactor>()
-  .update<Reactor, UpdateReactorModel>()
+  .update<Reactor, UpdateReactor>()
   .delete()
-  .list<Reactor, ReactorQuery>()
+  .list<Reactor, ListReactorQuery>()
   .build();
 
 export type BasisTheoryReactors = InstanceType<typeof BasisTheoryReactors>;

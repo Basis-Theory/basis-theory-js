@@ -3,6 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
 import { DEFAULT_BASE_URL, CLIENT_BASE_PATHS } from '../src/common';
+import { BasisTheoryService } from '../src/service';
 
 describe('clients', () => {
   it('should use base url and paths for all clients', async () => {
@@ -27,10 +28,6 @@ describe('clients', () => {
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.tokenize}`,
-    });
-    expect(create).toHaveBeenCalledWith({
-      ...baseConfig,
-      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.atomic}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
@@ -64,7 +61,7 @@ describe('clients', () => {
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.permissions}`,
     });
-    expect(create).toHaveBeenCalledTimes(11);
+    expect(create).toHaveBeenCalledTimes(10);
   });
 
   it('should throw error if not properly initialized', () => {
@@ -90,7 +87,9 @@ describe('clients', () => {
       apiBaseUrl: `${url}`,
     });
 
-    const mockClient = new MockAdapter(bt.tokens.client);
+    const mockClient = new MockAdapter(
+      ((bt.tokens as unknown) as BasisTheoryService).client
+    );
 
     mockClient.onGet(id).reply(200, {});
 
@@ -114,7 +113,9 @@ describe('clients', () => {
       apiBaseUrl: `${url}`,
     });
 
-    const mockClient = new MockAdapter(bt.tokens.client);
+    const mockClient = new MockAdapter(
+      ((bt.tokens as unknown) as BasisTheoryService).client
+    );
 
     mockClient.onGet(id).reply(200, {});
 

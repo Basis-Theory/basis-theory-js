@@ -1,6 +1,7 @@
-import MockAdapter from 'axios-mock-adapter';
+import type { ApplicationType } from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
+import type MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import type { ApplicationType } from '../src';
 import { BasisTheory } from '../src';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 import {
@@ -11,10 +12,10 @@ import {
 } from './setup/utils';
 
 describe('Applications', () => {
-  let bt: BasisTheory;
-  let chance: Chance.Chance;
-  let apiKey: string;
-  let client: MockAdapter;
+  let bt: IBasisTheory,
+    chance: Chance.Chance,
+    apiKey: string,
+    client: MockAdapter;
 
   beforeAll(async () => {
     chance = new Chance();
@@ -68,7 +69,7 @@ describe('Applications', () => {
       const retrieveByKey = jest.spyOn(bt.applications, 'retrieveByKey');
 
       // should call retrieveByKey, and not have own implementation
-      expect(await bt.applications.getApplicationByKey()).toEqual({
+      expect(await bt.applications.retrieveByKey()).toEqual({
         id,
         createdAt,
         createdBy,

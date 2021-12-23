@@ -1,15 +1,33 @@
 import { Chance } from 'chance';
 import { mocked } from 'ts-jest/utils';
 import { BasisTheory } from '../src';
-import { loadElements } from '../src/common/elements';
+import {
+  loadElements,
+  delegateTokens,
+  delegateTokenize,
+  delegateAtomicBanks,
+  delegateAtomicCards,
+} from '../src/elements';
 
-jest.mock('../src/common/elements');
+jest.mock('../src/elements');
 
 describe('Init', () => {
   let chance: Chance.Chance;
 
   beforeEach(() => {
     chance = new Chance();
+    (delegateTokens as jest.Mock).mockImplementation(() =>
+      jest.fn().mockReturnValue({})
+    );
+    (delegateTokenize as jest.Mock).mockImplementation(() =>
+      jest.fn().mockReturnValue({})
+    );
+    (delegateAtomicBanks as jest.Mock).mockImplementation(() =>
+      jest.fn().mockReturnValue({})
+    );
+    (delegateAtomicCards as jest.Mock).mockImplementation(() =>
+      jest.fn().mockReturnValue({})
+    );
   });
 
   it('should throw error if init is called consecutively', () => {

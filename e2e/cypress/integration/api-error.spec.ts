@@ -31,12 +31,12 @@ context('API error', () => {
 
   context('error response', () => {
     const status = 400,
-      data = 'some error response';
+      message = 'some error response';
 
     beforeEach(() => {
       cy.intercept('POST', '/atomic/cards', {
         statusCode: status,
-        body: data,
+        body: { message },
       });
     });
 
@@ -50,7 +50,9 @@ context('API error', () => {
         'have.text',
         JSON.stringify({
           status,
-          data,
+          data: {
+            message,
+          },
           name: 'BasisTheoryApiError',
         })
       );

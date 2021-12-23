@@ -1,34 +1,22 @@
 /* eslint-disable max-classes-per-file, @typescript-eslint/no-shadow */
+import type {
+  PaginatedList,
+  PaginatedQuery,
+  RequestOptions,
+  Create as ICreate,
+  Retrieve as IRetrieve,
+  Update as IUpdate,
+  Delete as IDelete,
+  List as IList,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { createRequestConfig, dataExtractor, getQueryParams } from '../common';
 import { BasisTheoryService } from './BasisTheoryService';
-import type { RequestOptions, PaginatedList, PaginatedQuery } from './types';
-
-type BasisTheoryServiceConstructor<
-  T extends BasisTheoryService = BasisTheoryService
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-> = new (...params: any[]) => T;
-
-type ICreate<T, C> = {
-  create(model: C, options?: RequestOptions): Promise<T>;
-};
-
-type IRetrieve<T> = {
-  retrieve(id: string, options?: RequestOptions): Promise<T>;
-};
-
-type IUpdate<T, U> = {
-  update(id: string, model: U, options?: RequestOptions): Promise<T>;
-};
-
-type IDelete = {
-  delete(id: string, options?: RequestOptions): Promise<void>;
-};
-
-type IList<T, Q extends PaginatedQuery> = {
-  list(query?: Q, options?: RequestOptions): Promise<PaginatedList<T>>;
-};
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+type BasisTheoryServiceConstructor<
+  T extends BasisTheoryService = BasisTheoryService
+> = new (...params: any[]) => T;
+
 type ICreateConstructor<T, C> = new (...args: any[]) => ICreate<T, C>;
 type IRetrieveConstructor<T> = new (...args: any[]) => IRetrieve<T>;
 type IUpdateConstructor<T, U> = new (...args: any[]) => IUpdate<T, U>;
@@ -142,6 +130,13 @@ class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
 }
 
 export { CrudBuilder };
-export type { ICreate, IRetrieve, IUpdate, IDelete, IList };
+export type {
+  ICreate,
+  IRetrieve,
+  IUpdate,
+  IDelete,
+  IList,
+  BasisTheoryServiceConstructor,
+};
 
 /* eslint-enable max-classes-per-file, @typescript-eslint/no-shadow */

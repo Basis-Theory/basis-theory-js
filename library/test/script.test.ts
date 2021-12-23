@@ -1,4 +1,4 @@
-import { findScript, injectScript } from '../src/common/script';
+import { findScript, injectScript } from '../src/elements/script';
 import { describeif } from './setup/utils';
 
 describe('Script', () => {

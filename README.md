@@ -61,6 +61,10 @@ const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED', {
 }); // replace with your application key and api base URL.
 ```
 
+### Elements
+
+Please, refer to the [Elements Documentation](https://docs.basistheory.com/elements) on how to use it.
+
 ## Development
 
 The provided scripts with the SDK will check for all dependencies, start docker, build the solution, and run all tests.
