@@ -1,3 +1,10 @@
+import type { BasisTheoryElementsInternal } from '@basis-theory/basis-theory-elements-interfaces/elements';
+import type {
+  Create,
+  PaginatedList,
+  PaginatedQuery,
+  Tokenize,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import {
@@ -5,9 +12,10 @@ import {
   BT_TRACE_ID_HEADER,
   transformRequestSnakeCase,
 } from '../../src/common';
-import type { PaginatedList } from '../../src/service';
-import { PaginatedQuery } from '../../src/service';
+import { BasisTheoryServiceOptions } from '../../src/service';
 import {
+  BasisTheoryServiceConstructor,
+  CrudBuilder,
   ICreate,
   IDelete,
   IList,
@@ -539,6 +547,141 @@ const testCRUD = <T, C, U>(
   testList(param);
 };
 
+const testServiceDelegate = (
+  serviceToBeTested: 'atomicBanks' | 'atomicCards' | 'tokens' | 'tokenize',
+  method: 'create' | 'tokenize',
+  delegateServiceUnderTest: <T extends BasisTheoryServiceConstructor>(
+    elements?: BasisTheoryElementsInternal
+  ) => new (
+    ...initBtArgs: CrudBuilder<T> extends { new (...args: infer P): any }
+      ? P
+      : BasisTheoryServiceOptions[]
+  ) => Create<unknown, unknown> | Tokenize
+): void => {
+  const chance = new Chance();
+  const expectedCreatedToken = chance.string();
+  const hasElement = jest.fn();
+
+  let elementsInstance: {
+    [service in typeof serviceToBeTested]?: {
+      create: jest.Mock;
+      tokenize: jest.Mock;
+    };
+  } & {
+    hasElement: jest.Mock;
+  };
+
+  describe('elements is initialized', () => {
+    beforeEach(() => {
+      elementsInstance = {
+        [serviceToBeTested]: {
+          create: jest.fn().mockReturnValue(expectedCreatedToken),
+          tokenize: jest.fn().mockReturnValue(expectedCreatedToken),
+        },
+        hasElement,
+      };
+    });
+
+    describe('element instance is on the payload', () => {
+      beforeEach(() => {
+        (hasElement as jest.Mock).mockReturnValue(true);
+      });
+
+      test('should delegate create call to elements', () => {
+        const serviceInstance = new (delegateServiceUnderTest(
+          (elementsInstance as unknown) as BasisTheoryElementsInternal
+        ))({
+          apiKey: chance.string(),
+          baseURL: chance.url(),
+        });
+        const expectedPayload = chance.string(),
+          expectedRequestOptions = chance.string();
+        const createdToken = ((serviceInstance as unknown) as {
+          tokenize?: (...args: unknown[]) => string;
+          create?: (...args: unknown[]) => string;
+        })[method]?.(expectedPayload, expectedRequestOptions);
+
+        expect(
+          elementsInstance[serviceToBeTested]?.[method]
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          elementsInstance[serviceToBeTested]?.[method]
+        ).toHaveBeenCalledWith(expectedPayload, expectedRequestOptions);
+        expect(createdToken).toBe(expectedCreatedToken);
+      });
+    });
+
+    describe('element instance is not on the payload', () => {
+      beforeEach(() => {
+        (hasElement as jest.Mock).mockReturnValue(false);
+      });
+
+      test('should delegate create call to bt.js', () => {
+        const superMethod = jest.fn().mockReturnValue(expectedCreatedToken);
+        const ClassToBeInstantiated = delegateServiceUnderTest(
+          (elementsInstance as unknown) as BasisTheoryElementsInternal
+        );
+
+        Object.setPrototypeOf(ClassToBeInstantiated.prototype, {
+          create: superMethod,
+          tokenize: superMethod,
+        });
+        const serviceInstance = new ClassToBeInstantiated({
+          apiKey: chance.string(),
+          baseURL: chance.url(),
+        });
+        const expectedPayload = chance.string(),
+          expectedRequestOptions = chance.string();
+
+        const createdToken = ((serviceInstance as unknown) as {
+          tokenize?: (...args: unknown[]) => string;
+          create?: (...args: unknown[]) => string;
+        })[method]?.(expectedPayload, expectedRequestOptions);
+
+        expect(superMethod).toHaveBeenCalledTimes(1);
+        expect(superMethod).toHaveBeenCalledWith(
+          expectedPayload,
+          expectedRequestOptions
+        );
+        expect(createdToken).toBe(expectedCreatedToken);
+      });
+    });
+  });
+
+  describe('elements is not initialized', () => {
+    beforeEach(() => {
+      (hasElement as jest.Mock).mockReturnValue(false);
+    });
+
+    test('should delegate create call to bt.js', () => {
+      const superMethod = jest.fn().mockReturnValue(expectedCreatedToken);
+      const ClassToBeInstantiated = delegateServiceUnderTest(undefined);
+
+      Object.setPrototypeOf(ClassToBeInstantiated.prototype, {
+        create: superMethod,
+        tokenize: superMethod,
+      });
+      const serviceInstance = new ClassToBeInstantiated({
+        apiKey: chance.string(),
+        baseURL: chance.url(),
+      });
+      const expectedPayload = chance.string(),
+        expectedRequestOptions = chance.string();
+      const createdToken = ((serviceInstance as unknown) as {
+        tokenize?: (...args: unknown[]) => string;
+        create?: (...args: unknown[]) => string;
+      })[method]?.(expectedPayload, expectedRequestOptions);
+
+      expect(superMethod).toHaveBeenCalledTimes(1);
+      expect(superMethod).toHaveBeenCalledWith(
+        expectedPayload,
+        expectedRequestOptions
+      );
+      expect(createdToken).toBe(expectedCreatedToken);
+    });
+  });
+};
+
 export {
   describeif,
   mockServiceClient,
@@ -550,4 +693,5 @@ export {
   testUpdate,
   testDelete,
   testList,
+  testServiceDelegate,
 };

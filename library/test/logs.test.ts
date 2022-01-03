@@ -1,13 +1,14 @@
+import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
 import { testList, mockServiceClient } from './setup/utils';
 
 describe('Logs', () => {
-  let bt: BasisTheory;
-  let chance: Chance.Chance;
-  let apiKey: string;
-  let client: MockAdapter;
+  let bt: IBasisTheory,
+    chance: Chance.Chance,
+    apiKey: string,
+    client: MockAdapter;
 
   beforeAll(async () => {
     chance = new Chance();

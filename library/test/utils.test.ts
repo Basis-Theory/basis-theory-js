@@ -1,3 +1,4 @@
+import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosResponse } from 'axios';
 import { Chance } from 'chance';
 import { API_KEY_HEADER } from '../dist/common';
@@ -7,7 +8,6 @@ import {
   dataExtractor,
   createRequestConfig,
 } from '../src/common/utils';
-import type { RequestOptions } from '../src/service';
 
 describe('Utils', () => {
   let chance: Chance.Chance;

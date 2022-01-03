@@ -1,19 +1,20 @@
+import type {
+  TokenType,
+  ReactorFormulaConfig,
+  FormulaType,
+  DataType,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
-import type {
-  DataType,
-  FormulaType,
-  ReactorFormulaConfig,
-} from '../src/reactor-formulas/types';
-import type { TokenType } from '../src/tokens';
 import { testCRUD, mockServiceClient } from './setup/utils';
 
 describe('Reactor Formulas', () => {
-  let bt: BasisTheory;
-  let chance: Chance.Chance;
-  let apiKey: string;
-  let client: MockAdapter;
+  let bt: IBasisTheory,
+    chance: Chance.Chance,
+    apiKey: string,
+    client: MockAdapter;
 
   beforeAll(async () => {
     chance = new Chance();

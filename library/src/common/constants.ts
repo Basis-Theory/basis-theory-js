@@ -9,7 +9,6 @@ const DEFAULT_ELEMENTS_BASE_URL = `https://${process.env.ELEMENTS_HOST}`;
 const CLIENT_BASE_PATHS: ClientsBasePathMap = {
   tokens: 'tokens',
   tokenize: 'tokenize',
-  atomic: 'atomic',
   applications: 'applications',
   tenants: 'tenants/self',
   logs: 'logs',

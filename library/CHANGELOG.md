@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.13.1...v1.14.0) (2021-12-23)
+
+
+### Features
+
+* consolidate elements features ([#137](https://github.com/Basis-Theory/basis-theory-js/issues/137)) ([ee53209](https://github.com/Basis-Theory/basis-theory-js/commit/ee532091bde4abb7f46878aa340eaf241500d0f6))
+
 ## [1.13.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.13.0...v1.13.1) (2021-12-07)
 
 
