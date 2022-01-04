@@ -1,12 +1,17 @@
 import type {
-  Token,
   CreateToken,
+  Token,
   TokenType,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import {
+  DATA_CLASSIFICATIONS,
+  DATA_IMPACT_LEVELS,
+  DATA_RESTRICTION_POLICIES,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
 import type {
   BasisTheory as IBasisTheory,
-  ListDecryptedTokensQuery,
   PaginatedList,
+  ListDecryptedTokensQuery,
   ListTokensQuery,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
@@ -861,9 +866,9 @@ describe('Tokens', () => {
         snake_case_parameter: _chance.string(),
       },
       privacy: {
-        impactLevel: 'high',
-        classification: 'pci',
-        restrictionPolicy: 'redact',
+        impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
+        classification: _chance.pickone([...DATA_CLASSIFICATIONS]),
+        restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
       },
       metadata: {
         camelCaseParameter: _chance.string(),
