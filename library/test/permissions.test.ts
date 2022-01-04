@@ -1,7 +1,4 @@
-import type {
-  PermissionType,
-  ApplicationType,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { ApplicationType } from '@basis-theory/basis-theory-elements-interfaces/models';
 import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
@@ -33,7 +30,7 @@ describe('Permissions', () => {
 
   describe('list permissions', () => {
     it('should list permissions', async () => {
-      const type = chance.string() as PermissionType;
+      const type = chance.string();
       const description = chance.string();
       const applicationTypes = [chance.string() as ApplicationType];
 
@@ -64,7 +61,7 @@ describe('Permissions', () => {
     });
 
     it('should list permissions w/ options', async () => {
-      const type = chance.string() as PermissionType;
+      const type = chance.string();
       const description = chance.string();
       const applicationTypes = [chance.string() as ApplicationType];
       const _apiKey = chance.string();
