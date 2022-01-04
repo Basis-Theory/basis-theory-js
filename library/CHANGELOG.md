@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.14.0...v1.15.0) (2022-01-04)
+
+
+### Features
+
+* adds privacy payload options to token create and token response ([#136](https://github.com/Basis-Theory/basis-theory-js/issues/136)) ([a5e8bbc](https://github.com/Basis-Theory/basis-theory-js/commit/a5e8bbc6a2687d279a572ad393d00a716ac85548))
+
 # [1.14.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.13.1...v1.14.0) (2021-12-23)
 
 
