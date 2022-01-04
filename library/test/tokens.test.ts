@@ -1,9 +1,6 @@
 import type {
   Token,
   CreateToken,
-  DataClassification,
-  DataImpact,
-  DataRestrictionPolicy,
   TokenType,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
 import type {
@@ -864,9 +861,9 @@ describe('Tokens', () => {
         snake_case_parameter: _chance.string(),
       },
       privacy: {
-        impactLevel: DataImpact.HIGH,
-        classification: DataClassification.PCI,
-        restrictionPolicy: DataRestrictionPolicy.REDACT,
+        impactLevel: 'high',
+        classification: 'pci',
+        restrictionPolicy: 'redact',
       },
       metadata: {
         camelCaseParameter: _chance.string(),
