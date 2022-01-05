@@ -8,8 +8,10 @@ import type {
   ElementType,
   TextElement,
   Tokenize as ElementsTokenize,
+  TokenizeData as ElementsTokenizeData,
   Tokens as ElementsTokens,
 } from '@basis-theory/basis-theory-elements-interfaces/elements';
+import type { TokenizeData } from '@basis-theory/basis-theory-elements-interfaces/models';
 import type {
   Applications,
   AtomicBanks,
@@ -20,6 +22,7 @@ import type {
   Permissions,
   ReactorFormulas,
   Reactors,
+  RequestOptions,
   Tenants,
   Tokenize,
   Tokens,
@@ -201,6 +204,13 @@ export class BasisTheory
     return this._elements.createElement(type as 'card', options);
   }
 
+  public tokenize(
+    tokens: TokenizeData & ElementsTokenizeData,
+    options?: RequestOptions
+  ): Promise<TokenizeData> {
+    return assertInit(this._tokenize).tokenize(tokens, options);
+  }
+
   private async loadElements(apiKey: string): Promise<void> {
     let elementsBaseUrl: URL;
 
@@ -230,10 +240,6 @@ export class BasisTheory
 
   public get tokens(): Tokens & ElementsTokens {
     return assertInit(this._tokens);
-  }
-
-  public get tokenize(): Tokenize & ElementsTokenize {
-    return assertInit(this._tokenize);
   }
 
   /**

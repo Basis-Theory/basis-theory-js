@@ -1,5 +1,4 @@
 import { Chance } from 'chance';
-import { mocked } from 'ts-jest/utils';
 import { BasisTheory } from '../src';
 import {
   loadElements,
@@ -67,9 +66,9 @@ describe('Init', () => {
   });
 
   it('should allow init again if throws error', async () => {
-    mocked(loadElements).mockRejectedValueOnce(
-      new Error('Load Elements error')
-    );
+    jest
+      .mocked(loadElements)
+      .mockRejectedValueOnce(new Error('Load Elements error'));
 
     const bt = new BasisTheory();
 

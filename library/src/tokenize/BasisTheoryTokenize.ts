@@ -1,7 +1,6 @@
 import type { TokenizeData } from '@basis-theory/basis-theory-elements-interfaces/models';
 import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { createRequestConfig } from '../common';
-import { dataExtractor, proxyRaw } from '../common/utils';
+import { createRequestConfig, dataExtractor, proxyRaw } from '../common';
 import { BasisTheoryService } from '../service';
 
 export class BasisTheoryTokenize extends BasisTheoryService {

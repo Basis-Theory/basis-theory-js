@@ -1,7 +1,6 @@
 import type { BasisTheoryElements } from '@basis-theory/basis-theory-elements-interfaces/elements';
 import type { BasisTheoryInit } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { Chance } from 'chance';
-import { mocked } from 'ts-jest/utils';
 import { BasisTheory } from '../../src';
 import { loadElements } from '../../src/elements';
 
@@ -40,7 +39,7 @@ describe('createElement', () => {
 
       (elements as any).init = jest.fn().mockResolvedValueOnce(elements);
 
-      mocked(loadElements).mockResolvedValueOnce(elements);
+      jest.mocked(loadElements).mockResolvedValueOnce(elements);
 
       await bt.init(chance.string(), { elements: true });
 

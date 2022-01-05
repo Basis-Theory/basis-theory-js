@@ -19,7 +19,8 @@ describe('Tokenize', () => {
     chance = new Chance();
     apiKey = chance.string();
     bt = await new BasisTheory().init(apiKey);
-    client = mockServiceClient(bt.tokenize);
+    // this is the only service we need to do this
+    client = mockServiceClient((bt as any)._tokenize);
   });
 
   beforeEach(() => {
@@ -83,7 +84,7 @@ describe('Tokenize', () => {
 
       client.onPost('/').reply(200, JSON.stringify(tokenResponse));
 
-      expect(await bt.tokenize.tokenize(tokens)).toEqual(tokenResponse);
+      expect(await bt.tokenize(tokens)).toEqual(tokenResponse);
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].data).toStrictEqual(JSON.stringify(tokens));
       expect(client.history.post[0].headers).toMatchObject({
@@ -149,7 +150,7 @@ describe('Tokenize', () => {
       client.onPost('/').reply(200, JSON.stringify(tokenResponse));
 
       expect(
-        await bt.tokenize.tokenize(tokens, {
+        await bt.tokenize(tokens, {
           apiKey: _apiKey,
           correlationId,
         })
@@ -167,7 +168,7 @@ describe('Tokenize', () => {
 
       client.onPost('/').reply(status);
 
-      const promise = bt.tokenize.tokenize({});
+      const promise = bt.tokenize({});
 
       await expectBasisTheoryApiError(promise, status);
     });
