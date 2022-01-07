@@ -591,7 +591,6 @@ const testMethodDelegate = (
           expectedRequestOptions = chance.string();
         const createdToken = ((serviceInstance as unknown) as {
           tokenize?: (...args: unknown[]) => string;
-          create?: (...args: unknown[]) => string;
         })[method]?.(expectedPayload, expectedRequestOptions);
 
         expect(elementsInstance[method]).toHaveBeenCalledTimes(1);
