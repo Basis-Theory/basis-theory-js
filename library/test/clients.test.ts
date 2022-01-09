@@ -15,7 +15,7 @@ describe('clients', () => {
 
     const baseConfig = {
       headers: {
-        'X-API-KEY': 'sb-key',
+        'BT-API-KEY': 'sb-key',
       },
       transformRequest: expect.any(Array),
       transformResponse: expect.any(Array),

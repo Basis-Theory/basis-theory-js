@@ -35,7 +35,7 @@ const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED'); // replac
 
 ### Per-request configuration
 
-All of the service methods accept an optional `RequestOptions` object. This is used if you want to set a correlation ID or if you want to set a per-request X-API-KEY
+All of the service methods accept an optional `RequestOptions` object. This is used if you want to set a correlation ID or if you want to set a per-request `BT-API-KEY`
 
 ```javascript
 import { v4 as uuid } from 'uuid';
