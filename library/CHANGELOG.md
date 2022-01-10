@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.15.0...v1.16.0) (2022-01-10)
+
+
+### Features
+
+* convert to use BT-API-KEY for auth header ([#144](https://github.com/Basis-Theory/basis-theory-js/issues/144)) ([fdfdbf8](https://github.com/Basis-Theory/basis-theory-js/commit/fdfdbf885d12fe225279fe5e89d2070c9a0742d8))
+
 # [1.15.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.14.0...v1.15.0) (2022-01-04)
 
 
