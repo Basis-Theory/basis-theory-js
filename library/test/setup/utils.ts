@@ -614,7 +614,6 @@ const testMethodDelegate = (
         );
 
         Object.setPrototypeOf(ClassToBeInstantiated.prototype, {
-          create: superMethod,
           tokenize: superMethod,
         });
         const serviceInstance = new ClassToBeInstantiated({
@@ -626,7 +625,6 @@ const testMethodDelegate = (
 
         const createdToken = ((serviceInstance as unknown) as {
           tokenize?: (...args: unknown[]) => string;
-          create?: (...args: unknown[]) => string;
         })[method]?.(expectedPayload, expectedRequestOptions);
 
         expect(superMethod).toHaveBeenCalledTimes(1);
@@ -649,7 +647,6 @@ const testMethodDelegate = (
       const ClassToBeInstantiated = delegateServiceUnderTest(undefined);
 
       Object.setPrototypeOf(ClassToBeInstantiated.prototype, {
-        create: superMethod,
         tokenize: superMethod,
       });
       const serviceInstance = new ClassToBeInstantiated({
@@ -660,7 +657,6 @@ const testMethodDelegate = (
         expectedRequestOptions = chance.string();
       const createdToken = ((serviceInstance as unknown) as {
         tokenize?: (...args: unknown[]) => string;
-        create?: (...args: unknown[]) => string;
       })[method]?.(expectedPayload, expectedRequestOptions);
 
       expect(superMethod).toHaveBeenCalledTimes(1);
