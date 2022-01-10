@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.16.0...v1.17.0) (2022-01-10)
+
+
+### Features
+
+* bump elements interfaces to add new password field to text element ([#145](https://github.com/Basis-Theory/basis-theory-js/issues/145)) ([31feaa1](https://github.com/Basis-Theory/basis-theory-js/commit/31feaa1d55d7565c7f3d2e5652f90abf0ec95f13))
+
 # [1.16.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.15.0...v1.16.0) (2022-01-10)
 
 
