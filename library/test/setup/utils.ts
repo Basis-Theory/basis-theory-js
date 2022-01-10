@@ -411,8 +411,8 @@ const testList = <T>(param: () => TestListParam<T>): void => {
       [chance.string()],
       {},
     ],
-    obj: {
-      [chance.string()]: chance.string(),
+    metadata: {
+      fooBar: chance.string({ alpha: true }),
     },
     fn: (): undefined => undefined,
     [Symbol(chance.string())]: Symbol(chance.string()),
@@ -483,7 +483,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
     } as PaginatedList<T>);
     expect(client.history.get.length).toBe(1);
     expect(client.history.get[0].url).toStrictEqual(
-      `/?page=${page}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}`
+      `/?page=${page}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}&metadata.fooBar=${query.metadata.fooBar}`
     );
     expect(client.history.get[0].headers).toMatchObject({
       [API_KEY_HEADER]: expect.any(String),
@@ -524,7 +524,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
     } as PaginatedList<T>);
     expect(client.history.get.length).toBe(1);
     expect(client.history.get[0].url).toStrictEqual(
-      `/?page=${page}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}`
+      `/?page=${page}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}&metadata.fooBar=${query.metadata.fooBar}`
     );
     expect(client.history.get[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
