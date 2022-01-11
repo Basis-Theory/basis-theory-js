@@ -1679,10 +1679,10 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@basis-theory/basis-theory-elements-interfaces@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@basis-theory/basis-theory-elements-interfaces/-/basis-theory-elements-interfaces-3.0.0.tgz#ab70cecba337fd2e1cf8230d814db76a0c0023a8"
-  integrity sha512-O9PJj7Hxi/QK4xPbPMX+0mD+jAYPzk3DM331oFNbSka5Se5CD9k+kk6eiuYuCWc8r2YSCq5+MBR+q7PJ15wJqQ==
+"@basis-theory/basis-theory-elements-interfaces@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@basis-theory/basis-theory-elements-interfaces/-/basis-theory-elements-interfaces-3.1.0.tgz#6bdb6239eacdadf48566b8fd0f91530a2d16ab05"
+  integrity sha512-7HAv3cFWLpaATveYzHz5g1CIA3zzs9mPwEQbKWbvSbkev0Qpf/Q1JFGYZ70Mzwu2GaAsRx7KQZI0DphLSI3CkQ==
   dependencies:
     csstype "^3.0.8"
 

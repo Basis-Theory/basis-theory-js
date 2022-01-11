@@ -251,12 +251,18 @@ const getQueryParams = <Q>(query: Q): string => {
   if (keys.length) {
     const params = new URLSearchParams();
 
-    const appendSafe = (key: string, value: unknown): void => {
+    const appendSafe = (
+      key: string,
+      value: unknown,
+      isNested = false
+    ): void => {
       const type = typeof value;
+
+      const formattedKey = isNested ? key : snakeCase(key);
 
       // eslint-disable-next-line unicorn/no-null
       if (value === null || ['boolean', 'number', 'string'].includes(type)) {
-        params.append(snakeCase(key), value as string);
+        params.append(formattedKey, value as string);
       }
     };
 
@@ -266,6 +272,16 @@ const getQueryParams = <Q>(query: Q): string => {
       if (Array.isArray(value)) {
         value.forEach((aValue) => {
           appendSafe(String(key), aValue);
+        });
+      } else if (value && typeof value === 'object') {
+        const objectKeys = Object.keys(value);
+
+        objectKeys.forEach((objectKey) => {
+          appendSafe(
+            `${key}.${objectKey}`,
+            ((value as unknown) as Record<string, string>)[objectKey],
+            true
+          );
         });
       } else {
         appendSafe(String(key), value);

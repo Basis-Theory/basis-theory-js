@@ -897,5 +897,59 @@ describe('Tokens', () => {
       service: bt.tokens,
       client,
     }));
+
+    it('should list tokens w/ query', async () => {
+      const totalItems = chance.integer();
+      const pageNumber = chance.integer();
+      const pageSize = chance.integer();
+      const totalPages = chance.integer();
+      const query = {
+        page: chance.integer(),
+        size: chance.integer(),
+        id: chance.string({
+          alpha: true,
+          numeric: true,
+        }),
+        type: chance.string({
+          alpha: true,
+          numeric: true,
+        }) as TokenType,
+        metadata: {
+          str: chance.string({ alpha: true }),
+          num: chance.string({ numeric: true }),
+        },
+      } as ListTokensQuery;
+      const url = `/?page=${query.page}&size=${query.size}&id=${query.id}&type=${query.type}&metadata.str=${query.metadata?.str}&metadata.num=${query.metadata?.num}`;
+
+      client.onGet(url).reply(
+        200,
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+        /* eslint-enable camelcase */
+      );
+
+      expect(await bt.tokens.list(query)).toStrictEqual({
+        pagination: {
+          totalItems,
+          pageNumber,
+          pageSize,
+          totalPages,
+        },
+        data: [],
+      } as PaginatedList<Token>);
+      expect(client.history.get.length).toBe(1);
+      expect(client.history.get[0].url).toStrictEqual(url);
+      expect(client.history.get[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
   });
 });
