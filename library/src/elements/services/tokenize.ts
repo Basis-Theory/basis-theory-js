@@ -23,7 +23,7 @@ const delegateTokenize = (
       requestOptions?: RequestOptions
     ): Promise<TokenizeData> {
       if (elements?.hasElement(payload)) {
-        return elements.tokenize.tokenize(
+        return elements.tokenize(
           payload as ElementsTokenizeData,
           requestOptions
         );
