@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.17.0...v1.18.0) (2022-01-11)
+
+
+### Features
+
+* turns `tokenize` into a SDK method ([#143](https://github.com/Basis-Theory/basis-theory-js/issues/143)) ([fbefdc7](https://github.com/Basis-Theory/basis-theory-js/commit/fbefdc7795a0b7326b1f9eacb4b994421b1efc76))
+
 # [1.17.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.16.0...v1.17.0) (2022-01-10)
 
 
