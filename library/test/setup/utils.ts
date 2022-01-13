@@ -412,7 +412,13 @@ const testList = <T>(param: () => TestListParam<T>): void => {
       {},
     ],
     obj: {
-      [chance.string()]: chance.string(),
+      str: chance.string({ alpha: true }),
+      bool: chance.bool(),
+      int: chance.integer(),
+      float: chance.floating(),
+      obj: {
+        [chance.string()]: chance.string(),
+      },
     },
     fn: (): undefined => undefined,
     [Symbol(chance.string())]: Symbol(chance.string()),
@@ -483,7 +489,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
     } as PaginatedList<T>);
     expect(client.history.get.length).toBe(1);
     expect(client.history.get[0].url).toStrictEqual(
-      `/?page=${page}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}`
+      `/?page=${page}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}&obj.str=${query.obj.str}&obj.bool=${query.obj.bool}&obj.int=${query.obj.int}&obj.float=${query.obj.float}`
     );
     expect(client.history.get[0].headers).toMatchObject({
       [API_KEY_HEADER]: expect.any(String),
@@ -524,7 +530,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
     } as PaginatedList<T>);
     expect(client.history.get.length).toBe(1);
     expect(client.history.get[0].url).toStrictEqual(
-      `/?page=${page}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}`
+      `/?page=${page}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}&obj.str=${query.obj.str}&obj.bool=${query.obj.bool}&obj.int=${query.obj.int}&obj.float=${query.obj.float}`
     );
     expect(client.history.get[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
