@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.18.0...v1.19.0) (2022-01-13)
+
+
+### Features
+
+* add metadata query filter to list Tokens ([#147](https://github.com/Basis-Theory/basis-theory-js/issues/147)) ([dfbbb56](https://github.com/Basis-Theory/basis-theory-js/commit/dfbbb5665da645c16121b1fc0031e4125f3a8dc4))
+
 # [1.18.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.17.0...v1.18.0) (2022-01-11)
 
 
