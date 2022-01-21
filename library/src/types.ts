@@ -24,16 +24,6 @@ const algorithm = ['RSA', 'AES'] as const;
 
 type Algorithm = typeof algorithm[number];
 
-interface EncryptionProviderOptions {
-  defaultKeySize: number;
-  keyExpirationInDays: number;
-}
-
-interface EncryptionOptions {
-  algorithm: Algorithm;
-  options?: EncryptionProviderOptions;
-}
-
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
 }
@@ -61,8 +51,6 @@ export type {
   ClientsBasePathMap,
   Providers,
   Algorithm,
-  EncryptionProviderOptions,
-  EncryptionOptions,
   BasisTheoryInitOptions,
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitOptionsWithElements,
