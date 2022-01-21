@@ -12,11 +12,17 @@ import type {
 } from 'axios';
 import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
+import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import { RequestTransformers } from '../service';
+import { ApplicationInfo, ClientUserAgent } from '../types';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
+import {
+  API_KEY_HEADER,
+  BT_TRACE_ID_HEADER,
+  USER_AGENT_CLIENT,
+} from './constants';
 
 const assertInit = <T>(prop: T): NonNullable<T> => {
   // eslint-disable-next-line unicorn/no-null
@@ -294,6 +300,115 @@ const getQueryParams = <Q>(query: Q): string => {
   return '';
 };
 
+const appInfoToUserAgentString = (appInfo: ApplicationInfo): string =>
+  `${appInfo.name ? appInfo.name : ''}; ${
+    appInfo.version ? appInfo.version : ''
+  }; ${appInfo.url ? appInfo.url : ''})`;
+
+const buildUserAgentString = (appInfo?: ApplicationInfo): string => {
+  let userAgent = `${USER_AGENT_CLIENT}/{'version'}`;
+
+  if (appInfo && Object.keys(appInfo).length !== 0) {
+    userAgent += ` ${appInfoToUserAgentString(appInfo)}`;
+  }
+
+  return userAgent;
+};
+
+const getBrowser = (): string => {
+  const { userAgent } = window.navigator;
+  let browserUA;
+  let browser = 'unknown';
+  let version;
+
+  if (userAgent.includes('Firefox')) {
+    browser = 'Firefox';
+    browserUA = 'Firefox';
+  } else if (userAgent.includes('SamsungBrowser')) {
+    browser = 'SamsungBrowser';
+    browserUA = 'SamsungBrowser';
+  } else if (userAgent.includes('Opera')) {
+    browser = 'Opera';
+    browserUA = 'Opera';
+  } else if (userAgent.includes('OPR')) {
+    browser = 'Opera';
+    browserUA = 'OPR';
+  } else if (userAgent.includes('Trident')) {
+    browser = 'Microsoft Internet Explorer';
+    browserUA = 'Trident';
+  } else if (userAgent.includes('Edge')) {
+    browser = 'Microsoft Edge (Legacy)';
+    browserUA = 'Edge';
+  } else if (userAgent.includes('Edg')) {
+    browser = 'Microsoft Edge (Chromium)';
+    browserUA = 'Edg';
+  } else if (userAgent.includes('Chrome')) {
+    browser = 'Google Chrome/Chromium';
+    browserUA = 'Edg';
+  } else if (userAgent.includes('Safari')) {
+    browser = 'Safari';
+    browserUA = 'Safari';
+  }
+
+  try {
+    version = userAgent.split(`${browserUA}/`)[1];
+  } catch {
+    version = 'unknown';
+  }
+
+  return `${browser}/${version}`;
+};
+
+const getOSVersion = (): string => {
+  // node
+  if (typeof window === 'undefined') {
+    try {
+      return `${os.type()}/${os.version()}`;
+    } catch {
+      return 'unknown';
+    }
+  }
+
+  // browser
+  try {
+    const appVersionString = window.navigator.appVersion;
+    const osMatch = appVersionString.match(/\(([^)]+)\)/u);
+
+    if (osMatch && osMatch.length > 1) {
+      return osMatch[1];
+    }
+
+    return 'unknown';
+  } catch {
+    return 'unknown';
+  }
+};
+
+const getRuntime = (): string => {
+  // node
+  if (typeof window === 'undefined') {
+    return `NodeJS/${process.version}`;
+  }
+
+  // browser
+  return getBrowser();
+};
+
+const buildClientUserAgentString = (appInfo?: ApplicationInfo): string => {
+  const clientUserAgent: ClientUserAgent = {
+    client: USER_AGENT_CLIENT,
+    clientVersion: 'meme',
+    osVersion: getOSVersion(),
+    runtimeVersion: getRuntime(),
+  };
+
+  if (appInfo) {
+    clientUserAgent.application = appInfo;
+  }
+
+  return JSON.stringify(snakecaseKeys(clientUserAgent));
+};
+
 export {
   assertInit,
   transformRequestSnakeCase,
@@ -312,4 +427,6 @@ export {
   concatResponseTransformermWithDefault,
   errorInterceptor,
   getQueryParams,
+  buildUserAgentString,
+  buildClientUserAgentString,
 };

@@ -1,9 +1,13 @@
 import axios, { AxiosInstance, AxiosTransformer } from 'axios';
 import {
   API_KEY_HEADER,
+  CLIENT_USER_AGENT_HEADER,
+  USER_AGENT_HEADER,
   errorInterceptor,
   transformRequestSnakeCase,
   transformResponseCamelCase,
+  buildUserAgentString,
+  buildClientUserAgentString,
 } from '../common';
 import { BasisTheoryServiceOptions } from './types';
 
@@ -13,12 +17,20 @@ export abstract class BasisTheoryService<
   public readonly client: AxiosInstance;
 
   public constructor(options: T) {
-    const { apiKey, baseURL, transformRequest, transformResponse } = options;
+    const {
+      apiKey,
+      baseURL,
+      transformRequest,
+      transformResponse,
+      appInfo,
+    } = options;
 
     this.client = axios.create({
       baseURL,
       headers: {
         [API_KEY_HEADER]: apiKey,
+        [USER_AGENT_HEADER]: buildUserAgentString(appInfo),
+        [CLIENT_USER_AGENT_HEADER]: buildClientUserAgentString(appInfo),
       },
       /* eslint-disable unicorn/prefer-spread */
       transformRequest: ([] as AxiosTransformer[]).concat(
