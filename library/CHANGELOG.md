@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.19.0...v1.20.0) (2022-01-21)
+
+
+### Features
+
+* removes deprecated encryption module ([#150](https://github.com/Basis-Theory/basis-theory-js/issues/150)) ([b68ff2d](https://github.com/Basis-Theory/basis-theory-js/commit/b68ff2d19b658f96d85dc0282c8b154069da2a39))
+
 # [1.19.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.18.0...v1.19.0) (2022-01-13)
 
 
