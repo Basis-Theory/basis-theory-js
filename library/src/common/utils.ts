@@ -301,12 +301,12 @@ const getQueryParams = <Q>(query: Q): string => {
 };
 
 const appInfoToUserAgentString = (appInfo: ApplicationInfo): string =>
-  `${appInfo.name ? appInfo.name : ''}; ${
+  `(${appInfo.name ? appInfo.name : ''}; ${
     appInfo.version ? appInfo.version : ''
   }; ${appInfo.url ? appInfo.url : ''})`;
 
 const buildUserAgentString = (appInfo?: ApplicationInfo): string => {
-  let userAgent = `${USER_AGENT_CLIENT}/{'version'}`;
+  let userAgent = `${USER_AGENT_CLIENT}/${process.env.VERSION ?? 'unknown'}`;
 
   if (appInfo && Object.keys(appInfo).length !== 0) {
     userAgent += ` ${appInfoToUserAgentString(appInfo)}`;
@@ -397,9 +397,10 @@ const getRuntime = (): string => {
 const buildClientUserAgentString = (appInfo?: ApplicationInfo): string => {
   const clientUserAgent: ClientUserAgent = {
     client: USER_AGENT_CLIENT,
-    clientVersion: 'meme',
+    clientVersion: process.env.VERSION ?? 'unknown',
     osVersion: getOSVersion(),
     runtimeVersion: getRuntime(),
+    application: {},
   };
 
   if (appInfo) {
@@ -429,4 +430,6 @@ export {
   getQueryParams,
   buildUserAgentString,
   buildClientUserAgentString,
+  getOSVersion,
+  getRuntime,
 };
