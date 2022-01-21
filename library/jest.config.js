@@ -1,7 +1,7 @@
 const common = {
   preset: 'ts-jest',
   automock: false,
-  coveragePathIgnorePatterns: ['test', 'dist', 'src/encryption/providers'],
+  coveragePathIgnorePatterns: ['test', 'dist'],
 };
 
 module.exports = {
