@@ -16,7 +16,7 @@ import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import { RequestTransformers } from '../service';
-import { ApplicationInfo, ClientUserAgent } from '../types';
+import type { ApplicationInfo, ClientUserAgent } from '../types';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
 import {
   API_KEY_HEADER,
@@ -301,14 +301,12 @@ const getQueryParams = <Q>(query: Q): string => {
 };
 
 const appInfoToUserAgentString = (appInfo: ApplicationInfo): string =>
-  `(${appInfo.name ? appInfo.name : ''}; ${
-    appInfo.version ? appInfo.version : ''
-  }; ${appInfo.url ? appInfo.url : ''})`;
+  `(${appInfo.name || ''}; ${appInfo.version || ''}; ${appInfo.url || ''})`;
 
 const buildUserAgentString = (appInfo?: ApplicationInfo): string => {
-  let userAgent = `${USER_AGENT_CLIENT}/${process.env.VERSION ?? 'unknown'}`;
+  let userAgent = `${USER_AGENT_CLIENT}/${process.env.VERSION || 'unknown'}`;
 
-  if (appInfo && Object.keys(appInfo).length !== 0) {
+  if (appInfo && Object.keys(appInfo || {}).length) {
     userAgent += ` ${appInfoToUserAgentString(appInfo)}`;
   }
 
@@ -317,46 +315,57 @@ const buildUserAgentString = (appInfo?: ApplicationInfo): string => {
 
 const getBrowser = (): string => {
   const { userAgent } = window.navigator;
-  let browserUA;
-  let browser = 'unknown';
-  let version;
 
-  if (userAgent.includes('Firefox')) {
-    browser = 'Firefox';
-    browserUA = 'Firefox';
-  } else if (userAgent.includes('SamsungBrowser')) {
-    browser = 'SamsungBrowser';
-    browserUA = 'SamsungBrowser';
-  } else if (userAgent.includes('Opera')) {
-    browser = 'Opera';
-    browserUA = 'Opera';
-  } else if (userAgent.includes('OPR')) {
-    browser = 'Opera';
-    browserUA = 'OPR';
-  } else if (userAgent.includes('Trident')) {
-    browser = 'Microsoft Internet Explorer';
-    browserUA = 'Trident';
-  } else if (userAgent.includes('Edge')) {
-    browser = 'Microsoft Edge (Legacy)';
-    browserUA = 'Edge';
-  } else if (userAgent.includes('Edg')) {
-    browser = 'Microsoft Edge (Chromium)';
-    browserUA = 'Edg';
-  } else if (userAgent.includes('Chrome')) {
-    browser = 'Google Chrome/Chromium';
-    browserUA = 'Edg';
-  } else if (userAgent.includes('Safari')) {
-    browser = 'Safari';
-    browserUA = 'Safari';
+  let version = 'unknown';
+
+  const browser = [
+    {
+      browserName: 'Firefox',
+      browserUA: 'Firefox',
+    },
+    {
+      browserName: 'SamsungBrowser',
+      browserUA: 'SamsungBrowser',
+    },
+    {
+      browserName: 'Opera',
+      browserUA: 'Opera',
+    },
+    {
+      browserName: 'Opera',
+      browserUA: 'OPR',
+    },
+    {
+      browserName: 'Microsoft Internet Explorer',
+      browserUA: 'Trident',
+    },
+    {
+      browserName: 'Microsoft Edge (Legacy)',
+      browserUA: 'Edge',
+    },
+    {
+      browserName: 'Microsoft Edge (Chromium)',
+      browserUA: 'Edg',
+    },
+    {
+      browserName: 'Google Chrome/Chromium',
+      browserUA: 'Chrome',
+    },
+    {
+      browserName: 'Safari',
+      browserUA: 'Safari',
+    },
+  ].find((b) => userAgent.includes(b.browserUA));
+
+  if (browser) {
+    try {
+      version = userAgent.split(`${browser.browserUA}/`)[1];
+    } catch {
+      version = 'unknown';
+    }
   }
 
-  try {
-    version = userAgent.split(`${browserUA}/`)[1];
-  } catch {
-    version = 'unknown';
-  }
-
-  return `${browser}/${version}`;
+  return `${browser?.browserName || 'unknown'}/${version}`;
 };
 
 const getOSVersion = (): string => {
@@ -397,7 +406,7 @@ const getRuntime = (): string => {
 const buildClientUserAgentString = (appInfo?: ApplicationInfo): string => {
   const clientUserAgent: ClientUserAgent = {
     client: USER_AGENT_CLIENT,
-    clientVersion: process.env.VERSION ?? 'unknown',
+    clientVersion: process.env.VERSION || 'unknown',
     osVersion: getOSVersion(),
     runtimeVersion: getRuntime(),
     application: {},
