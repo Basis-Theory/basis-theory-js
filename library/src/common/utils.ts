@@ -441,4 +441,5 @@ export {
   buildClientUserAgentString,
   getOSVersion,
   getRuntime,
+  getBrowser,
 };
