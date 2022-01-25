@@ -126,7 +126,6 @@ describe('Utils', () => {
     beforeEach(() => {
       jest.resetModules();
       process.env = { ...env };
-      //process.version = testVersion;
       process.env.VERSION = testVersion;
 
       const browser = chance.pickone([
