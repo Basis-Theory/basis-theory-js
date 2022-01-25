@@ -28,12 +28,12 @@ import type {
   Tokens,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import { BasisTheoryApplications } from './applications';
-import { assertInit } from './common';
 import {
+  assertInit,
   CLIENT_BASE_PATHS,
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
-} from './common/constants';
+} from './common';
 import {
   delegateAtomicBanks,
   delegateAtomicCards,
@@ -57,6 +57,7 @@ import type {
 const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
+  appInfo: {},
 };
 
 export class BasisTheory
@@ -131,6 +132,8 @@ export class BasisTheory
         throw new Error('Invalid format for the given API base url.');
       }
 
+      const appInfo = this._initOptions.appInfo;
+
       if ((this._initOptions as BasisTheoryInitOptionsWithElements).elements) {
         await this.loadElements(apiKey);
       }
@@ -138,42 +141,52 @@ export class BasisTheory
       this._tokens = new (delegateTokens(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
+        appInfo,
       });
       this._tokenize = new (delegateTokenize(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokenize, baseUrl).toString(),
+        appInfo,
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.applications, baseUrl).toString(),
+        appInfo,
       });
       this._tenants = new BasisTheoryTenants({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tenants, baseUrl).toString(),
+        appInfo,
       });
       this._logs = new BasisTheoryLogs({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.logs, baseUrl).toString(),
+        appInfo,
       });
       this._reactorFormulas = new BasisTheoryReactorFormulas({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.reactorFormulas, baseUrl).toString(),
+        appInfo,
       });
       this._reactors = new BasisTheoryReactors({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.reactors, baseUrl).toString(),
+        appInfo,
       });
       this._atomicBanks = new (delegateAtomicBanks(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.atomicBanks, baseUrl).toString(),
+        appInfo,
       });
       this._atomicCards = new (delegateAtomicCards(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.atomicCards, baseUrl).toString(),
+        appInfo,
       });
       this._permissions = new BasisTheoryPermissions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.permissions, baseUrl).toString(),
+        appInfo,
       });
 
       this._initStatus = 'done';

@@ -12,11 +12,18 @@ import type {
 } from 'axios';
 import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
+import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import { RequestTransformers } from '../service';
+import type { ApplicationInfo, ClientUserAgent } from '../types';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from './constants';
+import {
+  API_KEY_HEADER,
+  BROWSER_LIST,
+  BT_TRACE_ID_HEADER,
+  USER_AGENT_CLIENT,
+} from './constants';
 
 const assertInit = <T>(prop: T): NonNullable<T> => {
   // eslint-disable-next-line unicorn/no-null
@@ -294,6 +301,88 @@ const getQueryParams = <Q>(query: Q): string => {
   return '';
 };
 
+const appInfoToUserAgentString = (appInfo: ApplicationInfo): string =>
+  `(${appInfo.name || ''}; ${appInfo.version || ''}; ${appInfo.url || ''})`;
+
+const buildUserAgentString = (appInfo?: ApplicationInfo): string => {
+  let userAgent = `${USER_AGENT_CLIENT}/${process.env.VERSION || 'unknown'}`;
+
+  if (appInfo && Object.keys(appInfo || {}).length) {
+    userAgent += ` ${appInfoToUserAgentString(appInfo)}`;
+  }
+
+  return userAgent;
+};
+
+const getBrowser = (): string => {
+  const { userAgent } = window.navigator;
+
+  let version = 'unknown';
+
+  const browser = BROWSER_LIST.find((b) => userAgent.includes(b.browserUA));
+
+  if (browser) {
+    try {
+      version = userAgent.split(`${browser.browserUA}/`)[1];
+    } catch {
+      version = 'unknown';
+    }
+  }
+
+  return `${browser?.browserName || 'unknown'}/${version}`;
+};
+
+const getOSVersion = (): string => {
+  // node
+  if (typeof window === 'undefined') {
+    try {
+      return `${os.type()}/${os.version()}`;
+    } catch {
+      return 'unknown';
+    }
+  }
+
+  // browser
+  try {
+    const appVersionString = window.navigator.appVersion;
+    const osMatch = appVersionString.match(/\(([^)]+)\)/u);
+
+    if (osMatch && osMatch.length > 1) {
+      return osMatch[1];
+    }
+
+    return 'unknown';
+  } catch {
+    return 'unknown';
+  }
+};
+
+const getRuntime = (): string => {
+  // node
+  if (typeof window === 'undefined') {
+    return `NodeJS/${process.version}`;
+  }
+
+  // browser
+  return getBrowser();
+};
+
+const buildClientUserAgentString = (appInfo?: ApplicationInfo): string => {
+  const clientUserAgent: ClientUserAgent = {
+    client: USER_AGENT_CLIENT,
+    clientVersion: process.env.VERSION || 'unknown',
+    osVersion: getOSVersion(),
+    runtimeVersion: getRuntime(),
+    application: {},
+  };
+
+  if (appInfo) {
+    clientUserAgent.application = appInfo;
+  }
+
+  return JSON.stringify(snakecaseKeys(clientUserAgent));
+};
+
 export {
   assertInit,
   transformRequestSnakeCase,
@@ -312,4 +401,9 @@ export {
   concatResponseTransformermWithDefault,
   errorInterceptor,
   getQueryParams,
+  buildUserAgentString,
+  buildClientUserAgentString,
+  getOSVersion,
+  getRuntime,
+  getBrowser,
 };

@@ -22,6 +22,7 @@ import {
   IRetrieve,
   IUpdate,
 } from '../../src/service/CrudBuilder';
+import type { ApplicationInfo } from '../../src/types';
 
 const describeif = (condition: boolean): typeof describe =>
   condition ? describe : describe.skip;
@@ -810,6 +811,16 @@ const testServiceDelegate = (
   });
 };
 
+const getTestAppInfo = (): ApplicationInfo => {
+  const testApp: ApplicationInfo = {
+    name: 'TestApp',
+    version: '1.0.0',
+    url: 'http://localhost',
+  };
+
+  return testApp;
+};
+
 export {
   describeif,
   mockServiceClient,
@@ -823,4 +834,5 @@ export {
   testList,
   testServiceDelegate,
   testMethodDelegate,
+  getTestAppInfo,
 };

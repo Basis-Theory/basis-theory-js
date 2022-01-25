@@ -17,6 +17,8 @@ const base = {
     fallback: {
       crypto: false,
       stream: false,
+      os: false,
+      process: false,
     },
   },
 

@@ -2,8 +2,14 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
-import { DEFAULT_BASE_URL, CLIENT_BASE_PATHS } from '../src/common';
+import {
+  DEFAULT_BASE_URL,
+  CLIENT_BASE_PATHS,
+  buildClientUserAgentString,
+  buildUserAgentString,
+} from '../src/common';
 import { BasisTheoryService } from '../src/service';
+import { getTestAppInfo } from './setup/utils';
 
 describe('clients', () => {
   it('should use base url and paths for all clients', async () => {
@@ -11,11 +17,14 @@ describe('clients', () => {
 
     await new BasisTheory().init('sb-key', {
       apiBaseUrl: DEFAULT_BASE_URL,
+      appInfo: getTestAppInfo(),
     });
 
     const baseConfig = {
       headers: {
         'BT-API-KEY': 'sb-key',
+        'User-Agent': buildUserAgentString(getTestAppInfo()),
+        'BT-CLIENT-USER-AGENT': buildClientUserAgentString(getTestAppInfo()),
       },
       transformRequest: expect.any(Array),
       transformResponse: expect.any(Array),
