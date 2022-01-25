@@ -115,8 +115,10 @@ describe('Utils', () => {
     const env = process.env;
 
     chance = new Chance();
-
-    const osType = chance.string({ symbols: false });
+    const osType = chance.string({
+      alpha: true,
+      symbols: false,
+    });
     const versionNumber = chance.integer({
       min: 0,
       max: 100,
@@ -169,7 +171,7 @@ describe('Utils', () => {
 
       if (typeof window !== 'undefined') {
         Object.defineProperty(window.navigator, 'appVersion', {
-          value: `(${osType}/${testVersion})`,
+          value: `(${osType})`,
         });
 
         Object.defineProperty(window.navigator, 'userAgent', {
@@ -211,10 +213,12 @@ describe('Utils', () => {
 
     it('should get the os version', () => {
       (os.type as jest.Mock).mockReturnValue(osType);
-
       (os.version as jest.Mock).mockReturnValue(testVersion);
 
-      expect(getOSVersion()).toStrictEqual(`${osType}/${testVersion}`);
+      const osString =
+        typeof window === 'undefined' ? `${osType}/${testVersion}` : osType;
+
+      expect(getOSVersion()).toStrictEqual(osString);
     });
 
     it('should get the runtime version', () => {
