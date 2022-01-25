@@ -42,7 +42,6 @@ import {
   loadElements,
 } from './elements';
 import { ELEMENTS_INIT_ERROR_MESSAGE } from './elements/constants';
-import { BasisTheoryEncryptionAdapters } from './encryption/BasisTheoryEncryptionAdapters';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
@@ -70,8 +69,6 @@ export class BasisTheory
   private _tokens?: Tokens & ElementsTokens;
 
   private _tokenize?: Tokenize & ElementsTokenize;
-
-  private _encryption?: BasisTheoryEncryptionAdapters;
 
   private _elements?: BasisTheoryElementsInternal;
 
@@ -192,8 +189,6 @@ export class BasisTheory
         appInfo,
       });
 
-      this._encryption = new BasisTheoryEncryptionAdapters();
-
       this._initStatus = 'done';
     } catch (error) {
       this._initStatus = 'error';
@@ -253,13 +248,6 @@ export class BasisTheory
 
   public get tokens(): Tokens & ElementsTokens {
     return assertInit(this._tokens);
-  }
-
-  /**
-   * @deprecated
-   */
-  public get encryption(): BasisTheoryEncryptionAdapters {
-    return assertInit(this._encryption);
   }
 
   public get applications(): Applications {

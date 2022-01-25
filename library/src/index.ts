@@ -8,6 +8,5 @@ import { BasisTheory } from './BasisTheory';
 export const _instance: BasisTheoryInit = new BasisTheory();
 
 export * from './BasisTheory';
-export * from './encryption';
 export * from './applications';
 export * from './tokens';
