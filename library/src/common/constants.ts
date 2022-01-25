@@ -22,6 +22,45 @@ const CLIENT_BASE_PATHS: ClientsBasePathMap = {
   permissions: 'permissions',
 };
 
+const BROWSER_LIST = [
+  {
+    browserName: 'Firefox',
+    browserUA: 'Firefox',
+  },
+  {
+    browserName: 'SamsungBrowser',
+    browserUA: 'SamsungBrowser',
+  },
+  {
+    browserName: 'Opera',
+    browserUA: 'Opera',
+  },
+  {
+    browserName: 'Opera',
+    browserUA: 'OPR',
+  },
+  {
+    browserName: 'Microsoft Internet Explorer',
+    browserUA: 'Trident',
+  },
+  {
+    browserName: 'Microsoft Edge (Legacy)',
+    browserUA: 'Edge',
+  },
+  {
+    browserName: 'Microsoft Edge (Chromium)',
+    browserUA: 'Edg',
+  },
+  {
+    browserName: 'Google Chrome/Chromium',
+    browserUA: 'Chrome',
+  },
+  {
+    browserName: 'Safari',
+    browserUA: 'Safari',
+  },
+];
+
 export {
   API_KEY_HEADER,
   BT_TRACE_ID_HEADER,
@@ -31,4 +70,5 @@ export {
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
   CLIENT_BASE_PATHS,
+  BROWSER_LIST,
 };

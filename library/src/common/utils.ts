@@ -20,6 +20,7 @@ import type { ApplicationInfo, ClientUserAgent } from '../types';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
 import {
   API_KEY_HEADER,
+  BROWSER_LIST,
   BT_TRACE_ID_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
@@ -318,44 +319,7 @@ const getBrowser = (): string => {
 
   let version = 'unknown';
 
-  const browser = [
-    {
-      browserName: 'Firefox',
-      browserUA: 'Firefox',
-    },
-    {
-      browserName: 'SamsungBrowser',
-      browserUA: 'SamsungBrowser',
-    },
-    {
-      browserName: 'Opera',
-      browserUA: 'Opera',
-    },
-    {
-      browserName: 'Opera',
-      browserUA: 'OPR',
-    },
-    {
-      browserName: 'Microsoft Internet Explorer',
-      browserUA: 'Trident',
-    },
-    {
-      browserName: 'Microsoft Edge (Legacy)',
-      browserUA: 'Edge',
-    },
-    {
-      browserName: 'Microsoft Edge (Chromium)',
-      browserUA: 'Edg',
-    },
-    {
-      browserName: 'Google Chrome/Chromium',
-      browserUA: 'Chrome',
-    },
-    {
-      browserName: 'Safari',
-      browserUA: 'Safari',
-    },
-  ].find((b) => userAgent.includes(b.browserUA));
+  const browser = BROWSER_LIST.find((b) => userAgent.includes(b.browserUA));
 
   if (browser) {
     try {

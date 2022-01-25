@@ -1,8 +1,7 @@
 import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosResponse } from 'axios';
 import { Chance } from 'chance';
-import os from 'os';
-import { getOSVersion, getRuntime } from '../dist/common';
+import * as os from 'os';
 import {
   BT_TRACE_ID_HEADER,
   API_KEY_HEADER,
@@ -12,8 +11,11 @@ import {
   errorInterceptor,
   dataExtractor,
   createRequestConfig,
+  getOSVersion,
+  getRuntime,
+  BROWSER_LIST,
 } from '../src/common';
-import { ApplicationInfo } from '../src/types';
+import type { ApplicationInfo } from '../src/types';
 
 jest.mock('os', () => ({
   version: jest.fn().mockReturnValue('1.0.0'),
@@ -130,44 +132,7 @@ describe('Utils', () => {
       process.env = { ...env };
       process.env.VERSION = testVersion;
 
-      const browser = chance.pickone([
-        {
-          browserName: 'Firefox',
-          browserUA: 'Firefox',
-        },
-        {
-          browserName: 'SamsungBrowser',
-          browserUA: 'SamsungBrowser',
-        },
-        {
-          browserName: 'Opera',
-          browserUA: 'Opera',
-        },
-        {
-          browserName: 'Opera',
-          browserUA: 'OPR',
-        },
-        {
-          browserName: 'Microsoft Internet Explorer',
-          browserUA: 'Trident',
-        },
-        {
-          browserName: 'Microsoft Edge (Legacy)',
-          browserUA: 'Edge',
-        },
-        {
-          browserName: 'Microsoft Edge (Chromium)',
-          browserUA: 'Edg',
-        },
-        {
-          browserName: 'Google Chrome/Chromium',
-          browserUA: 'Chrome',
-        },
-        {
-          browserName: 'Safari',
-          browserUA: 'Safari',
-        },
-      ]);
+      const browser = chance.pickone(BROWSER_LIST);
 
       if (typeof window !== 'undefined') {
         Object.defineProperty(window.navigator, 'appVersion', {
