@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.20.0...v1.21.0) (2022-01-25)
+
+
+### Features
+
+* add user agent headers to all client requests ([#149](https://github.com/Basis-Theory/basis-theory-js/issues/149)) ([6154ed5](https://github.com/Basis-Theory/basis-theory-js/commit/6154ed598e72ccd28113d18fd4b0640ba32392b1))
+
 # [1.20.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.19.0...v1.20.0) (2022-01-21)
 
 
