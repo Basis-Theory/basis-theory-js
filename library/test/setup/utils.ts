@@ -22,7 +22,7 @@ import {
   IRetrieve,
   IUpdate,
 } from '../../src/service/CrudBuilder';
-import { ApplicationInfo } from '../../src/types';
+import type { ApplicationInfo } from '../../src/types';
 
 const describeif = (condition: boolean): typeof describe =>
   condition ? describe : describe.skip;
