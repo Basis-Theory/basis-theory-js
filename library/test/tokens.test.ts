@@ -13,6 +13,7 @@ import type {
   PaginatedList,
   ListDecryptedTokensQuery,
   ListTokensQuery,
+  SearchTokensRequest,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
@@ -950,6 +951,122 @@ describe('Tokens', () => {
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
       });
+    });
+  });
+
+  describe('search tokens', () => {
+    it('should search tokens', async () => {
+      const totalItems = chance.integer();
+      const pageNumber = chance.integer();
+      const pageSize = chance.integer();
+      const totalPages = chance.integer();
+
+      const searchRequest = {
+        query: chance.string(),
+        page: chance.integer(),
+        size: chance.integer(),
+      } as SearchTokensRequest;
+
+      client.onPost('search').reply(
+        200,
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+      );
+
+      expect(await bt.tokens.search(searchRequest)).toStrictEqual({
+        pagination: {
+          totalItems,
+          pageNumber,
+          pageSize,
+          totalPages,
+        },
+        data: [],
+      } as PaginatedList<Token>);
+
+      expect(client.history.post.length).toBe(1);
+      expect(client.history.post[0].url).toStrictEqual('/search');
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify(searchRequest)
+      );
+      expect(client.history.post[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
+
+    it('should search tokens with options', async () => {
+      const _apiKey = chance.string();
+      const correlationId = chance.string();
+      const totalItems = chance.integer();
+      const pageNumber = chance.integer();
+      const pageSize = chance.integer();
+      const totalPages = chance.integer();
+
+      const searchRequest = {
+        query: chance.string(),
+        page: chance.integer(),
+        size: chance.integer(),
+      } as SearchTokensRequest;
+
+      client.onPost('search').reply(
+        200,
+        JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [],
+        })
+      );
+
+      expect(
+        await bt.tokens.search(searchRequest, {
+          apiKey: _apiKey,
+          correlationId,
+        })
+      ).toStrictEqual({
+        pagination: {
+          totalItems,
+          pageNumber,
+          pageSize,
+          totalPages,
+        },
+        data: [],
+      } as PaginatedList<Token>);
+
+      expect(client.history.post.length).toBe(1);
+      expect(client.history.post[0].url).toStrictEqual('/search');
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify(searchRequest)
+      );
+      expect(client.history.post[0].headers).toMatchObject({
+        [API_KEY_HEADER]: _apiKey,
+        [BT_TRACE_ID_HEADER]: correlationId,
+      });
+    });
+
+    it('should reject with status >= 400 <= 599', async () => {
+      const searchRequest = {
+        query: chance.string(),
+        page: chance.integer(),
+        size: chance.integer(),
+      } as SearchTokensRequest;
+
+      const status = errorStatus();
+
+      client.onPost('/search').reply(status);
+
+      const promise = bt.tokens.search(searchRequest);
+
+      await expectBasisTheoryApiError(promise, status);
     });
   });
 });
