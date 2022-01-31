@@ -967,6 +967,7 @@ describe('Tokens', () => {
         size: chance.integer(),
       } as SearchTokensRequest;
 
+      /* eslint-disable camelcase */
       client.onPost('search').reply(
         200,
         JSON.stringify({
@@ -979,6 +980,7 @@ describe('Tokens', () => {
           data: [],
         })
       );
+      /* eslint-enable camelcase */
 
       expect(await bt.tokens.search(searchRequest)).toStrictEqual({
         pagination: {
@@ -1014,6 +1016,7 @@ describe('Tokens', () => {
         size: chance.integer(),
       } as SearchTokensRequest;
 
+      /* eslint-disable camelcase */
       client.onPost('search').reply(
         200,
         JSON.stringify({
@@ -1026,6 +1029,7 @@ describe('Tokens', () => {
           data: [],
         })
       );
+      /* eslint-enable camelcase */
 
       expect(
         await bt.tokens.search(searchRequest, {
