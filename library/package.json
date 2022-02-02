@@ -32,6 +32,8 @@
     "@basis-theory/basis-theory-elements-interfaces": "^3.2.0",
     "axios": "^0.21.2",
     "camelcase-keys": "^6.2.2",
+    "os": "^0.1.2",
+    "os-browserify": "^0.3.0",
     "snake-case": "^3.0.4",
     "snakecase-keys": "^3.2.1"
   },
