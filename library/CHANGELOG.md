@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.21.0...v1.22.0) (2022-02-02)
+
+
+### Features
+
+* exposing token search ([#154](https://github.com/Basis-Theory/basis-theory-js/issues/154)) ([9e0157d](https://github.com/Basis-Theory/basis-theory-js/commit/9e0157d054d881da5a7e706d9a562d14195f07bb))
+
 # [1.21.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.20.0...v1.21.0) (2022-01-25)
 
 
