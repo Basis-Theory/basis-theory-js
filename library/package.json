@@ -1,6 +1,6 @@
 {
   "name": "@basis-theory/basis-theory-js",
-  "version": "1.21.0",
+  "version": "1.22.0",
   "repository": "https://github.com/Basis-Theory/basis-theory-js",
   "license": "Apache-2.0",
   "author": {
@@ -29,7 +29,7 @@
     "test:cov": "jest --coverage"
   },
   "dependencies": {
-    "@basis-theory/basis-theory-elements-interfaces": "^3.2.0",
+    "@basis-theory/basis-theory-elements-interfaces": "^3.4.0",
     "axios": "^0.21.2",
     "camelcase-keys": "^6.2.2",
     "os": "^0.1.2",

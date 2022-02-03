@@ -7,6 +7,7 @@ import type {
   RequestOptions,
   ListDecryptedTokensQuery,
   ListTokensQuery,
+  SearchTokensRequest,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';
 import { createRequestConfig, getQueryParams } from '../common';
@@ -109,6 +110,15 @@ export const BasisTheoryTokens = new CrudBuilder(
 
       return this.client
         .get(url, createRequestConfig(options))
+        .then(dataExtractor);
+    }
+
+    public search(
+      searchRequest: SearchTokensRequest,
+      options?: RequestOptions
+    ): Promise<PaginatedList<Token>> {
+      return this.client
+        .post('/search', searchRequest, createRequestConfig(options))
         .then(dataExtractor);
     }
   }
