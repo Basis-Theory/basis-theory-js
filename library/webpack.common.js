@@ -17,7 +17,7 @@ const base = {
     fallback: {
       crypto: false,
       stream: false,
-      os: false,
+      os: require.resolve('os-browserify/browser'),
       process: false,
     },
   },
