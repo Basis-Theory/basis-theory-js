@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.22.0...v1.22.1) (2022-02-03)
+
+
+### Bug Fixes
+
+* add polyfill for os module for webpack users ([#156](https://github.com/Basis-Theory/basis-theory-js/issues/156)) ([ced8ae4](https://github.com/Basis-Theory/basis-theory-js/commit/ced8ae4a13a7309beda05c2acdebeca7b8bfa520))
+
 # [1.22.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.21.0...v1.22.0) (2022-02-02)
 
 
