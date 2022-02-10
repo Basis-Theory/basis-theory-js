@@ -48,7 +48,6 @@ az storage blob upload \
 # Global Stack Upload
 az storage blob upload \
   --account-name $JS_STORAGE_ACCOUNT_NAME \
-  --encryption-scope "encryptionscope185" \
   -f $BUNDLE_PATH \
   -c $JS_CONTAINER_NAME \
   -n "$INDEX_JS_NAME"
@@ -68,7 +67,6 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
 # Global Stack Upload
 az storage blob upload \
   --account-name $JS_STORAGE_ACCOUNT_NAME \
-  --encryption-scope "encryptionscope185" \
   -f $BUNDLE_PATH \
   -c $JS_CONTAINER_NAME \
   -n "$BLOB_NAME"
@@ -86,7 +84,6 @@ else
 # Global Stack Upload
   az storage blob upload \
     --account-name $JS_STORAGE_ACCOUNT_NAME \
-    --encryption-scope "encryptionscope185" \
     -f $BUNDLE_PATH \
     -c $JS_CONTAINER_NAME \
     -n "$VERSIONED_JS_NAME"
