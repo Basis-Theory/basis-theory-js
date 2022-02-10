@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+env
+
 current_directory="$PWD"
 
 cd $(dirname $0)/../infrastructure
