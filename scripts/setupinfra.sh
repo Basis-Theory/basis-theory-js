@@ -5,8 +5,6 @@ current_directory="$PWD"
 
 cd $(dirname $0)/../infrastructure
 
-az login
-
 pulumi login
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then
