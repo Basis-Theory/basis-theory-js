@@ -18,7 +18,6 @@ fi
 INFRA_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_STACK --json)
 STORAGE_ACCOUNT_NAME=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageAccountName')
 CONTAINER_NAME=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageContainerName')
-JS_HOST=$(echo $INFRA_STACK_OUTPUTS | jq -r '.hostNames.js')
 
 GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_STACK --json)
 EDGE_RESOURCE_GROUP_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .edgeResourceGroupName)
@@ -31,6 +30,12 @@ BUNDLE_PATH=$(cat outputs.json | jq -r '.bundlePath')
 BLOB_DIR=$(cat outputs.json | jq -r '.blobDir')
 INDEX_JS_NAME=$(cat outputs.json | jq -r '.indexJsName')
 VERSIONED_JS_NAME=$(cat outputs.json | jq -r '.versionedJsName')
+
+if [[ $STACK_NAME == "dev" ]]; then
+  JS_HOST="js-dev.basistheory.com"
+else
+  JS_HOST="js.basistheory.com"
+fi
 
 echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
