@@ -12,6 +12,8 @@ export AZURE_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, j
 export AZURE_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['subscriptionId'])")
 export AZURE_TENANT_ID=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['tenantId'])")
 
+az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+
 pulumi login
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then
