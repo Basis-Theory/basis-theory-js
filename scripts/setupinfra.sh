@@ -5,6 +5,8 @@ current_directory="$PWD"
 
 cd $(dirname $0)/../infrastructure
 
+az login
+
 pulumi login
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then
@@ -24,7 +26,6 @@ GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_STACK --json)
 EDGE_RESOURCE_GROUP_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .edgeResourceGroupName)
 JS_STORAGE_ACCOUNT_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jnStorageAccountName)
 JS_CONTAINER_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsContainerName)
-
 
 yarn outputs
 
