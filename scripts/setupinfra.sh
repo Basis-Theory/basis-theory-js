@@ -5,6 +5,11 @@ current_directory="$PWD"
 
 cd $(dirname $0)/../infrastructure
 
+export AZURE_CLIENT_ID=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['clientId'])")
+export AZURE_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['clientSecret'])")
+export AZURE_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['subscriptionId'])")
+export AZURE_TENANT_ID=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['tenantId'])")
+
 pulumi login
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then

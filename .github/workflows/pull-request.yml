@@ -83,6 +83,7 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           STACK_NAME: dev
           IS_PR_WORKFLOW: true
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_DEV_CREDENTIALS }}
 
       - name: Monitor coverage
         uses: slavcodev/coverage-monitor-action@1.2.0
