@@ -1,18 +1,9 @@
 #!/bin/bash
 set -e
 
-env
-
 current_directory="$PWD"
 
 cd $(dirname $0)/../infrastructure
-
-export AZURE_CLIENT_ID=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['clientId'])")
-export AZURE_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['clientSecret'])")
-export AZURE_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['subscriptionId'])")
-export AZURE_TENANT_ID=$(echo $AZURE_CREDENTIALS | python3 -c "import sys, json; print(json.load(sys.stdin)['tenantId'])")
-
-az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
 
 pulumi login
 
@@ -57,6 +48,7 @@ az storage blob upload \
 # Global Stack Upload
 az storage blob upload \
   --account-name $JS_STORAGE_ACCOUNT_NAME \
+  --encryption-scope "encryptionscope185" \
   -f $BUNDLE_PATH \
   -c $JS_CONTAINER_NAME \
   -n "$INDEX_JS_NAME"
@@ -76,6 +68,7 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
 # Global Stack Upload
 az storage blob upload \
   --account-name $JS_STORAGE_ACCOUNT_NAME \
+  --encryption-scope "encryptionscope185" \
   -f $BUNDLE_PATH \
   -c $JS_CONTAINER_NAME \
   -n "$BLOB_NAME"
@@ -91,11 +84,12 @@ else
     -n "$VERSIONED_JS_NAME"
 
 # Global Stack Upload
-az storage blob upload \
-  --account-name $JS_STORAGE_ACCOUNT_NAME \
-  -f $BUNDLE_PATH \
-  -c $JS_CONTAINER_NAME \
-  -n "$VERSIONED_JS_NAME"
+  az storage blob upload \
+    --account-name $JS_STORAGE_ACCOUNT_NAME \
+    --encryption-scope "encryptionscope185" \
+    -f $BUNDLE_PATH \
+    -c $JS_CONTAINER_NAME \
+    -n "$VERSIONED_JS_NAME"
 fi
 
 
