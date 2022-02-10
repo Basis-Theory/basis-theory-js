@@ -78,7 +78,7 @@ jobs:
           path: e2e/cypress/screenshots
 
       - name: Verify Infrastructure
-        run: bash .scripts/setupinfra.sh
+        run: bash ./scripts/setupinfra.sh
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           IS_PR_WORKFLOW: true
