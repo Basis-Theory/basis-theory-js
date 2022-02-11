@@ -33,7 +33,7 @@ jobs:
       - name: Login in Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.CDN_DEV_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_DEV_CREDENTIALS }}
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
