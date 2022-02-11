@@ -33,7 +33,7 @@ jobs:
       - name: Login in Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_DEV_CREDENTIALS }}
+          creds: ${{ secrets.CDN_DEV_CREDENTIALS }}
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
@@ -83,7 +83,6 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           STACK_NAME: dev
           IS_PR_WORKFLOW: true
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_DEV_CREDENTIALS }}
 
       - name: Monitor coverage
         uses: slavcodev/coverage-monitor-action@1.2.0
