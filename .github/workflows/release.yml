@@ -16,6 +16,8 @@ jobs:
       HUSKY: 0 # disables husky hooks
       PULUMI_INFRA_DEV_STACK: basistheory/infrastructure-azure/dev
       PULUMI_INFRA_PROD_STACK: basistheory/infrastructure-azure/prod
+      PULUMI_GLOBAL_DEV_STACK: basistheory/btinfra-global/dev
+      PULUMI_GLOBAL_PROD_STACK: basistheory/btinfra-global/prod
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -33,7 +35,7 @@ jobs:
       - name: Login in Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.CDN_PROD_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_PROD_CREDENTIALS }}
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
