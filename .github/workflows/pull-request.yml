@@ -81,7 +81,6 @@ jobs:
         run: make setup-infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          STACK_NAME: dev
           IS_PR_WORKFLOW: true
 
       - name: Monitor coverage
