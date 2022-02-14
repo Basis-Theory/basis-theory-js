@@ -29,8 +29,10 @@ export abstract class BasisTheoryService<
       baseURL,
       headers: {
         [API_KEY_HEADER]: apiKey,
-        [USER_AGENT_HEADER]: buildUserAgentString(appInfo),
         [CLIENT_USER_AGENT_HEADER]: buildClientUserAgentString(appInfo),
+        ...(typeof window !== 'undefined' && {
+          [USER_AGENT_HEADER]: buildUserAgentString(appInfo),
+        }),
       },
       /* eslint-disable unicorn/prefer-spread */
       transformRequest: ([] as AxiosTransformer[]).concat(
