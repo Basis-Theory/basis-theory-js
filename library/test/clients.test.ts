@@ -23,7 +23,7 @@ describe('clients', () => {
     const baseConfig = {
       headers: {
         'BT-API-KEY': 'sb-key',
-        ...(typeof window !== 'undefined' && {
+        ...(typeof window === 'undefined' && {
           'User-Agent': buildUserAgentString(getTestAppInfo()),
         }),
         'BT-CLIENT-USER-AGENT': buildClientUserAgentString(getTestAppInfo()),

@@ -30,7 +30,7 @@ export abstract class BasisTheoryService<
       headers: {
         [API_KEY_HEADER]: apiKey,
         [CLIENT_USER_AGENT_HEADER]: buildClientUserAgentString(appInfo),
-        ...(typeof window !== 'undefined' && {
+        ...(typeof window === 'undefined' && {
           [USER_AGENT_HEADER]: buildUserAgentString(appInfo),
         }),
       },
