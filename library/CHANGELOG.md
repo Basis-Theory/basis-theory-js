@@ -1,3 +1,10 @@
+## [1.22.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.22.1...v1.22.2) (2022-02-15)
+
+
+### Bug Fixes
+
+* only add User-Agent header if client is not a browser ([#160](https://github.com/Basis-Theory/basis-theory-js/issues/160)) ([1be6fb3](https://github.com/Basis-Theory/basis-theory-js/commit/1be6fb3adea7e9377d2128bcffdcb9b4cffc7c81))
+
 ## [1.22.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.22.0...v1.22.1) (2022-02-03)
 
 
