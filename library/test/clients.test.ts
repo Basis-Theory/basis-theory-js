@@ -23,7 +23,9 @@ describe('clients', () => {
     const baseConfig = {
       headers: {
         'BT-API-KEY': 'sb-key',
-        'User-Agent': buildUserAgentString(getTestAppInfo()),
+        ...(typeof window === 'undefined' && {
+          'User-Agent': buildUserAgentString(getTestAppInfo()),
+        }),
         'BT-CLIENT-USER-AGENT': buildClientUserAgentString(getTestAppInfo()),
       },
       transformRequest: expect.any(Array),
