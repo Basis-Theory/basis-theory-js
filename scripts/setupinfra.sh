@@ -34,12 +34,6 @@ VERSIONED_JS_NAME=$(cat outputs.json | jq -r '.versionedJsName')
 
 echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
-az storage blob upload \
-  --account-name $STORAGE_ACCOUNT_NAME \
-  -f $BUNDLE_PATH \
-  -c $CONTAINER_NAME \
-  -n "$INDEX_JS_NAME"
-
 # Global Stack Upload
 az storage blob upload \
   --account-name $JS_STORAGE_ACCOUNT_NAME \
@@ -52,31 +46,17 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
 
   echo "Uploading bundle to $JS_HOST/$BLOB_NAME"
 
-  # uploads commit hash named blob
+  # Global Stack Upload
   az storage blob upload \
-    --account-name $STORAGE_ACCOUNT_NAME \
+    --account-name $JS_STORAGE_ACCOUNT_NAME \
     -f $BUNDLE_PATH \
-    -c $CONTAINER_NAME \
+    -c $JS_CONTAINER_NAME \
     -n "$BLOB_NAME"
-
-# Global Stack Upload
-az storage blob upload \
-  --account-name $JS_STORAGE_ACCOUNT_NAME \
-  -f $BUNDLE_PATH \
-  -c $JS_CONTAINER_NAME \
-  -n "$BLOB_NAME"
 
 else
   echo "Uploading bundle to $JS_HOST/$VERSIONED_JS_NAME"
 
-  # uploads version file
-  az storage blob upload \
-    --account-name $STORAGE_ACCOUNT_NAME \
-    -f $BUNDLE_PATH \
-    -c $CONTAINER_NAME \
-    -n "$VERSIONED_JS_NAME"
-
-# Global Stack Upload
+  # Global Stack Upload
   az storage blob upload \
     --account-name $JS_STORAGE_ACCOUNT_NAME \
     -f $BUNDLE_PATH \
