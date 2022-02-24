@@ -8,16 +8,10 @@ cd $(dirname $0)/../infrastructure
 pulumi login
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then
-  PULUMI_INFRA_STACK=$PULUMI_INFRA_DEV_STACK
   PULUMI_GLOBAL_STACK=$PULUMI_GLOBAL_DEV_STACK
 else
-  PULUMI_INFRA_STACK=$PULUMI_INFRA_PROD_STACK
   PULUMI_GLOBAL_STACK=$PULUMI_GLOBAL_PROD_STACK
 fi
-
-INFRA_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_INFRA_STACK --json)
-STORAGE_ACCOUNT_NAME=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageAccountName')
-CONTAINER_NAME=$(echo $INFRA_STACK_OUTPUTS | jq -r '.jsStorageContainerName')
 
 GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_STACK --json)
 EDGE_RESOURCE_GROUP_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .edgeResourceGroupName)
