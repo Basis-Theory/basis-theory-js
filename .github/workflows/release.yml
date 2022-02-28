@@ -14,8 +14,6 @@ jobs:
     env:
       CI: 1 # prevents extra Cypress installation progress messages
       HUSKY: 0 # disables husky hooks
-      PULUMI_INFRA_DEV_STACK: basistheory/infrastructure-azure/dev
-      PULUMI_INFRA_PROD_STACK: basistheory/infrastructure-azure/prod
       PULUMI_GLOBAL_DEV_STACK: basistheory/btinfra-global/dev
       PULUMI_GLOBAL_PROD_STACK: basistheory/btinfra-global/prod
     steps:
