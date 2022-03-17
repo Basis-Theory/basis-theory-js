@@ -20,10 +20,6 @@ import { BasisTheoryService } from '../service';
 import type { BasisTheoryServiceOptions } from '../service';
 import { CrudBuilder } from '../service/CrudBuilder';
 
-interface ReactRequest2 {
-  args: DataObject;
-}
-
 export const BasisTheoryReactors = new CrudBuilder(
   class BasisTheoryReactors extends BasisTheoryService {
     public constructor(options: BasisTheoryServiceOptions) {
@@ -48,7 +44,7 @@ export const BasisTheoryReactors = new CrudBuilder(
 
     public react(
       reactorId: string,
-      request: ReactRequest2,
+      request: ReactRequest,
       options?: RequestOptions
     ): Promise<ReactResponse> {
       return this.client
