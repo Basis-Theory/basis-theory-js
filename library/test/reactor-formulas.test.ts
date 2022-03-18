@@ -1,5 +1,4 @@
 import type {
-  TokenType,
   ReactorFormulaConfig,
   FormulaType,
   DataType,
