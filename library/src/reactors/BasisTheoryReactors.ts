@@ -4,7 +4,6 @@ import type {
   UpdateReactor,
   ReactRequest,
   ReactResponse,
-  DataObject,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
 import type {
   ListReactorQuery,
