@@ -1,7 +1,7 @@
 import type {
   AtomicCard,
   CreateAtomicCard,
-  ReactRequest,
+  AtomicReactRequest,
   ReactResponse,
   UpdateAtomicCard,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
@@ -66,13 +66,13 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
     }
 
     public react(
-      id: string,
-      request: ReactRequest,
+      tokenId: string,
+      request: AtomicReactRequest,
       options?: RequestOptions
     ): Promise<ReactResponse> {
       return this.client
         .post(
-          `/${id}/react`,
+          `/${tokenId}/react`,
           request,
           createRequestConfig(options, {
             transformRequest: transformAtomicReactionRequestSnakeCase,

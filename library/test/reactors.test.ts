@@ -1,5 +1,8 @@
 import { TokenType } from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
+import type {
+  BasisTheory as IBasisTheory,
+  ReactRequest,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
@@ -91,7 +94,7 @@ describe('Reactors', () => {
 
       const reactRequest = {
         args,
-      };
+      } as ReactRequest;
       const data = {
         first_nested: chance.string(),
         second_nested: chance.string(),
@@ -123,12 +126,7 @@ describe('Reactors', () => {
         /* eslint-enable camelcase */
       );
 
-      expect(
-        await bt.reactors.react(id, {
-          reactorId,
-          reactRequest,
-        })
-      ).toStrictEqual({
+      expect(await bt.reactors.react(reactorId, reactRequest)).toStrictEqual({
         /* eslint-disable camelcase */
         tokens: {
           id,
@@ -233,12 +231,9 @@ describe('Reactors', () => {
       expect(client.history.post.length).toBe(1);
       expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
       expect(client.history.post[0].data).toStrictEqual(
-        /* eslint-disable camelcase */
         JSON.stringify({
-          reactor_id: reactorId,
           args,
         })
-        /* eslint-enable camelcase */
       );
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,

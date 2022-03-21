@@ -2,11 +2,11 @@ import type {
   Reactor,
   CreateReactor,
   UpdateReactor,
-  ReactRequest,
   ReactResponse,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
 import type {
   ListReactorQuery,
+  ReactRequest,
   RequestOptions,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';

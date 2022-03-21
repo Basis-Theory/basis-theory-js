@@ -1,7 +1,7 @@
 import type {
   AtomicBank,
   CreateAtomicBank,
-  ReactRequest,
+  AtomicReactRequest,
   ReactResponse,
   UpdateAtomicBank,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
@@ -64,13 +64,13 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
     }
 
     public react(
-      id: string,
-      request: ReactRequest,
+      tokenId: string,
+      request: AtomicReactRequest,
       options?: RequestOptions
     ): Promise<ReactResponse> {
       return this.client
         .post(
-          `/${id}/react`,
+          `/${tokenId}/react`,
           request,
           createRequestConfig(options, {
             transformRequest: transformAtomicReactionRequestSnakeCase,
