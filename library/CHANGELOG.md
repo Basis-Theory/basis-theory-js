@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.22.2...v1.23.0) (2022-03-21)
+
+
+### Features
+
+* exposing new react endpoint ([#164](https://github.com/Basis-Theory/basis-theory-js/issues/164)) ([636be88](https://github.com/Basis-Theory/basis-theory-js/commit/636be882be2fb3fd5fd226e6aa0d465533146c0c))
+
 ## [1.22.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.22.1...v1.22.2) (2022-02-15)
 
 
