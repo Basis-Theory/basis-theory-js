@@ -1,5 +1,4 @@
 import type {
-  TokenType,
   ReactorFormulaConfig,
   FormulaType,
   DataType,
@@ -36,7 +35,6 @@ describe('Reactor Formulas', () => {
         name: chance.string(),
         description: chance.string(),
         type: chance.string() as FormulaType,
-        sourceTokenType: chance.string() as TokenType,
         icon: chance.string(),
         code: chance.string(),
         configuration: [
@@ -59,7 +57,6 @@ describe('Reactor Formulas', () => {
         name: chance.string(),
         description: chance.string(),
         type: chance.string() as FormulaType,
-        sourceTokenType: chance.string() as TokenType,
         icon: chance.string(),
         code: chance.string(),
         configuration: [

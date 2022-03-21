@@ -1,6 +1,6 @@
 import type {
+  AtomicReactRequest,
   Reactor,
-  ReactRequest,
   Token,
   TokenBase,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
@@ -94,7 +94,7 @@ const transformTokenRequestSnakeCase: AxiosTransformer = (
 };
 
 const transformAtomicReactionRequestSnakeCase: AxiosTransformer = (
-  request: ReactRequest
+  request: AtomicReactRequest
 ): Token | undefined => {
   if (typeof request === 'undefined') {
     return undefined;

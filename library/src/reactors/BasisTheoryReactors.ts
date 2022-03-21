@@ -2,9 +2,15 @@ import type {
   Reactor,
   CreateReactor,
   UpdateReactor,
+  ReactResponse,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { ListReactorQuery } from '@basis-theory/basis-theory-elements-interfaces/sdk';
+import type {
+  ListReactorQuery,
+  ReactRequest,
+  RequestOptions,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';
+import { createRequestConfig, dataExtractor, proxyRaw } from '../common';
 import {
   transformReactorResponseCamelCase,
   transformReactorRequestSnakeCase,
@@ -33,6 +39,23 @@ export const BasisTheoryReactors = new CrudBuilder(
       );
 
       super(_options);
+    }
+
+    public react(
+      reactorId: string,
+      request: ReactRequest,
+      options?: RequestOptions
+    ): Promise<ReactResponse> {
+      return this.client
+        .post(
+          `/${reactorId}/react`,
+          request,
+          createRequestConfig(options, {
+            transformRequest: proxyRaw,
+            transformResponse: proxyRaw,
+          })
+        )
+        .then(dataExtractor);
     }
   }
 )

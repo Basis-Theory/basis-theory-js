@@ -1,9 +1,19 @@
-import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
+import { TokenType } from '@basis-theory/basis-theory-elements-interfaces/models';
+import type {
+  BasisTheory as IBasisTheory,
+  ReactRequest,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
+import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
 import { transformReactorRequestSnakeCase } from '../src/common/utils';
-import { testCRUD, mockServiceClient } from './setup/utils';
+import {
+  testCRUD,
+  mockServiceClient,
+  errorStatus,
+  expectBasisTheoryApiError,
+} from './setup/utils';
 
 describe('Reactors', () => {
   let bt: IBasisTheory,
@@ -62,5 +72,199 @@ describe('Reactors', () => {
       updatePayload,
       transformedUpdatePayload,
     }));
+  });
+
+  describe('react', () => {
+    it('should react', async () => {
+      const id = chance.string();
+      const reactorId = chance.string();
+      const tenantId = chance.string();
+      const fingerprint = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
+      const args = {
+        first: chance.string(),
+        second: chance.string(),
+        nested: {
+          first_nested: chance.string(),
+          second_nested: chance.string(),
+        },
+      };
+
+      const reactRequest = {
+        args,
+      } as ReactRequest;
+      const data = {
+        first_nested: chance.string(),
+        second_nested: chance.string(),
+      };
+      /* eslint-enable camelcase */
+
+      const createdBy = chance.string();
+      const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
+
+      client.onPost(`/${reactorId}/react`).reply(
+        200,
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          tokens: {
+            id,
+            tenant_id: tenantId,
+            fingerprint,
+            type,
+            data,
+            created_at: createdAt,
+            created_by: createdBy,
+            modified_at: modifiedAt,
+            modified_by: modifiedBy,
+          },
+          raw: data,
+        })
+        /* eslint-enable camelcase */
+      );
+
+      expect(await bt.reactors.react(reactorId, reactRequest)).toStrictEqual({
+        /* eslint-disable camelcase */
+        tokens: {
+          id,
+          tenant_id: tenantId,
+          fingerprint,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
+        },
+        raw: data,
+        /* eslint-enable camelcase */
+      });
+      expect(client.history.post.length).toBe(1);
+      expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          args,
+        })
+      );
+      expect(client.history.post[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
+
+    it('should react with options', async () => {
+      const id = chance.string();
+      const reactorId = chance.string();
+      const tenantId = chance.string();
+      const fingerprint = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
+      const args = {
+        first: chance.string(),
+        second: chance.string(),
+        nested: {
+          first_nested: chance.string(),
+          second_nested: chance.string(),
+        },
+      };
+
+      const reactRequest = {
+        args,
+      };
+      const data = {
+        first_nested: chance.string(),
+        second_nested: chance.string(),
+      };
+      /* eslint-enable camelcase */
+
+      const createdBy = chance.string();
+      const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
+      const _apiKey = chance.string();
+      const correlationId = chance.string();
+
+      client.onPost(`/${reactorId}/react`).reply(
+        200,
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          tokens: {
+            id,
+            tenant_id: tenantId,
+            fingerprint,
+            type,
+            data,
+            created_at: createdAt,
+            created_by: createdBy,
+            modified_at: modifiedAt,
+            modified_by: modifiedBy,
+          },
+          raw: data,
+        })
+        /* eslint-enable camelcase */
+      );
+
+      expect(
+        await bt.reactors.react(reactorId, reactRequest, {
+          apiKey: _apiKey,
+          correlationId,
+        })
+      ).toStrictEqual({
+        /* eslint-disable camelcase */
+        tokens: {
+          id,
+          tenant_id: tenantId,
+          fingerprint,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
+        },
+        raw: data,
+        /* eslint-enable camelcase */
+      });
+      expect(client.history.post.length).toBe(1);
+      expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          args,
+        })
+      );
+      expect(client.history.post[0].headers).toMatchObject({
+        [API_KEY_HEADER]: _apiKey,
+        [BT_TRACE_ID_HEADER]: correlationId,
+      });
+    });
+
+    it('should reject with status >= 400 <= 599', async () => {
+      const reactorId = chance.string();
+      const status = errorStatus();
+
+      /* eslint-disable camelcase */
+      const args = {
+        first: chance.string(),
+        second: chance.string(),
+        nested: {
+          first_nested: chance.string(),
+          second_nested: chance.string(),
+        },
+      };
+
+      const reactRequest = {
+        args,
+      };
+      /* eslint-enable camelcase */
+
+      client.onPost(`/${reactorId}/react`).reply(status);
+
+      const promise = bt.reactors.react(reactorId, reactRequest);
+
+      await expectBasisTheoryApiError(promise, status);
+    });
   });
 });
