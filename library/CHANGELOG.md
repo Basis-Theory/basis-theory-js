@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.23.0...v1.24.0) (2022-04-04)
+
+
+### Features
+
+* add Tenant Invitations and Tenant Members operations ([#167](https://github.com/Basis-Theory/basis-theory-js/issues/167)) ([97e41d7](https://github.com/Basis-Theory/basis-theory-js/commit/97e41d7a74335168d5ebe63a811743dca1931033))
+
 # [1.23.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.22.2...v1.23.0) (2022-03-21)
 
 
