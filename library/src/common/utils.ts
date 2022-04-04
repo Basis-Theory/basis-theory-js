@@ -252,7 +252,7 @@ const errorInterceptor = (error: any): void => {
   throw new BasisTheoryApiError(error.message, status, data);
 };
 
-const getQueryParams = <Q>(query: Q): string => {
+const getQueryParams = <Q>(query: Q = {} as Q): string => {
   const keys = Object.keys(query) as (keyof Q)[];
 
   if (keys.length) {

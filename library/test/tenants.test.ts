@@ -1,7 +1,16 @@
-import type { TenantUsageReport } from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
+import type {
+  CreateTenantInvitation,
+  TenantInvitation,
+  TenantMember,
+  TenantUsageReport,
+} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type {
+  BasisTheory as IBasisTheory,
+  PaginatedList,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
+import { v4 as uuid } from 'uuid';
 import { BasisTheory } from '../src';
 import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
 import {
@@ -296,6 +305,591 @@ describe('Tenants', () => {
       const promise = bt.tenants.retrieveUsageReport();
 
       await expectBasisTheoryApiError(promise, status);
+    });
+  });
+
+  describe('tenant members', () => {
+    describe('list', () => {
+      let totalItems: number;
+      let pageNumber: number;
+      let pageSize: number;
+      let totalPages: number;
+      let expectedMember: TenantMember;
+      let expectedTenantMembers: PaginatedList<TenantMember>;
+      let expectedTenantMembersJson: string;
+
+      beforeEach(() => {
+        totalItems = chance.integer();
+        pageNumber = chance.integer();
+        pageSize = chance.integer();
+        totalPages = chance.integer();
+        expectedMember = {
+          id: uuid(),
+          tenantId: uuid(),
+          role: 'ADMIN',
+          user: {
+            id: uuid(),
+          },
+          createdAt: new Date().toISOString(),
+          createdBy: uuid(),
+        };
+
+        expectedTenantMembers = {
+          pagination: {
+            totalItems,
+            pageNumber,
+            pageSize,
+            totalPages,
+          },
+          data: [expectedMember],
+        };
+
+        /* eslint-disable camelcase */
+        expectedTenantMembersJson = JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [
+            {
+              id: expectedMember.id,
+              tenant_id: expectedMember.tenantId,
+              role: expectedMember.role,
+              user: {
+                id: expectedMember.user.id,
+              },
+              created_at: expectedMember.createdAt,
+              created_by: expectedMember.createdBy,
+            },
+          ],
+        });
+        /* eslint-enable camelcase */
+      });
+
+      it('should list', async () => {
+        client.onGet('/members').reply(200, expectedTenantMembersJson);
+
+        expect(await bt.tenants.listMembers()).toStrictEqual(
+          expectedTenantMembers
+        );
+        expect(client.history.get.length).toBe(1);
+        expect(client.history.get[0].url).toStrictEqual('/members');
+        expect(client.history.get[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should list with query', async () => {
+        client.onGet().reply(200, expectedTenantMembersJson);
+
+        expect(
+          await bt.tenants.listMembers({
+            userId: ['foo', 'bar'],
+            page: pageNumber,
+            size: pageSize,
+          })
+        ).toStrictEqual(expectedTenantMembers);
+        expect(client.history.get.length).toBe(1);
+        expect(client.history.get[0].url).toStrictEqual(
+          `/members?user_id=foo&user_id=bar&page=${pageNumber}&size=${pageSize}`
+        );
+        expect(client.history.get[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should list with options', async () => {
+        const correlationId = chance.string();
+
+        client.onGet('/members').reply(200, expectedTenantMembersJson);
+
+        expect(
+          await bt.tenants.listMembers(
+            {},
+            {
+              apiKey,
+              correlationId,
+            }
+          )
+        ).toStrictEqual(expectedTenantMembers);
+        expect(client.history.get.length).toBe(1);
+        expect(client.history.get[0].url).toStrictEqual(`/members`);
+        expect(client.history.get[0].headers).toMatchObject({
+          [API_KEY_HEADER]: apiKey,
+          [BT_TRACE_ID_HEADER]: correlationId,
+        });
+      });
+
+      it('should reject with status >= 400 <= 599', async () => {
+        const status = errorStatus();
+
+        client.onGet('/members').reply(status);
+
+        const promise = bt.tenants.listMembers();
+
+        await expectBasisTheoryApiError(promise, status);
+      });
+    });
+
+    describe('delete', () => {
+      let expectedMemberId: string;
+      let path: string;
+
+      beforeEach(() => {
+        expectedMemberId = uuid();
+        path = `/members/${expectedMemberId}`;
+      });
+
+      it('should delete', async () => {
+        client.onDelete(path).reply(204, {});
+
+        expect(await bt.tenants.deleteMember(expectedMemberId)).toBeUndefined();
+        expect(client.history.delete.length).toBe(1);
+        expect(client.history.delete[0].url).toStrictEqual(path);
+        expect(client.history.delete[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should delete with options', async () => {
+        const correlationId = chance.string();
+
+        client.onDelete(path).reply(204, {});
+
+        expect(
+          await bt.tenants.deleteMember(expectedMemberId, {
+            apiKey,
+            correlationId,
+          })
+        ).toBeUndefined();
+        expect(client.history.delete.length).toBe(1);
+        expect(client.history.delete[0].url).toStrictEqual(path);
+        expect(client.history.delete[0].headers).toMatchObject({
+          [API_KEY_HEADER]: apiKey,
+          [BT_TRACE_ID_HEADER]: correlationId,
+        });
+      });
+
+      it('should reject with status >= 400 <= 599', async () => {
+        const status = errorStatus();
+
+        client.onDelete(path).reply(status);
+
+        const promise = bt.tenants.deleteMember(expectedMemberId);
+
+        await expectBasisTheoryApiError(promise, status);
+      });
+    });
+  });
+
+  describe('tenant invitations', () => {
+    describe('create', () => {
+      let expectedCreateInvitationRequest: CreateTenantInvitation;
+      let expectedTenantInvitation: TenantInvitation;
+      let expectedTenantInvitationJson: string;
+
+      beforeEach(() => {
+        expectedCreateInvitationRequest = {
+          email: chance.email(),
+        };
+
+        expectedTenantInvitation = {
+          id: uuid(),
+          tenantId: uuid(),
+          email: expectedCreateInvitationRequest.email,
+          status: 'PENDING',
+          expiresAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          createdBy: uuid(),
+        };
+
+        /* eslint-disable camelcase */
+        expectedTenantInvitationJson = JSON.stringify({
+          id: expectedTenantInvitation.id,
+          tenant_id: expectedTenantInvitation.tenantId,
+          email: expectedTenantInvitation.email,
+          status: expectedTenantInvitation.status,
+          expires_at: expectedTenantInvitation.expiresAt,
+          created_at: expectedTenantInvitation.createdAt,
+          created_by: expectedTenantInvitation.createdBy,
+        });
+        /* eslint-enable camelcase */
+      });
+
+      it('should create', async () => {
+        client.onPost('/invitations').reply(201, expectedTenantInvitationJson);
+
+        expect(
+          await bt.tenants.createInvitation(expectedCreateInvitationRequest)
+        ).toStrictEqual(expectedTenantInvitation);
+        expect(client.history.post.length).toBe(1);
+        expect(client.history.post[0].url).toStrictEqual('/invitations');
+        expect(client.history.post[0].data).toStrictEqual(
+          JSON.stringify(expectedCreateInvitationRequest)
+        );
+        expect(client.history.post[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should create with options', async () => {
+        const correlationId = chance.string();
+
+        client.onPost('/invitations').reply(201, expectedTenantInvitationJson);
+
+        expect(
+          await bt.tenants.createInvitation(expectedCreateInvitationRequest, {
+            apiKey,
+            correlationId,
+          })
+        ).toStrictEqual(expectedTenantInvitation);
+        expect(client.history.post.length).toBe(1);
+        expect(client.history.post[0].url).toStrictEqual('/invitations');
+        expect(client.history.post[0].headers).toMatchObject({
+          [API_KEY_HEADER]: apiKey,
+          [BT_TRACE_ID_HEADER]: correlationId,
+        });
+      });
+
+      it('should reject with status >= 400 <= 599', async () => {
+        const status = errorStatus();
+
+        client.onPost('/invitations').reply(status);
+
+        const promise = bt.tenants.createInvitation(
+          expectedCreateInvitationRequest
+        );
+
+        await expectBasisTheoryApiError(promise, status);
+      });
+    });
+
+    describe('resend', () => {
+      let expectedInvitationId: string;
+      let path: string;
+      let expectedTenantInvitation: TenantInvitation;
+      let expectedTenantInvitationJson: string;
+
+      beforeEach(() => {
+        expectedInvitationId = uuid();
+        path = `/invitations/${expectedInvitationId}/resend`;
+
+        expectedTenantInvitation = {
+          id: uuid(),
+          tenantId: uuid(),
+          email: chance.email(),
+          status: 'PENDING',
+          expiresAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          createdBy: uuid(),
+        };
+
+        /* eslint-disable camelcase */
+        expectedTenantInvitationJson = JSON.stringify({
+          id: expectedTenantInvitation.id,
+          tenant_id: expectedTenantInvitation.tenantId,
+          email: expectedTenantInvitation.email,
+          status: expectedTenantInvitation.status,
+          expires_at: expectedTenantInvitation.expiresAt,
+          created_at: expectedTenantInvitation.createdAt,
+          created_by: expectedTenantInvitation.createdBy,
+        });
+        /* eslint-enable camelcase */
+      });
+
+      it('should resend invitation', async () => {
+        client.onPost(path).reply(200, expectedTenantInvitationJson);
+
+        expect(
+          await bt.tenants.resendInvitation(expectedInvitationId)
+        ).toStrictEqual(expectedTenantInvitation);
+        expect(client.history.post.length).toBe(1);
+        expect(client.history.post[0].url).toStrictEqual(path);
+        expect(client.history.post[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should resend invitation with options', async () => {
+        const correlationId = chance.string();
+
+        client.onPost(path).reply(200, expectedTenantInvitationJson);
+
+        expect(
+          await bt.tenants.resendInvitation(expectedInvitationId, {
+            apiKey,
+            correlationId,
+          })
+        ).toStrictEqual(expectedTenantInvitation);
+        expect(client.history.post.length).toBe(1);
+        expect(client.history.post[0].url).toStrictEqual(path);
+        expect(client.history.post[0].headers).toMatchObject({
+          [API_KEY_HEADER]: apiKey,
+          [BT_TRACE_ID_HEADER]: correlationId,
+        });
+      });
+
+      it('should reject with status >= 400 <= 599', async () => {
+        const status = errorStatus();
+
+        client.onPost(path).reply(status);
+
+        const promise = bt.tenants.resendInvitation(expectedInvitationId);
+
+        await expectBasisTheoryApiError(promise, status);
+      });
+    });
+
+    describe('list', () => {
+      let totalItems: number;
+      let pageNumber: number;
+      let pageSize: number;
+      let totalPages: number;
+      let expectedInvitation: TenantInvitation;
+      let expectedTenantInvitations: PaginatedList<TenantInvitation>;
+      let expectedTenantInvitationsJson: string;
+
+      beforeEach(() => {
+        totalItems = chance.integer();
+        pageNumber = chance.integer();
+        pageSize = chance.integer();
+        totalPages = chance.integer();
+        expectedInvitation = {
+          id: uuid(),
+          tenantId: uuid(),
+          email: chance.email(),
+          status: 'PENDING',
+          expiresAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          createdBy: uuid(),
+        };
+
+        expectedTenantInvitations = {
+          pagination: {
+            totalItems,
+            pageNumber,
+            pageSize,
+            totalPages,
+          },
+          data: [expectedInvitation],
+        };
+
+        /* eslint-disable camelcase */
+        expectedTenantInvitationsJson = JSON.stringify({
+          pagination: {
+            total_items: totalItems,
+            page_number: pageNumber,
+            page_size: pageSize,
+            total_pages: totalPages,
+          },
+          data: [
+            {
+              id: expectedInvitation.id,
+              tenant_id: expectedInvitation.tenantId,
+              email: expectedInvitation.email,
+              status: expectedInvitation.status,
+              expires_at: expectedInvitation.expiresAt,
+              created_at: expectedInvitation.createdAt,
+              created_by: expectedInvitation.createdBy,
+            },
+          ],
+        });
+        /* eslint-enable camelcase */
+      });
+
+      it('should list', async () => {
+        client.onGet('/invitations').reply(200, expectedTenantInvitationsJson);
+
+        expect(await bt.tenants.listInvitations()).toStrictEqual(
+          expectedTenantInvitations
+        );
+        expect(client.history.get.length).toBe(1);
+        expect(client.history.get[0].url).toStrictEqual('/invitations');
+        expect(client.history.get[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should list with query', async () => {
+        client.onGet().reply(200, expectedTenantInvitationsJson);
+
+        expect(
+          await bt.tenants.listInvitations({
+            status: 'PENDING',
+            page: pageNumber,
+            size: pageSize,
+          })
+        ).toStrictEqual(expectedTenantInvitations);
+        expect(client.history.get.length).toBe(1);
+        expect(client.history.get[0].url).toStrictEqual(
+          `/invitations?status=PENDING&page=${pageNumber}&size=${pageSize}`
+        );
+        expect(client.history.get[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should list with options', async () => {
+        const correlationId = chance.string();
+
+        client.onGet('/invitations').reply(200, expectedTenantInvitationsJson);
+
+        expect(
+          await bt.tenants.listInvitations(
+            {},
+            {
+              apiKey,
+              correlationId,
+            }
+          )
+        ).toStrictEqual(expectedTenantInvitations);
+        expect(client.history.get.length).toBe(1);
+        expect(client.history.get[0].url).toStrictEqual(`/invitations`);
+        expect(client.history.get[0].headers).toMatchObject({
+          [API_KEY_HEADER]: apiKey,
+          [BT_TRACE_ID_HEADER]: correlationId,
+        });
+      });
+
+      it('should reject with status >= 400 <= 599', async () => {
+        const status = errorStatus();
+
+        client.onGet('/invitations').reply(status);
+
+        const promise = bt.tenants.listInvitations();
+
+        await expectBasisTheoryApiError(promise, status);
+      });
+    });
+
+    describe('retrieve', () => {
+      let expectedInvitationId: string;
+      let path: string;
+      let expectedTenantInvitation: TenantInvitation;
+      let expectedTenantInvitationJson: string;
+
+      beforeEach(() => {
+        expectedInvitationId = uuid();
+        path = `/invitations/${expectedInvitationId}`;
+
+        expectedTenantInvitation = {
+          id: uuid(),
+          tenantId: uuid(),
+          email: chance.email(),
+          status: 'PENDING',
+          expiresAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          createdBy: uuid(),
+        };
+
+        /* eslint-disable camelcase */
+        expectedTenantInvitationJson = JSON.stringify({
+          id: expectedTenantInvitation.id,
+          tenant_id: expectedTenantInvitation.tenantId,
+          email: expectedTenantInvitation.email,
+          status: expectedTenantInvitation.status,
+          expires_at: expectedTenantInvitation.expiresAt,
+          created_at: expectedTenantInvitation.createdAt,
+          created_by: expectedTenantInvitation.createdBy,
+        });
+        /* eslint-enable camelcase */
+      });
+
+      it('should retrieve', async () => {
+        client.onGet(path).reply(200, expectedTenantInvitationJson);
+
+        expect(
+          await bt.tenants.retrieveInvitation(expectedInvitationId)
+        ).toStrictEqual(expectedTenantInvitation);
+        expect(client.history.get.length).toBe(1);
+        expect(client.history.get[0].url).toStrictEqual(path);
+        expect(client.history.get[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should retrieve with options', async () => {
+        const correlationId = chance.string();
+
+        client.onGet(path).reply(200, expectedTenantInvitationJson);
+
+        expect(
+          await bt.tenants.retrieveInvitation(expectedInvitationId, {
+            apiKey,
+            correlationId,
+          })
+        ).toStrictEqual(expectedTenantInvitation);
+        expect(client.history.get.length).toBe(1);
+        expect(client.history.get[0].url).toStrictEqual(path);
+        expect(client.history.get[0].headers).toMatchObject({
+          [API_KEY_HEADER]: apiKey,
+          [BT_TRACE_ID_HEADER]: correlationId,
+        });
+      });
+
+      it('should reject with status >= 400 <= 599', async () => {
+        const status = errorStatus();
+
+        client.onGet(path).reply(status);
+
+        const promise = bt.tenants.retrieveInvitation(expectedInvitationId);
+
+        await expectBasisTheoryApiError(promise, status);
+      });
+    });
+
+    describe('delete', () => {
+      let expectedInvitationId: string;
+      let path: string;
+
+      beforeEach(() => {
+        expectedInvitationId = uuid();
+        path = `/invitations/${expectedInvitationId}`;
+      });
+
+      it('should delete', async () => {
+        client.onDelete(path).reply(204, {});
+
+        expect(
+          await bt.tenants.deleteInvitation(expectedInvitationId)
+        ).toBeUndefined();
+        expect(client.history.delete.length).toBe(1);
+        expect(client.history.delete[0].url).toStrictEqual(path);
+        expect(client.history.delete[0].headers).toMatchObject({
+          [API_KEY_HEADER]: expect.any(String),
+        });
+      });
+
+      it('should delete with options', async () => {
+        const correlationId = chance.string();
+
+        client.onDelete(path).reply(204, {});
+
+        expect(
+          await bt.tenants.deleteInvitation(expectedInvitationId, {
+            apiKey,
+            correlationId,
+          })
+        ).toBeUndefined();
+        expect(client.history.delete.length).toBe(1);
+        expect(client.history.delete[0].url).toStrictEqual(path);
+        expect(client.history.delete[0].headers).toMatchObject({
+          [API_KEY_HEADER]: apiKey,
+          [BT_TRACE_ID_HEADER]: correlationId,
+        });
+      });
+
+      it('should reject with status >= 400 <= 599', async () => {
+        const status = errorStatus();
+
+        client.onDelete(path).reply(status);
+
+        const promise = bt.tenants.deleteInvitation(expectedInvitationId);
+
+        await expectBasisTheoryApiError(promise, status);
+      });
     });
   });
 });
