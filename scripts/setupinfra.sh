@@ -31,6 +31,7 @@ echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 # Global Stack Upload
 az storage blob upload \
   --account-name $JS_STORAGE_ACCOUNT_NAME \
+  --overwrite true \
   -f $BUNDLE_PATH \
   -c $JS_CONTAINER_NAME \
   -n "$INDEX_JS_NAME"
@@ -43,6 +44,7 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
   # Global Stack Upload
   az storage blob upload \
     --account-name $JS_STORAGE_ACCOUNT_NAME \
+    --overwrite true \
     -f $BUNDLE_PATH \
     -c $JS_CONTAINER_NAME \
     -n "$BLOB_NAME"
@@ -53,6 +55,7 @@ else
   # Global Stack Upload
   az storage blob upload \
     --account-name $JS_STORAGE_ACCOUNT_NAME \
+    --overwrite true \
     -f $BUNDLE_PATH \
     -c $JS_CONTAINER_NAME \
     -n "$VERSIONED_JS_NAME"
