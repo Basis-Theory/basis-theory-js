@@ -49,6 +49,12 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
     -c $JS_CONTAINER_NAME \
     -n "$BLOB_NAME"
 
+    az afd endpoint purge \
+    --content-paths "${VERSIONED_JS_NAME}" \
+    --endpoint-name "dev-edge-js" \
+    -g "dev-edge" \
+    --profile-name "dev-edge-afd-profile"
+
 else
   echo "Uploading bundle to $JS_HOST/$VERSIONED_JS_NAME"
 
@@ -59,6 +65,12 @@ else
     -f $BUNDLE_PATH \
     -c $JS_CONTAINER_NAME \
     -n "$VERSIONED_JS_NAME"
+
+    az afd endpoint purge \
+    --content-paths "${VERSIONED_JS_NAME}" \
+    --endpoint-name "prod-edge-js" \
+    -g "prod-edge" \
+    --profile-name "prod-edge-afd-profile"
 fi
 
 
