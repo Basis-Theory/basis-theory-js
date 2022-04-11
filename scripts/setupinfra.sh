@@ -50,7 +50,7 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
     -n "$BLOB_NAME"
 
     az afd endpoint purge \
-    --content-paths "${VERSIONED_JS_NAME}" \
+    --content-paths "/v1/*" \
     --endpoint-name "dev-edge-js" \
     -g "dev-edge" \
     --profile-name "dev-edge-afd-profile"
@@ -67,7 +67,7 @@ else
     -n "$VERSIONED_JS_NAME"
 
     az afd endpoint purge \
-    --content-paths "${VERSIONED_JS_NAME}" \
+    --content-paths "/v1/*" \
     --endpoint-name "prod-edge-js" \
     -g "prod-edge" \
     --profile-name "prod-edge-afd-profile"
