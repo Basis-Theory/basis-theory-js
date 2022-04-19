@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.24.0...v1.25.0) (2022-04-19)
+
+
+### Features
+
+* deprecate atomics ([#174](https://github.com/Basis-Theory/basis-theory-js/issues/174)) ([74b5162](https://github.com/Basis-Theory/basis-theory-js/commit/74b5162566f1cb14eac666235f2fb34c20b95649))
+
 # [1.24.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.23.0...v1.24.0) (2022-04-04)
 
 
