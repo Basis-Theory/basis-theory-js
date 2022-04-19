@@ -21,17 +21,18 @@
         const cvc = document.getElementById('cvc').value;
         const response = document.getElementById('response');
 
-        const paymentInfo = {
-          card: {
-            number,
-            expiration_month,
-            expiration_year,
-            cvc,
-          },
+        const card = {
+          number,
+          expiration_month,
+          expiration_year,
+          cvc,
         };
 
-        BasisTheory.atomicCards
-          .create(paymentInfo)
+        BasisTheory.tokens
+          .create({
+            type: 'card',
+            data: card,
+          })
           .then(function (data) {
             // should not fall into here
           })

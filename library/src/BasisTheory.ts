@@ -270,10 +270,16 @@ export class BasisTheory
     return assertInit(this._reactors);
   }
 
+  /**
+   * @deprecated use {@link tokens} or {@link tokenize}
+   */
   public get atomicBanks(): AtomicBanks & ElementsAtomicBanks {
     return assertInit(this._atomicBanks);
   }
 
+  /**
+   * @deprecated use {@link tokens} or {@link tokenize}
+   */
   public get atomicCards(): AtomicCards & ElementsAtomicCards {
     return assertInit(this._atomicCards);
   }

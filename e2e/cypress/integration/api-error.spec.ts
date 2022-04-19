@@ -8,7 +8,7 @@ context('API error', () => {
 
   context('network error/network offline', () => {
     beforeEach(() => {
-      cy.intercept('POST', '/atomic/cards', {
+      cy.intercept('POST', '/tokens', {
         forceNetworkError: true,
       });
     });
@@ -34,7 +34,7 @@ context('API error', () => {
       message = 'some error response';
 
     beforeEach(() => {
-      cy.intercept('POST', '/atomic/cards', {
+      cy.intercept('POST', '/tokens', {
         statusCode: status,
         body: { message },
       });

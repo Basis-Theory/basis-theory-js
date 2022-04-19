@@ -4,7 +4,10 @@ import type {
   Token,
   TokenBase,
 } from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk/services';
+import {
+  BasisTheoryApiError,
+  RequestOptions,
+} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type {
   AxiosRequestConfig,
   AxiosResponse,
@@ -17,7 +20,6 @@ import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import { RequestTransformers } from '../service';
 import type { ApplicationInfo, ClientUserAgent } from '../types';
-import { BasisTheoryApiError } from './BasisTheoryApiError';
 import {
   API_KEY_HEADER,
   BROWSER_LIST,

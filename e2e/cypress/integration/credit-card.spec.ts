@@ -12,30 +12,29 @@ context('Credit Card example', () => {
 
     cy.intercept(
       {
-        pathname: '/atomic/cards',
+        pathname: '/tokens',
       },
       (req) => {
-        const year = (new Date().getFullYear() + 1).toString();
-
         /* eslint-disable camelcase */
         req.reply({
           statusCode: 201,
           body: {
             id: uuid(),
-            card: {
-              number: `${'X'.repeat(12)}4242`,
-              expiration_month: '10',
-              expiration_year: year,
-              cvc: 'XXX',
+            data: {
+              number: `${'X'.repeat(
+                req.body.data.number.length - 4
+              )}${req.body.data.number.slice(-4)}`,
+              expiration_month: req.body.data.expiration_month,
+              expiration_year: req.body.data.expiration_year,
             },
           },
         });
         /* eslint-enable camelcase */
       }
-    ).as('createCreditCard');
+    ).as('createToken');
   });
 
-  it('shoud load BasisTheory', () => {
+  it('should load BasisTheory', () => {
     cy.window().should('have.property', 'BasisTheory');
   });
 
@@ -55,7 +54,7 @@ context('Credit Card example', () => {
     cy.get('form').find('#cvc').type('123');
     cy.get('form').submit();
 
-    cy.wait('@createCreditCard').then((i) => {
+    cy.wait('@createToken').then((i) => {
       const alert = cy.stub();
 
       cy.on('window:alert', alert);

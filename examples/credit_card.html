@@ -55,48 +55,52 @@
 
         // extract data from form elements
         const number = document.getElementById('card_number').value;
-        const expirationMonth = document.getElementById('expiration_month')
+        const expiration_month = document.getElementById('expiration_month')
           .value;
-        const expirationYear = document.getElementById('expiration_year').value;
+        const expiration_year = document.getElementById('expiration_year')
+          .value;
         const cvc = document.getElementById('cvc').value;
 
-        const paymentInfo = {
-          card: {
-            number,
-            expirationMonth,
-            expirationYear,
-            cvc,
-          },
+        const card = {
+          number,
+          expiration_month,
+          expiration_year,
+          cvc,
         };
 
         // this is where the magic happens
-        // invoke async BasisTheory Payments API store credit card method
-        BasisTheory.atomicCards.create(paymentInfo).then(function (data) {
-          // and when that is done
-          form.reset(); // we can reset our form
-          handleNewCard(data); // and attach the stored credit card info to the view
-        });
+        // invoke async BasisTheory Create Tokens API
+        BasisTheory.tokens
+          .create({
+            type: 'card',
+            data: card,
+          })
+          .then(function (data) {
+            // and when that is done
+            form.reset(); // we can reset our form
+            handleNewCard(data); // and attach the stored credit card info to the view
+          });
       }
 
-      function handleNewCard(data) {
+      function handleNewCard(card) {
         const wrapper = document.getElementById('cards_wrapper');
         const newCardDiv = document.createElement('div');
         const expiration =
-          data.card.expirationMonth + '/' + data.card.expirationYear;
+          card.data.expiration_month + '/' + card.data.expiration_year;
         newCardDiv.className = 'card';
         newCardDiv.innerHTML =
           '<h3>' +
           name +
           '</h3>' +
           '<div class="card-info">' +
-          data.card.number +
+          card.data.number +
           '</div>' +
           '<div class="card-info">' +
           '<span>' +
           expiration +
           '</span>' +
           '<a href="#" onclick="alert(\'' +
-          data.id +
+          card.id +
           '\'); return true;">see token</a>' +
           '</div>';
         wrapper.appendChild(newCardDiv);
