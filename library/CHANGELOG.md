@@ -1,3 +1,10 @@
+## [1.25.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.25.0...v1.25.1) (2022-04-20)
+
+
+### Bug Fixes
+
+* export validation error ([#178](https://github.com/Basis-Theory/basis-theory-js/issues/178)) ([1456992](https://github.com/Basis-Theory/basis-theory-js/commit/1456992bd0a2e14ff3cd82800b199b5aebbca409))
+
 # [1.25.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.24.0...v1.25.0) (2022-04-19)
 
 
