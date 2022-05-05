@@ -56,15 +56,6 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
         .then(dataExtractor);
     }
 
-    public retrieveDecrypted(
-      id: string,
-      options?: RequestOptions
-    ): Promise<AtomicCard> {
-      return this.client
-        .get(`/${id}/decrypt`, createRequestConfig(options))
-        .then(dataExtractor);
-    }
-
     public react(
       tokenId: string,
       request: AtomicReactRequest,
