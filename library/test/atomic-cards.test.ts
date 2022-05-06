@@ -8,10 +8,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '../src';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
-import {
-  transformAtomicRequestSnakeCase,
-  transformAtomicResponseCamelCase,
-} from '../src/common/utils';
+import { transformAtomicRequestSnakeCase } from '../src/common/utils';
 import {
   testCreate,
   testRetrieve,
