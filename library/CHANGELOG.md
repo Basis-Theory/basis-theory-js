@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.25.1...v1.26.0) (2022-05-09)
+
+
+### Features
+
+* removes retrieveDecrypted and listDecrypted methods ([#179](https://github.com/Basis-Theory/basis-theory-js/issues/179)) ([1cfe025](https://github.com/Basis-Theory/basis-theory-js/commit/1cfe02559fc7ebad35b8b9cb807ccd79a67c0ed8))
+
 ## [1.25.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.25.0...v1.25.1) (2022-04-20)
 
 
