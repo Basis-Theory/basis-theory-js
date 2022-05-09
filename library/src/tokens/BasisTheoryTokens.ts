@@ -5,7 +5,6 @@ import type {
 import type {
   PaginatedList,
   RequestOptions,
-  ListDecryptedTokensQuery,
   ListTokensQuery,
   SearchTokensRequest,
 } from '@basis-theory/basis-theory-elements-interfaces/sdk';
@@ -41,28 +40,6 @@ export const BasisTheoryTokens = new CrudBuilder(
 
     public retrieve(id: string, options: RequestOptions = {}): Promise<Token> {
       const url = `/${id}`;
-
-      return this.client
-        .get(url, createRequestConfig(options))
-        .then(dataExtractor);
-    }
-
-    public retrieveDecrypted(
-      id: string,
-      options: RequestOptions = {}
-    ): Promise<Token> {
-      const url = `/${id}/decrypt`;
-
-      return this.client
-        .get(url, createRequestConfig(options))
-        .then(dataExtractor);
-    }
-
-    public listDecrypted(
-      query: ListDecryptedTokensQuery = {},
-      options: RequestOptions = {}
-    ): Promise<PaginatedList<Token>> {
-      const url = `/decrypt${getQueryParams(query)}`;
 
       return this.client
         .get(url, createRequestConfig(options))
