@@ -88,21 +88,17 @@ describe('Utils', () => {
         },
       };
 
-      expect(() => {
-        errorInterceptor(expectedError);
-        fail('should have thrown BasisTheoryApiError');
-      }).toThrow(expectedError);
-
-      /*
       try {
         errorInterceptor(expectedError);
         fail('should have thrown BasisTheoryApiError');
       } catch (error) {
+        /* eslint-disable jest/no-conditional-expect */
         expect(error).toHaveProperty('name', 'BasisTheoryApiError');
         expect(error).toHaveProperty('message', expectedError.message);
         expect(error).toHaveProperty('status', expectedError.response.status);
         expect(error).toHaveProperty('data', expectedError.response.data);
-      }*/
+        /* eslint-enable jest/no-conditional-expect */
+      }
     });
     test('should throw BasisTheoryApiError with -1 for the status and an undefined for data', () => {
       const errorMessage = 'some error message';
@@ -114,12 +110,17 @@ describe('Utils', () => {
         data: undefined,
       };
 
-      expect(() => {
-        errorInterceptor({
-          message: errorMessage,
-        });
+      try {
+        errorInterceptor(expectedError);
         fail('should have thrown BasisTheoryApiError');
-      }).toThrow(expectedError);
+      } catch (error) {
+        /* eslint-disable jest/no-conditional-expect */
+        expect(error).toHaveProperty('name', 'BasisTheoryApiError');
+        expect(error).toHaveProperty('message', expectedError.message);
+        expect(error).toHaveProperty('status', expectedError.status);
+        expect(error).toHaveProperty('data', expectedError.data);
+        /* eslint-enable jest/no-conditional-expect */
+      }
     });
   });
 
