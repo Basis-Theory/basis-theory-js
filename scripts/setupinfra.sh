@@ -18,7 +18,7 @@ JS_CONTAINER_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsContainerName)
 JS_HOST=$(echo $GLOBAL_STACK_OUTPUTS | jq -r '.hostNames.js')
 
 MAJOR_VERSION=$(cat package.json | jq -r '.version' | cut -d. -f1)
-BUNDLE_PATH= '../dist/basis-theory-js.bundle.js'
+BUNDLE_PATH=../dist/basis-theory-js.bundle.js
 BLOB_DIR=v$MAJOR_VERSION
 INDEX_JS_NAME=$BLOB_DIR/index.js
 VERSIONED_JS_NAME=$(cat package.json | jq -r '.version')
