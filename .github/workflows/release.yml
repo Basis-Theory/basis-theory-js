@@ -75,7 +75,7 @@ jobs:
         if: failure()
         with:
           name: cypress-screenshots
-          path: e2e/cypress/screenshots
+          path: cypress/screenshots
 
       - name: Release
         run: make release

@@ -3,4 +3,3 @@ dist
 coverage
 .github
 CHANGELOG.md
-infrastructure/outputs.json
