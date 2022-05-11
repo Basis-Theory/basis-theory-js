@@ -3,8 +3,6 @@ set -e
 
 current_directory="$PWD"
 
-cd $(dirname $0)/../library
-
 pulumi login
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then
@@ -12,7 +10,6 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
 else
   GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_PROD_STACK --json)
 fi
-
 
 JS_HOST=$(echo $GLOBAL_STACK_OUTPUTS | jq -r '.hostNames.js')
 API_HOST=$(echo $GLOBAL_STACK_OUTPUTS | jq -r '.hostNames.api')

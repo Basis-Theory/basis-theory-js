@@ -74,7 +74,7 @@ jobs:
         if: failure()
         with:
           name: cypress-screenshots
-          path: e2e/cypress/screenshots
+          path: cypress/screenshots
 
       - name: Verify Infrastructure
         run: make setup-infra
@@ -86,6 +86,6 @@ jobs:
         uses: slavcodev/coverage-monitor-action@1.2.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          clover_file: 'library/coverage/clover.xml'
+          clover_file: 'coverage/clover.xml'
           threshold_alert: 80
           threshold_warning: 90

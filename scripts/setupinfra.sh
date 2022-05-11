@@ -1,9 +1,14 @@
 #!/bin/bash
 set -e
 
-current_directory="$PWD"
+script_directory="$PWD"
 
-cd $(dirname $0)/../infrastructure
+# get bundle source
+cd $(dirname $0)/../dist
+dist_directory="$PWD"
+
+# back to script directory
+cd $script_directory
 
 pulumi login
 
@@ -19,12 +24,12 @@ JS_STORAGE_ACCOUNT_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsStorageAccountNa
 JS_CONTAINER_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsContainerName)
 JS_HOST=$(echo $GLOBAL_STACK_OUTPUTS | jq -r '.hostNames.js')
 
-yarn outputs
+MAJOR_VERSION=$(cat package.json | jq -r '.version' | cut -d. -f1)
+BUNDLE_PATH=$dist_directory/basis-theory-js.bundle.js
+BLOB_DIR=v$MAJOR_VERSION
+INDEX_JS_NAME=$BLOB_DIR/index.js
+VERSIONED_JS_NAME=$(cat package.json | jq -r '.version')
 
-BUNDLE_PATH=$(cat outputs.json | jq -r '.bundlePath')
-BLOB_DIR=$(cat outputs.json | jq -r '.blobDir')
-INDEX_JS_NAME=$(cat outputs.json | jq -r '.indexJsName')
-VERSIONED_JS_NAME=$(cat outputs.json | jq -r '.versionedJsName')
 
 echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
@@ -76,6 +81,6 @@ fi
 
 result=$?
 
-cd "$current_directory"
+cd "$script_directory"
 
 exit $result
