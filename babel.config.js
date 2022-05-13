@@ -13,6 +13,7 @@ module.exports = {
     '@babel/typescript',
   ],
   plugins: [
+    'tsconfig-paths-module-resolver',
     '@babel/proposal-class-properties',
     ['inline-dotenv', { unsafe: true }],
   ],
