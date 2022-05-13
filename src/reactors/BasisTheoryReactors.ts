@@ -4,20 +4,20 @@ import {
   transformReactorResponseCamelCase,
   transformReactorRequestSnakeCase,
 } from '@/common/utils';
+import { BasisTheoryService } from '@/service';
+import type { BasisTheoryServiceOptions } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 import type {
   Reactor,
   CreateReactor,
   UpdateReactor,
   ReactResponse,
-} from '@/interfaces/models';
+} from '@/types/models';
 import type {
   ListReactorQuery,
   ReactRequest,
   RequestOptions,
-} from '@/interfaces/sdk';
-import { BasisTheoryService } from '@/service';
-import type { BasisTheoryServiceOptions } from '@/service';
-import { CrudBuilder } from '@/service/CrudBuilder';
+} from '@/types/sdk';
 
 export const BasisTheoryReactors = new CrudBuilder(
   class BasisTheoryReactors extends BasisTheoryService {

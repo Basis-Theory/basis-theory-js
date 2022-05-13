@@ -2,7 +2,7 @@ import type {
   Application,
   CreateApplication,
   UpdateApplication,
-} from '@/interfaces/models';
+} from '@/types/models';
 import type {
   Create,
   Delete,

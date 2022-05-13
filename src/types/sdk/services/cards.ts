@@ -2,7 +2,7 @@ import type {
   AtomicCard,
   CreateAtomicCard,
   UpdateAtomicCard,
-} from '@/interfaces/models';
+} from '@/types/models';
 import type {
   Create,
   Retrieve,

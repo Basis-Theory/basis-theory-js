@@ -8,11 +8,8 @@ import type {
   TenantInvitation,
   TenantMember,
   TenantUsageReport,
-} from '@/interfaces/models';
-import type {
-  BasisTheory as IBasisTheory,
-  PaginatedList,
-} from '@/interfaces/sdk';
+} from '@/types/models';
+import type { BasisTheory as IBasisTheory, PaginatedList } from '@/types/sdk';
 import {
   errorStatus,
   expectBasisTheoryApiError,

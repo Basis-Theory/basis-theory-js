@@ -1,4 +1,4 @@
-import type { TokenizeData } from '@/interfaces/models';
+import type { TokenizeData } from '@/types/models';
 import type { RequestOptions } from './shared';
 
 interface Tokenize {

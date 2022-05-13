@@ -3,11 +3,8 @@ import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '@/common';
 import { transformReactorRequestSnakeCase } from '@/common/utils';
-import { TokenType } from '@/interfaces/models';
-import type {
-  BasisTheory as IBasisTheory,
-  ReactRequest,
-} from '@/interfaces/sdk';
+import { TokenType } from '@/types/models';
+import type { BasisTheory as IBasisTheory, ReactRequest } from '@/types/sdk';
 import {
   testCRUD,
   mockServiceClient,

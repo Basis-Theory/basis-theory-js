@@ -3,9 +3,9 @@ import type {
   AtomicBanks as ElementsAtomicBanks,
   BasisTheoryElementsInternal,
   CreateAtomicBank as ElementsCreateAtomicBank,
-} from '@/interfaces/elements';
-import type { CreateAtomicBank, AtomicBank } from '@/interfaces/models';
-import type { RequestOptions, AtomicBanks } from '@/interfaces/sdk';
+} from '@/types/elements';
+import type { CreateAtomicBank, AtomicBank } from '@/types/models';
+import type { RequestOptions, AtomicBanks } from '@/types/sdk';
 
 const delegateAtomicBanks = (
   elements?: BasisTheoryElementsInternal

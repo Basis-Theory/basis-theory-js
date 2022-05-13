@@ -9,17 +9,17 @@ import {
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
 } from '@/common/utils';
+import type { BasisTheoryServiceOptions } from '@/service';
+import { BasisTheoryService } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 import type {
   AtomicCard,
   CreateAtomicCard,
   AtomicReactRequest,
   ReactResponse,
   UpdateAtomicCard,
-} from '@/interfaces/models';
-import type { PaginatedQuery, RequestOptions } from '@/interfaces/sdk';
-import type { BasisTheoryServiceOptions } from '@/service';
-import { BasisTheoryService } from '@/service';
-import { CrudBuilder } from '@/service/CrudBuilder';
+} from '@/types/models';
+import type { PaginatedQuery, RequestOptions } from '@/types/sdk';
 
 export const BasisTheoryAtomicCards = new CrudBuilder(
   class BasisTheoryAtomicCards extends BasisTheoryService {

@@ -1,4 +1,4 @@
-import type { Token, CreateToken, TokenType } from '@/interfaces/models';
+import type { Token, CreateToken, TokenType } from '@/types/models';
 import type {
   Create,
   Retrieve,

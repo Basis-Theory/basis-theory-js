@@ -2,7 +2,7 @@ import type {
   AtomicBank,
   CreateAtomicBank,
   UpdateAtomicBank,
-} from '@/interfaces/models';
+} from '@/types/models';
 import type {
   Create,
   Retrieve,

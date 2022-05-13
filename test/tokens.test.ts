@@ -7,18 +7,18 @@ import {
   getQueryParams,
   transformTokenRequestSnakeCase,
 } from '@/common';
-import type { CreateToken, Token, TokenType } from '@/interfaces/models';
+import type { CreateToken, Token, TokenType } from '@/types/models';
 import {
   DATA_CLASSIFICATIONS,
   DATA_IMPACT_LEVELS,
   DATA_RESTRICTION_POLICIES,
-} from '@/interfaces/models';
+} from '@/types/models';
 import type {
   BasisTheory as IBasisTheory,
   PaginatedList,
   ListTokensQuery,
   SearchTokensRequest,
-} from '@/interfaces/sdk';
+} from '@/types/sdk';
 import {
   errorStatus,
   expectBasisTheoryApiError,

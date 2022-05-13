@@ -3,9 +3,9 @@ import type {
   AtomicCards as ElementsAtomicCards,
   BasisTheoryElementsInternal,
   CreateAtomicCard as ElementsCreateAtomicCard,
-} from '@/interfaces/elements';
-import type { CreateAtomicCard, AtomicCard } from '@/interfaces/models';
-import type { RequestOptions, AtomicCards } from '@/interfaces/sdk';
+} from '@/types/elements';
+import type { CreateAtomicCard, AtomicCard } from '@/types/models';
+import type { RequestOptions, AtomicCards } from '@/types/sdk';
 
 const delegateAtomicCards = (
   elements?: BasisTheoryElementsInternal

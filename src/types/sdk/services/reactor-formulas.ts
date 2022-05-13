@@ -1,4 +1,4 @@
-import type { CreateReactorFormula, ReactorFormula } from '@/interfaces/models';
+import type { CreateReactorFormula, ReactorFormula } from '@/types/models';
 import type {
   Create,
   Delete,

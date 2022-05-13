@@ -1,12 +1,12 @@
 import { createRequestConfig, dataExtractor } from '@/common';
+import { BasisTheoryService } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 import type {
   Application,
   CreateApplication,
   UpdateApplication,
-} from '@/interfaces/models';
-import type { ListApplicationsQuery, RequestOptions } from '@/interfaces/sdk';
-import { BasisTheoryService } from '@/service';
-import { CrudBuilder } from '@/service/CrudBuilder';
+} from '@/types/models';
+import type { ListApplicationsQuery, RequestOptions } from '@/types/sdk';
 
 export const BasisTheoryApplications = new CrudBuilder(
   class BasisTheoryApplications extends BasisTheoryService {

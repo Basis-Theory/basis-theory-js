@@ -46,6 +46,12 @@ interface BasisTheoryElementsInternal extends BasisTheoryElements {
   hasElement: (payload: unknown) => boolean;
 }
 
+declare global {
+  interface Window {
+    BasisTheoryElements?: BasisTheoryElementsInternal;
+  }
+}
+
 export type {
   BaseElement,
   CardElement,

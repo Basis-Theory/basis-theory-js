@@ -1,10 +1,10 @@
-import type { CardElement, TextElement } from '@/interfaces/elements';
+import type { CardElement, TextElement } from '@/types/elements';
 import type {
   CreateAtomicCard as CreateAtomicCardModel,
   AtomicCard,
   Card,
-} from '@/interfaces/models';
-import type { Create } from '@/interfaces/sdk';
+} from '@/types/models';
+import type { Create } from '@/types/sdk';
 
 interface CreateAtomicCard extends Pick<CreateAtomicCardModel, 'metadata'> {
   card:

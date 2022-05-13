@@ -7,17 +7,17 @@ import {
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
 } from '@/common';
+import type { BasisTheoryServiceOptions } from '@/service';
+import { BasisTheoryService } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 import type {
   AtomicBank,
   CreateAtomicBank,
   AtomicReactRequest,
   ReactResponse,
   UpdateAtomicBank,
-} from '@/interfaces/models';
-import type { PaginatedQuery, RequestOptions } from '@/interfaces/sdk';
-import type { BasisTheoryServiceOptions } from '@/service';
-import { BasisTheoryService } from '@/service';
-import { CrudBuilder } from '@/service/CrudBuilder';
+} from '@/types/models';
+import type { PaginatedQuery, RequestOptions } from '@/types/sdk';
 
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {

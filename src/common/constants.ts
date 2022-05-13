@@ -1,4 +1,4 @@
-import type { ClientsBasePathMap } from '@/types';
+import type { BasisTheoryServicesBasePathMap } from '@/types/sdk';
 
 const API_KEY_HEADER = 'BT-API-KEY';
 const BT_TRACE_ID_HEADER = 'bt-trace-id';
@@ -9,7 +9,7 @@ const USER_AGENT_CLIENT = 'BasisTheoryJS';
 const DEFAULT_BASE_URL = `https://${process.env.API_HOST}`;
 const DEFAULT_ELEMENTS_BASE_URL = `https://${process.env.ELEMENTS_HOST}`;
 
-const CLIENT_BASE_PATHS: ClientsBasePathMap = {
+const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   tokens: 'tokens',
   tokenize: 'tokenize',
   applications: 'applications',

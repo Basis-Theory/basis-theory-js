@@ -5,8 +5,8 @@ import type {
   ReactorFormulaConfig,
   FormulaType,
   DataType,
-} from '@/interfaces/models';
-import type { BasisTheory as IBasisTheory } from '@/interfaces/sdk';
+} from '@/types/models';
+import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import { testCRUD, mockServiceClient } from './setup/utils';
 
 describe('Reactor Formulas', () => {

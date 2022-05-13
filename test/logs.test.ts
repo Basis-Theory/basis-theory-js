@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
-import type { BasisTheory as IBasisTheory } from '@/interfaces/sdk';
+import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import { testList, mockServiceClient } from './setup/utils';
 
 describe('Logs', () => {

@@ -5,15 +5,15 @@ import {
   transformTokenResponseCamelCase,
   transformTokenRequestSnakeCase,
 } from '@/common/utils';
-import type { Token, CreateToken } from '@/interfaces/models';
+import { BasisTheoryService, BasisTheoryServiceOptions } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
+import type { Token, CreateToken } from '@/types/models';
 import type {
   PaginatedList,
   RequestOptions,
   ListTokensQuery,
   SearchTokensRequest,
-} from '@/interfaces/sdk';
-import { BasisTheoryService, BasisTheoryServiceOptions } from '@/service';
-import { CrudBuilder } from '@/service/CrudBuilder';
+} from '@/types/sdk';
 
 export const BasisTheoryTokens = new CrudBuilder(
   class BasisTheoryTokens extends BasisTheoryService {

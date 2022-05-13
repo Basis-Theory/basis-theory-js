@@ -1,7 +1,7 @@
-import type { CreateReactorFormula, ReactorFormula } from '@/interfaces/models';
-import type { ListReactorFormulaQuery } from '@/interfaces/sdk';
 import { BasisTheoryService } from '@/service';
 import { CrudBuilder } from '@/service/CrudBuilder';
+import type { CreateReactorFormula, ReactorFormula } from '@/types/models';
+import type { ListReactorFormulaQuery } from '@/types/sdk';
 
 export const BasisTheoryReactorFormulas = new CrudBuilder(
   class BasisTheoryReactorFormulas extends BasisTheoryService {}

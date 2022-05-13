@@ -1,4 +1,4 @@
-import type { AtomicReactRequest, ReactResponse } from '@/interfaces/models';
+import type { AtomicReactRequest, ReactResponse } from '@/types/models';
 
 interface RequestOptions {
   apiKey?: string;

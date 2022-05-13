@@ -1,10 +1,10 @@
-import { TextElement } from '@/interfaces/elements';
+import { TextElement } from '@/types/elements';
 import type {
   Bank,
   CreateAtomicBank as CreateAtomicBankModel,
   AtomicBank,
-} from '@/interfaces/models';
-import type { Create } from '@/interfaces/sdk';
+} from '@/types/models';
+import type { Create } from '@/types/sdk';
 
 interface CreateAtomicBank extends Pick<CreateAtomicBankModel, 'metadata'> {
   bank: {

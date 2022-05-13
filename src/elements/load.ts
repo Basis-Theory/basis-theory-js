@@ -1,4 +1,4 @@
-import type { BasisTheoryElements } from '@/interfaces/elements';
+import type { BasisTheoryElements } from '@/types/elements';
 import {
   ELEMENTS_NOM_DOM_ERROR_MESSAGE,
   ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE,

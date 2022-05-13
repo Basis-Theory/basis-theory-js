@@ -1,6 +1,6 @@
 import { Chance } from 'chance';
-import type { BasisTheoryElements } from '@/interfaces/elements';
-import type { BasisTheoryInit } from '@/interfaces/sdk';
+import type { BasisTheoryElements } from '@/types/elements';
+import type { BasisTheoryInit } from '@/types/sdk';
 import { BasisTheory } from '../../src';
 import { loadElements } from '../../src/elements';
 

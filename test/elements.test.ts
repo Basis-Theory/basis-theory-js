@@ -1,6 +1,6 @@
 import { Chance } from 'chance';
 import type { BasisTheory as BasisTheoryType } from '@/BasisTheory';
-import type { BasisTheoryElementsInternal } from '@/interfaces/elements';
+import type { BasisTheoryElementsInternal } from '@/types/elements';
 import { describeif } from './setup/utils';
 
 describe('Elements', () => {

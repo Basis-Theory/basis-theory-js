@@ -1,7 +1,7 @@
 import { createRequestConfig, dataExtractor, proxyRaw } from '@/common';
-import type { TokenizeData } from '@/interfaces/models';
-import type { RequestOptions } from '@/interfaces/sdk';
 import { BasisTheoryService } from '@/service';
+import type { TokenizeData } from '@/types/models';
+import type { RequestOptions } from '@/types/sdk';
 
 export class BasisTheoryTokenize extends BasisTheoryService {
   public tokenize(

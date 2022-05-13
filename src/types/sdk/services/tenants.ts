@@ -5,7 +5,7 @@ import type {
   TenantMember,
   TenantUsageReport,
   UpdateTenant,
-} from '@/interfaces/models';
+} from '@/types/models';
 import type { PaginatedList, RequestOptions } from './shared';
 import { PaginatedQuery } from './shared';
 

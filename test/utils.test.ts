@@ -14,8 +14,7 @@ import {
   getRuntime,
   BROWSER_LIST,
 } from '@/common';
-import type { RequestOptions } from '@/interfaces/sdk';
-import type { ApplicationInfo } from '@/types';
+import type { ApplicationInfo, RequestOptions } from '@/types/sdk';
 import { describeif } from './setup/utils';
 
 jest.mock('os', () => ({

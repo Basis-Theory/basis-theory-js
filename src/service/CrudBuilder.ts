@@ -9,7 +9,7 @@ import type {
   Update as IUpdate,
   Delete as IDelete,
   List as IList,
-} from '@/interfaces/sdk';
+} from '@/types/sdk';
 import { BasisTheoryService } from './BasisTheoryService';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

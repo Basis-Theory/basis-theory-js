@@ -1,4 +1,4 @@
-import type { BasisTheoryElements } from '@/interfaces/elements';
+import type { BasisTheoryElements } from '@/types/elements';
 import type {
   AtomicBanks,
   AtomicCards,
@@ -12,8 +12,15 @@ import type {
   Permissions,
 } from './services';
 
+interface ApplicationInfo {
+  name?: string;
+  version?: string;
+  url?: string;
+}
+
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
+  appInfo?: ApplicationInfo;
 }
 
 interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {
@@ -55,10 +62,40 @@ interface BasisTheory extends Tokenize {
   permissions: Permissions;
 }
 
+interface ClientUserAgent {
+  client: string;
+  clientVersion: string;
+  osVersion: string;
+  runtimeVersion: string;
+  application?: ApplicationInfo;
+}
+
+type BasisTheoryServices =
+  | 'tokens'
+  | 'tokenize'
+  | 'applications'
+  | 'reactorFormulas'
+  | 'reactors'
+  | 'atomicBanks'
+  | 'atomicCards'
+  | 'permissions'
+  | 'logs'
+  | 'tenants';
+
+type BasisTheoryServicesBasePathMap = {
+  [key in BasisTheoryServices]: string;
+};
+
+type BasisTheoryInitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
+
 export type {
+  ApplicationInfo,
+  BasisTheoryInitStatus,
   BasisTheoryInit,
   BasisTheory,
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitOptionsWithElements,
   BasisTheoryInitOptions,
+  BasisTheoryServicesBasePathMap,
+  ClientUserAgent,
 };

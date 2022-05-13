@@ -1,4 +1,4 @@
-import type { Permission } from '@/interfaces/models';
+import type { Permission } from '@/types/models';
 import type { RequestOptions } from './shared';
 
 interface Permissions {

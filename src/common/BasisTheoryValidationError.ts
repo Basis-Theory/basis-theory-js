@@ -1,4 +1,4 @@
-import type { FieldError } from '@/interfaces/elements';
+import type { FieldError } from '@/types/elements';
 
 export class BasisTheoryValidationError<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

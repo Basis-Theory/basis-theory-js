@@ -4,7 +4,7 @@ import type {
   Reactor,
   DataObject,
   ReactResponse,
-} from '@/interfaces/models';
+} from '@/types/models';
 import type {
   Create,
   Delete,

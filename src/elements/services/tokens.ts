@@ -1,11 +1,11 @@
+import { BasisTheoryTokens } from '@/tokens';
 import type {
   Tokens as ElementsTokens,
   BasisTheoryElementsInternal,
   CreateToken as ElementsCreateToken,
-} from '@/interfaces/elements';
-import type { CreateToken, Token } from '@/interfaces/models';
-import type { RequestOptions, Tokens } from '@/interfaces/sdk';
-import { BasisTheoryTokens } from '@/tokens';
+} from '@/types/elements';
+import type { CreateToken, Token } from '@/types/models';
+import type { RequestOptions, Tokens } from '@/types/sdk';
 
 const delegateTokens = (
   elements?: BasisTheoryElementsInternal

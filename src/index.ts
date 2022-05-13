@@ -1,4 +1,4 @@
-import type { BasisTheoryInit } from '@/interfaces/sdk';
+import type { BasisTheoryInit } from '@/types/sdk';
 import { BasisTheory } from './BasisTheory';
 
 /**

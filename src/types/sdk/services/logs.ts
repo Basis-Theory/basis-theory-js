@@ -1,4 +1,4 @@
-import type { Log } from '@/interfaces/models';
+import type { Log } from '@/types/models';
 import type { List, PaginatedQuery } from './shared';
 
 interface ListLogQuery extends PaginatedQuery {

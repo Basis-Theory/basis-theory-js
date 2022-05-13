@@ -8,15 +8,18 @@ import camelcaseKeys from 'camelcase-keys';
 import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
+import type { RequestTransformers } from '@/service';
 import type {
   AtomicReactRequest,
   Reactor,
   Token,
   TokenBase,
-} from '@/interfaces/models';
-import type { RequestOptions } from '@/interfaces/sdk';
-import type { RequestTransformers } from '@/service';
-import type { ApplicationInfo, ClientUserAgent } from '@/types';
+} from '@/types/models';
+import type {
+  ApplicationInfo,
+  ClientUserAgent,
+  RequestOptions,
+} from '@/types/sdk';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
 import {
   API_KEY_HEADER,

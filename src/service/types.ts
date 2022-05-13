@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios';
-import type { ApplicationInfo } from '@/types';
+import type { ApplicationInfo } from '@/types/sdk';
 
 interface BasisTheoryServiceOptions
   extends Pick<AxiosRequestConfig, 'transformRequest' | 'transformResponse'> {

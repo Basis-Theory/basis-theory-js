@@ -6,12 +6,8 @@ import {
   BT_TRACE_ID_HEADER,
   transformAtomicRequestSnakeCase,
 } from '@/common';
-import type {
-  AtomicBank,
-  UpdateAtomicBank,
-  TokenType,
-} from '@/interfaces/models';
-import type { BasisTheory as IBasisTheory } from '@/interfaces/sdk';
+import type { AtomicBank, UpdateAtomicBank, TokenType } from '@/types/models';
+import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import {
   testCreate,
   testRetrieve,
