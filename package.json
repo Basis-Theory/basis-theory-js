@@ -16,7 +16,7 @@
   "prettier": "@basis-theory/eslint-config/prettier",
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "yarn clean && concurrently 'yarn build:bundle' 'yarn build:module' 'yarn build:declarations' 'yarn build:package' --kill-others-on-fail",
+    "build": "yarn clean && concurrently 'yarn build:bundle' 'yarn build:module' 'yarn build:declarations' 'yarn build:package' -n 'bundle,module,declarations,package' -c 'yellow,magenta,blue,green' --kill-others-on-fail -g",
     "build:bundle": "webpack --config webpack.prod.js",
     "build:declarations": "tsc",
     "build:module": "babel src --extensions .ts --out-dir dist",
@@ -75,7 +75,7 @@
     "babel-loader": "^8.2.2",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "chance": "^1.1.8",
-    "concurrently": "5.3.0",
+    "concurrently": "^7.1.0",
     "cypress": "^8.3.1",
     "dotenv-webpack": "^7.0.2",
     "eslint": "^7.32.0",
