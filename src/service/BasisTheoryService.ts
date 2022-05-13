@@ -8,7 +8,7 @@ import {
   transformResponseCamelCase,
   buildUserAgentString,
   buildClientUserAgentString,
-} from '../common';
+} from '@/common';
 import { BasisTheoryServiceOptions } from './types';
 
 export abstract class BasisTheoryService<

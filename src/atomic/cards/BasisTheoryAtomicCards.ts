@@ -1,28 +1,25 @@
-import type {
-  AtomicCard,
-  CreateAtomicCard,
-  AtomicReactRequest,
-  ReactResponse,
-  UpdateAtomicCard,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type {
-  PaginatedQuery,
-  RequestOptions,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';
 import {
   createRequestConfig,
   dataExtractor,
   transformAtomicReactionRequestSnakeCase,
   proxyRaw,
-} from '../../common';
+} from '@/common';
 import {
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
-} from '../../common/utils';
-import type { BasisTheoryServiceOptions } from '../../service';
-import { BasisTheoryService } from '../../service';
-import { CrudBuilder } from '../../service/CrudBuilder';
+} from '@/common/utils';
+import type {
+  AtomicCard,
+  CreateAtomicCard,
+  AtomicReactRequest,
+  ReactResponse,
+  UpdateAtomicCard,
+} from '@/interfaces/models';
+import type { PaginatedQuery, RequestOptions } from '@/interfaces/sdk';
+import type { BasisTheoryServiceOptions } from '@/service';
+import { BasisTheoryService } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 
 export const BasisTheoryAtomicCards = new CrudBuilder(
   class BasisTheoryAtomicCards extends BasisTheoryService {

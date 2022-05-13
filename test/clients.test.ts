@@ -1,14 +1,14 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import { BasisTheory } from '../src';
+import { BasisTheory } from '@/BasisTheory';
 import {
   DEFAULT_BASE_URL,
   CLIENT_BASE_PATHS,
   buildClientUserAgentString,
   buildUserAgentString,
-} from '../src/common';
-import { BasisTheoryService } from '../src/service';
+} from '@/common';
+import { BasisTheoryService } from '@/service';
 import { getTestAppInfo } from './setup/utils';
 
 describe('clients', () => {

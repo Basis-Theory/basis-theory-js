@@ -1,12 +1,12 @@
+import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
+import { BasisTheory } from '@/BasisTheory';
 import type {
   ReactorFormulaConfig,
   FormulaType,
   DataType,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import MockAdapter from 'axios-mock-adapter';
-import { Chance } from 'chance';
-import { BasisTheory } from '../src';
+} from '@/interfaces/models';
+import type { BasisTheory as IBasisTheory } from '@/interfaces/sdk';
 import { testCRUD, mockServiceClient } from './setup/utils';
 
 describe('Reactor Formulas', () => {

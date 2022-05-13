@@ -1,7 +1,7 @@
-import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import { BasisTheory } from '../src';
+import { BasisTheory } from '@/BasisTheory';
+import type { BasisTheory as IBasisTheory } from '@/interfaces/sdk';
 import { testList, mockServiceClient } from './setup/utils';
 
 describe('Logs', () => {

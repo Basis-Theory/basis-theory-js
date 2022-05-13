@@ -1,4 +1,3 @@
-import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosResponse } from 'axios';
 import { Chance } from 'chance';
 import * as os from 'os';
@@ -14,8 +13,9 @@ import {
   getOSVersion,
   getRuntime,
   BROWSER_LIST,
-} from '../src/common';
-import type { ApplicationInfo } from '../src/types';
+} from '@/common';
+import type { RequestOptions } from '@/interfaces/sdk';
+import type { ApplicationInfo } from '@/types';
 import { describeif } from './setup/utils';
 
 jest.mock('os', () => ({

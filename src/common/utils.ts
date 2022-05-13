@@ -1,14 +1,4 @@
 import type {
-  AtomicReactRequest,
-  Reactor,
-  Token,
-  TokenBase,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import {
-  BasisTheoryApiError,
-  RequestOptions,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import type {
   AxiosRequestConfig,
   AxiosResponse,
   AxiosTransformer,
@@ -18,8 +8,16 @@ import camelcaseKeys from 'camelcase-keys';
 import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
-import { RequestTransformers } from '../service';
-import type { ApplicationInfo, ClientUserAgent } from '../types';
+import type {
+  AtomicReactRequest,
+  Reactor,
+  Token,
+  TokenBase,
+} from '@/interfaces/models';
+import type { RequestOptions } from '@/interfaces/sdk';
+import type { RequestTransformers } from '@/service';
+import type { ApplicationInfo, ClientUserAgent } from '@/types';
+import { BasisTheoryApiError } from './BasisTheoryApiError';
 import {
   API_KEY_HEADER,
   BROWSER_LIST,

@@ -1,28 +1,24 @@
-import type {
-  CreateToken,
-  Token,
-  TokenType,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import {
-  DATA_CLASSIFICATIONS,
-  DATA_IMPACT_LEVELS,
-  DATA_RESTRICTION_POLICIES,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type {
-  BasisTheory as IBasisTheory,
-  PaginatedList,
-  ListTokensQuery,
-  SearchTokensRequest,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import { BasisTheory } from '../src';
+import { BasisTheory } from '@/BasisTheory';
 import {
   API_KEY_HEADER,
   BT_TRACE_ID_HEADER,
   getQueryParams,
   transformTokenRequestSnakeCase,
-} from '../src/common';
+} from '@/common';
+import type { CreateToken, Token, TokenType } from '@/interfaces/models';
+import {
+  DATA_CLASSIFICATIONS,
+  DATA_IMPACT_LEVELS,
+  DATA_RESTRICTION_POLICIES,
+} from '@/interfaces/models';
+import type {
+  BasisTheory as IBasisTheory,
+  PaginatedList,
+  ListTokensQuery,
+  SearchTokensRequest,
+} from '@/interfaces/sdk';
 import {
   errorStatus,
   expectBasisTheoryApiError,

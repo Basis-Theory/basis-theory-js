@@ -1,8 +1,14 @@
+const { pathsToModuleNameMapper } = require('ts-jest');
+const { compilerOptions } = require('./tsconfig');
+
 const common = {
   preset: 'ts-jest',
   automock: false,
   coveragePathIgnorePatterns: ['test', 'dist'],
   testPathIgnorePatterns: ['cypress'],
+  roots: ['<rootDir>'],
+  modulePaths: ['<rootDir>'],
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
 };
 
 module.exports = {

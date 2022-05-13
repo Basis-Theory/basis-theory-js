@@ -1,14 +1,14 @@
+import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
+import { BasisTheory } from '@/BasisTheory';
+import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '@/common';
+import { transformAtomicRequestSnakeCase } from '@/common/utils';
 import type {
   AtomicCard,
   UpdateAtomicCard,
   TokenType,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import MockAdapter from 'axios-mock-adapter';
-import { Chance } from 'chance';
-import { BasisTheory } from '../src';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
-import { transformAtomicRequestSnakeCase } from '../src/common/utils';
+} from '@/interfaces/models';
+import type { BasisTheory as IBasisTheory } from '@/interfaces/sdk';
 import {
   testCreate,
   testRetrieve,

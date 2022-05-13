@@ -1,23 +1,23 @@
+import type { AxiosTransformer } from 'axios';
+import { createRequestConfig, dataExtractor, proxyRaw } from '@/common';
+import {
+  transformReactorResponseCamelCase,
+  transformReactorRequestSnakeCase,
+} from '@/common/utils';
 import type {
   Reactor,
   CreateReactor,
   UpdateReactor,
   ReactResponse,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
+} from '@/interfaces/models';
 import type {
   ListReactorQuery,
   ReactRequest,
   RequestOptions,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import type { AxiosTransformer } from 'axios';
-import { createRequestConfig, dataExtractor, proxyRaw } from '../common';
-import {
-  transformReactorResponseCamelCase,
-  transformReactorRequestSnakeCase,
-} from '../common/utils';
-import { BasisTheoryService } from '../service';
-import type { BasisTheoryServiceOptions } from '../service';
-import { CrudBuilder } from '../service/CrudBuilder';
+} from '@/interfaces/sdk';
+import { BasisTheoryService } from '@/service';
+import type { BasisTheoryServiceOptions } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 
 export const BasisTheoryReactors = new CrudBuilder(
   class BasisTheoryReactors extends BasisTheoryService {

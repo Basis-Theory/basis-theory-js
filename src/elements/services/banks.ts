@@ -1,17 +1,11 @@
+import { BasisTheoryAtomicBanks } from '@/atomic';
 import type {
   AtomicBanks as ElementsAtomicBanks,
   BasisTheoryElementsInternal,
   CreateAtomicBank as ElementsCreateAtomicBank,
-} from '@basis-theory/basis-theory-elements-interfaces/elements';
-import type {
-  CreateAtomicBank,
-  AtomicBank,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type {
-  RequestOptions,
-  AtomicBanks,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryAtomicBanks } from '../../atomic';
+} from '@/interfaces/elements';
+import type { CreateAtomicBank, AtomicBank } from '@/interfaces/models';
+import type { RequestOptions, AtomicBanks } from '@/interfaces/sdk';
 
 const delegateAtomicBanks = (
   elements?: BasisTheoryElementsInternal

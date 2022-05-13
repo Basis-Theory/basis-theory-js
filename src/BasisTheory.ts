@@ -10,8 +10,8 @@ import type {
   Tokenize as ElementsTokenize,
   TokenizeData as ElementsTokenizeData,
   Tokens as ElementsTokens,
-} from '@basis-theory/basis-theory-elements-interfaces/elements';
-import type { TokenizeData } from '@basis-theory/basis-theory-elements-interfaces/models';
+} from '@/interfaces/elements';
+import type { TokenizeData } from '@/interfaces/models';
 import type {
   Applications,
   AtomicBanks,
@@ -26,7 +26,7 @@ import type {
   Tenants,
   Tokenize,
   Tokens,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
+} from '@/interfaces/sdk';
 import { BasisTheoryApplications } from './applications';
 import {
   assertInit,

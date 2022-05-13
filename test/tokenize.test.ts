@@ -1,8 +1,8 @@
-import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import { BasisTheory } from '../src';
-import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
+import { BasisTheory } from '@/BasisTheory';
+import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '@/common';
+import type { BasisTheory as IBasisTheory } from '@/interfaces/sdk';
 import {
   errorStatus,
   expectBasisTheoryApiError,

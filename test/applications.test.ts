@@ -1,9 +1,9 @@
-import type { ApplicationType } from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { BasisTheory as IBasisTheory } from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import { BasisTheory } from '../src';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '../src/common';
+import { BasisTheory } from '@/BasisTheory';
+import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '@/common';
+import type { ApplicationType } from '@/interfaces/models';
+import type { BasisTheory as IBasisTheory } from '@/interfaces/sdk';
 import {
   testCRUD,
   errorStatus,

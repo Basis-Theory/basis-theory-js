@@ -1,17 +1,11 @@
+import { BasisTheoryAtomicCards } from '@/atomic';
 import type {
   AtomicCards as ElementsAtomicCards,
   BasisTheoryElementsInternal,
   CreateAtomicCard as ElementsCreateAtomicCard,
-} from '@basis-theory/basis-theory-elements-interfaces/elements';
-import type {
-  CreateAtomicCard,
-  AtomicCard,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type {
-  RequestOptions,
-  AtomicCards,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryAtomicCards } from '../../atomic';
+} from '@/interfaces/elements';
+import type { CreateAtomicCard, AtomicCard } from '@/interfaces/models';
+import type { RequestOptions, AtomicCards } from '@/interfaces/sdk';
 
 const delegateAtomicCards = (
   elements?: BasisTheoryElementsInternal

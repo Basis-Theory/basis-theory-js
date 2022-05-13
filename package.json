@@ -16,7 +16,7 @@
   "prettier": "@basis-theory/eslint-config/prettier",
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "yarn clean && concurrently \"yarn build:bundle\" \"yarn build:module\" \"yarn build:declarations\" \"yarn build:package\" --kill-others-on-fail",
+    "build": "yarn clean && concurrently 'yarn build:bundle' 'yarn build:module' 'yarn build:declarations' 'yarn build:package' --kill-others-on-fail",
     "build:bundle": "webpack --config webpack.prod.js",
     "build:declarations": "tsc",
     "build:module": "babel src --extensions .ts --out-dir dist",
@@ -37,9 +37,9 @@
     "postinstall": "husky install"
   },
   "dependencies": {
-    "@basis-theory/basis-theory-elements-interfaces": "^4.0.0",
     "axios": "^0.21.2",
     "camelcase-keys": "^6.2.2",
+    "csstype": "^3.0.11",
     "os": "^0.1.2",
     "os-browserify": "^0.3.0",
     "snake-case": "^3.0.4",
@@ -53,7 +53,7 @@
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-typescript": "^7.12.13",
-    "@basis-theory/eslint-config": "^1.0.10",
+    "@basis-theory/eslint-config": "link:../basis-theory-eslint-config",
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^15.0.0",
     "@peculiar/webcrypto": "^1.1.6",
@@ -89,6 +89,7 @@
     "semantic-release": "^17.3.9",
     "size-limit": "^7.0.5",
     "ts-jest": "^27.1.2",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "4.1.4",
     "uuid": "^8.3.2",
     "webpack": "^5.20.2",

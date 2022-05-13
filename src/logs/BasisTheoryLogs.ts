@@ -1,7 +1,7 @@
-import type { Log } from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { ListLogQuery } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryService } from '../service';
-import { CrudBuilder } from '../service/CrudBuilder';
+import type { Log } from '@/interfaces/models';
+import type { ListLogQuery } from '@/interfaces/sdk';
+import { BasisTheoryService } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 
 export const BasisTheoryLogs = new CrudBuilder(
   class BasisTheoryLogs extends BasisTheoryService {}

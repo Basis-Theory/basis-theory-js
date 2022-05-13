@@ -1,4 +1,4 @@
-import type { ClientsBasePathMap } from '../types';
+import type { ClientsBasePathMap } from '@/types';
 
 const API_KEY_HEADER = 'BT-API-KEY';
 const BT_TRACE_ID_HEADER = 'bt-trace-id';

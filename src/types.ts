@@ -1,4 +1,4 @@
-import type { BasisTheoryElementsInternal } from '@basis-theory/basis-theory-elements-interfaces/elements';
+import type { BasisTheoryElementsInternal } from '@/interfaces/elements';
 
 type InitStatus = 'not-started' | 'in-progress' | 'done' | 'error';
 
@@ -17,12 +17,6 @@ type Clients =
 type ClientsBasePathMap = {
   [key in Clients]: string;
 };
-
-type Providers = 'BROWSER' | 'NODE';
-
-const algorithm = ['RSA', 'AES'] as const;
-
-type Algorithm = typeof algorithm[number];
 
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
@@ -58,14 +52,10 @@ declare global {
   }
 }
 
-export { algorithm };
-
 export type {
   InitStatus,
   Clients,
   ClientsBasePathMap,
-  Providers,
-  Algorithm,
   BasisTheoryInitOptions,
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitOptionsWithElements,

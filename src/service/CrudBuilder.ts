@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file, @typescript-eslint/no-shadow */
+import { createRequestConfig, dataExtractor, getQueryParams } from '@/common';
 import type {
   PaginatedList,
   PaginatedQuery,
@@ -8,8 +9,7 @@ import type {
   Update as IUpdate,
   Delete as IDelete,
   List as IList,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { createRequestConfig, dataExtractor, getQueryParams } from '../common';
+} from '@/interfaces/sdk';
 import { BasisTheoryService } from './BasisTheoryService';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

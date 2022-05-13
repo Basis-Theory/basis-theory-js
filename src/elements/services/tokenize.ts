@@ -2,13 +2,10 @@ import type {
   Tokenize as ElementsTokenize,
   BasisTheoryElementsInternal,
   TokenizeData as ElementsTokenizeData,
-} from '@basis-theory/basis-theory-elements-interfaces/elements';
-import type { TokenizeData } from '@basis-theory/basis-theory-elements-interfaces/models';
-import type {
-  RequestOptions,
-  Tokenize,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryTokenize } from '../../tokenize';
+} from '@/interfaces/elements';
+import type { TokenizeData } from '@/interfaces/models';
+import type { RequestOptions, Tokenize } from '@/interfaces/sdk';
+import { BasisTheoryTokenize } from '@/tokenize';
 
 const delegateTokenize = (
   elements?: BasisTheoryElementsInternal

@@ -1,12 +1,12 @@
-import type { BasisTheoryElementsInternal } from '@basis-theory/basis-theory-elements-interfaces/elements';
+import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
+import type { BasisTheoryElementsInternal } from '@/interfaces/elements';
 import type {
   Create,
   PaginatedList,
   PaginatedQuery,
   Tokenize,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import MockAdapter from 'axios-mock-adapter';
-import { Chance } from 'chance';
+} from '@/interfaces/sdk';
 import {
   API_KEY_HEADER,
   BT_TRACE_ID_HEADER,

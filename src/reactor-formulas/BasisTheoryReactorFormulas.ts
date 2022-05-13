@@ -1,10 +1,7 @@
-import type {
-  CreateReactorFormula,
-  ReactorFormula,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { ListReactorFormulaQuery } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { BasisTheoryService } from '../service';
-import { CrudBuilder } from '../service/CrudBuilder';
+import type { CreateReactorFormula, ReactorFormula } from '@/interfaces/models';
+import type { ListReactorFormulaQuery } from '@/interfaces/sdk';
+import { BasisTheoryService } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 
 export const BasisTheoryReactorFormulas = new CrudBuilder(
   class BasisTheoryReactorFormulas extends BasisTheoryService {}
