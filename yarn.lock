@@ -1679,9 +1679,23 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@basis-theory/eslint-config@link:../basis-theory-eslint-config":
-  version "0.0.0"
-  uid ""
+"@basis-theory/eslint-config@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@basis-theory/eslint-config/-/eslint-config-1.0.11.tgz#60378a5d0c4c88307c8fce0a00bfbd7a08017738"
+  integrity sha512-UsbRWyJkDNjsupYQAuEWKZAUDz1zzzUxpDFI+HQmbwezlST+iUDlNwyRaqcP+FpFL6CxBPl8knYam0FcIra54g==
+  dependencies:
+    "@rushstack/eslint-patch" "^1.0.8"
+    "@trivago/prettier-plugin-sort-imports" "^3.1.1"
+    "@typescript-eslint/eslint-plugin" "^4.30.0"
+    "@typescript-eslint/parser" "^4.30.0"
+    dot-prop "^6.0.1"
+    eslint-config-get-off-my-lawn "^6.0.1"
+    eslint-config-next "^11.1.2"
+    eslint-config-prettier "^8.3.0"
+    eslint-import-resolver-node "^0.3.6"
+    eslint-import-resolver-typescript "^2.7.1"
+    eslint-plugin-prettier "^4.0.0"
+    read-pkg-up "^7.0.1"
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"

@@ -4,6 +4,7 @@ const libPackage = require('./package.json');
 // remove not required fields
 delete libPackage.devDependencies;
 delete libPackage['size-limit'];
+delete libPackage.prettier;
 
 // use only required temporary script in dist
 libPackage.scripts = {
