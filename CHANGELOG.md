@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.26.0...v1.27.0) (2022-05-17)
+
+
+### Features
+
+* merge interfaces in JS SDK ([#183](https://github.com/Basis-Theory/basis-theory-js/issues/183)) ([82998e7](https://github.com/Basis-Theory/basis-theory-js/commit/82998e7dccb195756a31a78a8cc3bb8d1c5573bc))
+
 # [1.26.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.25.1...v1.26.0) (2022-05-09)
 
 
