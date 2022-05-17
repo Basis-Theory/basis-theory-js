@@ -1,18 +1,15 @@
+import MockAdapter from 'axios-mock-adapter';
+import { Chance } from 'chance';
+import { v4 as uuid } from 'uuid';
+import { BasisTheory } from '@/BasisTheory';
+import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '@/common';
 import type {
   CreateTenantInvitation,
   TenantInvitation,
   TenantMember,
   TenantUsageReport,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type {
-  BasisTheory as IBasisTheory,
-  PaginatedList,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import MockAdapter from 'axios-mock-adapter';
-import { Chance } from 'chance';
-import { v4 as uuid } from 'uuid';
-import { BasisTheory } from '../src';
-import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '../src/common';
+} from '@/types/models';
+import type { BasisTheory as IBasisTheory, PaginatedList } from '@/types/sdk';
 import {
   errorStatus,
   expectBasisTheoryApiError,

@@ -1,3 +1,6 @@
+import { createRequestConfig, dataExtractor, getQueryParams } from '@/common';
+import { BasisTheoryService } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
 import type {
   Tenant,
   TenantUsageReport,
@@ -5,16 +8,13 @@ import type {
   CreateTenantInvitation,
   TenantInvitation,
   TenantMember,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk/services';
-import type { PaginatedList } from '@basis-theory/basis-theory-elements-interfaces/sdk/services/shared';
+} from '@/types/models';
+import type { RequestOptions } from '@/types/sdk/services';
+import type { PaginatedList } from '@/types/sdk/services/shared';
 import type {
   ListTenantInvitationsQuery,
   ListTenantMembersQuery,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk/services/tenants';
-import { createRequestConfig, dataExtractor, getQueryParams } from '../common';
-import { BasisTheoryService } from '../service';
-import { CrudBuilder } from '../service/CrudBuilder';
+} from '@/types/sdk/services/tenants';
 
 export const BasisTheoryTenants = new CrudBuilder(
   class BasisTheoryTenants extends BasisTheoryService {

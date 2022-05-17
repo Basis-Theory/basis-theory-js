@@ -1,18 +1,11 @@
-import type { BasisTheoryElementsInternal } from '@basis-theory/basis-theory-elements-interfaces/elements';
-import type {
-  Create,
-  PaginatedList,
-  PaginatedQuery,
-  Tokenize,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import {
   API_KEY_HEADER,
   BT_TRACE_ID_HEADER,
   transformRequestSnakeCase,
-} from '../../src/common';
-import { BasisTheoryServiceOptions } from '../../src/service';
+} from '@/common';
+import { BasisTheoryServiceOptions } from '@/service';
 import {
   BasisTheoryServiceConstructor,
   CrudBuilder,
@@ -21,8 +14,15 @@ import {
   IList,
   IRetrieve,
   IUpdate,
-} from '../../src/service/CrudBuilder';
-import type { ApplicationInfo } from '../../src/types';
+} from '@/service/CrudBuilder';
+import type { BasisTheoryElementsInternal } from '@/types/elements';
+import type {
+  Create,
+  PaginatedList,
+  PaginatedQuery,
+  Tokenize,
+  ApplicationInfo,
+} from '@/types/sdk';
 
 const describeif = (condition: boolean): typeof describe =>
   condition ? describe : describe.skip;

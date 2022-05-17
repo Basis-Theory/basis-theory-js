@@ -1,7 +1,7 @@
-import type { Permission } from '@basis-theory/basis-theory-elements-interfaces/models';
-import type { RequestOptions } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import { createRequestConfig, dataExtractor } from '../common';
-import { BasisTheoryService } from '../service';
+import { createRequestConfig, dataExtractor } from '@/common';
+import { BasisTheoryService } from '@/service';
+import type { Permission } from '@/types/models';
+import type { RequestOptions } from '@/types/sdk';
 
 export class BasisTheoryPermissions extends BasisTheoryService {
   public list(options?: RequestOptions): Promise<Permission[]> {

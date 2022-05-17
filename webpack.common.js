@@ -2,6 +2,7 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const { merge } = require('webpack-merge');
 const babelConfig = require('./babel.bundle.config');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const base = {
   target: ['web', 'es6'],
@@ -13,6 +14,7 @@ const base = {
   },
 
   resolve: {
+    plugins: [new TsconfigPathsPlugin({})],
     extensions: ['.ts', '.tsx', '.js', '.json'],
     fallback: {
       crypto: false,

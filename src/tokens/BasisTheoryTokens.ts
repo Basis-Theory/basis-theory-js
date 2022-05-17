@@ -1,22 +1,19 @@
-import type {
-  Token,
-  CreateToken,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
+import type { AxiosTransformer } from 'axios';
+import { createRequestConfig, getQueryParams } from '@/common';
+import {
+  dataExtractor,
+  transformTokenResponseCamelCase,
+  transformTokenRequestSnakeCase,
+} from '@/common/utils';
+import { BasisTheoryService, BasisTheoryServiceOptions } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
+import type { Token, CreateToken } from '@/types/models';
 import type {
   PaginatedList,
   RequestOptions,
   ListTokensQuery,
   SearchTokensRequest,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
-import type { AxiosTransformer } from 'axios';
-import { createRequestConfig, getQueryParams } from '../common';
-import {
-  dataExtractor,
-  transformTokenResponseCamelCase,
-  transformTokenRequestSnakeCase,
-} from '../common/utils';
-import { BasisTheoryService, BasisTheoryServiceOptions } from '../service';
-import { CrudBuilder } from '../service/CrudBuilder';
+} from '@/types/sdk';
 
 export const BasisTheoryTokens = new CrudBuilder(
   class BasisTheoryTokens extends BasisTheoryService {

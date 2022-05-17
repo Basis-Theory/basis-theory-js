@@ -1,14 +1,3 @@
-import type {
-  AtomicBank,
-  CreateAtomicBank,
-  AtomicReactRequest,
-  ReactResponse,
-  UpdateAtomicBank,
-} from '@basis-theory/basis-theory-elements-interfaces/models';
-import type {
-  PaginatedQuery,
-  RequestOptions,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
 import type { AxiosTransformer } from 'axios';
 import {
   createRequestConfig,
@@ -17,10 +6,18 @@ import {
   transformAtomicReactionRequestSnakeCase,
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
-} from '../../common';
-import type { BasisTheoryServiceOptions } from '../../service';
-import { BasisTheoryService } from '../../service';
-import { CrudBuilder } from '../../service/CrudBuilder';
+} from '@/common';
+import type { BasisTheoryServiceOptions } from '@/service';
+import { BasisTheoryService } from '@/service';
+import { CrudBuilder } from '@/service/CrudBuilder';
+import type {
+  AtomicBank,
+  CreateAtomicBank,
+  AtomicReactRequest,
+  ReactResponse,
+  UpdateAtomicBank,
+} from '@/types/models';
+import type { PaginatedQuery, RequestOptions } from '@/types/sdk';
 
 export const BasisTheoryAtomicBanks = new CrudBuilder(
   class BasisTheoryAtomicBanks extends BasisTheoryService {

@@ -1,4 +1,4 @@
 export * from './constants';
 export * from './utils';
-export { BasisTheoryApiError } from '@basis-theory/basis-theory-elements-interfaces/sdk';
-export { BasisTheoryValidationError } from '@basis-theory/basis-theory-elements-interfaces/elements';
+export { BasisTheoryApiError } from './BasisTheoryApiError';
+export { BasisTheoryValidationError } from './BasisTheoryValidationError';

@@ -10,8 +10,8 @@ import type {
   Tokenize as ElementsTokenize,
   TokenizeData as ElementsTokenizeData,
   Tokens as ElementsTokens,
-} from '@basis-theory/basis-theory-elements-interfaces/elements';
-import type { TokenizeData } from '@basis-theory/basis-theory-elements-interfaces/models';
+} from '@/types/elements';
+import type { TokenizeData } from '@/types/models';
 import type {
   Applications,
   AtomicBanks,
@@ -26,7 +26,11 @@ import type {
   Tenants,
   Tokenize,
   Tokens,
-} from '@basis-theory/basis-theory-elements-interfaces/sdk';
+  BasisTheoryInitOptions,
+  BasisTheoryInitOptionsWithElements,
+  BasisTheoryInitOptionsWithoutElements,
+  BasisTheoryInitStatus,
+} from '@/types/sdk';
 import { BasisTheoryApplications } from './applications';
 import {
   assertInit,
@@ -47,12 +51,6 @@ import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheoryTenants } from './tenants';
-import type {
-  BasisTheoryInitOptions,
-  BasisTheoryInitOptionsWithElements,
-  BasisTheoryInitOptionsWithoutElements,
-  InitStatus,
-} from './types';
 
 const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
@@ -62,7 +60,7 @@ const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
 
 export class BasisTheory
   implements BasisTheoryInit, IBasisTheory, BasisTheoryElements {
-  private _initStatus: InitStatus = 'not-started';
+  private _initStatus: BasisTheoryInitStatus = 'not-started';
 
   private _initOptions?: Required<BasisTheoryInitOptions>;
 

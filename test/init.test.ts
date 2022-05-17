@@ -1,12 +1,12 @@
 import { Chance } from 'chance';
-import { BasisTheory } from '../src';
+import { BasisTheory } from '@/BasisTheory';
 import {
   loadElements,
   delegateTokens,
   delegateTokenize,
   delegateAtomicBanks,
   delegateAtomicCards,
-} from '../src/elements';
+} from '@/elements';
 
 jest.mock('../src/elements');
 

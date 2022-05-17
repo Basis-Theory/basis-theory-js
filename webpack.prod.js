@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge');
-const configs = require('./webpack.common.js');
+const configs = require('./webpack.common');
 
 const prod = {
   mode: 'production',
