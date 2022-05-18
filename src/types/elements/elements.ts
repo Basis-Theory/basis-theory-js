@@ -1,4 +1,10 @@
-import type { ElementEventListener, EventType, Subscription } from './events';
+import type {
+  ElementEventListener,
+  EventType,
+  Subscription,
+  TextElementEvents,
+  CardElementEvents,
+} from './events';
 import type {
   CreateCardElementOptions,
   CreateTextElementOptions,
@@ -7,7 +13,7 @@ import type {
 } from './options';
 import type { AtomicBanks, AtomicCards, Tokenize, Tokens } from './services';
 
-interface BaseElement<UpdateOptions> {
+interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
   mount(selector: string): Promise<void>;
   update(options: UpdateOptions): Promise<void>;
@@ -15,13 +21,13 @@ interface BaseElement<UpdateOptions> {
   unmount(): void;
   on<T extends EventType>(
     eventType: T,
-    listener: ElementEventListener<T>
+    listener: ElementEventListener<ElementEvents, T>
   ): Subscription;
 }
 
-type CardElement = BaseElement<UpdateCardElementOptions>;
+type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents>;
 
-type TextElement = BaseElement<UpdateTextElementOptions>;
+type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents>;
 
 interface BasisTheoryElements extends Tokenize {
   /**

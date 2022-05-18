@@ -4,6 +4,8 @@ import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
   CardElement,
+  CreateCardElementOptions,
+  CreateTextElementOptions,
   CustomizableElementOptions,
   ElementType,
   TextElement,
@@ -197,6 +199,16 @@ export class BasisTheory
   }
 
   public createElement(
+    type: 'card',
+    options?: CreateCardElementOptions
+  ): CardElement;
+
+  public createElement(
+    type: 'text',
+    options: CreateTextElementOptions
+  ): TextElement;
+
+  public createElement(
     type: ElementType,
     options: CustomizableElementOptions
   ): CardElement | TextElement {
@@ -204,10 +216,7 @@ export class BasisTheory
       throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
     }
 
-    // the cast below is to avoid unnecessary conditional calls to elements
-    // the underlying elements function called will be the same, no matter the
-    // element type
-    return this._elements.createElement(type as 'card', options);
+    return this._elements.createElement(type as never, options);
   }
 
   public tokenize(
