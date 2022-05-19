@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.27.0...v1.28.0) (2022-05-19)
+
+
+### Features
+
+* add cardBrand to card element change event ([#184](https://github.com/Basis-Theory/basis-theory-js/issues/184)) ([ab658a3](https://github.com/Basis-Theory/basis-theory-js/commit/ab658a3fc5d40db562d4657f81970c6268acbb6a))
+
 # [1.27.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.26.0...v1.27.0) (2022-05-17)
 
 
