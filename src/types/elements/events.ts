@@ -1,4 +1,4 @@
-import type { FieldError, ListenableKey, Targeted } from './shared';
+import type { Brand, FieldError, ListenableKey, Targeted } from './shared';
 
 type EventType = 'ready' | 'change' | 'focus' | 'blur' | 'keydown';
 
@@ -14,6 +14,10 @@ type ChangeEvent = BaseEvent<'change'> & {
   errors?: FieldError[];
 };
 
+type CardChangeEvent = ChangeEvent & {
+  cardBrand: Brand;
+};
+
 type InputFocusEvent = BaseEvent<'focus'> & Targeted;
 
 type InputBlurEvent = BaseEvent<'blur'> & Targeted;
@@ -23,20 +27,23 @@ type InputKeydownEvent = BaseEvent<'keydown'> &
     key: ListenableKey;
   } & Pick<KeyboardEvent, 'altKey' | 'ctrlKey' | 'shiftKey' | 'metaKey'>;
 
-type ElementEvent =
+type BaseElementEvents =
   | ReadyEvent
-  | ChangeEvent
   | InputFocusEvent
   | InputBlurEvent
   | InputKeydownEvent;
+
+type TextElementEvents = BaseElementEvents | ChangeEvent;
+
+type CardElementEvents = BaseElementEvents | CardChangeEvent;
 
 /**
  * Utility type that helps find a Union type based on a `type` property
  */
 type FindByType<Union, Type> = Union extends { type: Type } ? Union : never;
 
-type ElementEventListener<T extends EventType> = (
-  event: FindByType<ElementEvent, T>
+type ElementEventListener<Events, Type> = (
+  event: FindByType<Events, Type>
 ) => void;
 
 interface Subscription {
@@ -48,10 +55,13 @@ export type {
   BaseEvent,
   ReadyEvent,
   ChangeEvent,
+  CardChangeEvent,
   InputFocusEvent,
   InputBlurEvent,
   InputKeydownEvent,
-  ElementEvent,
+  BaseElementEvents,
+  TextElementEvents,
+  CardElementEvents,
   ElementEventListener,
   Subscription,
 };
