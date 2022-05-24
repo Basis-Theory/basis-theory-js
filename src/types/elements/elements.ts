@@ -4,13 +4,16 @@ import type {
   Subscription,
   TextElementEvents,
   CardElementEvents,
+  CardNumberElementEvents,
+  CardExpirationDateElementEvents,
 } from './events';
-import { CardExpirationDateElementEvents } from './events';
 import type {
   CreateCardElementOptions,
   CreateCardExpirationDateElementOptions,
   CreateTextElementOptions,
   UpdateCardElementOptions,
+  CreateCardNumberElementOptions,
+  UpdateCardNumberElementOptions,
   UpdateCardExpirationDateElementOptions,
   UpdateTextElementOptions,
 } from './options';
@@ -32,6 +35,11 @@ type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents>;
 
 type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents>;
 
+type CardNumberElement = BaseElement<
+  UpdateCardNumberElementOptions,
+  CardNumberElementEvents
+>;
+
 type CardExpirationDateElement = BaseElement<
   UpdateCardExpirationDateElementOptions,
   CardExpirationDateElementEvents
@@ -49,6 +57,7 @@ type ElementWrapper<T extends BaseElement<any, any> = BaseElement<any, any>> = {
 type ElementValue =
   | TextElement
   | CardElement
+  | CardNumberElement
   | CardExpirationDateElement
   | ElementWrapper;
 
@@ -65,6 +74,10 @@ interface BasisTheoryElements extends Tokenize {
 
   createElement(type: 'card', options?: CreateCardElementOptions): CardElement;
   createElement(type: 'text', options: CreateTextElementOptions): TextElement;
+  createElement(
+    type: 'cardNumber',
+    options: CreateCardNumberElementOptions
+  ): CardNumberElement;
   createElement(
     type: 'cardExpirationDate',
     options: CreateCardExpirationDateElementOptions
@@ -89,6 +102,7 @@ export type {
   BaseElement,
   CardElement,
   TextElement,
+  CardNumberElement,
   CardExpirationDateElement,
   ElementWrapper,
   ElementValue,

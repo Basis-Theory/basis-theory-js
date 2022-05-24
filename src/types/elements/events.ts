@@ -37,6 +37,8 @@ type TextElementEvents = BaseElementEvents | ChangeEvent;
 
 type CardElementEvents = BaseElementEvents | CardChangeEvent;
 
+type CardNumberElementEvents = BaseElementEvents | CardChangeEvent;
+
 type CardExpirationDateElementEvents = BaseElementEvents | ChangeEvent;
 
 /**
@@ -64,6 +66,7 @@ export type {
   BaseElementEvents,
   TextElementEvents,
   CardElementEvents,
+  CardNumberElementEvents,
   CardExpirationDateElementEvents,
   ElementEventListener,
   Subscription,

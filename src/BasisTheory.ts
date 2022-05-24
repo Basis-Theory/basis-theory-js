@@ -4,8 +4,10 @@ import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
   CardElement,
+  CardNumberElement,
   CardExpirationDateElement,
   CreateCardElementOptions,
+  CreateCardNumberElementOptions,
   CreateCardExpirationDateElementOptions,
   CreateTextElementOptions,
   CustomizableElementOptions,
@@ -211,6 +213,11 @@ export class BasisTheory
   ): TextElement;
 
   public createElement(
+    type: 'cardNumber',
+    options: CreateCardNumberElementOptions
+  ): CardNumberElement;
+
+  public createElement(
     type: 'cardExpirationDate',
     options: CreateCardExpirationDateElementOptions
   ): CardExpirationDateElement;
@@ -218,7 +225,7 @@ export class BasisTheory
   public createElement(
     type: ElementType,
     options: CustomizableElementOptions
-  ): CardElement | TextElement | CardExpirationDateElement {
+  ): CardElement | TextElement | CardNumberElement | CardExpirationDateElement {
     if (!this._elements) {
       throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
     }
