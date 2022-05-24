@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.28.0...v1.29.0) (2022-05-24)
+
+
+### Features
+
+* add CardExpirationDateElement types ([#186](https://github.com/Basis-Theory/basis-theory-js/issues/186)) ([bafbc7b](https://github.com/Basis-Theory/basis-theory-js/commit/bafbc7bf319b1a648ed8422178438881eaf106a0))
+
 # [1.28.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.27.0...v1.28.0) (2022-05-19)
 
 
