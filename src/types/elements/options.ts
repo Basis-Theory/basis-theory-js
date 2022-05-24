@@ -25,6 +25,7 @@ interface SanitizedElementOptions {
   transform?: [RegExp, string] | null;
   ariaDescription?: string;
   ariaLabel?: string;
+  brand?: string;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
