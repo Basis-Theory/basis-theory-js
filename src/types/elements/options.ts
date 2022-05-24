@@ -72,7 +72,7 @@ type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
   };
 
 type UpdateCardVerificationCodeElementOptions = Omit<
-  CreateCardExpirationDateElementOptions,
+  CreateCardVerificationCodeElementOptions,
   'targetId'
 >;
 

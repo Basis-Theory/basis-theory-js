@@ -220,7 +220,7 @@ export class BasisTheory
   public createElement(
     type: 'cardVerificationCode',
     options: CreateCardVerificationCodeElementOptions
-  ): CardExpirationDateElement;
+  ): CardVerificationCodeElement;
 
   public createElement(
     type: ElementType,
