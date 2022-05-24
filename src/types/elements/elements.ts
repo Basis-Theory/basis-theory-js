@@ -5,10 +5,13 @@ import type {
   TextElementEvents,
   CardElementEvents,
 } from './events';
+import { CardExpirationDateElementEvents } from './events';
 import type {
   CreateCardElementOptions,
+  CreateCardExpirationDateElementOptions,
   CreateTextElementOptions,
   UpdateCardElementOptions,
+  UpdateCardExpirationDateElementOptions,
   UpdateTextElementOptions,
 } from './options';
 import type { AtomicBanks, AtomicCards, Tokenize, Tokens } from './services';
@@ -29,6 +32,26 @@ type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents>;
 
 type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents>;
 
+type CardExpirationDateElement = BaseElement<
+  UpdateCardExpirationDateElementOptions,
+  CardExpirationDateElementEvents
+> & {
+  month(): ElementWrapper<CardExpirationDateElement>;
+  year(): ElementWrapper<CardExpirationDateElement>;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ElementWrapper<T extends BaseElement<any, any> = BaseElement<any, any>> = {
+  element: T;
+  method?: string;
+};
+
+type ElementValue =
+  | TextElement
+  | CardElement
+  | CardExpirationDateElement
+  | ElementWrapper;
+
 interface BasisTheoryElements extends Tokenize {
   /**
    * @deprecated use {@link tokens} or {@link tokenize}
@@ -42,6 +65,10 @@ interface BasisTheoryElements extends Tokenize {
 
   createElement(type: 'card', options?: CreateCardElementOptions): CardElement;
   createElement(type: 'text', options: CreateTextElementOptions): TextElement;
+  createElement(
+    type: 'cardExpirationDate',
+    options: CreateCardExpirationDateElementOptions
+  ): CardExpirationDateElement;
 }
 
 interface BasisTheoryElementsInternal extends BasisTheoryElements {
@@ -62,6 +89,9 @@ export type {
   BaseElement,
   CardElement,
   TextElement,
+  CardExpirationDateElement,
+  ElementWrapper,
+  ElementValue,
   BasisTheoryElements,
   BasisTheoryElementsInternal,
 };

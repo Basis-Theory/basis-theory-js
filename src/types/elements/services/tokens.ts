@@ -1,8 +1,8 @@
-import type { TextElement, CardElement } from '@/types/elements';
+import type { ElementValue } from '@/types/elements';
 import type { CreateToken as CreateTokenModel, Token } from '@/types/models';
 import type { Create } from '@/types/sdk';
 
-type CreateToken = CreateTokenModel<TextElement | CardElement>;
+type CreateToken = CreateTokenModel<ElementValue>;
 
 type Tokens = Create<Token, CreateToken>;
 

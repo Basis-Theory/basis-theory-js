@@ -1,6 +1,6 @@
 import type { ElementStyle } from './styles';
 
-const ELEMENTS_TYPES = ['card', 'text'] as const;
+const ELEMENTS_TYPES = ['card', 'text', 'cardExpirationDate'] as const;
 
 type ElementType = typeof ELEMENTS_TYPES[number];
 
@@ -48,6 +48,17 @@ type UpdateTextElementOptions = Omit<
   'targetId' | 'mask'
 >;
 
+type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'placeholder'> &
+  Required<Pick<ElementOptions, 'targetId'>> & {
+    'aria-label'?: string;
+  };
+
+type UpdateCardExpirationDateElementOptions = Omit<
+  CreateCardExpirationDateElementOptions,
+  'targetId'
+>;
+
 export type {
   ElementInternalOptions,
   ElementType,
@@ -59,6 +70,8 @@ export type {
   UpdateCardElementOptions,
   CreateTextElementOptions,
   UpdateTextElementOptions,
+  CreateCardExpirationDateElementOptions,
+  UpdateCardExpirationDateElementOptions,
 };
 
 export { ELEMENTS_TYPES };
