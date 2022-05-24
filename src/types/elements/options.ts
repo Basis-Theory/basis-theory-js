@@ -1,6 +1,11 @@
 import type { ElementStyle } from './styles';
 
-const ELEMENTS_TYPES = ['card', 'text', 'cardExpirationDate'] as const;
+const ELEMENTS_TYPES = [
+  'card',
+  'text',
+  'cardExpirationDate',
+  'cardVerificationCode',
+] as const;
 
 type ElementType = typeof ELEMENTS_TYPES[number];
 
@@ -59,6 +64,18 @@ type UpdateCardExpirationDateElementOptions = Omit<
   'targetId'
 >;
 
+type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'placeholder'> &
+  Required<Pick<ElementOptions, 'targetId'>> & {
+    'aria-label'?: string;
+    brand?: string;
+  };
+
+type UpdateCardVerificationCodeElementOptions = Omit<
+  CreateCardExpirationDateElementOptions,
+  'targetId'
+>;
+
 export type {
   ElementInternalOptions,
   ElementType,
@@ -72,6 +89,8 @@ export type {
   UpdateTextElementOptions,
   CreateCardExpirationDateElementOptions,
   UpdateCardExpirationDateElementOptions,
+  CreateCardVerificationCodeElementOptions,
+  UpdateCardVerificationCodeElementOptions,
 };
 
 export { ELEMENTS_TYPES };

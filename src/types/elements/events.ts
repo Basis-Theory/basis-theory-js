@@ -39,6 +39,8 @@ type CardElementEvents = BaseElementEvents | CardChangeEvent;
 
 type CardExpirationDateElementEvents = BaseElementEvents | ChangeEvent;
 
+type CardVerificationCodeElementEvents = BaseElementEvents | ChangeEvent;
+
 /**
  * Utility type that helps find a Union type based on a `type` property
  */
@@ -65,6 +67,7 @@ export type {
   TextElementEvents,
   CardElementEvents,
   CardExpirationDateElementEvents,
+  CardVerificationCodeElementEvents,
   ElementEventListener,
   Subscription,
 };
