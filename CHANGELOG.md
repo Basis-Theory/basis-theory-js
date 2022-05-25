@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.29.0...v1.30.0) (2022-05-25)
+
+
+### Features
+
+* add CardVerificationCodeElement types ([#187](https://github.com/Basis-Theory/basis-theory-js/issues/187)) ([188f41d](https://github.com/Basis-Theory/basis-theory-js/commit/188f41da4cea2d658c3230c869d29d43e04aad42))
+
 # [1.29.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.28.0...v1.29.0) (2022-05-24)
 
 
