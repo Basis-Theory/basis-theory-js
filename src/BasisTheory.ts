@@ -6,9 +6,11 @@ import type {
   CardElement,
   CardNumberElement,
   CardExpirationDateElement,
+  CardVerificationCodeElement,
   CreateCardElementOptions,
   CreateCardNumberElementOptions,
   CreateCardExpirationDateElementOptions,
+  CreateCardVerificationCodeElementOptions,
   CreateTextElementOptions,
   CustomizableElementOptions,
   ElementType,
@@ -223,9 +225,19 @@ export class BasisTheory
   ): CardExpirationDateElement;
 
   public createElement(
+    type: 'cardVerificationCode',
+    options: CreateCardVerificationCodeElementOptions
+  ): CardVerificationCodeElement;
+
+  public createElement(
     type: ElementType,
     options: CustomizableElementOptions
-  ): CardElement | TextElement | CardNumberElement | CardExpirationDateElement {
+  ):
+    | CardElement
+    | TextElement
+    | CardNumberElement
+    | CardExpirationDateElement
+    | CardVerificationCodeElement {
     if (!this._elements) {
       throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
     }

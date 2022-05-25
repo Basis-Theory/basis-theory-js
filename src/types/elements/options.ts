@@ -5,6 +5,7 @@ const ELEMENTS_TYPES = [
   'text',
   'cardNumber',
   'cardExpirationDate',
+  'cardVerificationCode',
 ] as const;
 
 type ElementType = typeof ELEMENTS_TYPES[number];
@@ -26,6 +27,7 @@ interface SanitizedElementOptions {
   ariaDescription?: string;
   ariaLabel?: string;
   iconPosition?: 'left' | 'right' | 'none';
+  cardBrand?: string;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
@@ -76,6 +78,17 @@ type UpdateCardExpirationDateElementOptions = Omit<
   'targetId'
 >;
 
+type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'placeholder' | 'cardBrand'> &
+  Required<Pick<ElementOptions, 'targetId'>> & {
+    'aria-label'?: string;
+  };
+
+type UpdateCardVerificationCodeElementOptions = Omit<
+  CreateCardVerificationCodeElementOptions,
+  'targetId'
+>;
+
 export type {
   ElementInternalOptions,
   ElementType,
@@ -91,6 +104,8 @@ export type {
   UpdateCardNumberElementOptions,
   CreateCardExpirationDateElementOptions,
   UpdateCardExpirationDateElementOptions,
+  CreateCardVerificationCodeElementOptions,
+  UpdateCardVerificationCodeElementOptions,
 };
 
 export { ELEMENTS_TYPES };

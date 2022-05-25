@@ -10,9 +10,26 @@ const ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE =
 const ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE =
   'There was an unknown error when loading BasisTheoryElements';
 
+const CARD_BRANDS = [
+  'visa',
+  'mastercard',
+  'american-express',
+  'discover',
+  'diners-club',
+  'jcb',
+  'unionpay',
+  'maestro',
+  'elo',
+  'hiper',
+  'hipercard',
+  'mir',
+  'unknown',
+] as const;
+
 export {
   ELEMENTS_INIT_ERROR_MESSAGE,
   ELEMENTS_NOM_DOM_ERROR_MESSAGE,
   ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE,
   ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE,
+  CARD_BRANDS,
 };
