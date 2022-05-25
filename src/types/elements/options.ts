@@ -25,7 +25,7 @@ interface SanitizedElementOptions {
   transform?: [RegExp, string] | null;
   ariaDescription?: string;
   ariaLabel?: string;
-  brand?: string;
+  cardBrand?: string;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
@@ -69,7 +69,7 @@ type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
   Pick<ElementOptions, 'placeholder'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
-    brand?: string;
+    cardBrand?: string;
   };
 
 type UpdateCardVerificationCodeElementOptions = Omit<
