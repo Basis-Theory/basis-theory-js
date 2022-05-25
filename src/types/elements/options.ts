@@ -66,10 +66,9 @@ type UpdateCardExpirationDateElementOptions = Omit<
 >;
 
 type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder'> &
+  Pick<ElementOptions, 'placeholder' | 'cardBrand'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
-    cardBrand?: string;
   };
 
 type UpdateCardVerificationCodeElementOptions = Omit<
