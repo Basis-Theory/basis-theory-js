@@ -5,8 +5,10 @@ import type {
   BasisTheoryElementsInternal,
   CardElement,
   CardExpirationDateElement,
+  CardVerificationCodeElement,
   CreateCardElementOptions,
   CreateCardExpirationDateElementOptions,
+  CreateCardVerificationCodeElementOptions,
   CreateTextElementOptions,
   CustomizableElementOptions,
   ElementType,
@@ -216,9 +218,18 @@ export class BasisTheory
   ): CardExpirationDateElement;
 
   public createElement(
+    type: 'cardVerificationCode',
+    options: CreateCardVerificationCodeElementOptions
+  ): CardVerificationCodeElement;
+
+  public createElement(
     type: ElementType,
     options: CustomizableElementOptions
-  ): CardElement | TextElement | CardExpirationDateElement {
+  ):
+    | CardElement
+    | TextElement
+    | CardExpirationDateElement
+    | CardVerificationCodeElement {
     if (!this._elements) {
       throw new Error(ELEMENTS_INIT_ERROR_MESSAGE);
     }
