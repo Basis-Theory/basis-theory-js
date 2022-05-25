@@ -3,6 +3,7 @@ import type { ElementStyle } from './styles';
 const ELEMENTS_TYPES = [
   'card',
   'text',
+  'cardNumber',
   'cardExpirationDate',
   'cardVerificationCode',
 ] as const;
@@ -25,6 +26,7 @@ interface SanitizedElementOptions {
   transform?: [RegExp, string] | null;
   ariaDescription?: string;
   ariaLabel?: string;
+  iconPosition?: 'left' | 'right' | 'none';
   cardBrand?: string;
 }
 
@@ -52,6 +54,17 @@ type CreateTextElementOptions = CustomizableElementOptions &
 type UpdateTextElementOptions = Omit<
   CreateTextElementOptions,
   'targetId' | 'mask'
+>;
+
+type CreateCardNumberElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'placeholder' | 'iconPosition'> &
+  Required<Pick<ElementOptions, 'targetId'>> & {
+    'aria-label'?: string;
+  };
+
+type UpdateCardNumberElementOptions = Omit<
+  CreateCardNumberElementOptions,
+  'targetId'
 >;
 
 type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
@@ -87,6 +100,8 @@ export type {
   UpdateCardElementOptions,
   CreateTextElementOptions,
   UpdateTextElementOptions,
+  CreateCardNumberElementOptions,
+  UpdateCardNumberElementOptions,
   CreateCardExpirationDateElementOptions,
   UpdateCardExpirationDateElementOptions,
   CreateCardVerificationCodeElementOptions,
