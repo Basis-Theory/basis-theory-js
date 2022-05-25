@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.30.0...v1.31.0) (2022-05-25)
+
+
+### Features
+
+* add CardNumberElement types ([#188](https://github.com/Basis-Theory/basis-theory-js/issues/188)) ([d4d6da8](https://github.com/Basis-Theory/basis-theory-js/commit/d4d6da894e26fb8cf7af36cc578e2f72575e3a90))
+
 # [1.30.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.29.0...v1.30.0) (2022-05-25)
 
 
