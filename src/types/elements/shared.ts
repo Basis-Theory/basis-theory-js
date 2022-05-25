@@ -1,3 +1,5 @@
+import { CARD_BRANDS } from '@/elements/constants';
+
 type FieldErrorType = 'incomplete' | 'invalid';
 
 type ConfigErrorType =
@@ -28,20 +30,7 @@ interface PropertyError {
 /**
  * Card brands type
  */
-type Brand =
-  | 'visa'
-  | 'mastercard'
-  | 'american-express'
-  | 'discover'
-  | 'diners-club'
-  | 'jcb'
-  | 'unionpay'
-  | 'maestro'
-  | 'elo'
-  | 'hiper'
-  | 'hipercard'
-  | 'mir'
-  | 'unknown';
+type Brand = typeof CARD_BRANDS[number];
 
 export type {
   FieldErrorType,
