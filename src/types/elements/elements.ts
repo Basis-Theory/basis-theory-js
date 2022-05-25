@@ -58,6 +58,7 @@ type ElementValue =
   | TextElement
   | CardElement
   | CardExpirationDateElement
+  | CardVerificationCodeElement
   | ElementWrapper;
 
 interface BasisTheoryElements extends Tokenize {
