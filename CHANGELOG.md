@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.31.0...v1.32.0) (2022-05-26)
+
+
+### Features
+
+* adding search indexes to token creation and responses ([#185](https://github.com/Basis-Theory/basis-theory-js/issues/185)) ([6a1f249](https://github.com/Basis-Theory/basis-theory-js/commit/6a1f249ea5492af2f12baefe5b4000920e9721e8))
+
 # [1.31.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.30.0...v1.31.0) (2022-05-25)
 
 
