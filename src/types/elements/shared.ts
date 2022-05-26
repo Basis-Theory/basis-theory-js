@@ -1,4 +1,4 @@
-import { CARD_BRANDS } from '@/elements/constants';
+import { CARD_BRANDS, CARD_ICON_POSITIONS } from '@/elements/constants';
 
 type FieldErrorType = 'incomplete' | 'invalid';
 
@@ -32,6 +32,11 @@ interface PropertyError {
  */
 type Brand = typeof CARD_BRANDS[number];
 
+/**
+ * Icon position for card number element
+ */
+type CardIconPosition = typeof CARD_ICON_POSITIONS[number];
+
 export type {
   FieldErrorType,
   ConfigErrorType,
@@ -41,4 +46,5 @@ export type {
   FieldError,
   PropertyError,
   Brand,
+  CardIconPosition,
 };
