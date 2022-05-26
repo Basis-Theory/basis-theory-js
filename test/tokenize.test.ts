@@ -58,6 +58,7 @@ describe('Tokenize', () => {
             restrictionPolicy: chance.pickone([...DATA_RESTRICTION_POLICIES]),
           },
           searchIndexes: [chance.string(), chance.string()],
+          fingerprintExpression: chance.string(),
         },
         random_tokens: [
           chance.string(),
@@ -89,6 +90,7 @@ describe('Tokenize', () => {
             restrictionPolicy: chance.pickone([...DATA_RESTRICTION_POLICIES]),
           },
           searchIndexes: [chance.string(), chance.string()],
+          fingerprintExpression: chance.string(),
         },
         random_tokens: [
           chance.guid(),
