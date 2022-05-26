@@ -589,6 +589,7 @@ describe('Tokens', () => {
         camelCaseParameter: _chance.string(),
         snake_case_parameter: _chance.string(),
       },
+      searchIndexes: [_chance.string(), _chance.string()],
     };
     /* eslint-enable camelcase */
 

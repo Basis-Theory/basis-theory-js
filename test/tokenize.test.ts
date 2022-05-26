@@ -2,6 +2,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
 import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '@/common';
+import {
+  DATA_CLASSIFICATIONS,
+  DATA_IMPACT_LEVELS,
+  DATA_RESTRICTION_POLICIES,
+} from '@/types/models';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import {
   errorStatus,
@@ -47,6 +52,12 @@ describe('Tokenize', () => {
             camelCase: chance.string(),
             snake_case: chance.string(),
           },
+          privacy: {
+            impactLevel: chance.pickone([...DATA_IMPACT_LEVELS]),
+            classification: chance.pickone([...DATA_CLASSIFICATIONS]),
+            restrictionPolicy: chance.pickone([...DATA_RESTRICTION_POLICIES]),
+          },
+          searchIndexes: [chance.string(), chance.string()],
         },
         random_tokens: [
           chance.string(),
@@ -72,6 +83,12 @@ describe('Tokenize', () => {
             camelCase: chance.string(),
             snake_case: chance.string(),
           },
+          privacy: {
+            impactLevel: chance.pickone([...DATA_IMPACT_LEVELS]),
+            classification: chance.pickone([...DATA_CLASSIFICATIONS]),
+            restrictionPolicy: chance.pickone([...DATA_RESTRICTION_POLICIES]),
+          },
+          searchIndexes: [chance.string(), chance.string()],
         },
         random_tokens: [
           chance.guid(),

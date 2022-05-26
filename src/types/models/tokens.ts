@@ -42,11 +42,12 @@ interface Token<DataType = Primitive> extends TokenBase {
   data: TokenData<DataType>;
   privacy?: TokenPrivacy;
   encryption?: TokenEncryption;
+  searchIndexes?: string[];
 }
 
 type CreateToken<DataType = Primitive> = Pick<
   Token<DataType>,
-  'type' | 'data' | 'privacy' | 'metadata' | 'encryption'
+  'type' | 'data' | 'privacy' | 'metadata' | 'encryption' | 'searchIndexes'
 >;
 
 export type {
