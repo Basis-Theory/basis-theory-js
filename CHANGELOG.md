@@ -1,3 +1,10 @@
+## [1.32.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.32.0...v1.32.1) (2022-05-26)
+
+
+### Bug Fixes
+
+* fix card icon position type and add constant for card icon position ([#189](https://github.com/Basis-Theory/basis-theory-js/issues/189)) ([f510883](https://github.com/Basis-Theory/basis-theory-js/commit/f510883ee1298639da7a2473fc504ba383bce620))
+
 # [1.32.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.31.0...v1.32.0) (2022-05-26)
 
 
