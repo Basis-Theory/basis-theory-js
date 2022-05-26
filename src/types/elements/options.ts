@@ -26,7 +26,7 @@ interface SanitizedElementOptions {
   transform?: [RegExp, string] | null;
   ariaDescription?: string;
   ariaLabel?: string;
-  iconPosition?: 'left' | 'right' | 'none';
+  iconPosition?: string;
   cardBrand?: string;
 }
 
