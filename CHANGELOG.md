@@ -1,3 +1,24 @@
+# [1.31.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.30.0...v1.31.0) (2022-05-25)
+
+
+### Features
+
+* add CardNumberElement types ([#188](https://github.com/Basis-Theory/basis-theory-js/issues/188)) ([d4d6da8](https://github.com/Basis-Theory/basis-theory-js/commit/d4d6da894e26fb8cf7af36cc578e2f72575e3a90))
+
+# [1.30.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.29.0...v1.30.0) (2022-05-25)
+
+
+### Features
+
+* add CardVerificationCodeElement types ([#187](https://github.com/Basis-Theory/basis-theory-js/issues/187)) ([188f41d](https://github.com/Basis-Theory/basis-theory-js/commit/188f41da4cea2d658c3230c869d29d43e04aad42))
+
+# [1.29.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.28.0...v1.29.0) (2022-05-24)
+
+
+### Features
+
+* add CardExpirationDateElement types ([#186](https://github.com/Basis-Theory/basis-theory-js/issues/186)) ([bafbc7b](https://github.com/Basis-Theory/basis-theory-js/commit/bafbc7bf319b1a648ed8422178438881eaf106a0))
+
 # [1.28.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.27.0...v1.28.0) (2022-05-19)
 
 

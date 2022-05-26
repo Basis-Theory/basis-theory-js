@@ -1,6 +1,12 @@
 import type { ElementStyle } from './styles';
 
-const ELEMENTS_TYPES = ['card', 'text'] as const;
+const ELEMENTS_TYPES = [
+  'card',
+  'text',
+  'cardNumber',
+  'cardExpirationDate',
+  'cardVerificationCode',
+] as const;
 
 type ElementType = typeof ELEMENTS_TYPES[number];
 
@@ -20,6 +26,8 @@ interface SanitizedElementOptions {
   transform?: [RegExp, string] | null;
   ariaDescription?: string;
   ariaLabel?: string;
+  iconPosition?: 'left' | 'right' | 'none';
+  cardBrand?: string;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
@@ -48,6 +56,39 @@ type UpdateTextElementOptions = Omit<
   'targetId' | 'mask'
 >;
 
+type CreateCardNumberElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'placeholder' | 'iconPosition'> &
+  Required<Pick<ElementOptions, 'targetId'>> & {
+    'aria-label'?: string;
+  };
+
+type UpdateCardNumberElementOptions = Omit<
+  CreateCardNumberElementOptions,
+  'targetId'
+>;
+
+type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'placeholder'> &
+  Required<Pick<ElementOptions, 'targetId'>> & {
+    'aria-label'?: string;
+  };
+
+type UpdateCardExpirationDateElementOptions = Omit<
+  CreateCardExpirationDateElementOptions,
+  'targetId'
+>;
+
+type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'placeholder' | 'cardBrand'> &
+  Required<Pick<ElementOptions, 'targetId'>> & {
+    'aria-label'?: string;
+  };
+
+type UpdateCardVerificationCodeElementOptions = Omit<
+  CreateCardVerificationCodeElementOptions,
+  'targetId'
+>;
+
 export type {
   ElementInternalOptions,
   ElementType,
@@ -59,6 +100,12 @@ export type {
   UpdateCardElementOptions,
   CreateTextElementOptions,
   UpdateTextElementOptions,
+  CreateCardNumberElementOptions,
+  UpdateCardNumberElementOptions,
+  CreateCardExpirationDateElementOptions,
+  UpdateCardExpirationDateElementOptions,
+  CreateCardVerificationCodeElementOptions,
+  UpdateCardVerificationCodeElementOptions,
 };
 
 export { ELEMENTS_TYPES };

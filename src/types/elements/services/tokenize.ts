@@ -1,8 +1,8 @@
-import type { CardElement, TextElement } from '@/types/elements';
+import type { ElementValue } from '@/types/elements';
 import type { TokenizeData as TokenizeDataModel } from '@/types/models';
 import type { RequestOptions } from '@/types/sdk';
 
-type TokenizeData = TokenizeDataModel<TextElement | CardElement>;
+type TokenizeData = TokenizeDataModel<ElementValue>;
 
 interface Tokenize {
   tokenize(
