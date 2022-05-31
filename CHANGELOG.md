@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.32.1...v1.33.0) (2022-05-31)
+
+
+### Features
+
+* adds fingerprint_expression prop on Tokens ([#190](https://github.com/Basis-Theory/basis-theory-js/issues/190)) ([a2d6ba1](https://github.com/Basis-Theory/basis-theory-js/commit/a2d6ba1cdd4d3d6772d3c688f26f1dff119dbc05))
+
 ## [1.32.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.32.0...v1.32.1) (2022-05-26)
 
 
