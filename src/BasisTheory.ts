@@ -333,6 +333,7 @@ export class BasisTheory
   public get inboundProxies(): InboundProxies {
     return assertInit(this._inboundProxies);
   }
+
   /* eslint-enable accessor-pairs */
 
   /**
