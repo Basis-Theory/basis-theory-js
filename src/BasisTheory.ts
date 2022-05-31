@@ -38,6 +38,7 @@ import type {
   BasisTheoryInitOptionsWithElements,
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitStatus,
+  InboundProxies,
 } from '@/types/sdk';
 import { BasisTheoryApplications } from './applications';
 import {
@@ -54,6 +55,7 @@ import {
   loadElements,
 } from './elements';
 import { ELEMENTS_INIT_ERROR_MESSAGE } from './elements/constants';
+import { BasisTheoryInboundProxies } from './inbound-proxies';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
@@ -93,6 +95,8 @@ export class BasisTheory
   private _atomicCards?: AtomicCards & ElementsAtomicCards;
 
   private _permissions?: BasisTheoryPermissions;
+
+  private _inboundProxies?: InboundProxies;
 
   public init(
     apiKey: string,
@@ -192,6 +196,11 @@ export class BasisTheory
       this._permissions = new BasisTheoryPermissions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.permissions, baseUrl).toString(),
+        appInfo,
+      });
+      this._inboundProxies = new BasisTheoryInboundProxies({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.inboundProxies, baseUrl).toString(),
         appInfo,
       });
 
@@ -319,6 +328,10 @@ export class BasisTheory
 
   public get permissions(): Permissions {
     return assertInit(this._permissions);
+  }
+
+  public get inboundProxies(): InboundProxies {
+    return assertInit(this._inboundProxies);
   }
   /* eslint-enable accessor-pairs */
 

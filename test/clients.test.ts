@@ -72,7 +72,11 @@ describe('clients', () => {
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.permissions}`,
     });
-    expect(create).toHaveBeenCalledTimes(10);
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.inboundProxies}`,
+    });
+    expect(create).toHaveBeenCalledTimes(11);
   });
 
   test('should throw error if not properly initialized', () => {
