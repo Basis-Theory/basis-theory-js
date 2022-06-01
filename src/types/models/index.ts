@@ -9,4 +9,4 @@ export * from './reactor-formulas';
 export * from './reactors';
 export * from './permissions';
 export * from './tokenize';
-export * from './inbound-proxies';
+export * from './proxies';

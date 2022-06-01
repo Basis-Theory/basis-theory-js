@@ -38,7 +38,7 @@ import type {
   BasisTheoryInitOptionsWithElements,
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitStatus,
-  InboundProxies,
+  Proxies,
 } from '@/types/sdk';
 import { BasisTheoryApplications } from './applications';
 import {
@@ -55,9 +55,9 @@ import {
   loadElements,
 } from './elements';
 import { ELEMENTS_INIT_ERROR_MESSAGE } from './elements/constants';
-import { BasisTheoryInboundProxies } from './inbound-proxies';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryPermissions } from './permissions';
+import { BasisTheoryProxies } from './proxies';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheoryTenants } from './tenants';
@@ -96,7 +96,7 @@ export class BasisTheory
 
   private _permissions?: BasisTheoryPermissions;
 
-  private _inboundProxies?: InboundProxies;
+  private _proxies?: Proxies;
 
   public init(
     apiKey: string,
@@ -198,9 +198,9 @@ export class BasisTheory
         baseURL: new URL(CLIENT_BASE_PATHS.permissions, baseUrl).toString(),
         appInfo,
       });
-      this._inboundProxies = new BasisTheoryInboundProxies({
+      this._proxies = new BasisTheoryProxies({
         apiKey,
-        baseURL: new URL(CLIENT_BASE_PATHS.inboundProxies, baseUrl).toString(),
+        baseURL: new URL(CLIENT_BASE_PATHS.proxies, baseUrl).toString(),
         appInfo,
       });
 
@@ -330,8 +330,8 @@ export class BasisTheory
     return assertInit(this._permissions);
   }
 
-  public get inboundProxies(): InboundProxies {
-    return assertInit(this._inboundProxies);
+  public get proxies(): Proxies {
+    return assertInit(this._proxies);
   }
 
   /* eslint-enable accessor-pairs */

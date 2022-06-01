@@ -74,7 +74,7 @@ describe('clients', () => {
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.inboundProxies}`,
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.proxies}`,
     });
     expect(create).toHaveBeenCalledTimes(11);
   });

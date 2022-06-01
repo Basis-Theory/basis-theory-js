@@ -4,7 +4,7 @@ import { BasisTheory } from '@/BasisTheory';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import { mockServiceClient, testCRUD } from './setup/utils';
 
-describe('Inbound Proxies', () => {
+describe('Proxies', () => {
   let bt: IBasisTheory,
     chance: Chance.Chance,
     apiKey: string,
@@ -14,7 +14,7 @@ describe('Inbound Proxies', () => {
     chance = new Chance();
     apiKey = chance.string();
     bt = await new BasisTheory().init(apiKey);
-    client = mockServiceClient(bt.inboundProxies);
+    client = mockServiceClient(bt.proxies);
   });
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('Inbound Proxies', () => {
 
   describe('CRUD', () => {
     testCRUD(() => ({
-      service: bt.inboundProxies,
+      service: bt.proxies,
       client,
       createPayload: {
         name: chance.animal(),

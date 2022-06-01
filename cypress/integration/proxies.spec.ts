@@ -1,20 +1,20 @@
 // eslint-disable-next-line spaced-comment
 ///  <reference path="../support/index.d.ts" />
 
-context('Inbound Proxies', () => {
+context('Proxies', () => {
   it('should create', () => {
-    cy.testCreate('inbound-proxies');
+    cy.testCreate('proxies');
   });
   it('should retrieve', () => {
-    cy.testRetrieve('inbound-proxies');
+    cy.testRetrieve('proxies');
   });
   it('should update', () => {
-    cy.testUpdate('inbound-proxies');
+    cy.testUpdate('proxies');
   });
   it('should delete', () => {
-    cy.testDelete('inbound-proxies');
+    cy.testDelete('proxies');
   });
   it('should list', () => {
-    cy.testList('inbound-proxies');
+    cy.testList('proxies');
   });
 });

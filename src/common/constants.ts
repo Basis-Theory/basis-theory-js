@@ -20,7 +20,7 @@ const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   atomicBanks: 'atomic/banks',
   atomicCards: 'atomic/cards',
   permissions: 'permissions',
-  inboundProxies: 'inbound-proxies',
+  proxies: 'proxies',
 };
 
 const BROWSER_LIST = [
