@@ -1,3 +1,4 @@
+import type { Application } from './applications';
 import type { ReactorFormula } from './reactor-formulas';
 import type { Auditable } from './shared';
 
@@ -6,13 +7,17 @@ interface Reactor extends Auditable {
   tenantId: string;
   name: string;
   formula: ReactorFormula;
+  application?: Application;
   configuration: Record<string, string>;
 }
 
 type CreateReactor = Pick<Reactor, 'name' | 'configuration'> & {
   formula: Pick<ReactorFormula, 'id'>;
+  application?: Pick<Application, 'id'>;
 };
 
-type UpdateReactor = Pick<Reactor, 'name' | 'configuration'>;
+type UpdateReactor = Pick<Reactor, 'name' | 'configuration'> & {
+  application?: Pick<Application, 'id'>;
+};
 
 export type { Reactor, CreateReactor, UpdateReactor };

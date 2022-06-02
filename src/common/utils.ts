@@ -179,7 +179,7 @@ const concatRequestTransformerWithDefault = (
   ...(axios.defaults.transformRequest as AxiosTransformer[]),
 ];
 
-const concatResponseTransformermWithDefault = (
+const concatResponseTransformerWithDefault = (
   responseTransformer: AxiosTransformer | AxiosTransformer[]
 ): AxiosTransformer | AxiosTransformer[] | undefined => [
   ...(axios.defaults.transformResponse as AxiosTransformer[]),
@@ -205,7 +205,7 @@ const createRequestConfig = (
         : {}),
       ...(transformers.transformResponse !== undefined
         ? {
-            transformResponse: concatResponseTransformermWithDefault(
+            transformResponse: concatResponseTransformerWithDefault(
               transformers.transformResponse
             ),
           }
@@ -239,7 +239,7 @@ const createRequestConfig = (
       : {}),
     ...(transformers?.transformResponse !== undefined
       ? {
-          transformResponse: concatResponseTransformermWithDefault(
+          transformResponse: concatResponseTransformerWithDefault(
             transformers.transformResponse
           ),
         }
@@ -401,7 +401,7 @@ export {
   dataExtractor,
   createRequestConfig,
   concatRequestTransformerWithDefault,
-  concatResponseTransformermWithDefault,
+  concatResponseTransformerWithDefault,
   errorInterceptor,
   getQueryParams,
   buildUserAgentString,

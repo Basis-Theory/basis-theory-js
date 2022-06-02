@@ -10,6 +10,7 @@ import type {
   ReactorFormulas,
   Reactors,
   Permissions,
+  Proxies,
 } from './services';
 
 interface ApplicationInfo {
@@ -60,6 +61,7 @@ interface BasisTheory extends Tokenize {
   reactorFormulas: ReactorFormulas;
   reactors: Reactors;
   permissions: Permissions;
+  proxies: Proxies;
 }
 
 interface ClientUserAgent {
@@ -70,17 +72,7 @@ interface ClientUserAgent {
   application?: ApplicationInfo;
 }
 
-type BasisTheoryServices =
-  | 'tokens'
-  | 'tokenize'
-  | 'applications'
-  | 'reactorFormulas'
-  | 'reactors'
-  | 'atomicBanks'
-  | 'atomicCards'
-  | 'permissions'
-  | 'logs'
-  | 'tenants';
+type BasisTheoryServices = keyof BasisTheory;
 
 type BasisTheoryServicesBasePathMap = {
   [key in BasisTheoryServices]: string;
