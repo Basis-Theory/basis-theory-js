@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.33.0...v1.34.0) (2022-06-02)
+
+
+### Features
+
+* add proxies and reactor application ([#191](https://github.com/Basis-Theory/basis-theory-js/issues/191)) ([2afc50f](https://github.com/Basis-Theory/basis-theory-js/commit/2afc50f3c7339cd259af5b845636a3a1520fabce))
+
 # [1.33.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.32.1...v1.33.0) (2022-05-31)
 
 
