@@ -1,3 +1,10 @@
+# [1.35.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.34.0...v1.35.0) (2022-06-03)
+
+
+### Features
+
+* add requireAuth property to proxy entity ([#196](https://github.com/Basis-Theory/basis-theory-js/issues/196)) ([406b235](https://github.com/Basis-Theory/basis-theory-js/commit/406b23566b23a19d7defabd371f882a6ea5adb7a))
+
 # [1.34.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.33.0...v1.34.0) (2022-06-02)
 
 
