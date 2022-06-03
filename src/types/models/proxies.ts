@@ -7,9 +7,13 @@ interface Proxy extends Auditable {
   name: string;
   destinationUrl: string;
   requestReactorId: string;
+  requireAuth?: boolean;
 }
 
-type CreateProxy = Pick<Proxy, 'name' | 'destinationUrl' | 'requestReactorId'>;
+type CreateProxy = Pick<
+  Proxy,
+  'name' | 'destinationUrl' | 'requestReactorId' | 'requireAuth'
+>;
 
 type UpdateProxy = CreateProxy;
 
