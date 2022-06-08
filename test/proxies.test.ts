@@ -30,12 +30,14 @@ describe('Proxies', () => {
         name: chance.animal(),
         destinationUrl: chance.url(),
         requestReactorId: chance.guid(),
+        responseReactorId: chance.guid(),
         requireAuth: chance.bool(),
       },
       updatePayload: {
         name: chance.animal(),
         destinationUrl: chance.url(),
         requestReactorId: chance.guid(),
+        responseReactorId: chance.guid(),
         requireAuth: chance.bool(),
       },
     }));
