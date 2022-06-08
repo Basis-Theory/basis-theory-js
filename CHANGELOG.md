@@ -1,3 +1,10 @@
+# [1.36.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.35.0...v1.36.0) (2022-06-08)
+
+
+### Features
+
+* add response reactor to proxy ([#198](https://github.com/Basis-Theory/basis-theory-js/issues/198)) ([4b68441](https://github.com/Basis-Theory/basis-theory-js/commit/4b68441bcc5e04503274a5228fcb37406de434ee))
+
 # [1.35.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.34.0...v1.35.0) (2022-06-03)
 
 
