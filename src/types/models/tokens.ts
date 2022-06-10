@@ -55,7 +55,9 @@ type CreateToken<DataType = Primitive> = Pick<
   | 'encryption'
   | 'searchIndexes'
   | 'fingerprintExpression'
->;
+> & {
+  deduplicateToken?: boolean;
+};
 
 export type {
   Token,

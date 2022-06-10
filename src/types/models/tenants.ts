@@ -4,9 +4,10 @@ interface Tenant extends Auditable {
   id: string;
   ownerId: string;
   name: string;
+  settings?: Record<string, string>;
 }
 
-type UpdateTenant = Pick<Tenant, 'name'>;
+type UpdateTenant = Pick<Tenant, 'name' | 'settings'>;
 
 interface TenantUsageReport {
   tokenReport: TokenReport;

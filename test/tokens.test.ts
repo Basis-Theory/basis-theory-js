@@ -591,6 +591,7 @@ describe('Tokens', () => {
       },
       searchIndexes: [_chance.string(), _chance.string()],
       fingerprintExpression: _chance.string(),
+      deduplicateToken: _chance.bool(),
     };
     /* eslint-enable camelcase */
 

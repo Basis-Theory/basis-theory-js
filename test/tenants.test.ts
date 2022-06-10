@@ -39,6 +39,11 @@ describe('Tenants', () => {
       const id = chance.string();
       const ownerId = chance.string();
       const name = chance.string();
+      const settings = {
+        [chance.word()]: chance.string(),
+        [chance.word()]: chance.string(),
+        [chance.word()]: chance.string(),
+      };
       const createdBy = chance.string();
       const createdAt = chance.string();
       const modifiedBy = chance.string();
@@ -51,6 +56,7 @@ describe('Tenants', () => {
           id,
           owner_id: ownerId,
           name,
+          settings,
           created_at: createdAt,
           created_by: createdBy,
           modified_at: modifiedAt,
@@ -63,6 +69,7 @@ describe('Tenants', () => {
         id,
         ownerId,
         name,
+        settings,
         createdAt,
         createdBy,
         modifiedAt,
@@ -78,6 +85,11 @@ describe('Tenants', () => {
       const id = chance.string();
       const ownerId = chance.string();
       const name = chance.string();
+      const settings = {
+        [chance.word()]: chance.string(),
+        [chance.word()]: chance.string(),
+        [chance.word()]: chance.string(),
+      };
       const createdBy = chance.string();
       const createdAt = chance.string();
       const modifiedBy = chance.string();
@@ -92,6 +104,7 @@ describe('Tenants', () => {
           id,
           owner_id: ownerId,
           name,
+          settings,
           created_at: createdAt,
           created_by: createdBy,
           modified_at: modifiedAt,
@@ -109,6 +122,7 @@ describe('Tenants', () => {
         id,
         ownerId,
         name,
+        settings,
         createdAt,
         createdBy,
         modifiedAt,
@@ -135,15 +149,35 @@ describe('Tenants', () => {
   describe('update', () => {
     test('should update a tenant', async () => {
       const name = chance.string();
+      const settings = {
+        [chance.word()]: chance.string(),
+        [chance.word()]: chance.string(),
+        [chance.word()]: chance.string(),
+      };
 
-      client.onPut().reply(200, JSON.stringify({ name }));
+      client.onPut().reply(
+        200,
+        JSON.stringify({
+          name,
+          settings,
+        })
+      );
 
-      expect(await bt.tenants.update({ name })).toStrictEqual({
+      expect(
+        await bt.tenants.update({
+          name,
+          settings,
+        })
+      ).toStrictEqual({
         name,
+        settings,
       });
       expect(client.history.put).toHaveLength(1);
       expect(client.history.put[0].data).toStrictEqual(
-        JSON.stringify({ name })
+        JSON.stringify({
+          name,
+          settings,
+        })
       );
       expect(client.history.put[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
@@ -152,14 +186,28 @@ describe('Tenants', () => {
 
     test('should update with options', async () => {
       const name = chance.string();
+      const settings = {
+        [chance.word()]: chance.string(),
+        [chance.word()]: chance.string(),
+        [chance.word()]: chance.string(),
+      };
       const _apiKey = chance.string();
       const correlationId = chance.string();
 
-      client.onPut().reply(200, JSON.stringify({ name }));
+      client.onPut().reply(
+        200,
+        JSON.stringify({
+          name,
+          settings,
+        })
+      );
 
       expect(
         await bt.tenants.update(
-          { name },
+          {
+            name,
+            settings,
+          },
           {
             apiKey: _apiKey,
             correlationId,
@@ -167,10 +215,14 @@ describe('Tenants', () => {
         )
       ).toStrictEqual({
         name,
+        settings,
       });
       expect(client.history.put).toHaveLength(1);
       expect(client.history.put[0].data).toStrictEqual(
-        JSON.stringify({ name })
+        JSON.stringify({
+          name,
+          settings,
+        })
       );
       expect(client.history.put[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
