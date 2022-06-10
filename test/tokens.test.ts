@@ -7,7 +7,12 @@ import {
   getQueryParams,
   transformTokenRequestSnakeCase,
 } from '@/common';
-import type { CreateToken, Token, TokenType } from '@/types/models';
+import type {
+  CreateToken,
+  Token,
+  TokenType,
+  UpdateToken,
+} from '@/types/models';
 import {
   DATA_CLASSIFICATIONS,
   DATA_IMPACT_LEVELS,
@@ -600,6 +605,125 @@ describe('Tokens', () => {
       createPayload,
       transformedCreatePayload: transformTokenRequestSnakeCase(createPayload),
     }));
+  });
+
+  describe('update', () => {
+    const _chance = new Chance();
+
+    test('should update a token', async () => {
+      const id = _chance.guid();
+
+      /* eslint-disable camelcase */
+      const updatePayload: UpdateToken = {
+        data: {
+          camelCaseParameter: _chance.string(),
+          snake_case_parameter: _chance.string(),
+        },
+        privacy: {
+          impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
+          restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
+        },
+        metadata: {
+          camelCaseParameter: _chance.string(),
+          snake_case_parameter: _chance.string(),
+        },
+        searchIndexes: [_chance.string(), _chance.string()],
+        fingerprintExpression: _chance.string(),
+      };
+      /* eslint-enable camelcase */
+
+      const updatedToken: Omit<Token, 'data'> = {
+        id,
+        type: 'token',
+        tenantId: chance.guid(),
+        privacy: {
+          impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
+          restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
+        },
+        searchIndexes: [_chance.string(), _chance.string()],
+        fingerprintExpression: _chance.string(),
+      };
+
+      client.onPatch().reply(204, JSON.stringify(updatedToken));
+
+      expect(await bt.tokens.update(id, updatePayload)).toStrictEqual(
+        updatedToken
+      );
+
+      expect(client.history.patch).toHaveLength(1);
+      expect(client.history.patch[0].data).toStrictEqual(
+        JSON.stringify(transformTokenRequestSnakeCase(updatePayload))
+      );
+      expect(client.history.patch[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
+
+    test('should update a token with options', async () => {
+      const id = _chance.guid();
+      const _apiKey = chance.string();
+      const correlationId = chance.string();
+
+      /* eslint-disable camelcase */
+      const updatePayload: UpdateToken = {
+        data: {
+          camelCaseParameter: _chance.string(),
+          snake_case_parameter: _chance.string(),
+        },
+        privacy: {
+          impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
+          restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
+        },
+        metadata: {
+          camelCaseParameter: _chance.string(),
+          snake_case_parameter: _chance.string(),
+        },
+        searchIndexes: [_chance.string(), _chance.string()],
+        fingerprintExpression: _chance.string(),
+      };
+      /* eslint-enable camelcase */
+
+      const updatedToken: Omit<Token, 'data'> = {
+        id,
+        type: 'token',
+        tenantId: chance.guid(),
+        privacy: {
+          impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
+          restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
+        },
+        searchIndexes: [_chance.string(), _chance.string()],
+        fingerprintExpression: _chance.string(),
+      };
+
+      client.onPatch().reply(204, JSON.stringify(updatedToken));
+
+      expect(
+        await bt.tokens.update(id, updatePayload, {
+          apiKey: _apiKey,
+          correlationId,
+        })
+      ).toStrictEqual(updatedToken);
+
+      expect(client.history.patch).toHaveLength(1);
+      expect(client.history.patch[0].data).toStrictEqual(
+        JSON.stringify(transformTokenRequestSnakeCase(updatePayload))
+      );
+      expect(client.history.patch[0].headers).toMatchObject({
+        [API_KEY_HEADER]: _apiKey,
+        [BT_TRACE_ID_HEADER]: correlationId,
+      });
+    });
+
+    test('should reject with status >= 400 <= 599', async () => {
+      const id = _chance.guid();
+      const status = errorStatus();
+
+      client.onPatch().reply(status);
+
+      const promise = bt.tokens.update(id, { data: chance.string() });
+
+      await expectBasisTheoryApiError(promise, status);
+    });
   });
 
   describe('delete', () => {

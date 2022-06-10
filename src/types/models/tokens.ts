@@ -57,9 +57,17 @@ type CreateToken<DataType = Primitive> = Pick<
   | 'fingerprintExpression'
 >;
 
+type UpdateToken<DataType = Primitive> = Partial<
+  Pick<
+    Token<DataType>,
+    'data' | 'metadata' | 'searchIndexes' | 'fingerprintExpression'
+  > & { privacy: Omit<TokenPrivacy, 'classification'> }
+>;
+
 export type {
   Token,
   CreateToken,
+  UpdateToken,
   DataArray,
   DataObject,
   TokenData,

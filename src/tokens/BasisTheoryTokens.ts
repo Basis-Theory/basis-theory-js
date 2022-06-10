@@ -7,7 +7,7 @@ import {
 } from '@/common/utils';
 import { BasisTheoryService, BasisTheoryServiceOptions } from '@/service';
 import { CrudBuilder } from '@/service/CrudBuilder';
-import type { Token, CreateToken } from '@/types/models';
+import type { Token, CreateToken, UpdateToken } from '@/types/models';
 import type {
   PaginatedList,
   RequestOptions,
@@ -40,6 +40,18 @@ export const BasisTheoryTokens = new CrudBuilder(
 
       return this.client
         .get(url, createRequestConfig(options))
+        .then(dataExtractor);
+    }
+
+    public update(
+      id: string,
+      model: UpdateToken,
+      options: RequestOptions = {}
+    ): Promise<Token> {
+      const url = `/${id}`;
+
+      return this.client
+        .patch(url, model, createRequestConfig(options))
         .then(dataExtractor);
     }
 

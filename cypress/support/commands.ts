@@ -24,18 +24,23 @@ Cypress.Commands.add('testRetrieve', (serviceName: string) => {
   cy.wait('@retrieve');
 });
 
-Cypress.Commands.add('testUpdate', (serviceName: string) => {
-  cy.intercept('PUT', new RegExp(`/${serviceName}/.+`, 'u'), {}).as('update');
+Cypress.Commands.add(
+  'testUpdate',
+  (serviceName: string, method: 'PUT' | 'PATCH' = 'PUT') => {
+    cy.intercept(method, new RegExp(`/${serviceName}/.+`, 'u'), {}).as(
+      'update'
+    );
 
-  cy.visit('./cypress/fixtures/crud_client.html');
+    cy.visit('./cypress/fixtures/crud_client.html');
 
-  cy.get('#service').type(serviceName);
-  cy.get('#update').click();
+    cy.get('#service').type(serviceName);
+    cy.get('#update').click();
 
-  cy.get('#submit').click();
+    cy.get('#submit').click();
 
-  cy.wait('@update');
-});
+    cy.wait('@update');
+  }
+);
 
 Cypress.Commands.add('testDelete', (serviceName: string) => {
   cy.intercept('DELETE', new RegExp(`/${serviceName}/.+`, 'u'), {}).as(
