@@ -1,3 +1,10 @@
+# [1.37.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.36.0...v1.37.0) (2022-06-10)
+
+
+### Features
+
+* add tenant settings and tokens deduplicate option ([#200](https://github.com/Basis-Theory/basis-theory-js/issues/200)) ([fd1f0e3](https://github.com/Basis-Theory/basis-theory-js/commit/fd1f0e372d4a573e2f3a9ecc7ab436a27bbacf2b))
+
 # [1.36.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.35.0...v1.36.0) (2022-06-08)
 
 
