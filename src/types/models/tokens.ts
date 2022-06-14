@@ -65,7 +65,7 @@ type UpdateToken<DataType = Primitive> = Partial<
     'data' | 'metadata' | 'searchIndexes' | 'fingerprintExpression'
   > & {
     privacy: Omit<TokenPrivacy, 'classification'>;
-    deduplicateToken?: boolean;
+    deduplicateToken: boolean;
   }
 >;
 
