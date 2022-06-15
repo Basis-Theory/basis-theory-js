@@ -667,6 +667,7 @@ describe('Tokens', () => {
         JSON.stringify(transformTokenRequestSnakeCase(updatePayload))
       );
       expect(client.history.patch[0].headers).toMatchObject({
+        'Content-Type': 'application/merge-patch+json',
         [API_KEY_HEADER]: expect.any(String),
       });
     });
@@ -721,6 +722,7 @@ describe('Tokens', () => {
         JSON.stringify(transformTokenRequestSnakeCase(updatePayload))
       );
       expect(client.history.patch[0].headers).toMatchObject({
+        'Content-Type': 'application/merge-patch+json',
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
       });

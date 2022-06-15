@@ -51,7 +51,13 @@ export const BasisTheoryTokens = new CrudBuilder(
       const url = `/${id}`;
 
       return this.client
-        .patch(url, model, createRequestConfig(options))
+        .patch(url, model, {
+          ...createRequestConfig(options),
+          headers: {
+            ...createRequestConfig(options)?.headers,
+            'Content-Type': 'application/merge-patch+json',
+          },
+        })
         .then(dataExtractor);
     }
 
