@@ -49,12 +49,13 @@ export const BasisTheoryTokens = new CrudBuilder(
       options: RequestOptions = {}
     ): Promise<Token> {
       const url = `/${id}`;
+      const config = createRequestConfig(options);
 
       return this.client
         .patch(url, model, {
-          ...createRequestConfig(options),
+          ...config,
           headers: {
-            ...createRequestConfig(options)?.headers,
+            ...config?.headers,
             'Content-Type': 'application/merge-patch+json',
           },
         })
