@@ -624,6 +624,16 @@ describe('Tokens', () => {
           impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
+        encryption: {
+          cek: {
+            key: _chance.string(),
+            alg: _chance.string(),
+          },
+          kek: {
+            key: _chance.string(),
+            alg: _chance.string(),
+          },
+        },
         metadata: {
           camelCaseParameter: _chance.string(),
           snake_case_parameter: _chance.string(),
