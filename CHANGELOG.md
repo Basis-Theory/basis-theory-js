@@ -1,3 +1,10 @@
+# [1.38.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.37.0...v1.38.0) (2022-06-16)
+
+
+### Features
+
+* add token update ([#201](https://github.com/Basis-Theory/basis-theory-js/issues/201)) ([1093f0b](https://github.com/Basis-Theory/basis-theory-js/commit/1093f0bd24dda7ce694b3797bf60dff608e53da8))
+
 # [1.37.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.36.0...v1.37.0) (2022-06-10)
 
 
