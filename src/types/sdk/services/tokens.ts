@@ -1,4 +1,9 @@
-import type { Token, CreateToken, TokenType } from '@/types/models';
+import type {
+  Token,
+  CreateToken,
+  TokenType,
+  UpdateToken,
+} from '@/types/models';
 import type {
   Create,
   Retrieve,
@@ -7,6 +12,7 @@ import type {
   RequestOptions,
   PaginatedQuery,
   PaginatedList,
+  Update,
 } from './shared';
 
 interface ListTokensQuery extends PaginatedQuery {
@@ -23,6 +29,7 @@ interface SearchTokensRequest {
 
 interface Tokens
   extends Create<Token, CreateToken>,
+    Update<Token, UpdateToken>,
     Retrieve<Token>,
     Delete,
     List<Token, ListTokensQuery> {

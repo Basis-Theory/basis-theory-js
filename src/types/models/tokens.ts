@@ -59,9 +59,24 @@ type CreateToken<DataType = Primitive> = Pick<
   deduplicateToken?: boolean;
 };
 
+type UpdateToken<DataType = Primitive> = Partial<
+  Pick<
+    Token<DataType>,
+    | 'data'
+    | 'metadata'
+    | 'encryption'
+    | 'searchIndexes'
+    | 'fingerprintExpression'
+  > & {
+    privacy: Omit<TokenPrivacy, 'classification'>;
+    deduplicateToken: boolean;
+  }
+>;
+
 export type {
   Token,
   CreateToken,
+  UpdateToken,
   DataArray,
   DataObject,
   TokenData,

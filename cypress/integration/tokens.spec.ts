@@ -5,6 +5,12 @@ context('Tokens', () => {
   it('should create', () => {
     cy.testCreate('tokens');
   });
+  it('should retrieve', () => {
+    cy.testRetrieve('tokens');
+  });
+  it('should update', () => {
+    cy.testUpdate('tokens', 'PATCH');
+  });
   it('should delete', () => {
     cy.testDelete('tokens');
   });
