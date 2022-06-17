@@ -1,5 +1,9 @@
 import type { AxiosTransformer } from 'axios';
-import { createRequestConfig, getQueryParams } from '@/common';
+import {
+  CONTENT_TYPE_HEADER,
+  createRequestConfig,
+  getQueryParams,
+} from '@/common';
 import {
   dataExtractor,
   transformTokenResponseCamelCase,
@@ -50,8 +54,16 @@ export const BasisTheoryTokens = new CrudBuilder(
     ): Promise<Token> {
       const url = `/${id}`;
 
+      const requestConfig = createRequestConfig(options);
+
       return this.client
-        .patch(url, model, createRequestConfig(options))
+        .patch(url, model, {
+          ...requestConfig,
+          headers: {
+            ...requestConfig?.headers,
+            [CONTENT_TYPE_HEADER]: 'application/merge-patch+json',
+          },
+        })
         .then(dataExtractor);
     }
 

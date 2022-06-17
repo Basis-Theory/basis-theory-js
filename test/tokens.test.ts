@@ -4,6 +4,7 @@ import { BasisTheory } from '@/BasisTheory';
 import {
   API_KEY_HEADER,
   BT_TRACE_ID_HEADER,
+  CONTENT_TYPE_HEADER,
   getQueryParams,
   transformTokenRequestSnakeCase,
 } from '@/common';
@@ -610,6 +611,7 @@ describe('Tokens', () => {
 
   describe('update', () => {
     const _chance = new Chance();
+    const expectedContentType = 'application/merge-patch+json';
 
     test('should update a token', async () => {
       const id = _chance.guid();
@@ -658,6 +660,7 @@ describe('Tokens', () => {
       );
       expect(client.history.patch[0].headers).toMatchObject({
         [API_KEY_HEADER]: expect.any(String),
+        [CONTENT_TYPE_HEADER]: expectedContentType,
       });
     });
 
@@ -713,6 +716,7 @@ describe('Tokens', () => {
       expect(client.history.patch[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [CONTENT_TYPE_HEADER]: expectedContentType,
       });
     });
 
