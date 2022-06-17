@@ -22,6 +22,12 @@ type TokenData<DataType = Primitive> =
   | DataArray<DataType>
   | DataType;
 
+type MaskObject = {
+  [member: string]: TokenMask;
+};
+type MaskArray = Array<TokenMask>;
+type TokenMask = string | MaskObject | MaskArray;
+
 interface TokenEncryptionKey {
   key: string;
   alg: string;
@@ -44,6 +50,7 @@ interface Token<DataType = Primitive> extends TokenBase {
   encryption?: TokenEncryption;
   searchIndexes?: string[];
   fingerprintExpression?: string;
+  mask?: TokenMask;
 }
 
 type CreateToken<DataType = Primitive> = Pick<
@@ -55,6 +62,7 @@ type CreateToken<DataType = Primitive> = Pick<
   | 'encryption'
   | 'searchIndexes'
   | 'fingerprintExpression'
+  | 'mask'
 > & {
   deduplicateToken?: boolean;
 };
@@ -67,6 +75,7 @@ type UpdateToken<DataType = Primitive> = Partial<
     | 'encryption'
     | 'searchIndexes'
     | 'fingerprintExpression'
+    | 'mask'
   > & {
     privacy: Omit<TokenPrivacy, 'classification'>;
     deduplicateToken: boolean;
