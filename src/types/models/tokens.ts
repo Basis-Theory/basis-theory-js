@@ -62,10 +62,14 @@ type CreateToken<DataType = Primitive> = Pick<
 type UpdateToken<DataType = Primitive> = Partial<
   Pick<
     Token<DataType>,
-    'data' | 'metadata' | 'searchIndexes' | 'fingerprintExpression'
+    | 'data'
+    | 'metadata'
+    | 'encryption'
+    | 'searchIndexes'
+    | 'fingerprintExpression'
   > & {
     privacy: Omit<TokenPrivacy, 'classification'>;
-    deduplicateToken?: boolean;
+    deduplicateToken: boolean;
   }
 >;
 

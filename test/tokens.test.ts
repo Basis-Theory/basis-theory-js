@@ -613,6 +613,7 @@ describe('Tokens', () => {
     const _chance = new Chance();
     const expectedContentType = 'application/merge-patch+json';
 
+
     test('should update a token', async () => {
       const id = _chance.guid();
 
@@ -625,6 +626,16 @@ describe('Tokens', () => {
         privacy: {
           impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
+        },
+        encryption: {
+          cek: {
+            key: _chance.string(),
+            alg: _chance.string(),
+          },
+          kek: {
+            key: _chance.string(),
+            alg: _chance.string(),
+          },
         },
         metadata: {
           camelCaseParameter: _chance.string(),
