@@ -59,6 +59,11 @@ describe('Tokenize', () => {
           },
           searchIndexes: [chance.string(), chance.string()],
           fingerprintExpression: chance.string(),
+          mask: {
+            number: chance.string(),
+            expiration_month: chance.integer(),
+            expiration_year: chance.integer(),
+          },
         },
         random_tokens: [
           chance.string(),
@@ -75,7 +80,7 @@ describe('Tokenize', () => {
         card: {
           id: chance.guid(),
           type: 'card',
-          mask: {
+          data: {
             number: chance.string(),
             expiration_month: chance.integer(),
             expiration_year: chance.integer(),
@@ -91,6 +96,11 @@ describe('Tokenize', () => {
           },
           searchIndexes: [chance.string(), chance.string()],
           fingerprintExpression: chance.string(),
+          mask: {
+            number: chance.string(),
+            expiration_month: chance.integer(),
+            expiration_year: chance.integer(),
+          },
         },
         random_tokens: [
           chance.guid(),

@@ -597,6 +597,7 @@ describe('Tokens', () => {
       searchIndexes: [_chance.string(), _chance.string()],
       fingerprintExpression: _chance.string(),
       deduplicateToken: _chance.bool(),
+      mask: _chance.string(),
     };
     /* eslint-enable camelcase */
 
@@ -641,6 +642,7 @@ describe('Tokens', () => {
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
         deduplicateToken: _chance.bool(),
+        mask: _chance.string(),
       };
       /* eslint-enable camelcase */
 
@@ -654,6 +656,7 @@ describe('Tokens', () => {
         },
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
+        mask: _chance.string(),
       };
 
       client.onPatch().reply(204, JSON.stringify(updatedToken));
