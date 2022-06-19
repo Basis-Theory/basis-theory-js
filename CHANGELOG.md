@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.38.0...v1.39.0) (2022-06-19)
+
+
+### Features
+
+* add mask to token create and update ([#204](https://github.com/Basis-Theory/basis-theory-js/issues/204)) ([b9ace85](https://github.com/Basis-Theory/basis-theory-js/commit/b9ace85ce37d31d21c4657c4f713e0c1deec518b))
+
 # [1.38.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.37.0...v1.38.0) (2022-06-16)
 
 
