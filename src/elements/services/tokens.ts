@@ -3,8 +3,9 @@ import type {
   Tokens as ElementsTokens,
   BasisTheoryElementsInternal,
   CreateToken as ElementsCreateToken,
+  UpdateToken as ElementsUpdateToken,
 } from '@/types/elements';
-import type { CreateToken, Token } from '@/types/models';
+import type { CreateToken, Token, UpdateToken } from '@/types/models';
 import type { RequestOptions, Tokens } from '@/types/sdk';
 
 const delegateTokens = (
@@ -27,6 +28,22 @@ const delegateTokens = (
       }
 
       return super.create(payload as CreateToken, requestOptions);
+    }
+
+    public update(
+      id: string,
+      payload: UpdateToken | ElementsUpdateToken,
+      requestOptions?: RequestOptions
+    ): Promise<Token> {
+      if (elements?.hasElement(payload)) {
+        return elements.tokens.update(
+          id,
+          payload as ElementsUpdateToken,
+          requestOptions
+        );
+      }
+
+      return super.update(id, payload as UpdateToken, requestOptions);
     }
   };
 

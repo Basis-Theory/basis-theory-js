@@ -2,6 +2,7 @@ import type { BasisTheoryServicesBasePathMap } from '@/types/sdk';
 
 const API_KEY_HEADER = 'BT-API-KEY';
 const BT_TRACE_ID_HEADER = 'bt-trace-id';
+const CONTENT_TYPE_HEADER = 'Content-Type';
 const USER_AGENT_HEADER = 'User-Agent';
 const CLIENT_USER_AGENT_HEADER = 'BT-CLIENT-USER-AGENT';
 const USER_AGENT_CLIENT = 'BasisTheoryJS';
@@ -65,6 +66,7 @@ const BROWSER_LIST = [
 export {
   API_KEY_HEADER,
   BT_TRACE_ID_HEADER,
+  CONTENT_TYPE_HEADER,
   USER_AGENT_HEADER,
   CLIENT_USER_AGENT_HEADER,
   USER_AGENT_CLIENT,
