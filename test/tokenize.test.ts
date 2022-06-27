@@ -41,6 +41,7 @@ describe('Tokenize', () => {
         first_name: chance.string(),
         last_name: chance.string(),
         card: {
+          id: chance.string(),
           type: 'card',
           data: {
             number: chance.string(),
@@ -78,7 +79,7 @@ describe('Tokenize', () => {
         first_name: chance.guid(),
         last_name: chance.guid(),
         card: {
-          id: chance.guid(),
+          id: chance.string(),
           type: 'card',
           data: {
             number: chance.string(),
