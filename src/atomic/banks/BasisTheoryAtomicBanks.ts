@@ -2,8 +2,6 @@ import type { AxiosTransformer } from 'axios';
 import {
   createRequestConfig,
   dataExtractor,
-  proxyRaw,
-  transformAtomicReactionRequestSnakeCase,
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
 } from '@/common';
@@ -13,8 +11,6 @@ import { CrudBuilder } from '@/service/CrudBuilder';
 import type {
   AtomicBank,
   CreateAtomicBank,
-  AtomicReactRequest,
-  ReactResponse,
   UpdateAtomicBank,
 } from '@/types/models';
 import type { PaginatedQuery, RequestOptions } from '@/types/sdk';
@@ -48,23 +44,6 @@ export const BasisTheoryAtomicBanks = new CrudBuilder(
     ): Promise<AtomicBank> {
       return this.client
         .patch(`/${id}`, request, createRequestConfig(options))
-        .then(dataExtractor);
-    }
-
-    public react(
-      tokenId: string,
-      request: AtomicReactRequest,
-      options?: RequestOptions
-    ): Promise<ReactResponse> {
-      return this.client
-        .post(
-          `/${tokenId}/react`,
-          request,
-          createRequestConfig(options, {
-            transformRequest: transformAtomicReactionRequestSnakeCase,
-            transformResponse: proxyRaw,
-          })
-        )
         .then(dataExtractor);
     }
   }
