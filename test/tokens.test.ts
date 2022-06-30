@@ -581,6 +581,7 @@ describe('Tokens', () => {
 
     /* eslint-disable camelcase */
     const createPayload: CreateToken = {
+      id: _chance.string(),
       type: 'token',
       data: {
         camelCaseParameter: _chance.string(),
@@ -613,7 +614,6 @@ describe('Tokens', () => {
   describe('update', () => {
     const _chance = new Chance();
     const expectedContentType = 'application/merge-patch+json';
-
 
     test('should update a token', async () => {
       const id = _chance.guid();
