@@ -39,7 +39,10 @@ interface TransformOption {
   transform?: Transform;
 }
 
-type CustomizableElementOptions = Pick<ElementOptions, 'style' | 'disabled'>;
+type CustomizableElementOptions = Pick<
+  ElementOptions,
+  'style' | 'disabled' | 'autoComplete'
+>;
 
 type CreateCardElementOptions = CustomizableElementOptions;
 
