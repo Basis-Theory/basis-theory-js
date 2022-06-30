@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.41.1...v1.42.0) (2022-06-30)
+
+
+### Features
+
+* add autoComplete option for elements ([#207](https://github.com/Basis-Theory/basis-theory-js/issues/207)) ([0a3c48e](https://github.com/Basis-Theory/basis-theory-js/commit/0a3c48ed51a6c4d3a558c4f7f651c7aa4f537202))
+
 ## [1.41.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.41.0...v1.41.1) (2022-06-30)
 
 
