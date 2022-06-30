@@ -9,12 +9,7 @@ import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import type { RequestTransformers } from '@/service';
-import type {
-  AtomicReactRequest,
-  Reactor,
-  Token,
-  TokenBase,
-} from '@/types/models';
+import type { Reactor, Token, TokenBase } from '@/types/models';
 import type {
   ApplicationInfo,
   ClientUserAgent,
@@ -93,22 +88,6 @@ const transformTokenRequestSnakeCase: AxiosTransformer = (
     ...snakecaseKeys(token, { deep: true }),
     ...(token.data !== undefined ? { data: token.data } : {}),
     ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
-  } as Token;
-};
-
-const transformAtomicReactionRequestSnakeCase: AxiosTransformer = (
-  request: AtomicReactRequest
-): Token | undefined => {
-  if (typeof request === 'undefined') {
-    return undefined;
-  }
-
-  return {
-    ...snakecaseKeys(request, { deep: true }),
-    ...(request.requestParameters !== undefined
-      ? // eslint-disable-next-line camelcase
-        { request_parameters: request.requestParameters }
-      : {}),
   } as Token;
 };
 
@@ -288,7 +267,7 @@ const getQueryParams = <Q>(query: Q = {} as Q): string => {
 
         objectKeys.forEach((objectKey) => {
           appendSafe(
-            `${key}.${objectKey}`,
+            `${String(key)}.${objectKey}`,
             ((value as unknown) as Record<string, string>)[objectKey],
             true
           );
@@ -393,7 +372,6 @@ export {
   transformReactorRequestSnakeCase,
   transformAtomicRequestSnakeCase,
   transformTokenRequestSnakeCase,
-  transformAtomicReactionRequestSnakeCase,
   transformTokenResponseCamelCase,
   transformReactorResponseCamelCase,
   transformResponseCamelCase,

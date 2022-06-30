@@ -1,3 +1,22 @@
+## [1.41.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.41.0...v1.41.1) (2022-06-30)
+
+
+### Code Refactoring
+
+* remove atomic react methods ([#206](https://github.com/Basis-Theory/basis-theory-js/issues/206)) ([f2a200f](https://github.com/Basis-Theory/basis-theory-js/commit/f2a200fdf74e8bfc2fd31948b8ee6050d5f90641))
+
+
+### BREAKING CHANGES
+
+* Removes react method from atomic banks and cards clients.
+
+# [1.41.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.40.0...v1.41.0) (2022-06-30)
+
+
+### Features
+
+* add id to create token request ([#205](https://github.com/Basis-Theory/basis-theory-js/issues/205)) ([087e326](https://github.com/Basis-Theory/basis-theory-js/commit/087e3269a96829c93ae19ae7c04bec5f2ed9d3ba))
+
 # [1.40.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.39.0...v1.40.0) (2022-06-20)
 
 
