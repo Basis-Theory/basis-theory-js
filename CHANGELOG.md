@@ -1,3 +1,10 @@
+# [1.41.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.40.0...v1.41.0) (2022-06-30)
+
+
+### Features
+
+* add id to create token request ([#205](https://github.com/Basis-Theory/basis-theory-js/issues/205)) ([087e326](https://github.com/Basis-Theory/basis-theory-js/commit/087e3269a96829c93ae19ae7c04bec5f2ed9d3ba))
+
 # [1.40.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.39.0...v1.40.0) (2022-06-20)
 
 
