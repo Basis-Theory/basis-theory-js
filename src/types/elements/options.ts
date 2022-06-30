@@ -64,7 +64,7 @@ type UpdateTextElementOptions = Omit<
 >;
 
 type CreateCardNumberElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'iconPosition' | 'autoComplete'> &
+  Pick<ElementOptions, 'placeholder' | 'iconPosition'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
   };
@@ -75,7 +75,7 @@ type UpdateCardNumberElementOptions = Omit<
 >;
 
 type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'autoComplete'> &
+  Pick<ElementOptions, 'placeholder'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
   };
@@ -86,7 +86,7 @@ type UpdateCardExpirationDateElementOptions = Omit<
 >;
 
 type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'cardBrand' | 'autoComplete'> &
+  Pick<ElementOptions, 'placeholder' | 'cardBrand'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
   };
