@@ -28,6 +28,8 @@ const CARD_BRANDS = [
 
 const CARD_ICON_POSITIONS = ['left', 'right', 'none'] as const;
 
+const AUTOCOMPLETE_VALUES = ['off', 'on'] as const;
+
 export {
   ELEMENTS_INIT_ERROR_MESSAGE,
   ELEMENTS_NOM_DOM_ERROR_MESSAGE,
@@ -35,4 +37,5 @@ export {
   ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE,
   CARD_BRANDS,
   CARD_ICON_POSITIONS,
+  AUTOCOMPLETE_VALUES,
 };
