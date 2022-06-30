@@ -65,6 +65,7 @@ type CreateToken<DataType = Primitive> = Pick<
   | 'mask'
 > & {
   deduplicateToken?: boolean;
+  id?: string;
 };
 
 type UpdateToken<DataType = Primitive> = Partial<

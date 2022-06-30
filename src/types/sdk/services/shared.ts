@@ -1,5 +1,3 @@
-import type { AtomicReactRequest, ReactResponse } from '@/types/models';
-
 interface RequestOptions {
   apiKey?: string;
   correlationId?: string;
@@ -50,14 +48,6 @@ type List<T, Q extends PaginatedQuery = PaginatedQuery> = {
   list(query?: Q, options?: RequestOptions): Promise<PaginatedList<T>>;
 };
 
-type AtomicReact = {
-  react(
-    tokenId: string,
-    request: AtomicReactRequest,
-    options?: RequestOptions
-  ): Promise<ReactResponse>;
-};
-
 export type {
   RequestOptions,
   PaginatedQuery,
@@ -67,5 +57,4 @@ export type {
   Update,
   Delete,
   List,
-  AtomicReact,
 };

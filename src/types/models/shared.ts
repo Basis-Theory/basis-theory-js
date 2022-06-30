@@ -24,22 +24,9 @@ interface TokenBase<T extends TokenType = TokenType> extends Auditable {
   fingerprint?: string;
   metadata?: Record<string, string>;
 }
-
-interface AtomicReactRequest {
-  reactorId: string;
-  requestParameters?: Record<string, unknown>;
-}
-
 interface ReactResponse {
   tokens: DataObject;
   raw: DataObject;
 }
 
-export type {
-  Primitive,
-  Auditable,
-  TokenType,
-  TokenBase,
-  AtomicReactRequest,
-  ReactResponse,
-};
+export type { Primitive, Auditable, TokenType, TokenBase, ReactResponse };

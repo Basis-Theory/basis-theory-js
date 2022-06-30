@@ -1,10 +1,5 @@
 import type { AxiosTransformer } from 'axios';
-import {
-  createRequestConfig,
-  dataExtractor,
-  transformAtomicReactionRequestSnakeCase,
-  proxyRaw,
-} from '@/common';
+import { createRequestConfig, dataExtractor } from '@/common';
 import {
   transformAtomicRequestSnakeCase,
   transformAtomicResponseCamelCase,
@@ -15,8 +10,6 @@ import { CrudBuilder } from '@/service/CrudBuilder';
 import type {
   AtomicCard,
   CreateAtomicCard,
-  AtomicReactRequest,
-  ReactResponse,
   UpdateAtomicCard,
 } from '@/types/models';
 import type { PaginatedQuery, RequestOptions } from '@/types/sdk';
@@ -50,23 +43,6 @@ export const BasisTheoryAtomicCards = new CrudBuilder(
     ): Promise<AtomicCard> {
       return this.client
         .patch(`/${id}`, request, createRequestConfig(options))
-        .then(dataExtractor);
-    }
-
-    public react(
-      tokenId: string,
-      request: AtomicReactRequest,
-      options?: RequestOptions
-    ): Promise<ReactResponse> {
-      return this.client
-        .post(
-          `/${tokenId}/react`,
-          request,
-          createRequestConfig(options, {
-            transformRequest: transformAtomicReactionRequestSnakeCase,
-            transformResponse: proxyRaw,
-          })
-        )
         .then(dataExtractor);
     }
   }
