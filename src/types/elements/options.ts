@@ -28,6 +28,7 @@ interface SanitizedElementOptions {
   ariaLabel?: string;
   iconPosition?: string;
   cardBrand?: string;
+  autoComplete?: string;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
@@ -45,7 +46,7 @@ type CreateCardElementOptions = CustomizableElementOptions;
 type UpdateCardElementOptions = CreateCardElementOptions;
 
 type CreateTextElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'mask' | 'password'> &
+  Pick<ElementOptions, 'placeholder' | 'mask' | 'password' | 'autoComplete'> &
   TransformOption &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
@@ -57,7 +58,7 @@ type UpdateTextElementOptions = Omit<
 >;
 
 type CreateCardNumberElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'iconPosition'> &
+  Pick<ElementOptions, 'placeholder' | 'iconPosition' | 'autoComplete'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
   };
@@ -68,7 +69,7 @@ type UpdateCardNumberElementOptions = Omit<
 >;
 
 type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder'> &
+  Pick<ElementOptions, 'placeholder' | 'autoComplete'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
   };
@@ -79,7 +80,7 @@ type UpdateCardExpirationDateElementOptions = Omit<
 >;
 
 type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'cardBrand'> &
+  Pick<ElementOptions, 'placeholder' | 'cardBrand' | 'autoComplete'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
   };

@@ -1,4 +1,8 @@
-import { CARD_BRANDS, CARD_ICON_POSITIONS } from '@/elements/constants';
+import {
+  AUTOCOMPLETE_VALUES,
+  CARD_BRANDS,
+  CARD_ICON_POSITIONS,
+} from '@/elements/constants';
 
 type FieldErrorType = 'incomplete' | 'invalid';
 
@@ -37,6 +41,11 @@ type Brand = typeof CARD_BRANDS[number];
  */
 type CardIconPosition = typeof CARD_ICON_POSITIONS[number];
 
+/**
+ * Values for the element input autocomplete attribute
+ */
+type AutoCompleteValue = typeof AUTOCOMPLETE_VALUES[number];
+
 export type {
   FieldErrorType,
   ConfigErrorType,
@@ -47,4 +56,5 @@ export type {
   PropertyError,
   Brand,
   CardIconPosition,
+  AutoCompleteValue,
 };
