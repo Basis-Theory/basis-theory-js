@@ -52,7 +52,7 @@ type CreateCardElementOptions = CustomizableElementOptions;
 type UpdateCardElementOptions = CreateCardElementOptions;
 
 type CreateTextElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'mask' | 'password' | 'autoComplete'> &
+  Pick<ElementOptions, 'placeholder' | 'mask' | 'password'> &
   TransformOption &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
