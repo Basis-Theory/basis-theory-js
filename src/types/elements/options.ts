@@ -1,3 +1,4 @@
+import { AutoCompleteValue } from './shared';
 import type { ElementStyle } from './styles';
 
 const ELEMENTS_TYPES = [
@@ -39,10 +40,12 @@ interface TransformOption {
   transform?: Transform;
 }
 
-type CustomizableElementOptions = Pick<
-  ElementOptions,
-  'style' | 'disabled' | 'autoComplete'
->;
+interface AutoCompleteOption {
+  autoComplete?: AutoCompleteValue;
+}
+
+type CustomizableElementOptions = Pick<ElementOptions, 'style' | 'disabled'> &
+  AutoCompleteOption;
 
 type CreateCardElementOptions = CustomizableElementOptions;
 
