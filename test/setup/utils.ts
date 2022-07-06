@@ -681,7 +681,7 @@ const testMethodDelegate = (
 };
 
 const testServiceDelegate = (
-  serviceToBeTested: 'atomicBanks' | 'atomicCards' | 'tokens' | 'tokenize',
+  serviceToBeTested: 'tokens' | 'tokenize',
   method: 'create' | 'tokenize',
   delegateServiceUnderTest: <T extends BasisTheoryServiceConstructor>(
     elements?: BasisTheoryElementsInternal

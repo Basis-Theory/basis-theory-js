@@ -20,7 +20,7 @@ import type {
   UpdateCardVerificationCodeElementOptions,
   UpdateTextElementOptions,
 } from './options';
-import type { AtomicBanks, AtomicCards, Tokenize, Tokens } from './services';
+import type { Tokenize, Tokens } from './services';
 
 interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
@@ -71,14 +71,6 @@ type ElementValue =
   | ElementWrapper;
 
 interface BasisTheoryElements extends Tokenize {
-  /**
-   * @deprecated use {@link tokens} or {@link tokenize}
-   */
-  atomicBanks: AtomicBanks;
-  /**
-   * @deprecated use {@link tokens} or {@link tokenize}
-   */
-  atomicCards: AtomicCards;
   tokens: Tokens;
 
   createElement(type: 'card', options?: CreateCardElementOptions): CardElement;
