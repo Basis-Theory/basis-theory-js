@@ -1,3 +1,10 @@
+## [1.42.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.42.0...v1.42.1) (2022-07-19)
+
+
+### Bug Fixes
+
+* handle elements script request block ([#209](https://github.com/Basis-Theory/basis-theory-js/issues/209)) ([0ced94b](https://github.com/Basis-Theory/basis-theory-js/commit/0ced94b91cb0c74a289762046e7670b7ed6ddf6c))
+
 # [1.42.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.41.1...v1.42.0) (2022-06-30)
 
 
