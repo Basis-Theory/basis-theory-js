@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Elements example</title>
+    <script src="../../dist/basis-theory-js.bundle.js"></script>
+    <script src="./event-informer.js"></script>
+  </head>
+  <body>
+    <script>
+      window.addEventListener('load', async () => {
+        try {
+          await BasisTheory.init('04ab9d12-4959-4c48-ba03-9ef722efcc5a', {
+            elements: true,
+          });
+        } catch (error) {
+          informEventCypress(error?.message || error, 'initError');
+        }
+      });
+    </script>
+  </body>
+</html>
