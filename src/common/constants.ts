@@ -18,8 +18,6 @@ const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   logs: 'logs',
   reactorFormulas: 'reactor-formulas',
   reactors: 'reactors',
-  atomicBanks: 'atomic/banks',
-  atomicCards: 'atomic/cards',
   permissions: 'permissions',
   proxies: 'proxies',
 };

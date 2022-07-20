@@ -62,21 +62,13 @@ describe('clients', () => {
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
-      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.atomicBanks}`,
-    });
-    expect(create).toHaveBeenCalledWith({
-      ...baseConfig,
-      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.atomicCards}`,
-    });
-    expect(create).toHaveBeenCalledWith({
-      ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.permissions}`,
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.proxies}`,
     });
-    expect(create).toHaveBeenCalledTimes(11);
+    expect(create).toHaveBeenCalledTimes(9);
   });
 
   test('should throw error if not properly initialized', () => {

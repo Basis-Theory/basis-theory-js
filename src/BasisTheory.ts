@@ -1,6 +1,4 @@
 import type {
-  AtomicBanks as ElementsAtomicBanks,
-  AtomicCards as ElementsAtomicCards,
   BasisTheoryElements,
   BasisTheoryElementsInternal,
   CardElement,
@@ -22,8 +20,6 @@ import type {
 import type { TokenizeData } from '@/types/models';
 import type {
   Applications,
-  AtomicBanks,
-  AtomicCards,
   BasisTheory as IBasisTheory,
   BasisTheoryInit,
   Logs,
@@ -47,13 +43,7 @@ import {
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
 } from './common';
-import {
-  delegateAtomicBanks,
-  delegateAtomicCards,
-  delegateTokenize,
-  delegateTokens,
-  loadElements,
-} from './elements';
+import { delegateTokenize, delegateTokens, loadElements } from './elements';
 import { ELEMENTS_INIT_ERROR_MESSAGE } from './elements/constants';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryPermissions } from './permissions';
@@ -89,10 +79,6 @@ export class BasisTheory
   private _reactorFormulas?: BasisTheoryReactorFormulas;
 
   private _reactors?: BasisTheoryReactors;
-
-  private _atomicBanks?: AtomicBanks & ElementsAtomicBanks;
-
-  private _atomicCards?: AtomicCards & ElementsAtomicCards;
 
   private _permissions?: BasisTheoryPermissions;
 
@@ -181,16 +167,6 @@ export class BasisTheory
       this._reactors = new BasisTheoryReactors({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.reactors, baseUrl).toString(),
-        appInfo,
-      });
-      this._atomicBanks = new (delegateAtomicBanks(this._elements))({
-        apiKey,
-        baseURL: new URL(CLIENT_BASE_PATHS.atomicBanks, baseUrl).toString(),
-        appInfo,
-      });
-      this._atomicCards = new (delegateAtomicCards(this._elements))({
-        apiKey,
-        baseURL: new URL(CLIENT_BASE_PATHS.atomicCards, baseUrl).toString(),
         appInfo,
       });
       this._permissions = new BasisTheoryPermissions({
@@ -310,20 +286,6 @@ export class BasisTheory
 
   public get reactors(): Reactors {
     return assertInit(this._reactors);
-  }
-
-  /**
-   * @deprecated use {@link tokens} or {@link tokenize}
-   */
-  public get atomicBanks(): AtomicBanks & ElementsAtomicBanks {
-    return assertInit(this._atomicBanks);
-  }
-
-  /**
-   * @deprecated use {@link tokens} or {@link tokenize}
-   */
-  public get atomicCards(): AtomicCards & ElementsAtomicCards {
-    return assertInit(this._atomicCards);
   }
 
   public get permissions(): Permissions {
