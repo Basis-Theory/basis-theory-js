@@ -176,7 +176,7 @@ describe('Elements', () => {
 
         loadCallback();
         expect(promise).rejects.toThrow(
-          'BasisTheoryElements did not load properly.'
+          'Basis Theory Elements did not load properly.'
         );
       });
 
@@ -185,7 +185,7 @@ describe('Elements', () => {
 
         errorCallback();
         expect(promise).rejects.toThrow(
-          'There was an unknown error when loading BasisTheoryElements'
+          'There was an unknown error when loading Basis Theory Elements. Check the console for details.'
         );
       });
 
