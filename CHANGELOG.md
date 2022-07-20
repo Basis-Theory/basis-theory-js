@@ -1,3 +1,10 @@
+# [1.43.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.42.1...v1.43.0) (2022-07-20)
+
+
+### Features
+
+* remove atomics ([03e5b7f](https://github.com/Basis-Theory/basis-theory-js/commit/03e5b7ffb5de348902dff17e4df7d74ca503087b))
+
 ## [1.42.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.42.0...v1.42.1) (2022-07-19)
 
 
