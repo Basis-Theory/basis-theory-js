@@ -600,6 +600,7 @@ describe('Tokens', () => {
       fingerprintExpression: _chance.string(),
       deduplicateToken: _chance.bool(),
       mask: _chance.string(),
+      expirestAt: _chance.date().toString(),
     };
     /* eslint-enable camelcase */
 
