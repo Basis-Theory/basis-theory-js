@@ -80,7 +80,7 @@
     "cypress": "^9.7.0",
     "dotenv-webpack": "^7.0.2",
     "eslint": "^7.32.0",
-    "husky": "^5.1.1",
+    "husky": "^8.0.1",
     "is-base64": "^1.1.0",
     "jest": "^27.4.5",
     "jest-environment-jsdom": "^27.4.4",
