@@ -65,6 +65,7 @@ describe('Tokenize', () => {
             expiration_month: chance.integer(),
             expiration_year: chance.integer(),
           },
+          expiresAt: chance.date().toString(),
         },
         random_tokens: [
           chance.string(),
@@ -102,6 +103,7 @@ describe('Tokenize', () => {
             expiration_month: chance.integer(),
             expiration_year: chance.integer(),
           },
+          expiresAt: chance.date().toString(),
         },
         random_tokens: [
           chance.guid(),

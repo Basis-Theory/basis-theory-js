@@ -51,6 +51,7 @@ interface Token<DataType = Primitive> extends TokenBase {
   searchIndexes?: string[];
   fingerprintExpression?: string;
   mask?: TokenMask;
+  expiresAt?: string;
 }
 
 type CreateToken<DataType = Primitive> = Pick<
@@ -63,6 +64,7 @@ type CreateToken<DataType = Primitive> = Pick<
   | 'searchIndexes'
   | 'fingerprintExpression'
   | 'mask'
+  | 'expiresAt'
 > & {
   deduplicateToken?: boolean;
   id?: string;
