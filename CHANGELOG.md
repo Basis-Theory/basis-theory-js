@@ -1,3 +1,10 @@
+# [1.44.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.43.0...v1.44.0) (2022-07-29)
+
+
+### Features
+
+* add token expires_at ([#211](https://github.com/Basis-Theory/basis-theory-js/issues/211)) ([69888cc](https://github.com/Basis-Theory/basis-theory-js/commit/69888cc2d58b8a1ac4e19f4173d1f6278c874ba5))
+
 # [1.43.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.42.1...v1.43.0) (2022-07-20)
 
 
