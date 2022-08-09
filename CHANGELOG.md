@@ -1,3 +1,10 @@
+# [1.45.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.44.0...v1.45.0) (2022-08-09)
+
+
+### Features
+
+* consolidate app types ([#220](https://github.com/Basis-Theory/basis-theory-js/issues/220)) ([2970a8d](https://github.com/Basis-Theory/basis-theory-js/commit/2970a8dbc9eb372e0ad45c2ce650018181c7f874))
+
 # [1.44.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.43.0...v1.44.0) (2022-07-29)
 
 
