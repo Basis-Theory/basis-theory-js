@@ -1,3 +1,10 @@
+# [1.46.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.45.0...v1.46.0) (2022-08-10)
+
+
+### Features
+
+* add card and bank types ([#221](https://github.com/Basis-Theory/basis-theory-js/issues/221)) ([21d7871](https://github.com/Basis-Theory/basis-theory-js/commit/21d7871d240c922b31dd646a1fd8e5cea827b05d))
+
 # [1.45.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.44.0...v1.45.0) (2022-08-09)
 
 
