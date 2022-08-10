@@ -47,6 +47,7 @@ interface TokenPrivacy {
 interface Token<DataType = Primitive> extends TokenBase {
   data: TokenData<DataType>;
   privacy?: TokenPrivacy;
+  container?: string;
   encryption?: TokenEncryption;
   searchIndexes?: string[];
   fingerprintExpression?: string;
@@ -59,6 +60,7 @@ type CreateToken<DataType = Primitive> = Pick<
   | 'type'
   | 'data'
   | 'privacy'
+  | 'container'
   | 'metadata'
   | 'encryption'
   | 'searchIndexes'
@@ -74,6 +76,7 @@ type UpdateToken<DataType = Primitive> = Partial<
   Pick<
     Token<DataType>,
     | 'data'
+    | 'container'
     | 'metadata'
     | 'encryption'
     | 'searchIndexes'
