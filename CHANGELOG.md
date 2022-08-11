@@ -1,3 +1,10 @@
+# [1.47.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.46.0...v1.47.0) (2022-08-11)
+
+
+### Features
+
+* adds container property to tokens ([#222](https://github.com/Basis-Theory/basis-theory-js/issues/222)) ([0c76fdd](https://github.com/Basis-Theory/basis-theory-js/commit/0c76fdde4ab3f16792c81b42743460d5bd3aad7d))
+
 # [1.46.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.45.0...v1.46.0) (2022-08-10)
 
 
