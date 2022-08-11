@@ -73,7 +73,7 @@
     "@types/uuid": "^8.3.3",
     "axios-mock-adapter": "^1.21.1",
     "babel-loader": "^8.2.2",
-    "babel-plugin-inline-dotenv": "^1.6.0",
+    "babel-plugin-inline-dotenv": "^1.7.0",
     "babel-plugin-tsconfig-paths-module-resolver": "^1.0.3",
     "chance": "^1.1.8",
     "concurrently": "^7.1.0",
