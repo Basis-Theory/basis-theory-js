@@ -58,6 +58,7 @@ describe('Tokens', () => {
       const fingerprint = chance.string();
       const tenantId = chance.string();
       const type = chance.string() as TokenType;
+      const container = `/${chance.string()}/`;
 
       /* eslint-disable camelcase */
       const data = {
@@ -85,6 +86,7 @@ describe('Tokens', () => {
           type,
           data,
           metadata,
+          container,
           created_at: createdAt,
           created_by: createdBy,
           modified_at: modifiedAt,
@@ -100,6 +102,7 @@ describe('Tokens', () => {
         type,
         data,
         metadata,
+        container,
         createdAt,
         createdBy,
         modifiedAt,
@@ -119,6 +122,7 @@ describe('Tokens', () => {
       const fingerprint = chance.string();
       const type = chance.string() as TokenType;
       const data = chance.string();
+      const container = `/${chance.string()}/`;
       const createdBy = chance.string();
       const createdAt = chance.string();
       const modifiedBy = chance.string();
@@ -133,6 +137,7 @@ describe('Tokens', () => {
           fingerprint,
           type,
           data,
+          container,
           created_at: createdAt,
           created_by: createdBy,
           modified_at: modifiedAt,
@@ -152,6 +157,7 @@ describe('Tokens', () => {
         fingerprint,
         type,
         data,
+        container,
         createdAt,
         createdBy,
         modifiedAt,
@@ -629,6 +635,7 @@ describe('Tokens', () => {
           impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
+        container: `/${chance.string()}/`,
         encryption: {
           cek: {
             key: _chance.string(),
@@ -658,6 +665,7 @@ describe('Tokens', () => {
           impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
+        container: `/${chance.string()}/`,
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
         mask: _chance.string(),
@@ -694,6 +702,7 @@ describe('Tokens', () => {
           impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
+        container: `/${chance.string()}/`,
         metadata: {
           camelCaseParameter: _chance.string(),
           snake_case_parameter: _chance.string(),
@@ -711,6 +720,7 @@ describe('Tokens', () => {
           impactLevel: _chance.pickone([...DATA_IMPACT_LEVELS]),
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
+        container: `/${chance.string()}/`,
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
       };

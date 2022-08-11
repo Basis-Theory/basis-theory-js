@@ -58,6 +58,7 @@ describe('Tokenize', () => {
             classification: chance.pickone([...DATA_CLASSIFICATIONS]),
             restrictionPolicy: chance.pickone([...DATA_RESTRICTION_POLICIES]),
           },
+          container: `/${chance.string()}/`,
           searchIndexes: [chance.string(), chance.string()],
           fingerprintExpression: chance.string(),
           mask: {
@@ -96,6 +97,7 @@ describe('Tokenize', () => {
             classification: chance.pickone([...DATA_CLASSIFICATIONS]),
             restrictionPolicy: chance.pickone([...DATA_RESTRICTION_POLICIES]),
           },
+          container: `/${chance.string()}/`,
           searchIndexes: [chance.string(), chance.string()],
           fingerprintExpression: chance.string(),
           mask: {
@@ -140,6 +142,7 @@ describe('Tokenize', () => {
             expiration_year: chance.integer(),
             cvc: chance.string(),
           },
+          container: `/${chance.string()}/`,
           metadata: {
             camelCase: chance.string(),
             snake_case: chance.string(),
@@ -165,6 +168,7 @@ describe('Tokenize', () => {
             expiration_month: chance.integer(),
             expiration_year: chance.integer(),
           },
+          container: `/${chance.string()}/`,
           metadata: {
             camelCase: chance.string(),
             snake_case: chance.string(),
