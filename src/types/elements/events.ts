@@ -16,6 +16,7 @@ type ChangeEvent = BaseEvent<'change'> & {
 
 type CardChangeEvent = ChangeEvent & {
   cardBrand: Brand;
+  cardLast4?: string;
 };
 
 type InputFocusEvent = BaseEvent<'focus'> & Targeted;
