@@ -1,3 +1,10 @@
+# [1.48.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.47.0...v1.48.0) (2022-08-22)
+
+
+### Features
+
+* add card last 4 to card change event ([#229](https://github.com/Basis-Theory/basis-theory-js/issues/229)) ([1ebfb8a](https://github.com/Basis-Theory/basis-theory-js/commit/1ebfb8aaa76b6abb6cf8efb1e2bd17cc73791b39))
+
 # [1.47.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.46.0...v1.47.0) (2022-08-11)
 
 
