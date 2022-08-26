@@ -27,6 +27,8 @@ interface BaseElement<UpdateOptions, ElementEvents> {
   mount(selector: string): Promise<void>;
   update(options: UpdateOptions): Promise<void>;
   clear(): void;
+  focus(): void;
+  blur(): void;
   unmount(): void;
   on<T extends EventType>(
     eventType: T,
