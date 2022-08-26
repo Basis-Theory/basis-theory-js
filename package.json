@@ -79,7 +79,7 @@
     "concurrently": "^7.1.0",
     "cypress": "^9.7.0",
     "dotenv-webpack": "^8.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.22.0",
     "husky": "^8.0.1",
     "is-base64": "^1.1.0",
     "jest": "^27.4.5",
