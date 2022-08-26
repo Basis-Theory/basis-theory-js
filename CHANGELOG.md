@@ -1,3 +1,10 @@
+# [1.49.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.48.0...v1.49.0) (2022-08-26)
+
+
+### Features
+
+* add focus and blur methods to base element ([#230](https://github.com/Basis-Theory/basis-theory-js/issues/230)) ([b75cd02](https://github.com/Basis-Theory/basis-theory-js/commit/b75cd0221b2affb06c2abce9f3492fb3b84ddd6e))
+
 # [1.48.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.47.0...v1.48.0) (2022-08-22)
 
 
