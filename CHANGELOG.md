@@ -1,3 +1,10 @@
+## [1.49.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.49.0...v1.49.1) (2022-09-05)
+
+
+### Bug Fixes
+
+* library typings relative imports ([#232](https://github.com/Basis-Theory/basis-theory-js/issues/232)) ([9a68299](https://github.com/Basis-Theory/basis-theory-js/commit/9a68299e712d3caca192cbce7fa8f9846682f5c4))
+
 # [1.49.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.48.0...v1.49.0) (2022-08-26)
 
 
