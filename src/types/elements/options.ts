@@ -59,11 +59,8 @@ interface CardElementValue {
 }
 
 interface CardExpirationDateValue {
-  // disabling camecalse so that the element value matches the API data
-  /* eslint-disable camelcase */
-  expiration_month?: number;
-  expiration_year?: number;
-  /* eslint-enable camelcase */
+  month?: number;
+  year?: number;
 }
 
 type CreateCardElementOptions = CustomizableElementOptions & {
