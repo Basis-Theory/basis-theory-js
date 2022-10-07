@@ -133,6 +133,7 @@ export type {
   CreateCardVerificationCodeElementOptions,
   UpdateCardVerificationCodeElementOptions,
   CardElementValue,
+  CardExpirationDateValue,
 };
 
 export { ELEMENTS_TYPES };
