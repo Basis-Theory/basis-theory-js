@@ -59,8 +59,8 @@ interface CardElementValue {
 }
 
 interface CardExpirationDateValue {
-  month?: number;
-  year?: number;
+  month: number;
+  year: number;
 }
 
 type CreateCardElementOptions = CustomizableElementOptions & {
