@@ -1,3 +1,10 @@
+# [1.50.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.49.1...v1.50.0) (2022-10-07)
+
+
+### Features
+
+* add value prop to elements create and update objects ([#237](https://github.com/Basis-Theory/basis-theory-js/issues/237)) ([b427e8d](https://github.com/Basis-Theory/basis-theory-js/commit/b427e8dedfb4bd4aaf289e101ff6f0d660d0425d))
+
 ## [1.49.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.49.0...v1.49.1) (2022-09-05)
 
 
