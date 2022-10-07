@@ -49,7 +49,7 @@ type CustomizableElementOptions = Pick<ElementOptions, 'style' | 'disabled'> &
   AutoCompleteOption;
 
 interface CardElementValue {
-  number: string;
+  number?: string;
   // disabling camecalse so that the element value matches the API data
   /* eslint-disable camelcase */
   expiration_month?: number;
