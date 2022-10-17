@@ -1,4 +1,4 @@
-import { AutoCompleteValue } from './shared';
+import { AutoCompleteValue, DataElementReference } from './shared';
 import type { ElementStyle } from './styles';
 
 const ELEMENTS_TYPES = [
@@ -7,6 +7,7 @@ const ELEMENTS_TYPES = [
   'cardNumber',
   'cardExpirationDate',
   'cardVerificationCode',
+  'data',
 ] as const;
 
 type ElementType = typeof ELEMENTS_TYPES[number];
@@ -49,18 +50,18 @@ type CustomizableElementOptions = Pick<ElementOptions, 'style' | 'disabled'> &
   AutoCompleteOption;
 
 interface CardElementValue {
-  number?: string;
+  number?: DataElementReference;
   // disabling camecalse so that the element value matches the API data
   /* eslint-disable camelcase */
-  expiration_month?: number;
-  expiration_year?: number;
+  expiration_month?: DataElementReference;
+  expiration_year?: DataElementReference;
   /* eslint-enable camelcase */
-  cvc?: string;
+  cvc?: DataElementReference;
 }
 
 interface CardExpirationDateValue {
-  month: number;
-  year: number;
+  month: DataElementReference;
+  year: DataElementReference;
 }
 
 type CreateCardElementOptions = CustomizableElementOptions & {

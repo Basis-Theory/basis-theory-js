@@ -46,6 +46,15 @@ type CardIconPosition = typeof CARD_ICON_POSITIONS[number];
  */
 type AutoCompleteValue = typeof AUTOCOMPLETE_VALUES[number];
 
+/**
+ * Type used for detokenization responses stored on Data Elements
+ */
+type DataElementReference = {
+  correlationId: string;
+  elementId: string;
+  path: string;
+};
+
 export type {
   FieldErrorType,
   ConfigErrorType,
@@ -57,4 +66,5 @@ export type {
   Brand,
   CardIconPosition,
   AutoCompleteValue,
+  DataElementReference,
 };
