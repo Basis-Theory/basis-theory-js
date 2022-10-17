@@ -7,6 +7,7 @@ const ELEMENTS_TYPES = [
   'cardNumber',
   'cardExpirationDate',
   'cardVerificationCode',
+  'data',
 ] as const;
 
 type ElementType = typeof ELEMENTS_TYPES[number];
@@ -30,7 +31,7 @@ interface SanitizedElementOptions {
   iconPosition?: string;
   cardBrand?: string;
   autoComplete?: string;
-  value?: string;
+  value?: string | unknown;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;

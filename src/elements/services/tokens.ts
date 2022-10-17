@@ -45,6 +45,17 @@ const delegateTokens = (
 
       return super.update(id, payload as UpdateToken, requestOptions);
     }
+
+    public retrieve(
+      id: string,
+      requestOptions?: RequestOptions
+    ): Promise<Token> {
+      if (elements !== undefined) {
+        return elements.tokens.retrieve(id, requestOptions);
+      }
+
+      return super.retrieve(id, requestOptions);
+    }
   };
 
 export { delegateTokens };
