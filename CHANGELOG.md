@@ -1,3 +1,10 @@
+# [1.51.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.50.0...v1.51.0) (2022-10-18)
+
+
+### Features
+
+* add retrieve method, data reference types for reveal elements ([#239](https://github.com/Basis-Theory/basis-theory-js/issues/239)) ([12fc3c3](https://github.com/Basis-Theory/basis-theory-js/commit/12fc3c30040f3e99c7fdfea41d5333ac2f7ac344))
+
 # [1.50.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.49.1...v1.50.0) (2022-10-07)
 
 
