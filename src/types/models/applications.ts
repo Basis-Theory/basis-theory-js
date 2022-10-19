@@ -18,7 +18,7 @@ interface Application extends Auditable {
 
 interface AccessRule {
   description: string;
-  priority?: number;
+  priority: number;
   container: string;
   transform: TransformType;
   permissions: string[];

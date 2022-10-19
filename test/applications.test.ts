@@ -3,7 +3,6 @@ import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '@/common';
 import type { ApplicationType, TransformType } from '@/types/models';
-import { TRANSFORM_TYPES } from '@/types/models';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import {
   testCRUD,
