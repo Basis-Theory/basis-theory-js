@@ -2,7 +2,7 @@ import type MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
 import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '@/common';
-import type { ApplicationType } from '@/types/models';
+import type { ApplicationType, TransformType } from '@/types/models';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import {
   testCRUD,
@@ -29,7 +29,7 @@ describe('Applications', () => {
     client.resetHistory();
   });
 
-  describe('CRUD', () => {
+  describe('CRUD with permissions', () => {
     testCRUD(() => ({
       service: bt.applications,
       client,
@@ -41,6 +41,46 @@ describe('Applications', () => {
       updatePayload: {
         name: chance.string(),
         permissions: [chance.string()],
+      },
+    }));
+  });
+
+  describe('CRUD with access rules', () => {
+    testCRUD(() => ({
+      service: bt.applications,
+      client,
+      createPayload: {
+        name: chance.string(),
+        type: chance.string() as ApplicationType,
+        rules: [
+          {
+            description: chance.string(),
+            priority: chance.integer(),
+            container: chance.string(),
+            transform: chance.pickone<TransformType>([
+              'mask',
+              'redact',
+              'reveal',
+            ]),
+            permissions: [chance.string()],
+          },
+        ],
+      },
+      updatePayload: {
+        name: chance.string(),
+        rules: [
+          {
+            description: chance.string(),
+            priority: chance.integer(),
+            container: chance.string(),
+            transform: chance.pickone<TransformType>([
+              'mask',
+              'redact',
+              'reveal',
+            ]),
+            permissions: [chance.string()],
+          },
+        ],
       },
     }));
   });
