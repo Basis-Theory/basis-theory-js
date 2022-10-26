@@ -1,3 +1,10 @@
+## [1.53.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.53.0...v1.53.1) (2022-10-26)
+
+
+### Bug Fixes
+
+* fix value in sanitized options ([#243](https://github.com/Basis-Theory/basis-theory-js/issues/243)) ([b212d6b](https://github.com/Basis-Theory/basis-theory-js/commit/b212d6b6f4f10e127d9a35015d013c5434d86a1f))
+
 # [1.53.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.52.0...v1.53.0) (2022-10-26)
 
 
