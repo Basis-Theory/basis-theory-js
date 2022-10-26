@@ -31,7 +31,6 @@ interface SanitizedElementOptions {
   iconPosition?: string;
   cardBrand?: string;
   autoComplete?: string;
-  value?: string;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
@@ -49,32 +48,35 @@ interface AutoCompleteOption {
 type CustomizableElementOptions = Pick<ElementOptions, 'style' | 'disabled'> &
   AutoCompleteOption;
 
-interface CardElementValue {
-  number?: DataElementReference;
+type ElementValueType = 'static' | 'reference';
+
+interface CardElementValue<T extends ElementValueType> {
+  number?: T extends 'reference' ? DataElementReference : string;
   // disabling camecalse so that the element value matches the API data
   /* eslint-disable camelcase */
-  expiration_month?: DataElementReference;
-  expiration_year?: DataElementReference;
+  expiration_month?: T extends 'reference' ? DataElementReference : string;
+  expiration_year?: T extends 'reference' ? DataElementReference : string;
   /* eslint-enable camelcase */
-  cvc?: DataElementReference;
+  cvc?: T extends 'reference' ? DataElementReference : string;
 }
 
-interface CardExpirationDateValue {
-  month: DataElementReference;
-  year: DataElementReference;
+interface CardExpirationDateValue<T extends ElementValueType> {
+  month: T extends 'reference' ? DataElementReference : string;
+  year: T extends 'reference' ? DataElementReference : string;
 }
 
 type CreateCardElementOptions = CustomizableElementOptions & {
-  value?: CardElementValue;
+  value?: CardElementValue<'static'>;
 };
 
 type UpdateCardElementOptions = CreateCardElementOptions;
 
 type CreateTextElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'mask' | 'password' | 'value'> &
+  Pick<ElementOptions, 'placeholder' | 'mask' | 'password'> &
   TransformOption &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
+    value?: string;
   };
 
 type UpdateTextElementOptions = Omit<
@@ -83,9 +85,10 @@ type UpdateTextElementOptions = Omit<
 >;
 
 type CreateCardNumberElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'iconPosition' | 'value'> &
+  Pick<ElementOptions, 'placeholder' | 'iconPosition'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
+    value?: string;
   };
 
 type UpdateCardNumberElementOptions = Omit<
@@ -97,7 +100,7 @@ type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
   Pick<ElementOptions, 'placeholder'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
-    value?: CardExpirationDateValue;
+    value?: CardExpirationDateValue<'static'>;
   };
 
 type UpdateCardExpirationDateElementOptions = Omit<
@@ -106,9 +109,10 @@ type UpdateCardExpirationDateElementOptions = Omit<
 >;
 
 type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'cardBrand' | 'value'> &
+  Pick<ElementOptions, 'placeholder' | 'cardBrand'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
+    value?: string;
   };
 
 type UpdateCardVerificationCodeElementOptions = Omit<
