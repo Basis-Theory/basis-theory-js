@@ -1,3 +1,10 @@
+# [1.53.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.52.0...v1.53.0) (2022-10-26)
+
+
+### Features
+
+* add separation between card elements static and reference values ([#242](https://github.com/Basis-Theory/basis-theory-js/issues/242)) ([b2b4fd1](https://github.com/Basis-Theory/basis-theory-js/commit/b2b4fd17cb3f126332e0540005fd17d0fd0da086))
+
 # [1.52.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.51.0...v1.52.0) (2022-10-21)
 
 
