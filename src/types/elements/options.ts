@@ -31,6 +31,10 @@ interface SanitizedElementOptions {
   iconPosition?: string;
   cardBrand?: string;
   autoComplete?: string;
+  value?:
+    | CardElementValue<'static'>
+    | CardExpirationDateValue<'static'>
+    | string;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
