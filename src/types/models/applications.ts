@@ -1,6 +1,11 @@
 import type { Auditable } from './shared';
 
-const APPLICATION_TYPES = ['private', 'public', 'management'] as const;
+const APPLICATION_TYPES = [
+  'private',
+  'public',
+  'management',
+  'expiring',
+] as const;
 const TRANSFORM_TYPES = ['mask', 'redact', 'reveal'] as const;
 
 type ApplicationType = typeof APPLICATION_TYPES[number];
