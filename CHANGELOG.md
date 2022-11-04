@@ -1,3 +1,10 @@
+# [1.54.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.53.1...v1.54.0) (2022-11-04)
+
+
+### Features
+
+* add expiring application type ([#244](https://github.com/Basis-Theory/basis-theory-js/issues/244)) ([8e5bca2](https://github.com/Basis-Theory/basis-theory-js/commit/8e5bca2bc427cd7f919789d65dac4072031bcc53))
+
 ## [1.53.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.53.0...v1.53.1) (2022-10-26)
 
 
