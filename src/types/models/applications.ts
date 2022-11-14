@@ -19,6 +19,8 @@ interface Application extends Auditable {
   type: ApplicationType;
   permissions?: string[];
   rules?: AccessRule[];
+  canCreateExpiringApplications?: boolean;
+  expiresAt?: string;
 }
 
 interface AccessRule {
