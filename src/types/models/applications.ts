@@ -29,7 +29,14 @@ interface AccessRule {
   container: string;
   transform: TransformType;
   permissions: string[];
+  conditions: Condition[];
 }
+
+type Condition = {
+  attribute: string;
+  operator: string;
+  value: string;
+};
 
 type CreateApplication = Pick<Application, 'name' | 'type'> &
   Partial<Pick<Application, 'permissions' | 'rules'>>;
