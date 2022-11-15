@@ -14,7 +14,7 @@ type TransformType = typeof TRANSFORM_TYPES[number];
 interface Application extends Auditable {
   id: string;
   tenantId: string;
-  name: string;
+  name?: string;
   key?: string;
   type: ApplicationType;
   permissions?: string[];
