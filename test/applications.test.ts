@@ -65,6 +65,13 @@ describe('Applications', () => {
               'reveal',
             ]),
             permissions: [chance.string()],
+            conditions: [
+              {
+                attribute: chance.string(),
+                operator: chance.string(),
+                value: chance.string(),
+              },
+            ],
           },
         ],
         canCreateExpiringApplications: chance.bool(),
@@ -83,6 +90,7 @@ describe('Applications', () => {
               'reveal',
             ]),
             permissions: [chance.string()],
+            conditions: [],
           },
         ],
       },
