@@ -39,7 +39,12 @@ export const BasisTheoryTokens = new CrudBuilder(
       super(_options);
     }
 
-    public retrieve(id: string, options: RequestOptions = {}): Promise<Token> {
+    public retrieve(
+      id: string,
+      options: RequestOptions = {}
+      // returned data type as any to avoid casting when trying to retrieve token.data.<prop>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ): Promise<Token<any>> {
       const url = `/${id}`;
 
       return this.client

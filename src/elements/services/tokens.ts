@@ -49,7 +49,9 @@ const delegateTokens = (
     public retrieve(
       id: string,
       requestOptions?: RequestOptions
-    ): Promise<Token> {
+      //  returned data type as any to avoid casting when trying to retrieve token.data.<prop>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ): Promise<Token<any>> {
       if (elements !== undefined) {
         return elements.tokens.retrieve(id, requestOptions);
       }

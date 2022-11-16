@@ -30,7 +30,9 @@ interface SearchTokensRequest {
 interface Tokens
   extends Create<Token, CreateToken>,
     Update<Token, UpdateToken>,
-    Retrieve<Token>,
+    //  returned data type as any to avoid casting when trying to retrieve token.data.<prop>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Retrieve<Token<any>>,
     Delete,
     List<Token, ListTokensQuery> {
   createAssociation(
