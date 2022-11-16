@@ -58,15 +58,15 @@ interface CardElementValue<T extends ElementValueType> {
   number?: T extends 'reference' ? DataElementReference : string;
   // disabling camecalse so that the element value matches the API data
   /* eslint-disable camelcase */
-  expiration_month?: T extends 'reference' ? DataElementReference : string;
-  expiration_year?: T extends 'reference' ? DataElementReference : string;
+  expiration_month?: T extends 'reference' ? DataElementReference : number;
+  expiration_year?: T extends 'reference' ? DataElementReference : number;
   /* eslint-enable camelcase */
   cvc?: T extends 'reference' ? DataElementReference : string;
 }
 
 interface CardExpirationDateValue<T extends ElementValueType> {
-  month: T extends 'reference' ? DataElementReference : string;
-  year: T extends 'reference' ? DataElementReference : string;
+  month: T extends 'reference' ? DataElementReference : number;
+  year: T extends 'reference' ? DataElementReference : number;
 }
 
 type CreateCardElementOptions = CustomizableElementOptions & {
@@ -104,7 +104,7 @@ type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
   Pick<ElementOptions, 'placeholder'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
-    value?: CardExpirationDateValue<'static'>;
+    value?: CardExpirationDateValue<'static'> | string;
   };
 
 type UpdateCardExpirationDateElementOptions = Omit<

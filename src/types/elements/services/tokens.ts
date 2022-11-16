@@ -10,7 +10,9 @@ type CreateToken = CreateTokenModel<ElementValue>;
 type UpdateToken = UpdateTokenModel<ElementValue>;
 
 type Tokens = Create<Token, CreateToken> &
-  Retrieve<Token> &
+  // avoid casting when accessing token data props
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Retrieve<Token<any>> &
   Update<Token, UpdateToken>;
 
 export type { Tokens, CreateToken, UpdateToken };

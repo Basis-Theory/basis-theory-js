@@ -85,12 +85,12 @@ export class BasisTheory
   private _proxies?: Proxies;
 
   public init(
-    apiKey: string,
+    apiKey: string | undefined,
     options?: BasisTheoryInitOptionsWithoutElements
   ): Promise<IBasisTheory>;
 
   public init(
-    apiKey: string,
+    apiKey: string | undefined,
     options: BasisTheoryInitOptionsWithElements
   ): Promise<IBasisTheory & BasisTheoryElements>;
 
