@@ -29,7 +29,7 @@ interface AccessRule {
   container: string;
   transform: TransformType;
   permissions: string[];
-  conditions: Condition[];
+  conditions?: Condition[];
 }
 
 type Condition = {
