@@ -1,3 +1,10 @@
+# [1.55.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.54.0...v1.55.0) (2022-11-16)
+
+
+### Features
+
+* add setValue method to elements, other qol improvements ([#248](https://github.com/Basis-Theory/basis-theory-js/issues/248)) ([cac105a](https://github.com/Basis-Theory/basis-theory-js/commit/cac105a323ff88fec11519beaca67fda8cb98c6a))
+
 # [1.54.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.53.1...v1.54.0) (2022-11-04)
 
 

@@ -19,8 +19,11 @@ import type {
   UpdateCardExpirationDateElementOptions,
   UpdateCardVerificationCodeElementOptions,
   UpdateTextElementOptions,
+  CardElementValue,
+  CardExpirationDateValue,
 } from './options';
 import type { Tokenize, Tokens } from './services';
+import { DataElementReference } from './shared';
 
 interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
@@ -36,14 +39,20 @@ interface BaseElement<UpdateOptions, ElementEvents> {
   ): Subscription;
 }
 
-type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents>;
+type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents> & {
+  setValue(value: CardElementValue<'reference'>): void;
+};
 
-type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents>;
+type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents> & {
+  setValue(value: DataElementReference): void;
+};
 
 type CardNumberElement = BaseElement<
   UpdateCardNumberElementOptions,
   CardNumberElementEvents
->;
+> & {
+  setValue(value: DataElementReference): void;
+};
 
 type CardExpirationDateElement = BaseElement<
   UpdateCardExpirationDateElementOptions,
@@ -51,12 +60,15 @@ type CardExpirationDateElement = BaseElement<
 > & {
   month(): ElementWrapper<CardExpirationDateElement>;
   year(): ElementWrapper<CardExpirationDateElement>;
+  setValue(value: CardExpirationDateValue<'reference'>): void;
 };
 
 type CardVerificationCodeElement = BaseElement<
   UpdateCardVerificationCodeElementOptions,
   CardVerificationCodeElementEvents
->;
+> & {
+  setValue(value: DataElementReference): void;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ElementWrapper<T extends BaseElement<any, any> = BaseElement<any, any>> = {
