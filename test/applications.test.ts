@@ -37,6 +37,8 @@ describe('Applications', () => {
         name: chance.string(),
         type: chance.string() as ApplicationType,
         permissions: [chance.string()],
+        canCreateExpiringApplications: chance.bool(),
+        expiresAt: chance.date().toString(),
       },
       updatePayload: {
         name: chance.string(),
@@ -63,8 +65,17 @@ describe('Applications', () => {
               'reveal',
             ]),
             permissions: [chance.string()],
+            conditions: [
+              {
+                attribute: chance.string(),
+                operator: chance.string(),
+                value: chance.string(),
+              },
+            ],
           },
         ],
+        canCreateExpiringApplications: chance.bool(),
+        expiresAt: chance.date().toString(),
       },
       updatePayload: {
         name: chance.string(),
@@ -79,6 +90,7 @@ describe('Applications', () => {
               'reveal',
             ]),
             permissions: [chance.string()],
+            conditions: [],
           },
         ],
       },

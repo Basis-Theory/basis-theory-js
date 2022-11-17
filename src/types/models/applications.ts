@@ -14,20 +14,29 @@ type TransformType = typeof TRANSFORM_TYPES[number];
 interface Application extends Auditable {
   id: string;
   tenantId: string;
-  name: string;
+  name?: string;
   key?: string;
   type: ApplicationType;
   permissions?: string[];
   rules?: AccessRule[];
+  canCreateExpiringApplications?: boolean;
+  expiresAt?: string;
 }
 
 interface AccessRule {
   description: string;
   priority: number;
-  container: string;
+  container?: string;
   transform: TransformType;
   permissions: string[];
+  conditions?: Condition[];
 }
+
+type Condition = {
+  attribute: string;
+  operator: string;
+  value: string;
+};
 
 type CreateApplication = Pick<Application, 'name' | 'type'> &
   Partial<Pick<Application, 'permissions' | 'rules'>>;

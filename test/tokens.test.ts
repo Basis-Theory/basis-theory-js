@@ -646,6 +646,7 @@ describe('Tokens', () => {
             alg: _chance.string(),
           },
         },
+        expiresAt: _chance.date().toString(),
         metadata: {
           camelCaseParameter: _chance.string(),
           snake_case_parameter: _chance.string(),
@@ -709,6 +710,7 @@ describe('Tokens', () => {
         },
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
+        expiresAt: _chance.date().toString(),
       };
       /* eslint-enable camelcase */
 
