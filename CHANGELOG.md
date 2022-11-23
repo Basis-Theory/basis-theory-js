@@ -1,3 +1,10 @@
+## [1.56.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.56.0...v1.56.1) (2022-11-23)
+
+
+### Bug Fixes
+
+* add expiring application props to create and update models ([#250](https://github.com/Basis-Theory/basis-theory-js/issues/250)) ([237028d](https://github.com/Basis-Theory/basis-theory-js/commit/237028dace7d3e40e8ff02ef8a995c09a8d98020))
+
 # [1.56.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.55.0...v1.56.0) (2022-11-17)
 
 
