@@ -40,15 +40,17 @@ type Condition = {
 
 type CreateApplication = Pick<
   Application,
-  'name' | 'type' | 'expiresAt' | 'canCreateExpiringApplications'
-> &
-  Partial<Pick<Application, 'permissions' | 'rules'>>;
+  | 'name'
+  | 'type'
+  | 'permissions'
+  | 'rules'
+  | 'canCreateExpiringApplications'
+  | 'expiresAt'
+>;
 
-type UpdateApplication = Partial<
-  Pick<
-    Application,
-    'name' | 'permissions' | 'rules' | 'canCreateExpiringApplications'
-  >
+type UpdateApplication = Pick<
+  Application,
+  'name' | 'permissions' | 'rules' | 'canCreateExpiringApplications'
 >;
 
 export type {
