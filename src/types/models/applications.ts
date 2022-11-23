@@ -38,11 +38,19 @@ type Condition = {
   value: string;
 };
 
-type CreateApplication = Pick<Application, 'name' | 'type'> &
-  Partial<Pick<Application, 'permissions' | 'rules'>>;
+type CreateApplication = Pick<
+  Application,
+  | 'name'
+  | 'type'
+  | 'permissions'
+  | 'rules'
+  | 'canCreateExpiringApplications'
+  | 'expiresAt'
+>;
 
-type UpdateApplication = Partial<
-  Pick<Application, 'name' | 'permissions' | 'rules'>
+type UpdateApplication = Pick<
+  Application,
+  'name' | 'permissions' | 'rules' | 'canCreateExpiringApplications'
 >;
 
 export type {
