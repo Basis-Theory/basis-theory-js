@@ -8,7 +8,7 @@ interface Reactor extends Auditable {
   name: string;
   formula: ReactorFormula;
   application?: Application;
-  configuration: Record<string, string>;
+  configuration?: Record<string, string>;
 }
 
 type CreateReactor = Pick<Reactor, 'name' | 'configuration'> & {
