@@ -9,7 +9,7 @@ import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import type { RequestTransformers } from '@/service';
-import type { Reactor, Token, TokenBase } from '@/types/models';
+import type { Reactor, Proxy, Token, TokenBase } from '@/types/models';
 import type {
   ApplicationInfo,
   ClientUserAgent,
@@ -59,6 +59,21 @@ const transformReactorRequestSnakeCase: AxiosTransformer = (
       ? { configuration: reactor.configuration }
       : {}),
   } as Reactor;
+};
+
+const transformProxyRequestSnakeCase: AxiosTransformer = (
+  proxy: Proxy
+): Proxy | undefined => {
+  if (typeof proxy === 'undefined') {
+    return undefined;
+  }
+
+  return {
+    ...snakecaseKeys(proxy, { deep: true }),
+    ...(proxy.configuration !== undefined
+      ? { configuration: proxy.configuration }
+      : {}),
+  } as Proxy;
 };
 
 const transformAtomicRequestSnakeCase: AxiosTransformer = <
@@ -118,6 +133,21 @@ const transformReactorResponseCamelCase: AxiosTransformer = (
       ? { configuration: reactor.configuration }
       : {}),
   } as Reactor;
+};
+
+const transformProxyResponseCamelCase: AxiosTransformer = (
+  proxy: Proxy
+): Proxy | undefined => {
+  if (typeof proxy === 'undefined') {
+    return undefined;
+  }
+
+  return {
+    ...camelcaseKeys(proxy, { deep: true }),
+    ...(proxy.configuration !== undefined
+      ? { configuration: proxy.configuration }
+      : {}),
+  } as Proxy;
 };
 
 const transformResponseCamelCase: AxiosTransformer = <T, C>(
@@ -370,10 +400,12 @@ export {
   transformRequestSnakeCase,
   proxyRaw,
   transformReactorRequestSnakeCase,
+  transformProxyRequestSnakeCase,
   transformAtomicRequestSnakeCase,
   transformTokenRequestSnakeCase,
   transformTokenResponseCamelCase,
   transformReactorResponseCamelCase,
+  transformProxyResponseCamelCase,
   transformResponseCamelCase,
   transformAtomicResponseCamelCase,
   dataExtractor,
