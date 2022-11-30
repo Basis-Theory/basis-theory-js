@@ -1,3 +1,10 @@
+# [1.57.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.56.1...v1.57.0) (2022-11-30)
+
+
+### Features
+
+* add new proxy transform attributes ([#252](https://github.com/Basis-Theory/basis-theory-js/issues/252)) ([d03b044](https://github.com/Basis-Theory/basis-theory-js/commit/d03b044fe0c1438e00aa4ab94975044aa09bf700))
+
 ## [1.56.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.56.0...v1.56.1) (2022-11-23)
 
 
