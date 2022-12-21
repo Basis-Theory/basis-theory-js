@@ -9,6 +9,7 @@ import type {
   Reactors,
   Permissions,
   Proxies,
+  Proxy,
 } from './services';
 
 interface ApplicationInfo {
@@ -52,6 +53,7 @@ interface BasisTheory extends Tokenize {
   reactors: Reactors;
   permissions: Permissions;
   proxies: Proxies;
+  proxy: Proxy;
 }
 
 interface ClientUserAgent {

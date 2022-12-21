@@ -22,7 +22,7 @@ import type {
   CardElementValue,
   CardExpirationDateValue,
 } from './options';
-import type { Tokenize, Tokens } from './services';
+import type { Tokenize, Tokens, Proxy } from './services';
 import { DataElementReference } from './shared';
 
 interface BaseElement<UpdateOptions, ElementEvents> {
@@ -86,6 +86,7 @@ type ElementValue =
 
 interface BasisTheoryElements extends Tokenize {
   tokens: Tokens;
+  proxy: Proxy;
 
   createElement(type: 'card', options?: CreateCardElementOptions): CardElement;
   createElement(type: 'text', options: CreateTextElementOptions): TextElement;

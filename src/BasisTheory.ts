@@ -16,6 +16,7 @@ import type {
   Tokenize as ElementsTokenize,
   TokenizeData as ElementsTokenizeData,
   Tokens as ElementsTokens,
+  Proxy as ElementsProxy,
 } from '@/types/elements';
 import type { TokenizeData } from '@/types/models';
 import type {
@@ -35,6 +36,7 @@ import type {
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitStatus,
   Proxies,
+  Proxy,
 } from '@/types/sdk';
 import { BasisTheoryApplications } from './applications';
 import {
@@ -48,6 +50,7 @@ import { ELEMENTS_INIT_ERROR_MESSAGE } from './elements/constants';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryProxies } from './proxies';
+import { BasisTheoryProxy } from './proxy';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheoryTenants } from './tenants';
@@ -83,6 +86,8 @@ export class BasisTheory
   private _permissions?: BasisTheoryPermissions;
 
   private _proxies?: Proxies;
+
+  private _proxy?: Proxy & ElementsProxy;
 
   public init(
     apiKey: string | undefined,
@@ -177,6 +182,11 @@ export class BasisTheory
       this._proxies = new BasisTheoryProxies({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxies, baseUrl).toString(),
+        appInfo,
+      });
+      this._proxy = new BasisTheoryProxy({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.proxy, baseUrl).toString(),
         appInfo,
       });
 
@@ -294,6 +304,10 @@ export class BasisTheory
 
   public get proxies(): Proxies {
     return assertInit(this._proxies);
+  }
+
+  public get proxy(): Proxy {
+    return assertInit(this._proxy);
   }
 
   /* eslint-enable accessor-pairs */

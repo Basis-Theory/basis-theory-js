@@ -13,6 +13,7 @@ import type { Reactor, Proxy, Token, TokenBase } from '@/types/models';
 import type {
   ApplicationInfo,
   ClientUserAgent,
+  ProxyRequestOptions,
   RequestOptions,
 } from '@/types/sdk';
 import { BasisTheoryApiError } from './BasisTheoryApiError';
@@ -196,7 +197,7 @@ const concatResponseTransformerWithDefault = (
 ];
 
 const createRequestConfig = (
-  options?: RequestOptions,
+  options?: ProxyRequestOptions | RequestOptions,
   transformers?: RequestTransformers
 ): AxiosRequestConfig | undefined => {
   if (!options) {
@@ -222,7 +223,12 @@ const createRequestConfig = (
     };
   }
 
-  const { apiKey, correlationId } = options;
+  const {
+    apiKey,
+    correlationId,
+    query,
+    headers,
+  } = options as ProxyRequestOptions;
   const apiKeyHeader = apiKey
     ? {
         [API_KEY_HEADER]: apiKey,
@@ -238,7 +244,9 @@ const createRequestConfig = (
     headers: {
       ...apiKeyHeader,
       ...correlationIdHeader,
+      ...(typeof headers !== 'undefined' && { ...headers }),
     },
+    ...(typeof query !== 'undefined' && { params: query }),
     ...(transformers?.transformRequest !== undefined
       ? {
           transformRequest: concatRequestTransformerWithDefault(
