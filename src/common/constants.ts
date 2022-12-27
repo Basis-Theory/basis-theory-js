@@ -20,6 +20,7 @@ const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   reactors: 'reactors',
   permissions: 'permissions',
   proxies: 'proxies',
+  proxy: 'proxy',
 };
 
 const BROWSER_LIST = [
