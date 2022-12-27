@@ -1,3 +1,10 @@
+# [1.58.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.57.0...v1.58.0) (2022-12-27)
+
+
+### Features
+
+* add proxy client ([#257](https://github.com/Basis-Theory/basis-theory-js/issues/257)) ([c57e7f0](https://github.com/Basis-Theory/basis-theory-js/commit/c57e7f033ca6209d62eac3a0ac8b368b594e8a68))
+
 # [1.57.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.56.1...v1.57.0) (2022-11-30)
 
 
