@@ -1,3 +1,10 @@
+# [1.59.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.58.0...v1.59.0) (2023-01-05)
+
+
+### Features
+
+* add cardBin to card change event ([#261](https://github.com/Basis-Theory/basis-theory-js/issues/261)) ([677be5c](https://github.com/Basis-Theory/basis-theory-js/commit/677be5c9fef64485e3605b1bb3b326743c1edba1))
+
 # [1.58.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.57.0...v1.58.0) (2022-12-27)
 
 
