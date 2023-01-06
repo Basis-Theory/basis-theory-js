@@ -1,6 +1,11 @@
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
-import { loadElements, delegateTokens, delegateTokenize } from '@/elements';
+import {
+  loadElements,
+  delegateTokens,
+  delegateTokenize,
+  delegateProxy,
+} from '@/elements';
 
 jest.mock('../src/elements');
 
@@ -13,6 +18,9 @@ describe('Init', () => {
       jest.fn().mockReturnValue({})
     );
     (delegateTokenize as jest.Mock).mockImplementation(() =>
+      jest.fn().mockReturnValue({})
+    );
+    (delegateProxy as jest.Mock).mockImplementation(() =>
       jest.fn().mockReturnValue({})
     );
   });
