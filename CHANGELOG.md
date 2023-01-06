@@ -1,3 +1,10 @@
+## [1.59.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.59.0...v1.59.1) (2023-01-06)
+
+
+### Bug Fixes
+
+* add proxy delegate to btjs ([#262](https://github.com/Basis-Theory/basis-theory-js/issues/262)) ([b6261be](https://github.com/Basis-Theory/basis-theory-js/commit/b6261bec0422bafd80bb3921bdbe7a4264aa7d24))
+
 # [1.59.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.58.0...v1.59.0) (2023-01-05)
 
 
