@@ -45,12 +45,16 @@ import {
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
 } from './common';
-import { delegateTokenize, delegateTokens, loadElements } from './elements';
+import {
+  delegateTokenize,
+  delegateTokens,
+  delegateProxy,
+  loadElements,
+} from './elements';
 import { ELEMENTS_INIT_ERROR_MESSAGE } from './elements/constants';
 import { BasisTheoryLogs } from './logs';
 import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryProxies } from './proxies';
-import { BasisTheoryProxy } from './proxy';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheoryTenants } from './tenants';
@@ -184,7 +188,7 @@ export class BasisTheory
         baseURL: new URL(CLIENT_BASE_PATHS.proxies, baseUrl).toString(),
         appInfo,
       });
-      this._proxy = new BasisTheoryProxy({
+      this._proxy = new (delegateProxy(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxy, baseUrl).toString(),
         appInfo,
