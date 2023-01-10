@@ -37,6 +37,7 @@ import type {
   BasisTheoryInitStatus,
   Proxies,
   Proxy,
+  Sessions,
 } from '@/types/sdk';
 import { BasisTheoryApplications } from './applications';
 import {
@@ -57,6 +58,7 @@ import { BasisTheoryPermissions } from './permissions';
 import { BasisTheoryProxies } from './proxies';
 import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
+import { BasisTheorySessions } from './sessions';
 import { BasisTheoryTenants } from './tenants';
 
 const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
@@ -92,6 +94,8 @@ export class BasisTheory
   private _proxies?: Proxies;
 
   private _proxy?: Proxy & ElementsProxy;
+
+  private _sessions?: Sessions;
 
   public init(
     apiKey: string | undefined,
@@ -191,6 +195,11 @@ export class BasisTheory
       this._proxy = new (delegateProxy(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxy, baseUrl).toString(),
+        appInfo,
+      });
+      this._sessions = new BasisTheorySessions({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.sessions, baseUrl).toString(),
         appInfo,
       });
 
@@ -314,6 +323,9 @@ export class BasisTheory
     return assertInit(this._proxy);
   }
 
+  public get sessions(): Sessions {
+    return assertInit(this._sessions);
+  }
   /* eslint-enable accessor-pairs */
 
   /**
