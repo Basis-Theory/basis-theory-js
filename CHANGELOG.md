@@ -1,3 +1,10 @@
+# [1.60.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.59.1...v1.60.0) (2023-01-11)
+
+
+### Features
+
+* support creating & authorizing sessions ([#264](https://github.com/Basis-Theory/basis-theory-js/issues/264)) ([80cf4d5](https://github.com/Basis-Theory/basis-theory-js/commit/80cf4d5b2956b53fbfc6b29663acc3f62dcee8c4))
+
 ## [1.59.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.59.0...v1.59.1) (2023-01-06)
 
 
