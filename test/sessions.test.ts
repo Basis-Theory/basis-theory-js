@@ -26,7 +26,7 @@ describe('Sessions', () => {
     client.resetHistory();
   });
 
-  describe('createSession', () => {
+  describe('create', () => {
     test('should create session', async () => {
       const sessionKey = chance.string();
       const nonce = chance.string();
@@ -43,7 +43,7 @@ describe('Sessions', () => {
         /* eslint-enable camelcase */
       );
 
-      expect(await bt.sessions.createSession()).toStrictEqual({
+      expect(await bt.sessions.create()).toStrictEqual({
         sessionKey,
         nonce,
         expiresAt,
@@ -55,7 +55,7 @@ describe('Sessions', () => {
     });
   });
 
-  describe('authorizeSession', () => {
+  describe('authorize', () => {
     test('should authorize session', async () => {
       const authorizeSessionRequest: AuthorizeSessionRequest = {
         nonce: chance.string(),
@@ -64,7 +64,7 @@ describe('Sessions', () => {
       client.onPost('/sessions/authorize').reply(200, JSON.stringify({}));
 
       expect(
-        await bt.sessions.authorizeSession(authorizeSessionRequest)
+        await bt.sessions.authorize(authorizeSessionRequest)
       ).toStrictEqual({});
       expect(client.history.post).toHaveLength(1);
       expect(client.history.post[0].headers).toMatchObject({

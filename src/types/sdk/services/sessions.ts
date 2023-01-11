@@ -15,8 +15,8 @@ type CreateSessionResponse = {
 };
 
 interface Sessions {
-  createSession(options?: RequestOptions): Promise<CreateSessionResponse>;
-  authorizeSession(
+  create(options?: RequestOptions): Promise<CreateSessionResponse>;
+  authorize(
     authorizeSessionRequest: AuthorizeSessionRequest,
     options?: RequestOptions
   ): Promise<void>;

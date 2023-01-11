@@ -37,9 +37,7 @@ export class BasisTheorySessions
     super(_options);
   }
 
-  public createSession(
-    options: RequestOptions = {}
-  ): Promise<CreateSessionResponse> {
+  public create(options: RequestOptions = {}): Promise<CreateSessionResponse> {
     const url = `/sessions`;
 
     return this.client
@@ -47,7 +45,7 @@ export class BasisTheorySessions
       .then(dataExtractor);
   }
 
-  public authorizeSession(
+  public authorize(
     authorizeSessionRequest: AuthorizeSessionRequest,
     options: RequestOptions = {}
   ): Promise<void> {
