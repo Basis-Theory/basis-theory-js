@@ -10,6 +10,7 @@ import type {
   Permissions,
   Proxies,
   Proxy,
+  Sessions,
 } from './services';
 
 interface ApplicationInfo {
@@ -54,6 +55,7 @@ interface BasisTheory extends Tokenize {
   permissions: Permissions;
   proxies: Proxies;
   proxy: Proxy;
+  sessions: Sessions;
 }
 
 interface ClientUserAgent {

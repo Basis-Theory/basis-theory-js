@@ -60,4 +60,4 @@ export type {
   TransformType,
   UpdateApplication,
 };
-export { APPLICATION_TYPES, TRANSFORM_TYPES };
+export { APPLICATION_TYPES, TRANSFORM_TYPES, AccessRule };
