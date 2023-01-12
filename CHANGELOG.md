@@ -1,3 +1,10 @@
+# [1.61.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.60.0...v1.61.0) (2023-01-12)
+
+
+### Features
+
+* remove expiring applications support ([#265](https://github.com/Basis-Theory/basis-theory-js/issues/265)) ([34d8cf9](https://github.com/Basis-Theory/basis-theory-js/commit/34d8cf91f4c5e86a863feadaf8f35465b838792c))
+
 # [1.60.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.59.1...v1.60.0) (2023-01-11)
 
 
