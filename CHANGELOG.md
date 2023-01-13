@@ -1,3 +1,10 @@
+## [1.62.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.62.1...v1.62.2) (2023-01-13)
+
+
+### Bug Fixes
+
+* fix sessions endpoints ([#267](https://github.com/Basis-Theory/basis-theory-js/issues/267)) ([388733d](https://github.com/Basis-Theory/basis-theory-js/commit/388733dba43e92437f2b7e75cdcf56925943da60))
+
 ## [1.62.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.62.0...v1.62.1) (2023-01-13)
 
 
