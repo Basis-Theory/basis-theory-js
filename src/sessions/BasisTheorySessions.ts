@@ -38,10 +38,8 @@ export class BasisTheorySessions
   }
 
   public create(options: RequestOptions = {}): Promise<CreateSessionResponse> {
-    const url = `/sessions`;
-
     return this.client
-      .post(url, undefined, createRequestConfig(options))
+      .post('/', undefined, createRequestConfig(options))
       .then(dataExtractor);
   }
 
@@ -49,7 +47,7 @@ export class BasisTheorySessions
     authorizeSessionRequest: AuthorizeSessionRequest,
     options: RequestOptions = {}
   ): Promise<void> {
-    const url = `/sessions/authorize`;
+    const url = `/authorize`;
 
     return this.client
       .post(url, authorizeSessionRequest, createRequestConfig(options))

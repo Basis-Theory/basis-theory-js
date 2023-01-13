@@ -32,7 +32,7 @@ describe('Sessions', () => {
       const nonce = chance.string();
       const expiresAt = chance.string();
 
-      client.onPost('/sessions').reply(
+      client.onPost('/').reply(
         201,
         /* eslint-disable camelcase */
         JSON.stringify({
@@ -61,7 +61,7 @@ describe('Sessions', () => {
         nonce: chance.string(),
       };
 
-      client.onPost('/sessions/authorize').reply(200, JSON.stringify({}));
+      client.onPost('/authorize').reply(200, JSON.stringify({}));
 
       expect(
         await bt.sessions.authorize(authorizeSessionRequest)
