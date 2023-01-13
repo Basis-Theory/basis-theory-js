@@ -1,11 +1,6 @@
 import type { Auditable } from './shared';
 
-const APPLICATION_TYPES = [
-  'private',
-  'public',
-  'management',
-  'expiring',
-] as const;
+const APPLICATION_TYPES = ['private', 'public', 'management'] as const;
 const TRANSFORM_TYPES = ['mask', 'redact', 'reveal'] as const;
 
 type ApplicationType = typeof APPLICATION_TYPES[number];
@@ -19,7 +14,6 @@ interface Application extends Auditable {
   type: ApplicationType;
   permissions?: string[];
   rules?: AccessRule[];
-  canCreateExpiringApplications?: boolean;
   expiresAt?: string;
 }
 
@@ -40,18 +34,10 @@ type Condition = {
 
 type CreateApplication = Pick<
   Application,
-  | 'name'
-  | 'type'
-  | 'permissions'
-  | 'rules'
-  | 'canCreateExpiringApplications'
-  | 'expiresAt'
+  'name' | 'type' | 'permissions' | 'rules' | 'expiresAt'
 >;
 
-type UpdateApplication = Pick<
-  Application,
-  'name' | 'permissions' | 'rules' | 'canCreateExpiringApplications'
->;
+type UpdateApplication = Pick<Application, 'name' | 'permissions' | 'rules'>;
 
 export type {
   ApplicationType,
