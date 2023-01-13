@@ -1,3 +1,10 @@
+## [1.62.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.62.0...v1.62.1) (2023-01-13)
+
+
+### Bug Fixes
+
+* fix transpiling issue for custom error classes ([#266](https://github.com/Basis-Theory/basis-theory-js/issues/266)) ([0d2fe7e](https://github.com/Basis-Theory/basis-theory-js/commit/0d2fe7e75f65dd521be5f612ba286571f7c5f43b))
+
 # [1.62.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.61.0...v1.62.0) (2023-01-13)
 
 
