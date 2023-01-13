@@ -1,3 +1,10 @@
+# [1.62.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.61.0...v1.62.0) (2023-01-13)
+
+
+### Features
+
+* add valid and maskSatisfied flags ([#263](https://github.com/Basis-Theory/basis-theory-js/issues/263)) ([01db35b](https://github.com/Basis-Theory/basis-theory-js/commit/01db35bbff3c21fbebe2d0e1e0dc2ed84220b508))
+
 # [1.61.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.60.0...v1.61.0) (2023-01-12)
 
 
