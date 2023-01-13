@@ -1678,10 +1678,10 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@basis-theory/eslint-config@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@basis-theory/eslint-config/-/eslint-config-1.0.12.tgz#0bc687a82a9382d43ce57d97b34f66fdb70f5ead"
-  integrity sha512-wJinPBhmdMcG719iMsIm6f3HNwb70Dd6fGYVk3X2KB19KKkPDU3lsLGRT4ntGCgX+N4M8F8CCNq6PC5vOAbtUA==
+"@basis-theory/eslint-config@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@basis-theory/eslint-config/-/eslint-config-1.0.13.tgz#18e13108f11c49bc3232b110ff5358d6ae0df733"
+  integrity sha512-6a9EtSoaW/Ks/dT8MY1C/Ed+DdQAwkpomJ9Lp9fhRiZzNnH7OpNQtG5ilUw/zoE/sY0uT5rZXgBLlQTc+o4a1A==
   dependencies:
     "@rushstack/eslint-patch" "^1.0.8"
     "@trivago/prettier-plugin-sort-imports" "^3.1.1"
@@ -2515,12 +2515,12 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.11.tgz#aeb16f50649a91af79dbe36574b66d0f9e4d9f71"
   integrity sha512-3NsZsJIA/22P3QUyrEDNA2D133H4j224twJrdipXN38dpnIOzAbUDtOwkcJ5pXmn75w7LSQDjA4tO9dm1XlqlA==
 
-"@rushstack/eslint-patch@1.0.6", "@rushstack/eslint-patch@^1.0.6":
+"@rushstack/eslint-patch@1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.6.tgz#023d72a5c4531b4ce204528971700a78a85a0c50"
   integrity sha512-Myxw//kzromB9yWgS8qYGuGVf91oBUUJpNvy5eM50sqvmKLbKjwLxohJnkWGTeeI9v9IBMtPLxz5Gc60FIfvCA==
 
-"@rushstack/eslint-patch@^1.0.8":
+"@rushstack/eslint-patch@^1.0.6", "@rushstack/eslint-patch@^1.0.8":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.3.tgz#6801033be7ff87a6b7cadaf5b337c9f366a3c4b0"
   integrity sha512-WiBSI6JBIhC6LRIsB2Kwh8DsGTlbBU+mLRxJmAe3LjHTdkDpwIbEOZgoXBbZilk/vlfjK8i6nKRAvIRn1XaIMw==
@@ -5701,18 +5701,7 @@ eslint-import-resolver-node@^0.3.4, eslint-import-resolver-node@^0.3.6:
     debug "^3.2.7"
     resolve "^1.20.0"
 
-eslint-import-resolver-typescript@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.4.0.tgz#ec1e7063ebe807f0362a7320543aaed6fe1100e1"
-  integrity sha512-useJKURidCcldRLCNKWemr1fFQL1SzB3G4a0li6lFGvlc5xGe1hY343bvG07cbpCzPuM/lK19FIJB3XGFSkplA==
-  dependencies:
-    debug "^4.1.1"
-    glob "^7.1.6"
-    is-glob "^4.0.1"
-    resolve "^1.17.0"
-    tsconfig-paths "^3.9.0"
-
-eslint-import-resolver-typescript@^2.7.1:
+eslint-import-resolver-typescript@^2.4.0, eslint-import-resolver-typescript@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.7.1.tgz#a90a4a1c80da8d632df25994c4c5fdcdd02b8751"
   integrity sha512-00UbgGwV8bSgUv34igBDbTOtKhqoRMy9bFjNehT40bXg6585PNIct8HhXZ0SybqB9rWtXj9crcku8ndDn/gIqQ==
