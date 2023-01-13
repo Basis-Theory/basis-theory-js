@@ -6,5 +6,7 @@ export class BasisTheoryApiError extends Error {
   ) {
     super(message);
     this.name = 'BasisTheoryApiError';
+
+    Object.setPrototypeOf(this, BasisTheoryApiError.prototype);
   }
 }

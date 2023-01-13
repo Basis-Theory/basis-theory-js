@@ -14,5 +14,7 @@ export class BasisTheoryValidationError<
   ) {
     super(message);
     this.name = 'BasisTheoryValidationError';
+
+    Object.setPrototypeOf(this, BasisTheoryValidationError.prototype);
   }
 }
