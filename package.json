@@ -71,7 +71,7 @@
     "@types/is-base64": "^1.1.1",
     "@types/jest": "^27.4.0",
     "@types/uuid": "^8.3.3",
-    "axios-mock-adapter": "^1.21.1",
+    "axios-mock-adapter": "^1.21.2",
     "babel-loader": "^8.2.2",
     "babel-plugin-inline-dotenv": "^1.1.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
