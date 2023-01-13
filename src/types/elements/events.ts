@@ -11,6 +11,8 @@ type ReadyEvent = BaseEvent<'ready'>;
 type ChangeEvent = BaseEvent<'change'> & {
   empty: boolean;
   complete: boolean;
+  valid?: boolean;
+  maskSatisfied?: boolean;
   errors?: FieldError[];
 };
 
