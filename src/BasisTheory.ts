@@ -260,7 +260,7 @@ export class BasisTheory
     return assertInit(this._tokenize).tokenize(tokens, options);
   }
 
-  private async loadElements(apiKey: string): Promise<void> {
+  private async loadElements(apiKey: string | undefined): Promise<void> {
     let elementsBaseUrl: URL;
 
     try {

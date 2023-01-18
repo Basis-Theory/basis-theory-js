@@ -13,7 +13,7 @@ const ELEMENTS_TYPES = [
 type ElementType = typeof ELEMENTS_TYPES[number];
 
 interface ElementInternalOptions {
-  apiKey: string;
+  apiKey: string | undefined;
   type: ElementType;
   baseUrl: string;
 }
