@@ -1,3 +1,10 @@
+# [1.63.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.62.2...v1.63.0) (2023-01-18)
+
+
+### Features
+
+* make apiKey optional for elements types ([#270](https://github.com/Basis-Theory/basis-theory-js/issues/270)) ([0ef1739](https://github.com/Basis-Theory/basis-theory-js/commit/0ef1739679cac8a2c339a628fedce24c28ea71f5))
+
 ## [1.62.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.62.1...v1.62.2) (2023-01-13)
 
 
