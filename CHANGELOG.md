@@ -1,3 +1,10 @@
+# [1.64.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.63.0...v1.64.0) (2023-01-26)
+
+
+### Features
+
+* add support for validation onChange ([#275](https://github.com/Basis-Theory/basis-theory-js/issues/275)) ([c577176](https://github.com/Basis-Theory/basis-theory-js/commit/c5771761b39b6085116732f5d9b9fc0dc66325f2))
+
 # [1.63.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.62.2...v1.63.0) (2023-01-18)
 
 

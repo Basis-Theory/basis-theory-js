@@ -19,6 +19,7 @@ interface ElementInternalOptions {
 }
 
 interface SanitizedElementOptions {
+  validateOnChange?: boolean;
   style?: ElementStyle;
   disabled?: boolean;
   targetId?: string;
@@ -49,7 +50,10 @@ interface AutoCompleteOption {
   autoComplete?: AutoCompleteValue;
 }
 
-type CustomizableElementOptions = Pick<ElementOptions, 'style' | 'disabled'> &
+type CustomizableElementOptions = Pick<
+  ElementOptions,
+  'style' | 'disabled' | 'validateOnChange'
+> &
   AutoCompleteOption;
 
 type ElementValueType = 'static' | 'reference';
