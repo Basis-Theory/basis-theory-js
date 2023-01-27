@@ -31,6 +31,7 @@ interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {
 interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
   elements: true;
   elementsBaseUrl?: string;
+  elementsClientUrl?: string;
 }
 
 interface BasisTheoryInit {

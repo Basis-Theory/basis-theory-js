@@ -8,7 +8,9 @@ import { findScript, injectScript } from './script';
 
 let elementsPromise: Promise<BasisTheoryElements>;
 
-const loadElements = (): Promise<BasisTheoryElements> => {
+const loadElements = (
+  elementsClientUrl?: string
+): Promise<BasisTheoryElements> => {
   if (!elementsPromise) {
     elementsPromise = new Promise((resolve, reject) => {
       if (typeof window !== 'object') {
@@ -24,7 +26,20 @@ const loadElements = (): Promise<BasisTheoryElements> => {
       }
 
       try {
-        const url = `https://${process.env.JS_HOST}/elements`;
+        let url = `https://${process.env.JS_HOST}/elements`;
+
+        if (typeof elementsClientUrl !== 'undefined') {
+          try {
+            const urlObject = new URL(elementsClientUrl);
+
+            url = urlObject.toString().replace(/\/$/u, '');
+          } catch {
+            throw new Error(
+              'Invalid format for the given Elements client url.'
+            );
+          }
+        }
+
         let script = findScript(url);
 
         if (!script) {
