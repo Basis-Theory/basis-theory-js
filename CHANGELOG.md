@@ -1,3 +1,10 @@
+# [1.65.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.64.0...v1.65.0) (2023-01-27)
+
+
+### Features
+
+* allow changing the elements client url ([#277](https://github.com/Basis-Theory/basis-theory-js/issues/277)) ([245ea30](https://github.com/Basis-Theory/basis-theory-js/commit/245ea30726ce4998d65e44110157b2c8472da80a))
+
 # [1.64.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.63.0...v1.64.0) (2023-01-26)
 
 
