@@ -62,6 +62,17 @@ describe('Elements', () => {
       ).rejects.toThrow('Invalid format for the given Elements base url.');
     });
 
+    test('should throw error for invalid client elements url', async () => {
+      const bt = new BasisTheory();
+
+      await expect(() =>
+        bt.init(chance.string(), {
+          elements: true,
+          elementsClientUrl: chance.string(),
+        })
+      ).rejects.toThrow('Invalid format for the given Elements client url.');
+    });
+
     test('should resolve with a valid base elements url', () => {
       const bt = new BasisTheory();
       const validUrl = chance.url({ protocol: 'https' });
@@ -70,6 +81,19 @@ describe('Elements', () => {
         bt.init(chance.string(), {
           elements: true,
           elementsBaseUrl: validUrl,
+        })
+        // eslint-disable-next-line jest/no-restricted-matchers
+      ).resolves.toBe(bt);
+    });
+
+    test('should resolve with a valid client elements url', () => {
+      const bt = new BasisTheory();
+      const validUrl = chance.url({ protocol: 'https' });
+
+      expect(
+        bt.init(chance.string(), {
+          elements: true,
+          elementsClientUrl: validUrl,
         })
         // eslint-disable-next-line jest/no-restricted-matchers
       ).resolves.toBe(bt);

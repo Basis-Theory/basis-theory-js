@@ -272,7 +272,9 @@ export class BasisTheory
       throw new Error('Invalid format for the given Elements base url.');
     }
 
-    const elements = await loadElements();
+    const elements = await loadElements(
+      (this.initOptions as BasisTheoryInitOptionsWithElements).elementsClientUrl
+    );
 
     await (elements as BasisTheoryElementsInternal).init(
       apiKey,
