@@ -78,7 +78,7 @@ type CreateCardElementOptions = CustomizableElementOptions & {
 };
 
 type UpdateCardElementOptions = Omit<
-  CreateCardElementOption,
+  CreateCardElementOptions,
   'validateOnChange'
 >;
 
