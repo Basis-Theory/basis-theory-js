@@ -1,3 +1,10 @@
+## [1.65.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.65.0...v1.65.1) (2023-02-01)
+
+
+### Bug Fixes
+
+* remove validateOnChange from update methods types ([#278](https://github.com/Basis-Theory/basis-theory-js/issues/278)) ([7371622](https://github.com/Basis-Theory/basis-theory-js/commit/73716225b157cda72cb24bcca0d56fe7e8926296))
+
 # [1.65.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.64.0...v1.65.0) (2023-01-27)
 
 
