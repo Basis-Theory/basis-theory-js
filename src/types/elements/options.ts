@@ -77,7 +77,10 @@ type CreateCardElementOptions = CustomizableElementOptions & {
   value?: CardElementValue<'static'>;
 };
 
-type UpdateCardElementOptions = CreateCardElementOptions;
+type UpdateCardElementOptions = Omit<
+  CreateCardElementOption,
+  'validateOnChange'
+>;
 
 type CreateTextElementOptions = CustomizableElementOptions &
   Pick<ElementOptions, 'placeholder' | 'mask' | 'password'> &
@@ -89,7 +92,7 @@ type CreateTextElementOptions = CustomizableElementOptions &
 
 type UpdateTextElementOptions = Omit<
   CreateTextElementOptions,
-  'targetId' | 'mask'
+  'targetId' | 'mask' | 'validateOnChange'
 >;
 
 type CreateCardNumberElementOptions = CustomizableElementOptions &
@@ -101,7 +104,7 @@ type CreateCardNumberElementOptions = CustomizableElementOptions &
 
 type UpdateCardNumberElementOptions = Omit<
   CreateCardNumberElementOptions,
-  'targetId'
+  'targetId' | 'validateOnChange'
 >;
 
 type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
@@ -113,7 +116,7 @@ type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
 
 type UpdateCardExpirationDateElementOptions = Omit<
   CreateCardExpirationDateElementOptions,
-  'targetId'
+  'targetId' | 'validateOnChange'
 >;
 
 type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
@@ -125,7 +128,7 @@ type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
 
 type UpdateCardVerificationCodeElementOptions = Omit<
   CreateCardVerificationCodeElementOptions,
-  'targetId'
+  'targetId' | 'validateOnChange'
 >;
 
 export type {
