@@ -36,7 +36,8 @@ const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED'); // replac
 
 ### Per-request configuration
 
-All of the service methods accept an optional `RequestOptions` object. This is used if you want to set a correlation ID or if you want to set a per-request `BT-API-KEY`
+All of the service methods accept an optional `RequestOptions` object. This is used if you want to set a per-request `BT-TRACE-ID`, `BT-API-KEY` and/or
+`BT-IDEMPOTENCY-KEY`.
 
 ```javascript
 import { v4 as uuid } from 'uuid';
@@ -46,6 +47,7 @@ await bt.applications.list(
   {
     apiKey: 'key_N88mVGsp3sCXkykyN2EFED',
     correlationId: 'aa5d3379-6385-4ef4-9fdb-ca1341572153',
+    idempotencyKey: 'bb5d3379-6385-4ef4-9fdb-ca1341572154',
   }
 );
 ```

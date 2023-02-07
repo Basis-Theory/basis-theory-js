@@ -1,6 +1,7 @@
 interface RequestOptions {
   apiKey?: string;
   correlationId?: string;
+  idempotencyKey?: string;
 }
 
 type QueryValue =

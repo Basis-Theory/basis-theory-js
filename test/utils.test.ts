@@ -13,6 +13,7 @@ import {
   getOSVersion,
   getRuntime,
   BROWSER_LIST,
+  BT_IDEMPOTENCY_KEY_HEADER,
 } from '@/common';
 import type { ApplicationInfo, RequestOptions } from '@/types/sdk';
 import { describeif } from './setup/utils';
@@ -63,11 +64,13 @@ describe('Utils', () => {
         createRequestConfig({
           apiKey: chance.string(),
           correlationId: chance.string(),
+          idempotencyKey: chance.string(),
         })
       ).toStrictEqual({
         headers: {
           [API_KEY_HEADER]: expect.any(String),
           [BT_TRACE_ID_HEADER]: expect.any(String),
+          [BT_IDEMPOTENCY_KEY_HEADER]: expect.any(String),
         },
       });
     });

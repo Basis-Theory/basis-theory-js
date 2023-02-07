@@ -2,7 +2,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { v4 as uuid } from 'uuid';
 import { BasisTheory } from '@/BasisTheory';
-import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '@/common';
+import {
+  BT_TRACE_ID_HEADER,
+  API_KEY_HEADER,
+  BT_IDEMPOTENCY_KEY_HEADER,
+} from '@/common';
 import type {
   CreateTenantInvitation,
   TenantInvitation,
@@ -96,6 +100,7 @@ describe('Tenants', () => {
       const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
 
       client.onGet().reply(
         200,
@@ -117,6 +122,7 @@ describe('Tenants', () => {
         await bt.tenants.retrieve({
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual({
         id,
@@ -132,6 +138,7 @@ describe('Tenants', () => {
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -193,6 +200,7 @@ describe('Tenants', () => {
       };
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
 
       client.onPut().reply(
         200,
@@ -211,6 +219,7 @@ describe('Tenants', () => {
           {
             apiKey: _apiKey,
             correlationId,
+            idempotencyKey,
           }
         )
       ).toStrictEqual({
@@ -227,6 +236,7 @@ describe('Tenants', () => {
       expect(client.history.put[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -255,6 +265,7 @@ describe('Tenants', () => {
     test('should delete a tenant with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
 
       client.onDelete().reply(204, {});
 
@@ -262,12 +273,14 @@ describe('Tenants', () => {
         await bt.tenants.delete({
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toBeUndefined();
       expect(client.history.delete).toHaveLength(1);
       expect(client.history.delete[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -330,6 +343,7 @@ describe('Tenants', () => {
     test('should retrieve tenant usage report with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
 
       client.onGet('/reports/usage').reply(200, expectedUsageReportJson);
 
@@ -337,12 +351,14 @@ describe('Tenants', () => {
         await bt.tenants.retrieveUsageReport({
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual(expectedUsageReport);
       expect(client.history.get).toHaveLength(1);
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -451,6 +467,7 @@ describe('Tenants', () => {
 
       test('should list with options', async () => {
         const correlationId = chance.string();
+        const idempotencyKey = chance.string();
 
         client.onGet('/members').reply(200, expectedTenantMembersJson);
 
@@ -460,6 +477,7 @@ describe('Tenants', () => {
             {
               apiKey,
               correlationId,
+              idempotencyKey,
             }
           )
         ).toStrictEqual(expectedTenantMembers);
@@ -468,6 +486,7 @@ describe('Tenants', () => {
         expect(client.history.get[0].headers).toMatchObject({
           [API_KEY_HEADER]: apiKey,
           [BT_TRACE_ID_HEADER]: correlationId,
+          [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
         });
       });
 
@@ -504,6 +523,7 @@ describe('Tenants', () => {
 
       test('should delete with options', async () => {
         const correlationId = chance.string();
+        const idempotencyKey = chance.string();
 
         client.onDelete(path).reply(204, {});
 
@@ -511,6 +531,7 @@ describe('Tenants', () => {
           await bt.tenants.deleteMember(expectedMemberId, {
             apiKey,
             correlationId,
+            idempotencyKey,
           })
         ).toBeUndefined();
         expect(client.history.delete).toHaveLength(1);
@@ -518,6 +539,7 @@ describe('Tenants', () => {
         expect(client.history.delete[0].headers).toMatchObject({
           [API_KEY_HEADER]: apiKey,
           [BT_TRACE_ID_HEADER]: correlationId,
+          [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
         });
       });
 
@@ -585,6 +607,7 @@ describe('Tenants', () => {
 
       test('should create with options', async () => {
         const correlationId = chance.string();
+        const idempotencyKey = chance.string();
 
         client.onPost('/invitations').reply(201, expectedTenantInvitationJson);
 
@@ -592,6 +615,7 @@ describe('Tenants', () => {
           await bt.tenants.createInvitation(expectedCreateInvitationRequest, {
             apiKey,
             correlationId,
+            idempotencyKey,
           })
         ).toStrictEqual(expectedTenantInvitation);
         expect(client.history.post).toHaveLength(1);
@@ -599,6 +623,7 @@ describe('Tenants', () => {
         expect(client.history.post[0].headers).toMatchObject({
           [API_KEY_HEADER]: apiKey,
           [BT_TRACE_ID_HEADER]: correlationId,
+          [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
         });
       });
 
@@ -663,6 +688,7 @@ describe('Tenants', () => {
 
       test('should resend invitation with options', async () => {
         const correlationId = chance.string();
+        const idempotencyKey = chance.string();
 
         client.onPost(path).reply(200, expectedTenantInvitationJson);
 
@@ -670,6 +696,7 @@ describe('Tenants', () => {
           await bt.tenants.resendInvitation(expectedInvitationId, {
             apiKey,
             correlationId,
+            idempotencyKey,
           })
         ).toStrictEqual(expectedTenantInvitation);
         expect(client.history.post).toHaveLength(1);
@@ -677,6 +704,7 @@ describe('Tenants', () => {
         expect(client.history.post[0].headers).toMatchObject({
           [API_KEY_HEADER]: apiKey,
           [BT_TRACE_ID_HEADER]: correlationId,
+          [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
         });
       });
 
@@ -782,6 +810,7 @@ describe('Tenants', () => {
 
       test('should list with options', async () => {
         const correlationId = chance.string();
+        const idempotencyKey = chance.string();
 
         client.onGet('/invitations').reply(200, expectedTenantInvitationsJson);
 
@@ -791,6 +820,7 @@ describe('Tenants', () => {
             {
               apiKey,
               correlationId,
+              idempotencyKey,
             }
           )
         ).toStrictEqual(expectedTenantInvitations);
@@ -799,6 +829,7 @@ describe('Tenants', () => {
         expect(client.history.get[0].headers).toMatchObject({
           [API_KEY_HEADER]: apiKey,
           [BT_TRACE_ID_HEADER]: correlationId,
+          [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
         });
       });
 
@@ -861,6 +892,7 @@ describe('Tenants', () => {
 
       test('should retrieve with options', async () => {
         const correlationId = chance.string();
+        const idempotencyKey = chance.string();
 
         client.onGet(path).reply(200, expectedTenantInvitationJson);
 
@@ -868,6 +900,7 @@ describe('Tenants', () => {
           await bt.tenants.retrieveInvitation(expectedInvitationId, {
             apiKey,
             correlationId,
+            idempotencyKey,
           })
         ).toStrictEqual(expectedTenantInvitation);
         expect(client.history.get).toHaveLength(1);
@@ -875,6 +908,7 @@ describe('Tenants', () => {
         expect(client.history.get[0].headers).toMatchObject({
           [API_KEY_HEADER]: apiKey,
           [BT_TRACE_ID_HEADER]: correlationId,
+          [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
         });
       });
 
@@ -913,6 +947,7 @@ describe('Tenants', () => {
 
       test('should delete with options', async () => {
         const correlationId = chance.string();
+        const idempotencyKey = chance.string();
 
         client.onDelete(path).reply(204, {});
 
@@ -920,6 +955,7 @@ describe('Tenants', () => {
           await bt.tenants.deleteInvitation(expectedInvitationId, {
             apiKey,
             correlationId,
+            idempotencyKey,
           })
         ).toBeUndefined();
         expect(client.history.delete).toHaveLength(1);
@@ -927,6 +963,7 @@ describe('Tenants', () => {
         expect(client.history.delete[0].headers).toMatchObject({
           [API_KEY_HEADER]: apiKey,
           [BT_TRACE_ID_HEADER]: correlationId,
+          [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
         });
       });
 

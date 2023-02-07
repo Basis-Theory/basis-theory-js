@@ -2,6 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import {
   API_KEY_HEADER,
+  BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
   transformRequestSnakeCase,
 } from '@/common';
@@ -77,6 +78,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
   const chance = new Chance();
   const correlationId = chance.string();
   const apiKey = chance.string();
+  const idempotencyKey = chance.string();
 
   test('should create', async () => {
     const {
@@ -132,6 +134,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
       await service.create(createPayload, {
         apiKey,
         correlationId,
+        idempotencyKey,
       })
     ).toStrictEqual({
       ...createPayload,
@@ -145,6 +148,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
     expect(client.history.post[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
       [BT_TRACE_ID_HEADER]: correlationId,
+      [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
     });
   });
 
@@ -165,6 +169,7 @@ const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
   const id = chance.string();
   const correlationId = chance.string();
   const apiKey = chance.string();
+  const idempotencyKey = chance.string();
 
   test('should retrieve', async () => {
     const { service, client } = param();
@@ -206,6 +211,7 @@ const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
       await service.retrieve(id, {
         apiKey,
         correlationId,
+        idempotencyKey,
       })
     ).toStrictEqual({
       id,
@@ -215,6 +221,7 @@ const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
     expect(client.history.get[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
       [BT_TRACE_ID_HEADER]: correlationId,
+      [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
     });
   });
 
@@ -236,6 +243,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
   const id = chance.string();
   const correlationId = chance.string();
   const apiKey = chance.string();
+  const idempotencyKey = chance.string();
 
   test('should update', async () => {
     const {
@@ -290,6 +298,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
       await service.update(id, updatePayload, {
         apiKey,
         correlationId,
+        idempotencyKey,
       })
     ).toStrictEqual({
       ...updatePayload,
@@ -302,6 +311,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
     expect(client.history.put[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
       [BT_TRACE_ID_HEADER]: correlationId,
+      [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
     });
   });
 
@@ -323,6 +333,7 @@ const testDelete = (param: () => TestDeleteParam): void => {
   const id = chance.string();
   const correlationId = chance.string();
   const apiKey = chance.string();
+  const idempotencyKey = chance.string();
 
   test('should delete', async () => {
     const { service, client } = param();
@@ -355,12 +366,14 @@ const testDelete = (param: () => TestDeleteParam): void => {
       await service.delete(id, {
         apiKey,
         correlationId,
+        idempotencyKey,
       })
     ).toBeUndefined();
     expect(client.history.delete).toHaveLength(1);
     expect(client.history.delete[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
       [BT_TRACE_ID_HEADER]: correlationId,
+      [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
     });
   });
 
@@ -381,6 +394,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
   const chance = new Chance();
   const correlationId = chance.string();
   const apiKey = chance.string();
+  const idempotencyKey = chance.string();
   const totalItems = chance.integer();
   const pageNumber = chance.integer();
   const pageSize = chance.integer();
@@ -522,6 +536,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
       await service.list((query as unknown) as PaginatedQuery, {
         apiKey,
         correlationId,
+        idempotencyKey,
       })
     ).toStrictEqual({
       pagination: {
@@ -539,6 +554,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
     expect(client.history.get[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
       [BT_TRACE_ID_HEADER]: correlationId,
+      [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
     });
   });
 };
