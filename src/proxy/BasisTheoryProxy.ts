@@ -31,7 +31,7 @@ export class BasisTheoryProxy extends BasisTheoryService implements Proxy {
   ): Promise<any> {
     if (method === 'post' || method === 'put' || method === 'patch') {
       return this.client[method](
-        options?.path ?? '/',
+        options?.path ?? '',
         options?.body ?? undefined,
         createRequestConfig(options, {
           transformRequest: proxyRaw,
