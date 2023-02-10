@@ -1,3 +1,10 @@
+## [1.65.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.65.1...v1.65.2) (2023-02-10)
+
+
+### Bug Fixes
+
+* remove trailing slash from options path ([#280](https://github.com/Basis-Theory/basis-theory-js/issues/280)) ([81c0bd9](https://github.com/Basis-Theory/basis-theory-js/commit/81c0bd95a99b9dd9c83bf3c0261d7d4df32aa4b6))
+
 ## [1.65.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.65.0...v1.65.1) (2023-02-01)
 
 
