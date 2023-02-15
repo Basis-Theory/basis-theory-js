@@ -20,6 +20,7 @@ interface ElementInternalOptions {
 
 interface SanitizedElementOptions {
   validateOnChange?: boolean;
+  enableCopy?: boolean;
   style?: ElementStyle;
   disabled?: boolean;
   targetId?: string;
@@ -79,7 +80,7 @@ type CreateCardElementOptions = CustomizableElementOptions & {
 
 type UpdateCardElementOptions = Omit<
   CreateCardElementOptions,
-  'validateOnChange'
+  'validateOnChange' | 'enableCopy'
 >;
 
 type CreateTextElementOptions = CustomizableElementOptions &
