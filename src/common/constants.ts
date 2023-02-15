@@ -2,7 +2,7 @@ import type { BasisTheoryServicesBasePathMap } from '@/types/sdk';
 
 const API_KEY_HEADER = 'BT-API-KEY';
 const BT_TRACE_ID_HEADER = 'bt-trace-id';
-const BT_IDEMPOTENCY_KEY_HEADER = 'bt-trace-id';
+const BT_IDEMPOTENCY_KEY_HEADER = 'bt-idempotency-key';
 const CONTENT_TYPE_HEADER = 'Content-Type';
 const USER_AGENT_HEADER = 'User-Agent';
 const CLIENT_USER_AGENT_HEADER = 'BT-CLIENT-USER-AGENT';
