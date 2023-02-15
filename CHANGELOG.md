@@ -1,3 +1,10 @@
+# [1.66.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.65.2...v1.66.0) (2023-02-15)
+
+
+### Features
+
+* add elements metadata types ([#285](https://github.com/Basis-Theory/basis-theory-js/issues/285)) ([9a6ae2d](https://github.com/Basis-Theory/basis-theory-js/commit/9a6ae2dfdead4448c5ec0bb1a2922677440091d6))
+
 ## [1.65.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.65.1...v1.65.2) (2023-02-10)
 
 

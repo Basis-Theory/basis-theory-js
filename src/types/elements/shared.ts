@@ -31,6 +31,19 @@ interface PropertyError {
   type: FieldErrorType;
 }
 
+interface ElementMetadata {
+  complete: boolean;
+  valid: boolean;
+  maskSatisfied: boolean;
+  empty: boolean;
+}
+
+interface CardMetadata {
+  cardBrand: Brand;
+  cardLast4?: string;
+  cardBin?: string;
+}
+
 /**
  * Card brands type
  */
@@ -67,4 +80,6 @@ export type {
   CardIconPosition,
   AutoCompleteValue,
   DataElementReference,
+  ElementMetadata,
+  CardMetadata,
 };
