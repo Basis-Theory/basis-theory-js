@@ -23,7 +23,11 @@ import type {
   CardExpirationDateValue,
 } from './options';
 import type { Tokenize, Tokens, Proxy } from './services';
-import { CardMetadata, DataElementReference, ElementMetadata } from './shared';
+import type {
+  CardMetadata,
+  DataElementReference,
+  ElementMetadata,
+} from './shared';
 
 interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
