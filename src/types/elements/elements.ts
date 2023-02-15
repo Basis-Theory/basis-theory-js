@@ -23,10 +23,11 @@ import type {
   CardExpirationDateValue,
 } from './options';
 import type { Tokenize, Tokens, Proxy } from './services';
-import { DataElementReference } from './shared';
+import { CardMetadata, DataElementReference, ElementMetadata } from './shared';
 
 interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
+  readonly metadata: ElementMetadata;
   mount(selector: string): Promise<void>;
   update(options: UpdateOptions): Promise<void>;
   clear(): void;
@@ -40,6 +41,7 @@ interface BaseElement<UpdateOptions, ElementEvents> {
 }
 
 type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents> & {
+  readonly cardMetadata: CardMetadata;
   setValue(value: CardElementValue<'reference'>): void;
 };
 
@@ -51,6 +53,7 @@ type CardNumberElement = BaseElement<
   UpdateCardNumberElementOptions,
   CardNumberElementEvents
 > & {
+  readonly cardMetadata: CardMetadata;
   setValue(value: DataElementReference): void;
 };
 
