@@ -53,7 +53,7 @@ interface AutoCompleteOption {
 
 type CustomizableElementOptions = Pick<
   ElementOptions,
-  'style' | 'disabled' | 'validateOnChange'
+  'style' | 'disabled' | 'validateOnChange' | 'enableCopy'
 > &
   AutoCompleteOption;
 
@@ -105,7 +105,7 @@ type CreateCardNumberElementOptions = CustomizableElementOptions &
 
 type UpdateCardNumberElementOptions = Omit<
   CreateCardNumberElementOptions,
-  'targetId' | 'validateOnChange'
+  'targetId' | 'validateOnChange' | 'enableCopy'
 >;
 
 type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
@@ -117,7 +117,7 @@ type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
 
 type UpdateCardExpirationDateElementOptions = Omit<
   CreateCardExpirationDateElementOptions,
-  'targetId' | 'validateOnChange'
+  'targetId' | 'validateOnChange' | 'enableCopy'
 >;
 
 type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
@@ -129,7 +129,7 @@ type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
 
 type UpdateCardVerificationCodeElementOptions = Omit<
   CreateCardVerificationCodeElementOptions,
-  'targetId' | 'validateOnChange'
+  'targetId' | 'validateOnChange' | 'enableCopy'
 >;
 
 export type {
