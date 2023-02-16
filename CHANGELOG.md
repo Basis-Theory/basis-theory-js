@@ -1,3 +1,10 @@
+## [1.67.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.67.1...v1.67.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* make maskSatisfied optional ([#289](https://github.com/Basis-Theory/basis-theory-js/issues/289)) ([9dee8a4](https://github.com/Basis-Theory/basis-theory-js/commit/9dee8a4abd07505f5e859b4ddb9ec1d255100107))
+
 ## [1.67.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.67.0...v1.67.1) (2023-02-16)
 
 
