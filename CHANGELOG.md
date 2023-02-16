@@ -1,3 +1,10 @@
+# [1.68.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.67.2...v1.68.0) (2023-02-16)
+
+
+### Features
+
+* adding idempotency key header ([#279](https://github.com/Basis-Theory/basis-theory-js/issues/279)) ([645455f](https://github.com/Basis-Theory/basis-theory-js/commit/645455f8067e7eeb345ec0be6e60948e1508644f))
+
 ## [1.67.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.67.1...v1.67.2) (2023-02-16)
 
 
