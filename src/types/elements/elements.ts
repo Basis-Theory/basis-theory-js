@@ -45,7 +45,7 @@ interface BaseElement<UpdateOptions, ElementEvents> {
 }
 
 type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents> & {
-  readonly cardMetadata: CardMetadata;
+  readonly cardMetadata?: CardMetadata;
   setValue(value: CardElementValue<'reference'>): void;
 };
 
@@ -57,7 +57,7 @@ type CardNumberElement = BaseElement<
   UpdateCardNumberElementOptions,
   CardNumberElementEvents
 > & {
-  readonly cardMetadata: CardMetadata;
+  readonly cardMetadata?: CardMetadata;
   setValue(value: DataElementReference): void;
 };
 

@@ -20,6 +20,7 @@ interface ElementInternalOptions {
 
 interface SanitizedElementOptions {
   validateOnChange?: boolean;
+  enableCopy?: boolean;
   style?: ElementStyle;
   disabled?: boolean;
   targetId?: string;
@@ -52,7 +53,7 @@ interface AutoCompleteOption {
 
 type CustomizableElementOptions = Pick<
   ElementOptions,
-  'style' | 'disabled' | 'validateOnChange'
+  'style' | 'disabled' | 'validateOnChange' | 'enableCopy'
 > &
   AutoCompleteOption;
 
@@ -79,7 +80,7 @@ type CreateCardElementOptions = CustomizableElementOptions & {
 
 type UpdateCardElementOptions = Omit<
   CreateCardElementOptions,
-  'validateOnChange'
+  'validateOnChange' | 'enableCopy'
 >;
 
 type CreateTextElementOptions = CustomizableElementOptions &
@@ -104,7 +105,7 @@ type CreateCardNumberElementOptions = CustomizableElementOptions &
 
 type UpdateCardNumberElementOptions = Omit<
   CreateCardNumberElementOptions,
-  'targetId' | 'validateOnChange'
+  'targetId' | 'validateOnChange' | 'enableCopy'
 >;
 
 type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
@@ -116,7 +117,7 @@ type CreateCardExpirationDateElementOptions = CustomizableElementOptions &
 
 type UpdateCardExpirationDateElementOptions = Omit<
   CreateCardExpirationDateElementOptions,
-  'targetId' | 'validateOnChange'
+  'targetId' | 'validateOnChange' | 'enableCopy'
 >;
 
 type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
@@ -128,7 +129,7 @@ type CreateCardVerificationCodeElementOptions = CustomizableElementOptions &
 
 type UpdateCardVerificationCodeElementOptions = Omit<
   CreateCardVerificationCodeElementOptions,
-  'targetId' | 'validateOnChange'
+  'targetId' | 'validateOnChange' | 'enableCopy'
 >;
 
 export type {

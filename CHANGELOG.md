@@ -1,3 +1,24 @@
+## [1.67.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.67.1...v1.67.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* make maskSatisfied optional ([#289](https://github.com/Basis-Theory/basis-theory-js/issues/289)) ([9dee8a4](https://github.com/Basis-Theory/basis-theory-js/commit/9dee8a4abd07505f5e859b4ddb9ec1d255100107))
+
+## [1.67.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.67.0...v1.67.1) (2023-02-16)
+
+
+### Bug Fixes
+
+* make CardMetadata optional ([#288](https://github.com/Basis-Theory/basis-theory-js/issues/288)) ([ea5e137](https://github.com/Basis-Theory/basis-theory-js/commit/ea5e137e8e43c580bb1f39be0596b44f47ff7e02))
+
+# [1.67.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.66.0...v1.67.0) (2023-02-16)
+
+
+### Features
+
+* add enableCopy flag ([#284](https://github.com/Basis-Theory/basis-theory-js/issues/284)) ([cc196a5](https://github.com/Basis-Theory/basis-theory-js/commit/cc196a528bb2c1f4260d76c223c4ebdcaf6f2c71))
+
 # [1.66.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.65.2...v1.66.0) (2023-02-15)
 
 
