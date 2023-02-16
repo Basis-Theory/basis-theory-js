@@ -20,6 +20,7 @@ import { BasisTheoryApiError } from './BasisTheoryApiError';
 import {
   API_KEY_HEADER,
   BROWSER_LIST,
+  BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
@@ -226,6 +227,7 @@ const createRequestConfig = (
   const {
     apiKey,
     correlationId,
+    idempotencyKey,
     query,
     headers,
   } = options as ProxyRequestOptions;
@@ -239,11 +241,17 @@ const createRequestConfig = (
         [BT_TRACE_ID_HEADER]: correlationId,
       }
     : {};
+  const idempotencyKeyHeader = idempotencyKey
+    ? {
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+      }
+    : {};
 
   return {
     headers: {
       ...apiKeyHeader,
       ...correlationIdHeader,
+      ...idempotencyKeyHeader,
       ...(typeof headers !== 'undefined' && { ...headers }),
     },
     ...(typeof query !== 'undefined' && { params: query }),

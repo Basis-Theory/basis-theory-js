@@ -1,7 +1,11 @@
 import type MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '@/common';
+import {
+  API_KEY_HEADER,
+  BT_IDEMPOTENCY_KEY_HEADER,
+  BT_TRACE_ID_HEADER,
+} from '@/common';
 import type { ApplicationType, TransformType } from '@/types/models';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import {
@@ -151,6 +155,7 @@ describe('Applications', () => {
       const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
 
       client.onGet('/key').reply(
         200,
@@ -169,6 +174,7 @@ describe('Applications', () => {
         await bt.applications.retrieveByKey({
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual({
         id,
@@ -181,6 +187,7 @@ describe('Applications', () => {
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -241,6 +248,7 @@ describe('Applications', () => {
       const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
 
       client.onPost(`${id}/regenerate`).reply(
         200,
@@ -260,6 +268,7 @@ describe('Applications', () => {
         await bt.applications.regenerateKey(id, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual({
         id,
@@ -273,6 +282,7 @@ describe('Applications', () => {
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 

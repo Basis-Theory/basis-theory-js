@@ -1,7 +1,11 @@
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
-import { API_KEY_HEADER, BT_TRACE_ID_HEADER } from '@/common';
+import {
+  API_KEY_HEADER,
+  BT_IDEMPOTENCY_KEY_HEADER,
+  BT_TRACE_ID_HEADER,
+} from '@/common';
 import { transformReactorRequestSnakeCase } from '@/common/utils';
 import { TokenType } from '@/types/models';
 import type { BasisTheory as IBasisTheory, ReactRequest } from '@/types/sdk';
@@ -183,6 +187,7 @@ describe('Reactors', () => {
       const modifiedAt = chance.string();
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
 
       client.onPost(`/${reactorId}/react`).reply(
         200,
@@ -208,6 +213,7 @@ describe('Reactors', () => {
         await bt.reactors.react(reactorId, reactRequest, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual({
         /* eslint-disable camelcase */
@@ -235,6 +241,7 @@ describe('Reactors', () => {
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 

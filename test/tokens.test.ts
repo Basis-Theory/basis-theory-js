@@ -3,6 +3,7 @@ import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
 import {
   API_KEY_HEADER,
+  BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
   CONTENT_TYPE_HEADER,
   getQueryParams,
@@ -117,6 +118,7 @@ describe('Tokens', () => {
     test('should retrieve with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
       const id = chance.string();
       const tenantId = chance.string();
       const fingerprint = chance.string();
@@ -150,6 +152,7 @@ describe('Tokens', () => {
         await bt.tokens.retrieve(id, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual({
         id,
@@ -168,6 +171,7 @@ describe('Tokens', () => {
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -206,6 +210,7 @@ describe('Tokens', () => {
     test('should create association with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
       const parentId = chance.string();
       const childId = chance.string();
 
@@ -215,6 +220,7 @@ describe('Tokens', () => {
         await bt.tokens.createAssociation(parentId, childId, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toBeUndefined();
 
@@ -225,6 +231,7 @@ describe('Tokens', () => {
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -264,6 +271,7 @@ describe('Tokens', () => {
     test('should delete association with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
       const parentId = chance.string();
       const childId = chance.string();
 
@@ -273,6 +281,7 @@ describe('Tokens', () => {
         await bt.tokens.deleteAssociation(parentId, childId, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toBeUndefined();
 
@@ -283,6 +292,7 @@ describe('Tokens', () => {
       expect(client.history.delete[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -358,6 +368,7 @@ describe('Tokens', () => {
     test('should create child token for a token with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
       const parentId = chance.string();
       const tokenPayload = {
         data: chance.string(),
@@ -385,6 +396,7 @@ describe('Tokens', () => {
         await bt.tokens.createChild(parentId, tokenPayload, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual({
         ...tokenPayload,
@@ -402,6 +414,7 @@ describe('Tokens', () => {
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -514,6 +527,7 @@ describe('Tokens', () => {
     test('should list child tokens for a token w/ options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
       const parentId = chance.string();
       const totalItems = chance.integer();
       const pageNumber = chance.integer();
@@ -552,6 +566,7 @@ describe('Tokens', () => {
         await bt.tokens.listChildren(parentId, query, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual({
         pagination: {
@@ -567,6 +582,7 @@ describe('Tokens', () => {
       expect(client.history.get[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -692,6 +708,7 @@ describe('Tokens', () => {
       const id = _chance.guid();
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
 
       /* eslint-disable camelcase */
       const updatePayload: UpdateToken = {
@@ -733,6 +750,7 @@ describe('Tokens', () => {
         await bt.tokens.update(id, updatePayload, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual(updatedToken);
 
@@ -744,6 +762,7 @@ describe('Tokens', () => {
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
         [CONTENT_TYPE_HEADER]: expectedContentType,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
@@ -878,6 +897,7 @@ describe('Tokens', () => {
     test('should search tokens with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
       const totalItems = chance.integer();
       const pageNumber = chance.integer();
       const pageSize = chance.integer();
@@ -908,6 +928,7 @@ describe('Tokens', () => {
         await bt.tokens.search(searchRequest, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual({
         pagination: {
@@ -927,6 +948,7 @@ describe('Tokens', () => {
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 

@@ -1,7 +1,11 @@
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
-import { BT_TRACE_ID_HEADER, API_KEY_HEADER } from '@/common';
+import {
+  BT_TRACE_ID_HEADER,
+  API_KEY_HEADER,
+  BT_IDEMPOTENCY_KEY_HEADER,
+} from '@/common';
 import {
   DATA_CLASSIFICATIONS,
   DATA_IMPACT_LEVELS,
@@ -130,6 +134,7 @@ describe('Tokenize', () => {
     test('should tokenize with options', async () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
+      const idempotencyKey = chance.string();
       /* eslint-disable camelcase */
       const tokens = {
         first_name: chance.string(),
@@ -190,6 +195,7 @@ describe('Tokenize', () => {
         await bt.tokenize(tokens, {
           apiKey: _apiKey,
           correlationId,
+          idempotencyKey,
         })
       ).toStrictEqual(tokenResponse);
       expect(client.history.post).toHaveLength(1);
@@ -197,6 +203,7 @@ describe('Tokenize', () => {
       expect(client.history.post[0].headers).toMatchObject({
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       });
     });
 
