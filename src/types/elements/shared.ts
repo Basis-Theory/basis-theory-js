@@ -34,7 +34,7 @@ interface PropertyError {
 interface ElementMetadata {
   complete: boolean;
   valid: boolean;
-  maskSatisfied: boolean;
+  maskSatisfied?: boolean;
   empty: boolean;
 }
 
