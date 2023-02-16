@@ -1,3 +1,10 @@
+## [1.67.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.67.0...v1.67.1) (2023-02-16)
+
+
+### Bug Fixes
+
+* make CardMetadata optional ([#288](https://github.com/Basis-Theory/basis-theory-js/issues/288)) ([ea5e137](https://github.com/Basis-Theory/basis-theory-js/commit/ea5e137e8e43c580bb1f39be0596b44f47ff7e02))
+
 # [1.67.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.66.0...v1.67.0) (2023-02-16)
 
 
