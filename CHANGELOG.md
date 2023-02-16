@@ -1,3 +1,10 @@
+# [1.67.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.66.0...v1.67.0) (2023-02-16)
+
+
+### Features
+
+* add enableCopy flag ([#284](https://github.com/Basis-Theory/basis-theory-js/issues/284)) ([cc196a5](https://github.com/Basis-Theory/basis-theory-js/commit/cc196a528bb2c1f4260d76c223c4ebdcaf6f2c71))
+
 # [1.66.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.65.2...v1.66.0) (2023-02-15)
 
 
