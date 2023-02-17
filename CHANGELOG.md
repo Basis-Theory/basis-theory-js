@@ -1,3 +1,10 @@
+# [1.69.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.68.0...v1.69.0) (2023-02-17)
+
+
+### Features
+
+* add async reactor params ([#290](https://github.com/Basis-Theory/basis-theory-js/issues/290)) ([7cac26a](https://github.com/Basis-Theory/basis-theory-js/commit/7cac26abffdf9c626324230d6422cf0bcc1ec918))
+
 # [1.68.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.67.2...v1.68.0) (2023-02-16)
 
 
