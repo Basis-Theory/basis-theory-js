@@ -22,6 +22,8 @@ interface ListReactorQuery extends PaginatedQuery {
 
 interface ReactRequest {
   args: DataObject;
+  callbackUrl?: string;
+  timeoutMs?: number;
 }
 
 interface Reactors

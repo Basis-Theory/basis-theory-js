@@ -245,6 +245,103 @@ describe('Reactors', () => {
       });
     });
 
+    test('should react with callbackUrl and timeout', async () => {
+      const id = chance.string();
+      const reactorId = chance.string();
+      const tenantId = chance.string();
+      const fingerprint = chance.string();
+      const type = chance.string() as TokenType;
+
+      /* eslint-disable camelcase */
+      const args = {
+        first: chance.string(),
+        second: chance.string(),
+        nested: {
+          first_nested: chance.string(),
+          second_nested: chance.string(),
+        },
+      };
+
+      const timeout = chance.minute();
+      const callbackUrl = chance.url();
+
+      const reactRequest = {
+        args,
+        callbackUrl,
+        timeout,
+      };
+      const data = {
+        first_nested: chance.string(),
+        second_nested: chance.string(),
+      };
+      /* eslint-enable camelcase */
+
+      const createdBy = chance.string();
+      const createdAt = chance.string();
+      const modifiedBy = chance.string();
+      const modifiedAt = chance.string();
+      const _apiKey = chance.string();
+      const correlationId = chance.string();
+      const idempotencyKey = chance.string();
+
+      client.onPost(`/${reactorId}/react`).reply(
+        200,
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          tokens: {
+            id,
+            tenant_id: tenantId,
+            fingerprint,
+            type,
+            data,
+            created_at: createdAt,
+            created_by: createdBy,
+            modified_at: modifiedAt,
+            modified_by: modifiedBy,
+          },
+          raw: data,
+        })
+        /* eslint-enable camelcase */
+      );
+
+      expect(
+        await bt.reactors.react(reactorId, reactRequest, {
+          apiKey: _apiKey,
+          correlationId,
+          idempotencyKey,
+        })
+      ).toStrictEqual({
+        /* eslint-disable camelcase */
+        tokens: {
+          id,
+          tenant_id: tenantId,
+          fingerprint,
+          type,
+          data,
+          created_at: createdAt,
+          created_by: createdBy,
+          modified_at: modifiedAt,
+          modified_by: modifiedBy,
+        },
+        raw: data,
+        /* eslint-enable camelcase */
+      });
+      expect(client.history.post).toHaveLength(1);
+      expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
+      expect(client.history.post[0].data).toStrictEqual(
+        JSON.stringify({
+          args,
+          callbackUrl,
+          timeout,
+        })
+      );
+      expect(client.history.post[0].headers).toMatchObject({
+        [API_KEY_HEADER]: _apiKey,
+        [BT_TRACE_ID_HEADER]: correlationId,
+        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+      });
+    });
+
     test('should reject with status >= 400 <= 599', async () => {
       const reactorId = chance.string();
       const status = errorStatus();
