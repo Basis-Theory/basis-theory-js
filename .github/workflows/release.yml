@@ -66,6 +66,13 @@ jobs:
           ref: master
           inputs: '{ "source": "Basis-Theory/basis-theory-js" }'
 
+      - name: Purge cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_PROD_ZONE_ID }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+          PURGE_URLS: '["https://cdn.basistheory.com/*"]'
+
       - name: Slack Deploy / Release Alert
         uses: 8398a7/action-slack@v3
         if: always()
