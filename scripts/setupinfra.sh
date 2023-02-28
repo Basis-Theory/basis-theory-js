@@ -22,7 +22,6 @@ GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_STACK --json)
 EDGE_RESOURCE_GROUP_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .edgeResourceGroupName)
 JS_STORAGE_ACCOUNT_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsStorageAccountName)
 JS_CONTAINER_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsContainerName)
-JS_HOST=$(echo $GLOBAL_STACK_OUTPUTS | jq -r '.hostNames.js')
 
 MAJOR_VERSION=$(cat package.json | jq -r '.version' | cut -d. -f1)
 BUNDLE_PATH=$dist_directory/basis-theory-js.bundle.js
@@ -30,6 +29,11 @@ BLOB_DIR=v$MAJOR_VERSION
 INDEX_JS_NAME=$BLOB_DIR/index.js
 VERSIONED_JS_NAME=$(cat package.json | jq -r '.version')
 
+if [ "$ENVIRONMENT" = dev ] ; then
+  JS_HOST="js.flock-dev.com"
+else
+  JS_HOST="js.basistheory.com"
+fi
 
 echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
