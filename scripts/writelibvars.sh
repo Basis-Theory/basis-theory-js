@@ -5,15 +5,15 @@ current_directory="$PWD"
 
 pulumi login
 
-if [ "$IS_PR_WORKFLOW" = true ] ; then
-  GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_DEV_STACK --json)
+if [ "$ENVIRONMENT" = dev ]; then
+  JS_HOST="js.flock-dev.com"
+  API_HOST="api.flock-dev.com"
+  ELEMENTS_HOST="elements.flock-dev.com"
 else
-  GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_PROD_STACK --json)
+  JS_HOST="js.basistheory.com"
+  API_HOST="api.basistheory.com"
+  ELEMENTS_HOST="elements.basistheory.com"
 fi
-
-JS_HOST=$(echo $GLOBAL_STACK_OUTPUTS | jq -r '.hostNames.js')
-API_HOST=$(echo $GLOBAL_STACK_OUTPUTS | jq -r '.hostNames.api')
-ELEMENTS_HOST=$(echo $GLOBAL_STACK_OUTPUTS | jq -r '.hostNames.elements')
 
 printf 'JS_HOST=%s\n' "$JS_HOST" >> .env
 printf 'API_HOST=%s\n' "$API_HOST" >> .env

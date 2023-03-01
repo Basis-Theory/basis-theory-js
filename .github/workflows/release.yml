@@ -44,6 +44,7 @@ jobs:
         run: make write-lib-vars
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          ENVIRONMENT: prod
 
       - name: Build
         run: make build
