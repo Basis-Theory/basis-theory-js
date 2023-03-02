@@ -2,15 +2,15 @@ name: Pull Request
 
 on:
   pull_request:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ['14.x']
-        os: [ubuntu-latest]
+        node: [ '14.x' ]
+        os: [ ubuntu-latest ]
     env:
       CI: 1 # prevents extra Cypress installation progress messages
       HUSKY: 0 # disables husky hooks
@@ -82,6 +82,10 @@ jobs:
         env:
           ENVIRONMENT: dev
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          S3_CF_DEV_STATE: ${{ vars.S3_CF_DEV_STATE }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.JS_AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-2
           IS_PR_WORKFLOW: true
 
       - name: Purge cache

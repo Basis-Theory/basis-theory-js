@@ -18,10 +18,17 @@ else
   PULUMI_GLOBAL_STACK=$PULUMI_GLOBAL_PROD_STACK
 fi
 
+if [ "$ENVIRONMENT" = dev ] ; then
+  aws s3 cp s3://basis-theory-tf-state/basistheory-cloudflare/dev/terraform.tfstate ./
+else
+  aws s3 cp s3://basis-theory-tf-state/basistheory-cloudflare/prod/terraform.tfstate ./
+fi
+
 GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_STACK --json)
 EDGE_RESOURCE_GROUP_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .edgeResourceGroupName)
 JS_STORAGE_ACCOUNT_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsStorageAccountName)
 JS_CONTAINER_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsContainerName)
+JS_BUCKET_NAME=$(jq -r .outputs.js_bucket_name.value terraform.tfstate)
 
 MAJOR_VERSION=$(cat package.json | jq -r '.version' | cut -d. -f1)
 BUNDLE_PATH=$dist_directory/basis-theory-js.bundle.js
@@ -37,6 +44,9 @@ fi
 
 echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
+#Batch upload
+aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}"
+
 # Global Stack Upload
 az storage blob upload \
   --account-name $JS_STORAGE_ACCOUNT_NAME \
@@ -49,6 +59,8 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
   BLOB_NAME=$BLOB_DIR/$(git rev-parse HEAD).js
 
   echo "Uploading bundle to $JS_HOST/$BLOB_NAME"
+  aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${BLOB_NAME}"
+
 
   # Global Stack Upload
   az storage blob upload \
@@ -66,6 +78,7 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
 
 else
   echo "Uploading bundle to $JS_HOST/$VERSIONED_JS_NAME"
+  aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}"
 
   # Global Stack Upload
   az storage blob upload \
