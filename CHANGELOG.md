@@ -1,3 +1,10 @@
+## [1.69.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.0...v1.69.1) (2023-03-02)
+
+
+### Bug Fixes
+
+* fix issue w dev script ([#294](https://github.com/Basis-Theory/basis-theory-js/issues/294)) ([a0d05b9](https://github.com/Basis-Theory/basis-theory-js/commit/a0d05b91e18b44d5dc630b1a32dc0492fc0baa2f))
+
 # [1.69.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.68.0...v1.69.0) (2023-02-17)
 
 
