@@ -81,6 +81,7 @@ jobs:
         run: make setup-infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          ENVIRONMENT: dev
           IS_PR_WORKFLOW: true
 
       - name: Purge cache
