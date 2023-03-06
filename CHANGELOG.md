@@ -1,3 +1,10 @@
+## [1.69.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.1...v1.69.2) (2023-03-06)
+
+
+### Bug Fixes
+
+* pipeline fix for release ([#297](https://github.com/Basis-Theory/basis-theory-js/issues/297)) ([81f289e](https://github.com/Basis-Theory/basis-theory-js/commit/81f289ef8953d4e7c660b4a3d3e328aa14cdc4ba))
+
 ## [1.69.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.0...v1.69.1) (2023-03-02)
 
 
