@@ -60,6 +60,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.JS_AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
           S3_CF_PROD_STATE: ${{ vars.S3_CF_PROD_STATE }}
+          AWS_REGION: us-east-2
           ENVIRONMENT: prod
 
       - name: Dispatch integration tests run
