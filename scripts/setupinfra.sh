@@ -20,8 +20,8 @@ fi
 
 if [ "$ENVIRONMENT" = dev ] ; then
   JS_BUCKET_NAME=$(aws s3 cp s3://basis-theory-tf-state/basistheory-cloudflare/dev/terraform.tfstate - | jq -r .outputs.js_bucket_name.value)
-#else
-#  JS_BUCKET_NAME=$(aws s3 cp s3://basis-theory-tf-state/basistheory-cloudflare/prod/terraform.tfstate - | jq -r .outputs.js_bucket_name.value)
+else
+  JS_BUCKET_NAME=$(aws s3 cp s3://basis-theory-tf-state/basistheory-cloudflare/dev/terraform.tfstate - | jq -r .outputs.js_bucket_name.value)
 fi
 
 GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_STACK --json)
