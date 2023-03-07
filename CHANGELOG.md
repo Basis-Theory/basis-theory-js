@@ -1,3 +1,10 @@
+## [1.69.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.2...v1.69.3) (2023-03-07)
+
+
+### Bug Fixes
+
+* remove prod for aws s3 ([#300](https://github.com/Basis-Theory/basis-theory-js/issues/300)) ([83545ab](https://github.com/Basis-Theory/basis-theory-js/commit/83545ab51fca59ee3407d7ed9a9a5517c8def78c))
+
 ## [1.69.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.1...v1.69.2) (2023-03-06)
 
 
