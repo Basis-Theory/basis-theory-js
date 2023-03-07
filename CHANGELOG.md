@@ -1,3 +1,10 @@
+## [1.69.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.3...v1.69.4) (2023-03-07)
+
+
+### Bug Fixes
+
+* remove prod call for state pull ([#301](https://github.com/Basis-Theory/basis-theory-js/issues/301)) ([f0606cf](https://github.com/Basis-Theory/basis-theory-js/commit/f0606cf31f0701436afbae89c0e6be52277a03fe))
+
 ## [1.69.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.2...v1.69.3) (2023-03-07)
 
 
