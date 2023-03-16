@@ -1,3 +1,10 @@
+# [1.70.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.4...v1.70.0) (2023-03-16)
+
+
+### Features
+
+* allow passage of custom https agent ([#304](https://github.com/Basis-Theory/basis-theory-js/issues/304)) ([e2cb101](https://github.com/Basis-Theory/basis-theory-js/commit/e2cb1018377eb9fbed232aac8877e0f2b678b012))
+
 ## [1.69.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.3...v1.69.4) (2023-03-07)
 
 
