@@ -1,3 +1,4 @@
+import https from 'https';
 import type { BasisTheoryElements } from '@/types/elements';
 import type {
   Tokens,
@@ -22,6 +23,7 @@ interface ApplicationInfo {
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
   appInfo?: ApplicationInfo;
+  httpsAgent?: https.Agent;
 }
 
 interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {

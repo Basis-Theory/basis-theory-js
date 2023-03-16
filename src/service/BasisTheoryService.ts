@@ -23,6 +23,7 @@ export abstract class BasisTheoryService<
       transformRequest,
       transformResponse,
       appInfo,
+      httpsAgent,
     } = options;
 
     this.client = axios.create({
@@ -43,6 +44,7 @@ export abstract class BasisTheoryService<
         .transformResponse as AxiosTransformer[]).concat(
         transformResponse || transformResponseCamelCase
       ),
+      httpsAgent,
       /* eslint-enable unicorn/prefer-spread */
     });
     this.client.interceptors.response.use(undefined, errorInterceptor);

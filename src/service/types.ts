@@ -1,4 +1,5 @@
 import type { AxiosRequestConfig } from 'axios';
+import https from 'https';
 import type { ApplicationInfo } from '@/types/sdk';
 
 interface BasisTheoryServiceOptions
@@ -6,6 +7,7 @@ interface BasisTheoryServiceOptions
   apiKey: string;
   baseURL: string;
   appInfo?: ApplicationInfo;
+  httpsAgent?: https.Agent;
 }
 
 type RequestTransformers = Pick<
