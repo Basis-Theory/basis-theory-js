@@ -41,7 +41,7 @@ else
   JS_HOST="js.basistheory.com"
   aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}"
 fi
-`
+
 # Global Stack Upload
 az storage blob upload \
   --account-name $JS_STORAGE_ACCOUNT_NAME \
