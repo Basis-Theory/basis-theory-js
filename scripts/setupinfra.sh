@@ -73,7 +73,7 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
 
 else
   echo "Uploading bundle to $JS_HOST/$VERSIONED_JS_NAME"
-#  aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}"
+  aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}"
 
   # Global Stack Upload
   az storage blob upload \
