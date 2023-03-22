@@ -93,7 +93,7 @@ jobs:
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_DEV_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
-          PURGE_URLS: '["https://cdn.flock-dev.com/*"]'
+          PURGE_URLS: '["https://js.flock-dev.com/*"]'
 
       - name: Monitor coverage
         uses: slavcodev/coverage-monitor-action@1.2.0
