@@ -77,7 +77,7 @@ jobs:
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_PROD_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
-          PURGE_URLS: '["https://cdn.basistheory.com/*"]'
+          PURGE_URLS: '["https://js.basistheory.com/*"]'
 
       - name: Slack Deploy / Release Alert
         uses: 8398a7/action-slack@v3
