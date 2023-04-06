@@ -55,7 +55,7 @@
     "@babel/preset-typescript": "^7.12.13",
     "@basis-theory/eslint-config": "^1.0.13",
     "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-conventional": "^17.4.4",
     "@peculiar/webcrypto": "^1.1.6",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
