@@ -1,3 +1,10 @@
+## [1.70.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.70.0...v1.70.1) (2023-04-06)
+
+
+### Bug Fixes
+
+* update hosted elements hosts ([#312](https://github.com/Basis-Theory/basis-theory-js/issues/312)) ([a40b96c](https://github.com/Basis-Theory/basis-theory-js/commit/a40b96c1b86068e7b6b0b8a49471b1adb6576506))
+
 # [1.70.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.69.4...v1.70.0) (2023-03-16)
 
 
