@@ -14,7 +14,7 @@ context('Elements example', () => {
     cy.visit('cypress/fixtures/elements.html');
     cy.on('window:alert', (val) => {
       expect(val).to.equal(
-        `BasisTheoryElements 04ab9d12-4959-4c48-ba03-9ef722efcc5a https://elements.basistheory.com`
+        `BasisTheoryElements 04ab9d12-4959-4c48-ba03-9ef722efcc5a https://js.basistheory.com`
       );
     });
   });
