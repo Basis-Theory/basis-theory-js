@@ -8,11 +8,11 @@ pulumi login
 if [ "$ENVIRONMENT" = dev ]; then
   JS_HOST="js.flock-dev.com"
   API_HOST="api.flock-dev.com"
-  ELEMENTS_HOST="elements.flock-dev.com"
+  ELEMENTS_HOST="js.flock-dev.com/hosted-elements"
 else
   JS_HOST="js.basistheory.com"
   API_HOST="api.basistheory.com"
-  ELEMENTS_HOST="elements.basistheory.com"
+  ELEMENTS_HOST="js.basistheory.com/hosted-elements"
 fi
 
 printf 'JS_HOST=%s\n' "$JS_HOST" >> .env
