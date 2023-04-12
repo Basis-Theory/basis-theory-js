@@ -1,4 +1,5 @@
 import axios from 'axios';
+import https from 'https';
 import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
@@ -46,6 +47,7 @@ import {
   CLIENT_BASE_PATHS,
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
+  DEFAULT_KEEPALIVE_TIMEOUT_MS,
 } from './common';
 import {
   delegateTokenize,
@@ -62,11 +64,22 @@ import { BasisTheoryReactors } from './reactors';
 import { BasisTheorySessions } from './sessions';
 import { BasisTheoryTenants } from './tenants';
 
+const defaultAgent = (): https.Agent => {
+  try {
+    return new https.Agent({
+      keepAlive: true,
+      keepAliveMsecs: DEFAULT_KEEPALIVE_TIMEOUT_MS,
+    });
+  } catch {
+    return axios.defaults.httpsAgent;
+  }
+};
+
 const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
   appInfo: {},
-  httpsAgent: axios.defaults.httpsAgent,
+  httpsAgent: defaultAgent(),
 };
 
 export class BasisTheory
