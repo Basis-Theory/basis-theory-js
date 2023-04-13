@@ -10,6 +10,7 @@ const USER_AGENT_CLIENT = 'BasisTheoryJS';
 
 const DEFAULT_BASE_URL = `https://${process.env.API_HOST}`;
 const DEFAULT_ELEMENTS_BASE_URL = `https://${process.env.ELEMENTS_HOST}`;
+const DEFAULT_KEEPALIVE_TIMEOUT_MS = 5000;
 
 const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   tokens: 'tokens',
@@ -76,4 +77,5 @@ export {
   DEFAULT_ELEMENTS_BASE_URL,
   CLIENT_BASE_PATHS,
   BROWSER_LIST,
+  DEFAULT_KEEPALIVE_TIMEOUT_MS,
 };

@@ -7,6 +7,7 @@ import {
   CLIENT_BASE_PATHS,
   buildClientUserAgentString,
   buildUserAgentString,
+  DEFAULT_KEEPALIVE_TIMEOUT_MS,
 } from '@/common';
 import { BasisTheoryService } from '@/service';
 import { getTestAppInfo } from './setup/utils';
@@ -30,6 +31,10 @@ describe('clients', () => {
       },
       transformRequest: expect.any(Array),
       transformResponse: expect.any(Array),
+      httpsAgent: expect.objectContaining({
+        keepAlive: true,
+        keepAliveMsecs: DEFAULT_KEEPALIVE_TIMEOUT_MS,
+      }),
     };
 
     expect(create).toHaveBeenCalledWith({
