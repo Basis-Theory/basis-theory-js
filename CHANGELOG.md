@@ -1,3 +1,10 @@
+# [1.71.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.70.1...v1.71.0) (2023-04-13)
+
+
+### Features
+
+* add 5s connection keep-alive to node requests ([#314](https://github.com/Basis-Theory/basis-theory-js/issues/314)) ([e19dbda](https://github.com/Basis-Theory/basis-theory-js/commit/e19dbda9fd40e2662979e44074d754be94dd9bfa))
+
 ## [1.70.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.70.0...v1.70.1) (2023-04-06)
 
 
