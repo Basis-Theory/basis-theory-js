@@ -1,3 +1,10 @@
+## [1.71.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.0...v1.71.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* edits for removing azure sa push for static content ([#316](https://github.com/Basis-Theory/basis-theory-js/issues/316)) ([5b779de](https://github.com/Basis-Theory/basis-theory-js/commit/5b779de5b7862719deb811cc96acb4861b0a654f))
+
 # [1.71.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.70.1...v1.71.0) (2023-04-13)
 
 
