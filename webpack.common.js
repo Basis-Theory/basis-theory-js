@@ -21,7 +21,6 @@ const base = {
       stream: false,
       os: require.resolve('os-browserify/browser'),
       process: false,
-      https: false,
     },
   },
 
