@@ -1,3 +1,10 @@
+## [1.71.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.1...v1.71.2) (2023-04-25)
+
+
+### Bug Fixes
+
+* remove node https dependency ([#318](https://github.com/Basis-Theory/basis-theory-js/issues/318)) ([4e83030](https://github.com/Basis-Theory/basis-theory-js/commit/4e83030ac59425b23d5de1fea95a417b1caed834))
+
 ## [1.71.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.0...v1.71.1) (2023-04-13)
 
 
