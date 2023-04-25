@@ -1,5 +1,4 @@
 import type { AxiosRequestConfig } from 'axios';
-import https from 'https';
 import type { ApplicationInfo } from '@/types/sdk';
 
 interface BasisTheoryServiceOptions
@@ -7,7 +6,9 @@ interface BasisTheoryServiceOptions
   apiKey: string;
   baseURL: string;
   appInfo?: ApplicationInfo;
-  httpsAgent?: https.Agent;
+  // 'any' is the type accepted by axios, this avoids having to import 'https'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  httpsAgent?: any;
 }
 
 type RequestTransformers = Pick<
