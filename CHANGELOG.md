@@ -1,3 +1,10 @@
+## [1.71.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.2...v1.71.3) (2023-05-03)
+
+
+### Bug Fixes
+
+* revert default agent settings ([#321](https://github.com/Basis-Theory/basis-theory-js/issues/321)) ([dc08788](https://github.com/Basis-Theory/basis-theory-js/commit/dc0878843e16cbe4b75d638fa7b1d60cd8e5dabc))
+
 ## [1.71.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.1...v1.71.2) (2023-04-25)
 
 
