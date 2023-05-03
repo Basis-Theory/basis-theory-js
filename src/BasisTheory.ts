@@ -1,4 +1,3 @@
-import axios from 'axios';
 import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
@@ -66,7 +65,6 @@ const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
   appInfo: {},
-  httpsAgent: axios.defaults.httpAgent,
 };
 
 export class BasisTheory
@@ -149,73 +147,60 @@ export class BasisTheory
         await this.loadElements(apiKey);
       }
 
-      const httpsAgent = this._initOptions.httpsAgent;
-
       this._tokens = new (delegateTokens(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._tokenize = new (delegateTokenize(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokenize, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.applications, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._tenants = new BasisTheoryTenants({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tenants, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._logs = new BasisTheoryLogs({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.logs, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._reactorFormulas = new BasisTheoryReactorFormulas({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.reactorFormulas, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._reactors = new BasisTheoryReactors({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.reactors, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._permissions = new BasisTheoryPermissions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.permissions, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._proxies = new BasisTheoryProxies({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxies, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._proxy = new (delegateProxy(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxy, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._sessions = new BasisTheorySessions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.sessions, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
 
       this._initStatus = 'done';
