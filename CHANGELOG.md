@@ -1,3 +1,10 @@
+## [1.71.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.3...v1.71.4) (2023-05-03)
+
+
+### Bug Fixes
+
+* remove httpsAgent option ([#322](https://github.com/Basis-Theory/basis-theory-js/issues/322)) ([7458d34](https://github.com/Basis-Theory/basis-theory-js/commit/7458d34d5fe1c094a02813df4ab35f6a71a926da))
+
 ## [1.71.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.2...v1.71.3) (2023-05-03)
 
 
