@@ -6,9 +6,6 @@ interface BasisTheoryServiceOptions
   apiKey: string;
   baseURL: string;
   appInfo?: ApplicationInfo;
-  // 'any' is the type accepted by axios, this avoids having to import 'https'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  httpsAgent?: any;
 }
 
 type RequestTransformers = Pick<
