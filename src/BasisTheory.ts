@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
@@ -45,7 +46,6 @@ import {
   CLIENT_BASE_PATHS,
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
-  DEFAULT_KEEPALIVE_TIMEOUT_MS,
 } from './common';
 import {
   delegateTokenize,
@@ -66,10 +66,7 @@ const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
   appInfo: {},
-  httpsAgent: {
-    keepAlive: true,
-    keepAliveMsecs: DEFAULT_KEEPALIVE_TIMEOUT_MS,
-  },
+  httpsAgent: axios.defaults.httpAgent,
 };
 
 export class BasisTheory
