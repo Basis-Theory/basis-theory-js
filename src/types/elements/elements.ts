@@ -32,6 +32,7 @@ import type {
 interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
   readonly metadata: ElementMetadata;
+  mount(element: Element): Promise<void>;
   mount(selector: string): Promise<void>;
   update(options: UpdateOptions): Promise<void>;
   clear(): void;
