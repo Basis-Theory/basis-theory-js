@@ -1,8 +1,8 @@
 import type { ElementValue } from '@/types/elements';
 import type {
   CreateToken as CreateTokenModel,
-  UpdateToken as UpdateTokenModel,
   Token,
+  UpdateToken as UpdateTokenModel,
 } from '@/types/models';
 import type { Create, Retrieve, Update } from '@/types/sdk';
 

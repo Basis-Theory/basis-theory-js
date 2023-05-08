@@ -1,3 +1,5 @@
+import { CardElementValue } from '../elements';
+import { Card } from './cards';
 import type { Primitive, TokenBase } from './shared';
 
 const DATA_CLASSIFICATIONS = ['general', 'bank', 'pci', 'pii'] as const;
@@ -55,6 +57,34 @@ interface Token<DataType = Primitive> extends TokenBase {
   expiresAt?: string;
 }
 
+interface Secondary {
+  /**
+   * URL of the secondary service
+   */
+  url: string;
+
+  config: {
+    /**
+     * HTTP headers like content-type, authorization, etc required by the secondary service
+     */
+    headers: Record<string, unknown>;
+  };
+  /**
+   * Payload to merge with the card object
+   */
+  payload: Record<string, unknown>;
+  /**
+   *  Used to specify the mapping between keys in the `Card` type and keys in the object expected by the secondary service.
+   * The properties in the new object will be renamed as follows:
+   * 1) `['number']` will default to `'number'`
+   * 2) `['expirationDate', 'expDate']` will default to `'expDate'`
+   */
+  destinationType: (
+    | [keyof CardElementValue<'static'>]
+    | [keyof CardElementValue<'static'>, string]
+  )[];
+}
+
 type CreateToken<DataType = Primitive> = Pick<
   Token<DataType>,
   | 'type'
@@ -70,6 +100,10 @@ type CreateToken<DataType = Primitive> = Pick<
 > & {
   deduplicateToken?: boolean;
   id?: string;
+  /**
+   * Used for writing data to a secondary service
+   */
+  secondary?: Secondary;
 };
 
 type UpdateToken<DataType = Primitive> = Partial<
@@ -100,5 +134,4 @@ export type {
   DataImpactLevel,
   DataRestrictionPolicy,
 };
-
 export { DATA_CLASSIFICATIONS, DATA_IMPACT_LEVELS, DATA_RESTRICTION_POLICIES };
