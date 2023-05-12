@@ -1,3 +1,10 @@
+# [1.72.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.4...v1.72.0) (2023-05-12)
+
+
+### Features
+
+* add validation option to elements types ([#326](https://github.com/Basis-Theory/basis-theory-js/issues/326)) ([95f46dd](https://github.com/Basis-Theory/basis-theory-js/commit/95f46ddc91c1de5a451c7d4bac717b5d29573d59))
+
 ## [1.71.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.3...v1.71.4) (2023-05-03)
 
 
