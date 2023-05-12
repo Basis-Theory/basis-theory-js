@@ -37,6 +37,7 @@ interface SanitizedElementOptions {
     | CardElementValue<'static'>
     | CardExpirationDateValue<'static'>
     | string;
+  validation?: RegExp;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
@@ -84,7 +85,7 @@ type UpdateCardElementOptions = Omit<
 >;
 
 type CreateTextElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'mask' | 'password'> &
+  Pick<ElementOptions, 'placeholder' | 'mask' | 'password' | 'validation'> &
   TransformOption &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
