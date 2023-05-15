@@ -1,11 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
-import {
-  API_KEY_HEADER,
-  BT_EXPOSE_PROXY_RESPONSE_HEADER,
-  BT_IDEMPOTENCY_KEY_HEADER,
-} from '@/common';
+import { API_KEY_HEADER, BT_EXPOSE_PROXY_RESPONSE_HEADER } from '@/common';
 import type {
   BasisTheory as IBasisTheory,
   ProxyHeaders,
