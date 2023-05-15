@@ -1,4 +1,9 @@
-import { createRequestConfig, dataExtractor, proxyRaw } from '@/common';
+import {
+  createRequestConfig,
+  dataAndHeadersExtractor,
+  dataExtractor,
+  proxyRaw,
+} from '@/common';
 import { BasisTheoryService } from '@/service';
 import type { Proxy, ProxyRequestOptions } from '@/types/sdk';
 
@@ -29,6 +34,10 @@ export class BasisTheoryProxy extends BasisTheoryService implements Proxy {
     method: PROXY_METHODS,
     options?: ProxyRequestOptions
   ): Promise<any> {
+    const extractor = options?.includeResponseHeaders
+      ? dataAndHeadersExtractor
+      : dataExtractor;
+
     if (method === 'post' || method === 'put' || method === 'patch') {
       return this.client[method](
         options?.path ?? '',
@@ -37,7 +46,7 @@ export class BasisTheoryProxy extends BasisTheoryService implements Proxy {
           transformRequest: proxyRaw,
           transformResponse: proxyRaw,
         })
-      ).then(dataExtractor);
+      ).then(extractor);
     }
 
     return this.client[method](
@@ -46,6 +55,6 @@ export class BasisTheoryProxy extends BasisTheoryService implements Proxy {
         transformRequest: proxyRaw,
         transformResponse: proxyRaw,
       })
-    ).then(dataExtractor);
+    ).then(extractor);
   }
 }
