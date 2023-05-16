@@ -180,7 +180,15 @@ const transformAtomicResponseCamelCase: AxiosTransformer = <
   } as unknown) as C;
 };
 
-const dataExtractor = <T>(res: AxiosResponse<T>): T => res?.data;
+const dataExtractor = <T>(res: AxiosResponse<T>): AxiosResponse<T>['data'] =>
+  res?.data;
+
+const dataAndHeadersExtractor = <T>(
+  res: AxiosResponse<T>
+): Pick<AxiosResponse<T>, 'data' | 'headers'> => ({
+  data: res?.data,
+  headers: res?.headers,
+});
 
 const concatRequestTransformerWithDefault = (
   requestTransformer: AxiosTransformer | AxiosTransformer[]
@@ -415,6 +423,7 @@ export {
   assertInit,
   transformRequestSnakeCase,
   proxyRaw,
+  dataAndHeadersExtractor,
   transformReactorRequestSnakeCase,
   transformProxyRequestSnakeCase,
   transformAtomicRequestSnakeCase,

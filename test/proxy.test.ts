@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
-import { API_KEY_HEADER } from '@/common';
+import { API_KEY_HEADER, BT_EXPOSE_PROXY_RESPONSE_HEADER } from '@/common';
 import type {
   BasisTheory as IBasisTheory,
   ProxyHeaders,
@@ -163,6 +163,49 @@ describe('Proxy', () => {
       expect(client.history.patch[0].headers).toMatchObject({
         [API_KEY_HEADER]: apiKey,
         ...headers,
+      });
+    });
+
+    test('returns response body and headers when passing `includeResponseHeaders` in config', async () => {
+      const response = chance.string();
+
+      const path = chance.string();
+
+      const query: ProxyQuery = {
+        'bt-proxy-key': chance.string(),
+        [chance.string()]: chance.string(),
+      };
+
+      const headers: ProxyHeaders = {
+        'BT-PROXY-KEY': chance.string(),
+        'BT-PROXY-URL': chance.url(),
+        [chance.string()]: chance.string(),
+      };
+
+      const body = {
+        [chance.string()]: chance.string(),
+        [chance.string()]: {
+          [chance.string()]: chance.string(),
+        },
+      };
+
+      // validate path
+      client.onPost(path).reply(200, JSON.stringify(response), {
+        [BT_EXPOSE_PROXY_RESPONSE_HEADER]: 'true',
+      });
+
+      expect(
+        await bt.proxy.post({
+          includeResponseHeaders: true,
+          apiKey,
+          path,
+          query,
+          headers,
+          body,
+        })
+      ).toStrictEqual({
+        data: response,
+        headers: { [BT_EXPOSE_PROXY_RESPONSE_HEADER]: 'true' },
       });
     });
   });

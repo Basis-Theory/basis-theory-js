@@ -24,6 +24,7 @@ type BasisTheoryQueryParams = {
 type ProxyQuery = Partial<BasisTheoryQueryParams>;
 
 interface ProxyRequestOptions extends RequestOptions {
+  includeResponseHeaders?: boolean;
   path?: string;
   query?: ProxyQuery;
   headers?: ProxyHeaders;
