@@ -1,3 +1,10 @@
+# [1.73.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.72.0...v1.73.0) (2023-05-16)
+
+
+### Features
+
+* exposes proxy response headers ([#328](https://github.com/Basis-Theory/basis-theory-js/issues/328)) ([5e6051a](https://github.com/Basis-Theory/basis-theory-js/commit/5e6051a1ba48bd23e06fa4ac8a797faa894417b5))
+
 # [1.72.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.4...v1.72.0) (2023-05-12)
 
 
