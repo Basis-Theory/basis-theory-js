@@ -1,3 +1,10 @@
+## [1.73.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.73.0...v1.73.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* allow null mask props ([#329](https://github.com/Basis-Theory/basis-theory-js/issues/329)) ([7d1a7e3](https://github.com/Basis-Theory/basis-theory-js/commit/7d1a7e36458a4b06b618d711c908b3b1caf412ed))
+
 # [1.73.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.72.0...v1.73.0) (2023-05-16)
 
 
