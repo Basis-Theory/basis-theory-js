@@ -1,3 +1,10 @@
+# [1.74.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.73.1...v1.74.0) (2023-05-18)
+
+
+### Features
+
+* limit exposure of proxy response headers to post reqs ([#331](https://github.com/Basis-Theory/basis-theory-js/issues/331)) ([4726af8](https://github.com/Basis-Theory/basis-theory-js/commit/4726af8a053ff27c2091ca67c04edda84d19f1ce))
+
 ## [1.73.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.73.0...v1.73.1) (2023-05-17)
 
 
