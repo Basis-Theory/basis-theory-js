@@ -34,11 +34,12 @@ export class BasisTheoryProxy extends BasisTheoryService implements Proxy {
     method: PROXY_METHODS,
     options?: ProxyRequestOptions
   ): Promise<any> {
-    const extractor = options?.includeResponseHeaders
-      ? dataAndHeadersExtractor
-      : dataExtractor;
-
     if (method === 'post' || method === 'put' || method === 'patch') {
+      const extractor =
+        options?.includeResponseHeaders && method === 'post'
+          ? dataAndHeadersExtractor
+          : dataExtractor;
+
       return this.client[method](
         options?.path ?? '',
         options?.body ?? undefined,
@@ -55,6 +56,6 @@ export class BasisTheoryProxy extends BasisTheoryService implements Proxy {
         transformRequest: proxyRaw,
         transformResponse: proxyRaw,
       })
-    ).then(extractor);
+    ).then(dataExtractor);
   }
 }
