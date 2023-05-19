@@ -26,7 +26,7 @@ type MaskObject = {
   [member: string]: TokenMask;
 };
 type MaskArray = Array<TokenMask>;
-type TokenMask = string | MaskObject | MaskArray;
+type TokenMask = string | null | MaskObject | MaskArray;
 
 interface TokenEncryptionKey {
   key: string;

@@ -1,3 +1,31 @@
+# [1.74.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.73.1...v1.74.0) (2023-05-18)
+
+
+### Features
+
+* limit exposure of proxy response headers to post reqs ([#331](https://github.com/Basis-Theory/basis-theory-js/issues/331)) ([4726af8](https://github.com/Basis-Theory/basis-theory-js/commit/4726af8a053ff27c2091ca67c04edda84d19f1ce))
+
+## [1.73.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.73.0...v1.73.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* allow null mask props ([#329](https://github.com/Basis-Theory/basis-theory-js/issues/329)) ([7d1a7e3](https://github.com/Basis-Theory/basis-theory-js/commit/7d1a7e36458a4b06b618d711c908b3b1caf412ed))
+
+# [1.73.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.72.0...v1.73.0) (2023-05-16)
+
+
+### Features
+
+* exposes proxy response headers ([#328](https://github.com/Basis-Theory/basis-theory-js/issues/328)) ([5e6051a](https://github.com/Basis-Theory/basis-theory-js/commit/5e6051a1ba48bd23e06fa4ac8a797faa894417b5))
+
+# [1.72.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.4...v1.72.0) (2023-05-12)
+
+
+### Features
+
+* add validation option to elements types ([#326](https://github.com/Basis-Theory/basis-theory-js/issues/326)) ([95f46dd](https://github.com/Basis-Theory/basis-theory-js/commit/95f46ddc91c1de5a451c7d4bac717b5d29573d59))
+
 ## [1.71.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.3...v1.71.4) (2023-05-03)
 
 
