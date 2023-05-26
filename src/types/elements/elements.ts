@@ -33,7 +33,7 @@ interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
   readonly metadata: ElementMetadata;
   mount(selector: string): Promise<void>;
-  mount(element: HTMLElement): Promise<void>;
+  mount(element: Element): Promise<void>;
   update(options: UpdateOptions): Promise<void>;
   clear(): void;
   focus(): void;
