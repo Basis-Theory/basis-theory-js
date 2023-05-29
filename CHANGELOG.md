@@ -1,3 +1,10 @@
+# [1.75.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.74.0...v1.75.0) (2023-05-29)
+
+
+### Features
+
+* add mount overload that allows html element argument ([#333](https://github.com/Basis-Theory/basis-theory-js/issues/333)) ([eef00f5](https://github.com/Basis-Theory/basis-theory-js/commit/eef00f59b3eaf6009e401100528ecd2edb42c6c4))
+
 # [1.74.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.73.1...v1.74.0) (2023-05-18)
 
 
