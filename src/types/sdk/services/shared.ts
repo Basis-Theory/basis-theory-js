@@ -2,6 +2,7 @@ interface RequestOptions {
   apiKey?: string;
   correlationId?: string;
   idempotencyKey?: string;
+  transactionId?: string;
 }
 
 type QueryValue =

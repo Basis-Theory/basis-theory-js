@@ -5,6 +5,7 @@ import {
   API_KEY_HEADER,
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
+  BT_TRANSACTION_ID_HEADER,
   CONTENT_TYPE_HEADER,
   getQueryParams,
   transformTokenRequestSnakeCase,
@@ -211,6 +212,7 @@ describe('Tokens', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
       const idempotencyKey = chance.string();
+      const transactionId = chance.string();
       const parentId = chance.string();
       const childId = chance.string();
 
@@ -221,6 +223,7 @@ describe('Tokens', () => {
           apiKey: _apiKey,
           correlationId,
           idempotencyKey,
+          transactionId,
         })
       ).toBeUndefined();
 
@@ -232,6 +235,7 @@ describe('Tokens', () => {
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
         [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+        [BT_TRANSACTION_ID_HEADER]: transactionId,
       });
     });
 
@@ -709,6 +713,7 @@ describe('Tokens', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
       const idempotencyKey = chance.string();
+      const transactionId = chance.string();
 
       /* eslint-disable camelcase */
       const updatePayload: UpdateToken = {
@@ -751,6 +756,7 @@ describe('Tokens', () => {
           apiKey: _apiKey,
           correlationId,
           idempotencyKey,
+          transactionId,
         })
       ).toStrictEqual(updatedToken);
 
@@ -763,6 +769,7 @@ describe('Tokens', () => {
         [BT_TRACE_ID_HEADER]: correlationId,
         [CONTENT_TYPE_HEADER]: expectedContentType,
         [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+        [BT_TRANSACTION_ID_HEADER]: transactionId,
       });
     });
 

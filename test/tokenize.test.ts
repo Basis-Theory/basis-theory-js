@@ -5,6 +5,7 @@ import {
   BT_TRACE_ID_HEADER,
   API_KEY_HEADER,
   BT_IDEMPOTENCY_KEY_HEADER,
+  BT_TRANSACTION_ID_HEADER,
 } from '@/common';
 import {
   DATA_CLASSIFICATIONS,
@@ -135,6 +136,7 @@ describe('Tokenize', () => {
       const _apiKey = chance.string();
       const correlationId = chance.string();
       const idempotencyKey = chance.string();
+      const transactionId = chance.string();
       /* eslint-disable camelcase */
       const tokens = {
         first_name: chance.string(),
@@ -196,6 +198,7 @@ describe('Tokenize', () => {
           apiKey: _apiKey,
           correlationId,
           idempotencyKey,
+          transactionId,
         })
       ).toStrictEqual(tokenResponse);
       expect(client.history.post).toHaveLength(1);
@@ -204,6 +207,7 @@ describe('Tokenize', () => {
         [API_KEY_HEADER]: _apiKey,
         [BT_TRACE_ID_HEADER]: correlationId,
         [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+        [BT_TRANSACTION_ID_HEADER]: transactionId,
       });
     });
 
