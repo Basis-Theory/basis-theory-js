@@ -41,7 +41,7 @@ const transformRequestSnakeCase: AxiosTransformer = <T, S>(
     return undefined;
   }
 
-  return snakecaseKeys(data, {
+  return snakecaseKeys(data as Record<string, unknown>, {
     deep: true,
   }) as S;
 };
@@ -159,7 +159,7 @@ const transformResponseCamelCase: AxiosTransformer = <T, C>(
     return undefined;
   }
 
-  return (camelcaseKeys(data, {
+  return (camelcaseKeys(data as Record<string, unknown>, {
     deep: true,
   }) as unknown) as C;
 };
@@ -289,7 +289,7 @@ const errorInterceptor = (error: any): void => {
 };
 
 const getQueryParams = <Q>(query: Q = {} as Q): string => {
-  const keys = Object.keys(query) as (keyof Q)[];
+  const keys = Object.keys(query as Record<string, unknown>) as (keyof Q)[];
 
   if (keys.length) {
     const params = new URLSearchParams();

@@ -1,6 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
-import { v4 as uuid } from 'uuid';
 import { BasisTheory } from '@/BasisTheory';
 import {
   BT_TRACE_ID_HEADER,
@@ -389,14 +388,14 @@ describe('Tenants', () => {
         pageSize = chance.integer();
         totalPages = chance.integer();
         expectedMember = {
-          id: uuid(),
-          tenantId: uuid(),
+          id: chance.guid(),
+          tenantId: chance.guid(),
           role: 'ADMIN',
           user: {
-            id: uuid(),
+            id: chance.guid(),
           },
           createdAt: new Date().toISOString(),
-          createdBy: uuid(),
+          createdBy: chance.guid(),
         };
 
         expectedTenantMembers = {
@@ -506,7 +505,7 @@ describe('Tenants', () => {
       let path: string;
 
       beforeEach(() => {
-        expectedMemberId = uuid();
+        expectedMemberId = chance.guid();
         path = `/members/${expectedMemberId}`;
       });
 
@@ -567,13 +566,13 @@ describe('Tenants', () => {
         };
 
         expectedTenantInvitation = {
-          id: uuid(),
-          tenantId: uuid(),
+          id: chance.guid(),
+          tenantId: chance.guid(),
           email: expectedCreateInvitationRequest.email,
           status: 'PENDING',
           expiresAt: new Date().toISOString(),
           createdAt: new Date().toISOString(),
-          createdBy: uuid(),
+          createdBy: chance.guid(),
         };
 
         /* eslint-disable camelcase */
@@ -647,17 +646,17 @@ describe('Tenants', () => {
       let expectedTenantInvitationJson: string;
 
       beforeEach(() => {
-        expectedInvitationId = uuid();
+        expectedInvitationId = chance.guid();
         path = `/invitations/${expectedInvitationId}/resend`;
 
         expectedTenantInvitation = {
-          id: uuid(),
-          tenantId: uuid(),
+          id: chance.guid(),
+          tenantId: chance.guid(),
           email: chance.email(),
           status: 'PENDING',
           expiresAt: new Date().toISOString(),
           createdAt: new Date().toISOString(),
-          createdBy: uuid(),
+          createdBy: chance.guid(),
         };
 
         /* eslint-disable camelcase */
@@ -734,13 +733,13 @@ describe('Tenants', () => {
         pageSize = chance.integer();
         totalPages = chance.integer();
         expectedInvitation = {
-          id: uuid(),
-          tenantId: uuid(),
+          id: chance.guid(),
+          tenantId: chance.guid(),
           email: chance.email(),
           status: 'PENDING',
           expiresAt: new Date().toISOString(),
           createdAt: new Date().toISOString(),
-          createdBy: uuid(),
+          createdBy: chance.guid(),
         };
 
         expectedTenantInvitations = {
@@ -851,17 +850,17 @@ describe('Tenants', () => {
       let expectedTenantInvitationJson: string;
 
       beforeEach(() => {
-        expectedInvitationId = uuid();
+        expectedInvitationId = chance.guid();
         path = `/invitations/${expectedInvitationId}`;
 
         expectedTenantInvitation = {
-          id: uuid(),
-          tenantId: uuid(),
+          id: chance.guid(),
+          tenantId: chance.guid(),
           email: chance.email(),
           status: 'PENDING',
           expiresAt: new Date().toISOString(),
           createdAt: new Date().toISOString(),
-          createdBy: uuid(),
+          createdBy: chance.guid(),
         };
 
         /* eslint-disable camelcase */
@@ -928,7 +927,7 @@ describe('Tenants', () => {
       let path: string;
 
       beforeEach(() => {
-        expectedInvitationId = uuid();
+        expectedInvitationId = chance.guid();
         path = `/invitations/${expectedInvitationId}`;
       });
 
