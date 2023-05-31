@@ -3,7 +3,7 @@ import type { RequestOptions } from '@/types/sdk';
 type CreateTransactionResponse = {
   id: string;
   createdBy: string;
-  createdDate: string;
+  createdAt: string;
   expiresAt: string;
 };
 

@@ -27,7 +27,7 @@ describe('Transactions', () => {
     test('should create transaction', async () => {
       const id = chance.string();
       const createdBy = chance.string();
-      const createdDate = chance.string();
+      const createdAt = chance.string();
       const expiresAt = chance.string();
 
       client.onPost('/').reply(
@@ -36,7 +36,7 @@ describe('Transactions', () => {
         JSON.stringify({
           id,
           created_by: createdBy,
-          created_date: createdDate,
+          created_at: createdAt,
           expires_at: expiresAt,
         })
         /* eslint-enable camelcase */
@@ -45,7 +45,7 @@ describe('Transactions', () => {
       expect(await bt.transactions.create()).toStrictEqual({
         id,
         createdBy,
-        createdDate,
+        createdAt,
         expiresAt,
       });
       expect(client.history.post).toHaveLength(1);
@@ -59,7 +59,7 @@ describe('Transactions', () => {
     test('should commit transaction', async () => {
       const id = chance.string();
 
-      client.onPost(`/${id}/commit`).reply(200, JSON.stringify({}));
+      client.onPost(`/${id}/commit`).reply(204, JSON.stringify({}));
 
       expect(await bt.transactions.commit(id)).toStrictEqual({});
       expect(client.history.post).toHaveLength(1);
@@ -73,7 +73,7 @@ describe('Transactions', () => {
     test('should rollback transaction', async () => {
       const id = chance.string();
 
-      client.onPost(`/${id}/rollback`).reply(200, JSON.stringify({}));
+      client.onPost(`/${id}/rollback`).reply(204, JSON.stringify({}));
 
       expect(await bt.transactions.rollback(id)).toStrictEqual({});
       expect(client.history.post).toHaveLength(1);
