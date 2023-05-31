@@ -1,4 +1,5 @@
 import type { BasisTheoryElements } from '@/types/elements';
+import { Transactions } from '@/types/sdk/services/transactions';
 import type {
   Tokens,
   Tokenize,
@@ -57,6 +58,7 @@ interface BasisTheory extends Tokenize {
   proxies: Proxies;
   proxy: Proxy;
   sessions: Sessions;
+  transactions: Transactions;
 }
 
 interface ClientUserAgent {

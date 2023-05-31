@@ -76,7 +76,11 @@ describe('clients', () => {
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.sessions}`,
     });
-    expect(create).toHaveBeenCalledTimes(11);
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.transactions}`,
+    });
+    expect(create).toHaveBeenCalledTimes(12);
   });
 
   test('should throw error if not properly initialized', () => {
