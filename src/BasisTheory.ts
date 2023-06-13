@@ -3,6 +3,7 @@ import {
   makeRequestWithElementsCheck,
   makeRequestWithoutElementsCheck,
 } from '@/common/BasisTheoryClient';
+import { BasisTheoryTransactions } from '@/transactions';
 import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
@@ -44,6 +45,7 @@ import type {
   Proxy,
   Sessions,
 } from '@/types/sdk';
+import { Transactions } from '@/types/sdk/services/transactions';
 import { BasisTheoryApplications } from './applications';
 import {
   assertInit,
@@ -101,6 +103,8 @@ export class BasisTheory
   private _proxy?: Proxy & ElementsProxy;
 
   private _sessions?: Sessions;
+
+  private _transactions?: Transactions;
 
   public init(
     apiKey: string | undefined,
@@ -205,6 +209,11 @@ export class BasisTheory
       this._sessions = new BasisTheorySessions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.sessions, baseUrl).toString(),
+        appInfo,
+      });
+      this._transactions = new BasisTheoryTransactions({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.transactions, baseUrl).toString(),
         appInfo,
       });
 
@@ -383,6 +392,10 @@ export class BasisTheory
 
   public get sessions(): Sessions {
     return assertInit(this._sessions);
+  }
+
+  public get transactions(): Transactions {
+    return assertInit(this._transactions);
   }
   /* eslint-enable accessor-pairs */
 

@@ -1,3 +1,10 @@
+# [1.76.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.75.0...v1.76.0) (2023-05-31)
+
+
+### Features
+
+* supporting transactions ([#336](https://github.com/Basis-Theory/basis-theory-js/issues/336)) ([2f964ac](https://github.com/Basis-Theory/basis-theory-js/commit/2f964ac03a8b8790adb5efdd130b50781f20ef5e))
+
 # [1.75.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.74.0...v1.75.0) (2023-05-29)
 
 

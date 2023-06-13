@@ -4,6 +4,7 @@ import {
   API_KEY_HEADER,
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
+  BT_TRANSACTION_ID_HEADER,
   transformRequestSnakeCase,
 } from '@/common';
 import { BasisTheoryServiceOptions } from '@/service';
@@ -79,6 +80,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
   const correlationId = chance.string();
   const apiKey = chance.string();
   const idempotencyKey = chance.string();
+  const transactionId = chance.string();
 
   test('should create', async () => {
     const {
@@ -135,6 +137,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
         apiKey,
         correlationId,
         idempotencyKey,
+        transactionId,
       })
     ).toStrictEqual({
       ...createPayload,
@@ -149,6 +152,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
       [API_KEY_HEADER]: apiKey,
       [BT_TRACE_ID_HEADER]: correlationId,
       [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+      [BT_TRANSACTION_ID_HEADER]: transactionId,
     });
   });
 
@@ -244,6 +248,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
   const correlationId = chance.string();
   const apiKey = chance.string();
   const idempotencyKey = chance.string();
+  const transactionId = chance.string();
 
   test('should update', async () => {
     const {
@@ -299,6 +304,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
         apiKey,
         correlationId,
         idempotencyKey,
+        transactionId,
       })
     ).toStrictEqual({
       ...updatePayload,
@@ -312,6 +318,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
       [API_KEY_HEADER]: apiKey,
       [BT_TRACE_ID_HEADER]: correlationId,
       [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+      [BT_TRANSACTION_ID_HEADER]: transactionId,
     });
   });
 
@@ -334,6 +341,7 @@ const testDelete = (param: () => TestDeleteParam): void => {
   const correlationId = chance.string();
   const apiKey = chance.string();
   const idempotencyKey = chance.string();
+  const transactionId = chance.string();
 
   test('should delete', async () => {
     const { service, client } = param();
@@ -367,6 +375,7 @@ const testDelete = (param: () => TestDeleteParam): void => {
         apiKey,
         correlationId,
         idempotencyKey,
+        transactionId,
       })
     ).toBeUndefined();
     expect(client.history.delete).toHaveLength(1);
@@ -374,6 +383,7 @@ const testDelete = (param: () => TestDeleteParam): void => {
       [API_KEY_HEADER]: apiKey,
       [BT_TRACE_ID_HEADER]: correlationId,
       [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+      [BT_TRANSACTION_ID_HEADER]: transactionId,
     });
   });
 
