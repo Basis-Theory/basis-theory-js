@@ -20,7 +20,7 @@ const makeRequestWithElementsCheck = (
   url: string,
   payload: unknown,
   config: Config = {}
-) => {
+): Promise<unknown> => {
   if (elements?.hasElement(payload)) {
     return elements.client[method](url, payload, config);
   }
@@ -41,7 +41,7 @@ const makeRequestWithoutElementsCheck = (
   method: MethodWithoutPayloads,
   url: string,
   config: Config = {}
-) => {
+): Promise<unknown> => {
   if (elements) {
     return elements.client[method](url, config);
   }
