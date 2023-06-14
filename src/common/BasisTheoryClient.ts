@@ -14,7 +14,7 @@ class NoElementsError extends Error {
   }
 }
 
-const makeRequestWithElementsCheck = (
+const makeRequestWithElementsPayloadCheck = (
   elements: BasisTheoryElementsInternal | undefined,
   method: MethodWithPayloads,
   url: string,
@@ -25,18 +25,18 @@ const makeRequestWithElementsCheck = (
     return elements.client[method](url, payload, config);
   }
 
-  let errorMessageStart = 'Element not found in payload';
+  let errorMessageStart = 'Element not found in payload.';
 
   if (elements) {
-    errorMessageStart = 'Element not initialized';
+    errorMessageStart = 'Elements not initialized.';
   }
 
   throw new NoElementsError(
-    `${errorMessageStart}. Use a regular HTTP client if no elements are needed.`
+    `${errorMessageStart} Use a regular HTTP client if no elements are needed.`
   );
 };
 
-const makeRequestWithoutElementsCheck = (
+const makeRequestWithoutElementsPayloadCheck = (
   elements: BasisTheoryElementsInternal | undefined,
   method: MethodWithoutPayloads,
   url: string,
@@ -53,6 +53,6 @@ const makeRequestWithoutElementsCheck = (
 
 export {
   Config,
-  makeRequestWithElementsCheck,
-  makeRequestWithoutElementsCheck,
+  makeRequestWithElementsPayloadCheck,
+  makeRequestWithoutElementsPayloadCheck,
 };

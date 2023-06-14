@@ -1,7 +1,7 @@
 import {
   Config,
-  makeRequestWithElementsCheck,
-  makeRequestWithoutElementsCheck,
+  makeRequestWithElementsPayloadCheck,
+  makeRequestWithoutElementsPayloadCheck,
 } from '@/common/BasisTheoryClient';
 import { BasisTheoryTransactions } from '@/transactions';
 import type {
@@ -279,7 +279,7 @@ export class BasisTheory
     payload: unknown,
     config?: Config
   ): Promise<unknown> {
-    return makeRequestWithElementsCheck(
+    return makeRequestWithElementsPayloadCheck(
       this._elements,
       'post',
       url,
@@ -289,7 +289,7 @@ export class BasisTheory
   }
 
   public put(url: string, payload: unknown, config?: Config): Promise<unknown> {
-    return makeRequestWithElementsCheck(
+    return makeRequestWithElementsPayloadCheck(
       this._elements,
       'put',
       url,
@@ -303,7 +303,7 @@ export class BasisTheory
     payload: unknown,
     config?: Config
   ): Promise<unknown> {
-    return makeRequestWithElementsCheck(
+    return makeRequestWithElementsPayloadCheck(
       this._elements,
       'patch',
       url,
@@ -313,11 +313,16 @@ export class BasisTheory
   }
 
   public get(url: string, config?: Config): Promise<unknown> {
-    return makeRequestWithoutElementsCheck(this._elements, 'get', url, config);
+    return makeRequestWithoutElementsPayloadCheck(
+      this._elements,
+      'get',
+      url,
+      config
+    );
   }
 
   public delete(url: string, config?: Config): Promise<unknown> {
-    return makeRequestWithoutElementsCheck(
+    return makeRequestWithoutElementsPayloadCheck(
       this._elements,
       'delete',
       url,
