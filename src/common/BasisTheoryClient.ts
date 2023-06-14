@@ -25,10 +25,10 @@ const makeRequestWithElementsPayloadCheck = (
     return elements.client[method](url, payload, config);
   }
 
-  let errorMessageStart = 'Element not found in payload.';
+  let errorMessageStart = 'Elements not initialized.';
 
   if (elements) {
-    errorMessageStart = 'Elements not initialized.';
+    errorMessageStart = 'Element not found in payload.';
   }
 
   throw new NoElementsError(
