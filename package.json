@@ -37,7 +37,7 @@
     "postinstall": "husky install"
   },
   "dependencies": {
-    "axios": "^0.21.2",
+    "axios": "^1.4.0",
     "camelcase-keys": "^6.2.2",
     "csstype": "^3.0.11",
     "os": "^0.1.2",
