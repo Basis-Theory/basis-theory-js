@@ -1,3 +1,10 @@
+# [1.77.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.76.0...v1.77.0) (2023-06-15)
+
+
+### Features
+
+* adds interface for http client for dual writing ([#339](https://github.com/Basis-Theory/basis-theory-js/issues/339)) ([14c8ccf](https://github.com/Basis-Theory/basis-theory-js/commit/14c8ccf424d0dcbdc0d83785754e8d8989a854fa))
+
 # [1.76.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.75.0...v1.76.0) (2023-05-31)
 
 
