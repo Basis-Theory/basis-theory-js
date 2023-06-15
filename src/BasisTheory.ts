@@ -1,3 +1,8 @@
+import {
+  Config,
+  makeRequestWithElementsPayloadCheck,
+  makeRequestWithoutElementsPayloadCheck,
+} from '@/common/BasisTheoryClient';
 import { BasisTheoryTransactions } from '@/transactions';
 import type {
   BasisTheoryElements,
@@ -267,6 +272,62 @@ export class BasisTheory
     options?: RequestOptions
   ): Promise<TokenizeData> {
     return assertInit(this._tokenize).tokenize(tokens, options);
+  }
+
+  public post(
+    url: string,
+    payload: unknown,
+    config?: Config
+  ): Promise<unknown> {
+    return makeRequestWithElementsPayloadCheck(
+      this._elements,
+      'post',
+      url,
+      payload,
+      config
+    );
+  }
+
+  public put(url: string, payload: unknown, config?: Config): Promise<unknown> {
+    return makeRequestWithElementsPayloadCheck(
+      this._elements,
+      'put',
+      url,
+      payload,
+      config
+    );
+  }
+
+  public patch(
+    url: string,
+    payload: unknown,
+    config?: Config
+  ): Promise<unknown> {
+    return makeRequestWithElementsPayloadCheck(
+      this._elements,
+      'patch',
+      url,
+      payload,
+      config
+    );
+  }
+
+  public get(url: string, config?: Config): Promise<unknown> {
+    return makeRequestWithoutElementsPayloadCheck(
+      this._elements,
+      'get',
+      url,
+      config
+    );
+  }
+
+  public delete(url: string, config?: Config): Promise<unknown> {
+    return makeRequestWithoutElementsPayloadCheck(
+      this._elements,
+      'delete',
+      url,
+      config
+    );
   }
 
   private async loadElements(apiKey: string): Promise<void> {
