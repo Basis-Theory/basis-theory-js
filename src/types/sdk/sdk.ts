@@ -1,5 +1,5 @@
-import https from 'https';
 import type { BasisTheoryElements } from '@/types/elements';
+import { Transactions } from '@/types/sdk/services/transactions';
 import type {
   Tokens,
   Tokenize,
@@ -23,7 +23,6 @@ interface ApplicationInfo {
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
   appInfo?: ApplicationInfo;
-  httpsAgent?: https.Agent;
 }
 
 interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {
@@ -59,6 +58,7 @@ interface BasisTheory extends Tokenize {
   proxies: Proxies;
   proxy: Proxy;
   sessions: Sessions;
+  transactions: Transactions;
 }
 
 interface ClientUserAgent {

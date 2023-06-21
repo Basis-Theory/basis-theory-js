@@ -1,3 +1,4 @@
+import type { Config } from '@/common/BasisTheoryClient';
 import type {
   ElementEventListener,
   EventType,
@@ -33,6 +34,7 @@ interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
   readonly metadata: ElementMetadata;
   mount(selector: string): Promise<void>;
+  mount(element: Element): Promise<void>;
   update(options: UpdateOptions): Promise<void>;
   clear(): void;
   focus(): void;
@@ -111,12 +113,21 @@ interface BasisTheoryElements extends Tokenize {
   ): CardVerificationCodeElement;
 }
 
+interface ElementClient {
+  post(url: string, payload: unknown, config?: Config): Promise<unknown>;
+  put(url: string, payload: unknown, config?: Config): Promise<unknown>;
+  patch(url: string, payload: unknown, config?: Config): Promise<unknown>;
+  get(url: string, config?: Config): Promise<unknown>;
+  delete(url: string, config?: Config): Promise<unknown>;
+}
+
 interface BasisTheoryElementsInternal extends BasisTheoryElements {
   init: (
     apiKey: string | undefined,
     elementsBaseUrl: string
   ) => Promise<BasisTheoryElements>;
   hasElement: (payload: unknown) => boolean;
+  client: ElementClient;
 }
 
 declare global {

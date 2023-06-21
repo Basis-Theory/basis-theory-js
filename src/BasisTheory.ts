@@ -1,4 +1,9 @@
-import axios from 'axios';
+import {
+  Config,
+  makeRequestWithElementsPayloadCheck,
+  makeRequestWithoutElementsPayloadCheck,
+} from '@/common/BasisTheoryClient';
+import { BasisTheoryTransactions } from '@/transactions';
 import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
@@ -40,6 +45,7 @@ import type {
   Proxy,
   Sessions,
 } from '@/types/sdk';
+import { Transactions } from '@/types/sdk/services/transactions';
 import { BasisTheoryApplications } from './applications';
 import {
   assertInit,
@@ -66,7 +72,6 @@ const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
   appInfo: {},
-  httpsAgent: axios.defaults.httpsAgent,
 };
 
 export class BasisTheory
@@ -98,6 +103,8 @@ export class BasisTheory
   private _proxy?: Proxy & ElementsProxy;
 
   private _sessions?: Sessions;
+
+  private _transactions?: Transactions;
 
   public init(
     apiKey: string | undefined,
@@ -149,73 +156,65 @@ export class BasisTheory
         await this.loadElements(apiKey);
       }
 
-      const httpsAgent = this._initOptions.httpsAgent;
-
       this._tokens = new (delegateTokens(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._tokenize = new (delegateTokenize(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokenize, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.applications, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._tenants = new BasisTheoryTenants({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tenants, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._logs = new BasisTheoryLogs({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.logs, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._reactorFormulas = new BasisTheoryReactorFormulas({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.reactorFormulas, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._reactors = new BasisTheoryReactors({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.reactors, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._permissions = new BasisTheoryPermissions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.permissions, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._proxies = new BasisTheoryProxies({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxies, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._proxy = new (delegateProxy(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxy, baseUrl).toString(),
         appInfo,
-        httpsAgent,
       });
       this._sessions = new BasisTheorySessions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.sessions, baseUrl).toString(),
         appInfo,
-        httpsAgent,
+      });
+      this._transactions = new BasisTheoryTransactions({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.transactions, baseUrl).toString(),
+        appInfo,
       });
 
       this._initStatus = 'done';
@@ -273,6 +272,62 @@ export class BasisTheory
     options?: RequestOptions
   ): Promise<TokenizeData> {
     return assertInit(this._tokenize).tokenize(tokens, options);
+  }
+
+  public post(
+    url: string,
+    payload: unknown,
+    config?: Config
+  ): Promise<unknown> {
+    return makeRequestWithElementsPayloadCheck(
+      this._elements,
+      'post',
+      url,
+      payload,
+      config
+    );
+  }
+
+  public put(url: string, payload: unknown, config?: Config): Promise<unknown> {
+    return makeRequestWithElementsPayloadCheck(
+      this._elements,
+      'put',
+      url,
+      payload,
+      config
+    );
+  }
+
+  public patch(
+    url: string,
+    payload: unknown,
+    config?: Config
+  ): Promise<unknown> {
+    return makeRequestWithElementsPayloadCheck(
+      this._elements,
+      'patch',
+      url,
+      payload,
+      config
+    );
+  }
+
+  public get(url: string, config?: Config): Promise<unknown> {
+    return makeRequestWithoutElementsPayloadCheck(
+      this._elements,
+      'get',
+      url,
+      config
+    );
+  }
+
+  public delete(url: string, config?: Config): Promise<unknown> {
+    return makeRequestWithoutElementsPayloadCheck(
+      this._elements,
+      'delete',
+      url,
+      config
+    );
   }
 
   private async loadElements(apiKey: string): Promise<void> {
@@ -342,6 +397,10 @@ export class BasisTheory
 
   public get sessions(): Sessions {
     return assertInit(this._sessions);
+  }
+
+  public get transactions(): Transactions {
+    return assertInit(this._transactions);
   }
   /* eslint-enable accessor-pairs */
 

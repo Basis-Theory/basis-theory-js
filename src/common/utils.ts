@@ -22,6 +22,7 @@ import {
   BROWSER_LIST,
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
+  BT_TRANSACTION_ID_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
 
@@ -41,7 +42,7 @@ const transformRequestSnakeCase: AxiosTransformer = <T, S>(
     return undefined;
   }
 
-  return snakecaseKeys(data, {
+  return snakecaseKeys(data as Record<string, unknown>, {
     deep: true,
   }) as S;
 };
@@ -159,7 +160,7 @@ const transformResponseCamelCase: AxiosTransformer = <T, C>(
     return undefined;
   }
 
-  return (camelcaseKeys(data, {
+  return (camelcaseKeys(data as Record<string, unknown>, {
     deep: true,
   }) as unknown) as C;
 };
@@ -180,7 +181,15 @@ const transformAtomicResponseCamelCase: AxiosTransformer = <
   } as unknown) as C;
 };
 
-const dataExtractor = <T>(res: AxiosResponse<T>): T => res?.data;
+const dataExtractor = <T>(res: AxiosResponse<T>): AxiosResponse<T>['data'] =>
+  res?.data;
+
+const dataAndHeadersExtractor = <T>(
+  res: AxiosResponse<T>
+): Pick<AxiosResponse<T>, 'data' | 'headers'> => ({
+  data: res?.data,
+  headers: res?.headers,
+});
 
 const concatRequestTransformerWithDefault = (
   requestTransformer: AxiosTransformer | AxiosTransformer[]
@@ -228,9 +237,11 @@ const createRequestConfig = (
     apiKey,
     correlationId,
     idempotencyKey,
+    transactionId,
     query,
     headers,
   } = options as ProxyRequestOptions;
+
   const apiKeyHeader = apiKey
     ? {
         [API_KEY_HEADER]: apiKey,
@@ -246,12 +257,18 @@ const createRequestConfig = (
         [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       }
     : {};
+  const transactionIdHeader = transactionId
+    ? {
+        [BT_TRANSACTION_ID_HEADER]: transactionId,
+      }
+    : {};
 
   return {
     headers: {
       ...apiKeyHeader,
       ...correlationIdHeader,
       ...idempotencyKeyHeader,
+      ...transactionIdHeader,
       ...(typeof headers !== 'undefined' && { ...headers }),
     },
     ...(typeof query !== 'undefined' && { params: query }),
@@ -281,7 +298,7 @@ const errorInterceptor = (error: any): void => {
 };
 
 const getQueryParams = <Q>(query: Q = {} as Q): string => {
-  const keys = Object.keys(query) as (keyof Q)[];
+  const keys = Object.keys(query as Record<string, unknown>) as (keyof Q)[];
 
   if (keys.length) {
     const params = new URLSearchParams();
@@ -415,6 +432,7 @@ export {
   assertInit,
   transformRequestSnakeCase,
   proxyRaw,
+  dataAndHeadersExtractor,
   transformReactorRequestSnakeCase,
   transformProxyRequestSnakeCase,
   transformAtomicRequestSnakeCase,

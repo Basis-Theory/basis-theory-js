@@ -1,3 +1,87 @@
+# [1.77.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.76.0...v1.77.0) (2023-06-15)
+
+
+### Features
+
+* adds interface for http client for dual writing ([#339](https://github.com/Basis-Theory/basis-theory-js/issues/339)) ([14c8ccf](https://github.com/Basis-Theory/basis-theory-js/commit/14c8ccf424d0dcbdc0d83785754e8d8989a854fa))
+
+# [1.76.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.75.0...v1.76.0) (2023-05-31)
+
+
+### Features
+
+* supporting transactions ([#336](https://github.com/Basis-Theory/basis-theory-js/issues/336)) ([2f964ac](https://github.com/Basis-Theory/basis-theory-js/commit/2f964ac03a8b8790adb5efdd130b50781f20ef5e))
+
+# [1.75.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.74.0...v1.75.0) (2023-05-29)
+
+
+### Features
+
+* add mount overload that allows html element argument ([#333](https://github.com/Basis-Theory/basis-theory-js/issues/333)) ([eef00f5](https://github.com/Basis-Theory/basis-theory-js/commit/eef00f59b3eaf6009e401100528ecd2edb42c6c4))
+
+# [1.74.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.73.1...v1.74.0) (2023-05-18)
+
+
+### Features
+
+* limit exposure of proxy response headers to post reqs ([#331](https://github.com/Basis-Theory/basis-theory-js/issues/331)) ([4726af8](https://github.com/Basis-Theory/basis-theory-js/commit/4726af8a053ff27c2091ca67c04edda84d19f1ce))
+
+## [1.73.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.73.0...v1.73.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* allow null mask props ([#329](https://github.com/Basis-Theory/basis-theory-js/issues/329)) ([7d1a7e3](https://github.com/Basis-Theory/basis-theory-js/commit/7d1a7e36458a4b06b618d711c908b3b1caf412ed))
+
+# [1.73.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.72.0...v1.73.0) (2023-05-16)
+
+
+### Features
+
+* exposes proxy response headers ([#328](https://github.com/Basis-Theory/basis-theory-js/issues/328)) ([5e6051a](https://github.com/Basis-Theory/basis-theory-js/commit/5e6051a1ba48bd23e06fa4ac8a797faa894417b5))
+
+# [1.72.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.4...v1.72.0) (2023-05-12)
+
+
+### Features
+
+* add validation option to elements types ([#326](https://github.com/Basis-Theory/basis-theory-js/issues/326)) ([95f46dd](https://github.com/Basis-Theory/basis-theory-js/commit/95f46ddc91c1de5a451c7d4bac717b5d29573d59))
+
+## [1.71.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.3...v1.71.4) (2023-05-03)
+
+
+### Bug Fixes
+
+* remove httpsAgent option ([#322](https://github.com/Basis-Theory/basis-theory-js/issues/322)) ([7458d34](https://github.com/Basis-Theory/basis-theory-js/commit/7458d34d5fe1c094a02813df4ab35f6a71a926da))
+
+## [1.71.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.2...v1.71.3) (2023-05-03)
+
+
+### Bug Fixes
+
+* revert default agent settings ([#321](https://github.com/Basis-Theory/basis-theory-js/issues/321)) ([dc08788](https://github.com/Basis-Theory/basis-theory-js/commit/dc0878843e16cbe4b75d638fa7b1d60cd8e5dabc))
+
+## [1.71.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.1...v1.71.2) (2023-04-25)
+
+
+### Bug Fixes
+
+* remove node https dependency ([#318](https://github.com/Basis-Theory/basis-theory-js/issues/318)) ([4e83030](https://github.com/Basis-Theory/basis-theory-js/commit/4e83030ac59425b23d5de1fea95a417b1caed834))
+
+## [1.71.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.71.0...v1.71.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* edits for removing azure sa push for static content ([#316](https://github.com/Basis-Theory/basis-theory-js/issues/316)) ([5b779de](https://github.com/Basis-Theory/basis-theory-js/commit/5b779de5b7862719deb811cc96acb4861b0a654f))
+
+# [1.71.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.70.1...v1.71.0) (2023-04-13)
+
+
+### Features
+
+* add 5s connection keep-alive to node requests ([#314](https://github.com/Basis-Theory/basis-theory-js/issues/314)) ([e19dbda](https://github.com/Basis-Theory/basis-theory-js/commit/e19dbda9fd40e2662979e44074d754be94dd9bfa))
+
 ## [1.70.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.70.0...v1.70.1) (2023-04-06)
 
 
