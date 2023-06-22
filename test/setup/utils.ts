@@ -94,7 +94,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
     client.onPost('/').reply(
       201,
       JSON.stringify({
-        ...transformedCreatePayload,
+        ...(transformedCreatePayload as C),
         // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
@@ -126,7 +126,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
     client.onPost('/').reply(
       201,
       JSON.stringify({
-        ...transformedCreatePayload,
+        ...(transformedCreatePayload as C),
         // eslint-disable-next-line camelcase
         created_at: createdAt,
       })
@@ -262,7 +262,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
     client.onPut(id).reply(
       200,
       JSON.stringify({
-        ...transformedUpdatePayload,
+        ...(transformedUpdatePayload as U),
         // eslint-disable-next-line camelcase
         updated_at: updatedAt,
       })
@@ -293,7 +293,7 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
     client.onPut(id).reply(
       200,
       JSON.stringify({
-        ...transformedUpdatePayload,
+        ...(transformedUpdatePayload as U),
         // eslint-disable-next-line camelcase
         updated_at: updatedAt,
       })

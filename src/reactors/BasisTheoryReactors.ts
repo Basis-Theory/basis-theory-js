@@ -1,4 +1,4 @@
-import type { AxiosTransformer } from 'axios';
+import type { AxiosRequestTransformer, AxiosResponseTransformer } from 'axios';
 import { createRequestConfig, dataExtractor, proxyRaw } from '@/common';
 import {
   transformReactorResponseCamelCase,
@@ -27,13 +27,13 @@ export const BasisTheoryReactors = new CrudBuilder(
       };
 
       // eslint-disable-next-line unicorn/prefer-spread
-      _options.transformRequest = ([] as AxiosTransformer[]).concat(
+      _options.transformRequest = ([] as AxiosRequestTransformer[]).concat(
         transformReactorRequestSnakeCase,
         options.transformRequest || []
       );
 
       // eslint-disable-next-line unicorn/prefer-spread
-      _options.transformResponse = ([] as AxiosTransformer[]).concat(
+      _options.transformResponse = ([] as AxiosResponseTransformer[]).concat(
         transformReactorResponseCamelCase,
         options.transformResponse || []
       );

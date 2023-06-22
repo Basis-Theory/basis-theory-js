@@ -1,4 +1,4 @@
-import type { AxiosTransformer } from 'axios';
+import type { AxiosRequestTransformer, AxiosResponseTransformer } from 'axios';
 import { createRequestConfig } from '@/common';
 import {
   dataExtractor,
@@ -23,13 +23,13 @@ export class BasisTheorySessions
     };
 
     // eslint-disable-next-line unicorn/prefer-spread
-    _options.transformRequest = ([] as AxiosTransformer[]).concat(
+    _options.transformRequest = ([] as AxiosRequestTransformer[]).concat(
       transformProxyRequestSnakeCase,
       options.transformRequest || []
     );
 
     // eslint-disable-next-line unicorn/prefer-spread
-    _options.transformResponse = ([] as AxiosTransformer[]).concat(
+    _options.transformResponse = ([] as AxiosResponseTransformer[]).concat(
       transformProxyResponseCamelCase,
       options.transformResponse || []
     );

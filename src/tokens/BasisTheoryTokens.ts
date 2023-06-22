@@ -1,4 +1,4 @@
-import type { AxiosTransformer } from 'axios';
+import type { AxiosRequestTransformer, AxiosResponseTransformer } from 'axios';
 import {
   CONTENT_TYPE_HEADER,
   createRequestConfig,
@@ -25,13 +25,13 @@ export const BasisTheoryTokens = new CrudBuilder(
       const _options = options;
 
       // eslint-disable-next-line unicorn/prefer-spread
-      _options.transformRequest = ([] as AxiosTransformer[]).concat(
+      _options.transformRequest = ([] as AxiosRequestTransformer[]).concat(
         transformTokenRequestSnakeCase,
         options.transformRequest || []
       );
 
       // eslint-disable-next-line unicorn/prefer-spread
-      _options.transformResponse = ([] as AxiosTransformer[]).concat(
+      _options.transformResponse = ([] as AxiosResponseTransformer[]).concat(
         transformTokenResponseCamelCase,
         options.transformResponse || []
       );
