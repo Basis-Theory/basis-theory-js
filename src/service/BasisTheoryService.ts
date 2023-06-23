@@ -1,4 +1,9 @@
-import axios, { AxiosInstance, AxiosTransformer } from 'axios';
+import axios from 'axios';
+import type {
+  AxiosInstance,
+  AxiosRequestTransformer,
+  AxiosResponseTransformer,
+} from 'axios';
 import {
   API_KEY_HEADER,
   CLIENT_USER_AGENT_HEADER,
@@ -35,12 +40,12 @@ export abstract class BasisTheoryService<
         }),
       },
       /* eslint-disable unicorn/prefer-spread */
-      transformRequest: ([] as AxiosTransformer[]).concat(
+      transformRequest: ([] as AxiosRequestTransformer[]).concat(
         transformRequest || transformRequestSnakeCase,
-        axios.defaults.transformRequest as AxiosTransformer[]
+        axios.defaults.transformRequest as AxiosRequestTransformer[]
       ),
       transformResponse: (axios.defaults
-        .transformResponse as AxiosTransformer[]).concat(
+        .transformResponse as AxiosResponseTransformer[]).concat(
         transformResponse || transformResponseCamelCase
       ),
       /* eslint-enable unicorn/prefer-spread */

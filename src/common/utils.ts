@@ -1,7 +1,8 @@
 import type {
   AxiosRequestConfig,
   AxiosResponse,
-  AxiosTransformer,
+  AxiosRequestTransformer,
+  AxiosResponseTransformer,
 } from 'axios';
 import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
@@ -9,7 +10,17 @@ import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import type { RequestTransformers } from '@/service';
-import type { Reactor, Proxy, Token, TokenBase } from '@/types/models';
+import type {
+  Reactor,
+  Proxy,
+  Token,
+  CreateReactor,
+  UpdateReactor,
+  CreateToken,
+  UpdateToken,
+  CreateProxy,
+  UpdateProxy,
+} from '@/types/models';
 import type {
   ApplicationInfo,
   ClientUserAgent,
@@ -35,9 +46,7 @@ const assertInit = <T>(prop: T): NonNullable<T> => {
   return prop as NonNullable<T>;
 };
 
-const transformRequestSnakeCase: AxiosTransformer = <T, S>(
-  data: T
-): S | undefined => {
+const transformRequestSnakeCase = <T, S>(data: T): S | undefined => {
   if (typeof data === 'undefined') {
     return undefined;
   }
@@ -47,11 +56,11 @@ const transformRequestSnakeCase: AxiosTransformer = <T, S>(
   }) as S;
 };
 
-const proxyRaw: AxiosTransformer = <T>(data: T): T | undefined => data;
+const proxyRaw = <T>(data: T): T | undefined => data;
 
-const transformReactorRequestSnakeCase: AxiosTransformer = (
-  reactor: Reactor
-): Reactor | undefined => {
+const transformReactorRequestSnakeCase = (
+  reactor: Reactor | CreateReactor | UpdateReactor
+): Reactor | CreateReactor | UpdateReactor | undefined => {
   if (typeof reactor === 'undefined') {
     return undefined;
   }
@@ -61,12 +70,12 @@ const transformReactorRequestSnakeCase: AxiosTransformer = (
     ...(reactor.configuration !== undefined
       ? { configuration: reactor.configuration }
       : {}),
-  } as Reactor;
+  } as Reactor | CreateReactor | UpdateReactor;
 };
 
-const transformProxyRequestSnakeCase: AxiosTransformer = (
-  proxy: Proxy
-): Proxy | undefined => {
+const transformProxyRequestSnakeCase = (
+  proxy: Proxy | CreateProxy | UpdateProxy
+): Proxy | CreateProxy | UpdateProxy | undefined => {
   if (typeof proxy === 'undefined') {
     return undefined;
   }
@@ -76,28 +85,12 @@ const transformProxyRequestSnakeCase: AxiosTransformer = (
     ...(proxy.configuration !== undefined
       ? { configuration: proxy.configuration }
       : {}),
-  } as Proxy;
+  } as Proxy | CreateProxy | UpdateProxy;
 };
 
-const transformAtomicRequestSnakeCase: AxiosTransformer = <
-  T extends TokenBase,
-  S extends TokenBase
->(
-  data: T
-): S | undefined => {
-  if (typeof data === 'undefined') {
-    return undefined;
-  }
-
-  return {
-    ...snakecaseKeys(data, { deep: true }),
-    ...(data.metadata !== undefined ? { metadata: data.metadata } : {}),
-  } as S;
-};
-
-const transformTokenRequestSnakeCase: AxiosTransformer = (
-  token: Token
-): Token | undefined => {
+const transformTokenRequestSnakeCase = (
+  token: Token | CreateToken | UpdateToken
+): Token | CreateToken | UpdateToken | undefined => {
   if (typeof token === 'undefined') {
     return undefined;
   }
@@ -106,12 +99,10 @@ const transformTokenRequestSnakeCase: AxiosTransformer = (
     ...snakecaseKeys(token, { deep: true }),
     ...(token.data !== undefined ? { data: token.data } : {}),
     ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
-  } as Token;
+  } as Token | CreateToken | UpdateToken;
 };
 
-const transformTokenResponseCamelCase: AxiosTransformer = (
-  token: Token
-): Token | undefined => {
+const transformTokenResponseCamelCase = (token: Token): Token | undefined => {
   if (typeof token === 'undefined') {
     return undefined;
   }
@@ -123,7 +114,7 @@ const transformTokenResponseCamelCase: AxiosTransformer = (
   } as Token;
 };
 
-const transformReactorResponseCamelCase: AxiosTransformer = (
+const transformReactorResponseCamelCase = (
   reactor: Reactor
 ): Reactor | undefined => {
   if (typeof reactor === 'undefined') {
@@ -138,9 +129,7 @@ const transformReactorResponseCamelCase: AxiosTransformer = (
   } as Reactor;
 };
 
-const transformProxyResponseCamelCase: AxiosTransformer = (
-  proxy: Proxy
-): Proxy | undefined => {
+const transformProxyResponseCamelCase = (proxy: Proxy): Proxy | undefined => {
   if (typeof proxy === 'undefined') {
     return undefined;
   }
@@ -153,9 +142,7 @@ const transformProxyResponseCamelCase: AxiosTransformer = (
   } as Proxy;
 };
 
-const transformResponseCamelCase: AxiosTransformer = <T, C>(
-  data: T
-): C | undefined => {
+const transformResponseCamelCase = <T, C>(data: T): C | undefined => {
   if (typeof data === 'undefined') {
     return undefined;
   }
@@ -163,22 +150,6 @@ const transformResponseCamelCase: AxiosTransformer = <T, C>(
   return (camelcaseKeys(data as Record<string, unknown>, {
     deep: true,
   }) as unknown) as C;
-};
-
-const transformAtomicResponseCamelCase: AxiosTransformer = <
-  T extends TokenBase,
-  C extends TokenBase
->(
-  data: T
-): C | undefined => {
-  if (typeof data === 'undefined') {
-    return undefined;
-  }
-
-  return ({
-    ...camelcaseKeys(data, { deep: true }),
-    ...(data.metadata !== undefined ? { metadata: data.metadata } : {}),
-  } as unknown) as C;
 };
 
 const dataExtractor = <T>(res: AxiosResponse<T>): AxiosResponse<T>['data'] =>
@@ -192,18 +163,18 @@ const dataAndHeadersExtractor = <T>(
 });
 
 const concatRequestTransformerWithDefault = (
-  requestTransformer: AxiosTransformer | AxiosTransformer[]
-): AxiosTransformer | AxiosTransformer[] | undefined => [
-  ...([] as AxiosTransformer[]),
-  ...([requestTransformer] as AxiosTransformer[]),
-  ...(axios.defaults.transformRequest as AxiosTransformer[]),
+  requestTransformer: AxiosRequestTransformer | AxiosRequestTransformer[]
+): AxiosRequestTransformer | AxiosRequestTransformer[] | undefined => [
+  ...([] as AxiosRequestTransformer[]),
+  ...([requestTransformer] as AxiosRequestTransformer[]),
+  ...(axios.defaults.transformRequest as AxiosRequestTransformer[]),
 ];
 
 const concatResponseTransformerWithDefault = (
-  responseTransformer: AxiosTransformer | AxiosTransformer[]
-): AxiosTransformer | AxiosTransformer[] | undefined => [
-  ...(axios.defaults.transformResponse as AxiosTransformer[]),
-  ...([responseTransformer] as AxiosTransformer[]),
+  responseTransformer: AxiosResponseTransformer | AxiosResponseTransformer[]
+): AxiosResponseTransformer | AxiosResponseTransformer[] | undefined => [
+  ...(axios.defaults.transformResponse as AxiosResponseTransformer[]),
+  ...([responseTransformer] as AxiosResponseTransformer[]),
 ];
 
 const createRequestConfig = (
@@ -435,13 +406,11 @@ export {
   dataAndHeadersExtractor,
   transformReactorRequestSnakeCase,
   transformProxyRequestSnakeCase,
-  transformAtomicRequestSnakeCase,
   transformTokenRequestSnakeCase,
   transformTokenResponseCamelCase,
   transformReactorResponseCamelCase,
   transformProxyResponseCamelCase,
   transformResponseCamelCase,
-  transformAtomicResponseCamelCase,
   dataExtractor,
   createRequestConfig,
   concatRequestTransformerWithDefault,

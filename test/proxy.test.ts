@@ -1,3 +1,4 @@
+import { AxiosHeaders } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
@@ -205,7 +206,9 @@ describe('Proxy', () => {
         })
       ).toStrictEqual({
         data: response,
-        headers: { [BT_EXPOSE_PROXY_RESPONSE_HEADER]: 'true' },
+        headers: new AxiosHeaders({
+          [BT_EXPOSE_PROXY_RESPONSE_HEADER]: 'true',
+        }),
       });
     });
   });
