@@ -1,3 +1,10 @@
+## [1.77.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.77.0...v1.77.1) (2023-06-26)
+
+
+### Bug Fixes
+
+* trigger release for axios changes ([#341](https://github.com/Basis-Theory/basis-theory-js/issues/341)) ([24c5898](https://github.com/Basis-Theory/basis-theory-js/commit/24c589840960d6823ceecc5cce39d0c2af4edf07))
+
 # [1.77.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.76.0...v1.77.0) (2023-06-15)
 
 
