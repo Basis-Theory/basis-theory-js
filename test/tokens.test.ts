@@ -851,6 +851,93 @@ describe('Tokens', () => {
         [API_KEY_HEADER]: expect.any(String),
       });
     });
+
+    test('should list w/o changing metadata or data casing', async () => {
+      const randomString = chance.string();
+      const randomNumber = chance.integer();
+
+      client.onGet().reply(
+        200,
+        /* eslint-disable camelcase */
+        JSON.stringify({
+          pagination: {
+            total_items: randomNumber,
+            page_number: randomNumber,
+            page_size: randomNumber,
+            total_pages: randomNumber,
+          },
+          data: [
+            {
+              id: '1',
+              snake_case: randomString,
+              data: {
+                snake_case: randomString,
+                camelCase: randomString,
+              },
+              metadata: {
+                snake_case: randomString,
+                camelCase: randomString,
+              },
+            },
+            {
+              id: '2',
+              snake_case: randomString,
+              data: {
+                snake_case: randomString,
+                camelCase: randomString,
+              },
+              metadata: {
+                snake_case: randomString,
+                camelCase: randomString,
+              },
+            },
+          ],
+        })
+        /* eslint-enable camelcase */
+      );
+
+      expect(await bt.tokens.list()).toStrictEqual({
+        pagination: {
+          totalItems: randomNumber,
+          pageNumber: randomNumber,
+          pageSize: randomNumber,
+          totalPages: randomNumber,
+        },
+        data: [
+          {
+            id: '1',
+            /* eslint-disable camelcase */
+            snakeCase: randomString,
+            data: {
+              snake_case: randomString,
+              camelCase: randomString,
+            },
+            metadata: {
+              snake_case: randomString,
+              camelCase: randomString,
+            },
+          },
+          {
+            id: '2',
+            snakeCase: randomString,
+            data: {
+              snake_case: randomString,
+              camelCase: randomString,
+            },
+            metadata: {
+              snake_case: randomString,
+              camelCase: randomString,
+            },
+            /* eslint-enable camelcase */
+          },
+        ],
+      });
+      expect(client.history.get).toHaveLength(1);
+      expect(client.history.get[0].url).toStrictEqual('/');
+      expect(client.history.get[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
   });
 
   describe('search tokens', () => {
