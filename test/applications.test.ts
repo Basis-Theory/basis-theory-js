@@ -109,7 +109,6 @@ describe('Applications', () => {
 
       client.onGet('/key').reply(
         200,
-        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           created_at: createdAt,
@@ -117,7 +116,6 @@ describe('Applications', () => {
           modified_at: modifiedAt,
           modified_by: modifiedBy,
         })
-        /* eslint-enable camelcase */
       );
 
       const retrieveByKey = jest.spyOn(bt.applications, 'retrieveByKey');
@@ -159,7 +157,6 @@ describe('Applications', () => {
 
       client.onGet('/key').reply(
         200,
-        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           created_at: createdAt,
@@ -167,7 +164,6 @@ describe('Applications', () => {
           modified_at: modifiedAt,
           modified_by: modifiedBy,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(
@@ -213,7 +209,6 @@ describe('Applications', () => {
 
       client.onPost(`${id}/regenerate`).reply(
         200,
-        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           key,
@@ -222,7 +217,6 @@ describe('Applications', () => {
           modified_at: modifiedAt,
           modified_by: modifiedBy,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(await bt.applications.regenerateKey(id)).toStrictEqual({
@@ -252,7 +246,6 @@ describe('Applications', () => {
 
       client.onPost(`${id}/regenerate`).reply(
         200,
-        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           key,
@@ -261,7 +254,6 @@ describe('Applications', () => {
           modified_at: modifiedAt,
           modified_by: modifiedBy,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(

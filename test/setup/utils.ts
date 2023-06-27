@@ -95,7 +95,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
       201,
       JSON.stringify({
         ...(transformedCreatePayload as C),
-        // eslint-disable-next-line camelcase
+
         created_at: createdAt,
       })
     );
@@ -127,7 +127,7 @@ const testCreate = <T, C>(param: () => TestCreateParam<T, C>): void => {
       201,
       JSON.stringify({
         ...(transformedCreatePayload as C),
-        // eslint-disable-next-line camelcase
+
         created_at: createdAt,
       })
     );
@@ -183,7 +183,7 @@ const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
       200,
       JSON.stringify({
         id,
-        // eslint-disable-next-line camelcase
+
         created_at: createdAt,
       })
     );
@@ -206,7 +206,7 @@ const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
       200,
       JSON.stringify({
         id,
-        // eslint-disable-next-line camelcase
+
         created_at: createdAt,
       })
     );
@@ -349,7 +349,7 @@ const testDelete = (param: () => TestDeleteParam): void => {
 
     client.onDelete(id).reply(204, {
       id,
-      // eslint-disable-next-line camelcase
+
       created_at: createdAt,
     });
 
@@ -366,7 +366,7 @@ const testDelete = (param: () => TestDeleteParam): void => {
 
     client.onDelete(id).reply(204, {
       id,
-      // eslint-disable-next-line camelcase
+
       created_at: createdAt,
     });
 
@@ -457,7 +457,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
 
     client.onGet().reply(
       200,
-      /* eslint-disable camelcase */
+
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -467,7 +467,6 @@ const testList = <T>(param: () => TestListParam<T>): void => {
         },
         data: [],
       })
-      /* eslint-enable camelcase */
     );
 
     expect(await service.list()).toStrictEqual({
@@ -491,7 +490,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
 
     client.onGet().reply(
       200,
-      /* eslint-disable camelcase */
+
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -501,7 +500,6 @@ const testList = <T>(param: () => TestListParam<T>): void => {
         },
         data: [],
       })
-      /* eslint-enable camelcase */
     );
 
     expect(
@@ -529,7 +527,7 @@ const testList = <T>(param: () => TestListParam<T>): void => {
 
     client.onGet().reply(
       200,
-      /* eslint-disable camelcase */
+
       JSON.stringify({
         pagination: {
           total_items: totalItems,
@@ -539,7 +537,6 @@ const testList = <T>(param: () => TestListParam<T>): void => {
         },
         data: [],
       })
-      /* eslint-enable camelcase */
     );
 
     expect(

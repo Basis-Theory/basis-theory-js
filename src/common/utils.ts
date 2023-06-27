@@ -24,6 +24,7 @@ import type {
 import type {
   ApplicationInfo,
   ClientUserAgent,
+  PaginatedList,
   ProxyRequestOptions,
   RequestOptions,
 } from '@/types/sdk';
@@ -102,42 +103,100 @@ const transformTokenRequestSnakeCase = (
   } as Token | CreateToken | UpdateToken;
 };
 
-const transformTokenResponseCamelCase = (token: Token): Token | undefined => {
-  if (typeof token === 'undefined') {
+const isList = <T>(arg: unknown): arg is PaginatedList<T> =>
+  (arg as PaginatedList<T>) &&
+  (arg as PaginatedList<T>)?.pagination !== undefined &&
+  (arg as PaginatedList<T>)?.data !== undefined;
+
+const transformTokenResponseCamelCase = (
+  tokenResponse: Token | PaginatedList<Token> | undefined
+): Token | PaginatedList<Token> | undefined => {
+  if (typeof tokenResponse === 'undefined') {
     return undefined;
   }
 
+  if (isList<Token>(tokenResponse)) {
+    const transformedData = tokenResponse.data.map((t: Token) => ({
+      ...camelcaseKeys(t, { deep: true }),
+      ...(t.data !== undefined ? { data: t.data } : {}),
+      ...(t.metadata !== undefined ? { metadata: t.metadata } : {}),
+    }));
+
+    const transformedToken = {
+      data: transformedData,
+      pagination: camelcaseKeys(tokenResponse.pagination, { deep: true }),
+    };
+
+    return transformedToken;
+  }
+
   return {
-    ...camelcaseKeys(token, { deep: true }),
-    ...(token.data !== undefined ? { data: token.data } : {}),
-    ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
+    ...camelcaseKeys(tokenResponse, { deep: true }),
+    ...(tokenResponse.data !== undefined ? { data: tokenResponse.data } : {}),
+    ...(tokenResponse.metadata !== undefined
+      ? { metadata: tokenResponse.metadata }
+      : {}),
   } as Token;
 };
 
 const transformReactorResponseCamelCase = (
-  reactor: Reactor
-): Reactor | undefined => {
-  if (typeof reactor === 'undefined') {
+  reactorResponse: Reactor | PaginatedList<Reactor> | undefined
+): Reactor | PaginatedList<Reactor> | undefined => {
+  if (typeof reactorResponse === 'undefined') {
     return undefined;
   }
 
+  if (isList<Reactor>(reactorResponse)) {
+    const transformedData = reactorResponse.data.map((r: Reactor) => ({
+      ...camelcaseKeys(r, { deep: true }),
+      ...(r.configuration !== undefined
+        ? { configuration: r.configuration }
+        : {}),
+    }));
+
+    const transformedReactor = {
+      data: transformedData,
+      pagination: camelcaseKeys(reactorResponse.pagination, { deep: true }),
+    };
+
+    return transformedReactor;
+  }
+
   return {
-    ...camelcaseKeys(reactor, { deep: true }),
-    ...(reactor.configuration !== undefined
-      ? { configuration: reactor.configuration }
+    ...camelcaseKeys(reactorResponse, { deep: true }),
+    ...(reactorResponse.configuration !== undefined
+      ? { configuration: reactorResponse.configuration }
       : {}),
   } as Reactor;
 };
 
-const transformProxyResponseCamelCase = (proxy: Proxy): Proxy | undefined => {
-  if (typeof proxy === 'undefined') {
+const transformProxyResponseCamelCase = (
+  proxyResponse: Proxy | PaginatedList<Proxy> | undefined
+): Proxy | PaginatedList<Proxy> | undefined => {
+  if (typeof proxyResponse === 'undefined') {
     return undefined;
   }
 
+  if (isList<Proxy>(proxyResponse)) {
+    const transformedData = proxyResponse.data.map((p: Proxy) => ({
+      ...camelcaseKeys(p, { deep: true }),
+      ...(p.configuration !== undefined
+        ? { configuration: p.configuration }
+        : {}),
+    }));
+
+    const transformedReactor = {
+      data: transformedData,
+      pagination: camelcaseKeys(proxyResponse.pagination, { deep: true }),
+    };
+
+    return transformedReactor;
+  }
+
   return {
-    ...camelcaseKeys(proxy, { deep: true }),
-    ...(proxy.configuration !== undefined
-      ? { configuration: proxy.configuration }
+    ...camelcaseKeys(proxyResponse, { deep: true }),
+    ...(proxyResponse.configuration !== undefined
+      ? { configuration: proxyResponse.configuration }
       : {}),
   } as Proxy;
 };

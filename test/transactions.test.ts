@@ -32,14 +32,12 @@ describe('Transactions', () => {
 
       client.onPost('/').reply(
         201,
-        /* eslint-disable camelcase */
         JSON.stringify({
           id,
           created_by: createdBy,
           created_at: createdAt,
           expires_at: expiresAt,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(await bt.transactions.create()).toStrictEqual({

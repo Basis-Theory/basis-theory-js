@@ -39,7 +39,6 @@ describe('Reactors', () => {
     const createPayload = {
       name: _chance.string(),
       configuration: {
-        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -51,7 +50,6 @@ describe('Reactors', () => {
     const updatePayload = {
       name: _chance.string(),
       configuration: {
-        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -73,6 +71,75 @@ describe('Reactors', () => {
       updatePayload,
       transformedUpdatePayload,
     }));
+
+    test('should list w/o changing config casing', async () => {
+      const randomString = _chance.string();
+      const randomNumber = _chance.integer();
+
+      client.onGet().reply(
+        200,
+
+        JSON.stringify({
+          pagination: {
+            total_items: randomNumber,
+            page_number: randomNumber,
+            page_size: randomNumber,
+            total_pages: randomNumber,
+          },
+          data: [
+            {
+              id: '1',
+              snake_case: randomString,
+              configuration: {
+                snake_case: randomString,
+                camelCase: randomString,
+              },
+            },
+            {
+              id: '2',
+              snake_case: randomString,
+              configuration: {
+                snake_case: randomString,
+                camelCase: randomString,
+              },
+            },
+          ],
+        })
+      );
+
+      expect(await bt.reactors.list()).toStrictEqual({
+        pagination: {
+          totalItems: randomNumber,
+          pageNumber: randomNumber,
+          pageSize: randomNumber,
+          totalPages: randomNumber,
+        },
+        data: [
+          {
+            id: '1',
+
+            snakeCase: randomString,
+            configuration: {
+              snake_case: randomString,
+              camelCase: randomString,
+            },
+          },
+          {
+            id: '2',
+            snakeCase: randomString,
+            configuration: {
+              snake_case: randomString,
+              camelCase: randomString,
+            },
+          },
+        ],
+      });
+      expect(client.history.get).toHaveLength(1);
+      expect(client.history.get[0].url).toStrictEqual('/');
+      expect(client.history.get[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
   });
 
   describe('react', () => {
@@ -83,7 +150,6 @@ describe('Reactors', () => {
       const fingerprint = chance.string();
       const type = chance.string() as TokenType;
 
-      /* eslint-disable camelcase */
       const args = {
         first: chance.string(),
         second: chance.string(),
@@ -100,7 +166,6 @@ describe('Reactors', () => {
         first_nested: chance.string(),
         second_nested: chance.string(),
       };
-      /* eslint-enable camelcase */
 
       const createdBy = chance.string();
       const createdAt = chance.string();
@@ -109,7 +174,7 @@ describe('Reactors', () => {
 
       client.onPost(`/${reactorId}/react`).reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           tokens: {
             id,
@@ -124,11 +189,9 @@ describe('Reactors', () => {
           },
           raw: data,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(await bt.reactors.react(reactorId, reactRequest)).toStrictEqual({
-        /* eslint-disable camelcase */
         tokens: {
           id,
           tenant_id: tenantId,
@@ -141,7 +204,6 @@ describe('Reactors', () => {
           modified_by: modifiedBy,
         },
         raw: data,
-        /* eslint-enable camelcase */
       });
       expect(client.history.post).toHaveLength(1);
       expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
@@ -162,7 +224,6 @@ describe('Reactors', () => {
       const fingerprint = chance.string();
       const type = chance.string() as TokenType;
 
-      /* eslint-disable camelcase */
       const args = {
         first: chance.string(),
         second: chance.string(),
@@ -179,7 +240,6 @@ describe('Reactors', () => {
         first_nested: chance.string(),
         second_nested: chance.string(),
       };
-      /* eslint-enable camelcase */
 
       const createdBy = chance.string();
       const createdAt = chance.string();
@@ -191,7 +251,7 @@ describe('Reactors', () => {
 
       client.onPost(`/${reactorId}/react`).reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           tokens: {
             id,
@@ -206,7 +266,6 @@ describe('Reactors', () => {
           },
           raw: data,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(
@@ -216,7 +275,6 @@ describe('Reactors', () => {
           idempotencyKey,
         })
       ).toStrictEqual({
-        /* eslint-disable camelcase */
         tokens: {
           id,
           tenant_id: tenantId,
@@ -229,7 +287,6 @@ describe('Reactors', () => {
           modified_by: modifiedBy,
         },
         raw: data,
-        /* eslint-enable camelcase */
       });
       expect(client.history.post).toHaveLength(1);
       expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
@@ -252,7 +309,6 @@ describe('Reactors', () => {
       const fingerprint = chance.string();
       const type = chance.string() as TokenType;
 
-      /* eslint-disable camelcase */
       const args = {
         first: chance.string(),
         second: chance.string(),
@@ -274,7 +330,6 @@ describe('Reactors', () => {
         first_nested: chance.string(),
         second_nested: chance.string(),
       };
-      /* eslint-enable camelcase */
 
       const createdBy = chance.string();
       const createdAt = chance.string();
@@ -286,7 +341,7 @@ describe('Reactors', () => {
 
       client.onPost(`/${reactorId}/react`).reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           tokens: {
             id,
@@ -301,7 +356,6 @@ describe('Reactors', () => {
           },
           raw: data,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(
@@ -311,7 +365,6 @@ describe('Reactors', () => {
           idempotencyKey,
         })
       ).toStrictEqual({
-        /* eslint-disable camelcase */
         tokens: {
           id,
           tenant_id: tenantId,
@@ -324,7 +377,6 @@ describe('Reactors', () => {
           modified_by: modifiedBy,
         },
         raw: data,
-        /* eslint-enable camelcase */
       });
       expect(client.history.post).toHaveLength(1);
       expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
@@ -346,7 +398,6 @@ describe('Reactors', () => {
       const reactorId = chance.string();
       const status = errorStatus();
 
-      /* eslint-disable camelcase */
       const args = {
         first: chance.string(),
         second: chance.string(),
@@ -359,7 +410,6 @@ describe('Reactors', () => {
       const reactRequest = {
         args,
       };
-      /* eslint-enable camelcase */
 
       client.onPost(`/${reactorId}/react`).reply(status);
 

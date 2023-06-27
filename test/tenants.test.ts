@@ -54,7 +54,7 @@ describe('Tenants', () => {
 
       client.onGet().reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           id,
           owner_id: ownerId,
@@ -65,7 +65,6 @@ describe('Tenants', () => {
           modified_at: modifiedAt,
           modified_by: modifiedBy,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(await bt.tenants.retrieve()).toStrictEqual({
@@ -103,7 +102,7 @@ describe('Tenants', () => {
 
       client.onGet().reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           id,
           owner_id: ownerId,
@@ -114,7 +113,6 @@ describe('Tenants', () => {
           modified_at: modifiedAt,
           modified_by: modifiedBy,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(
@@ -314,7 +312,7 @@ describe('Tenants', () => {
           monthlyActiveTokens: chance.integer(),
         },
       };
-      /* eslint-disable camelcase */
+
       expectedUsageReportJson = JSON.stringify({
         token_report: {
           metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
@@ -324,7 +322,6 @@ describe('Tenants', () => {
             expectedUsageReport.tokenReport.includedMonthlyActiveTokens,
         },
       });
-      /* eslint-enable camelcase */
     });
 
     test('should retrieve tenant usage report', async () => {
@@ -408,7 +405,6 @@ describe('Tenants', () => {
           data: [expectedMember],
         };
 
-        /* eslint-disable camelcase */
         expectedTenantMembersJson = JSON.stringify({
           pagination: {
             total_items: totalItems,
@@ -429,7 +425,6 @@ describe('Tenants', () => {
             },
           ],
         });
-        /* eslint-enable camelcase */
       });
 
       test('should list', async () => {
@@ -575,7 +570,6 @@ describe('Tenants', () => {
           createdBy: chance.guid(),
         };
 
-        /* eslint-disable camelcase */
         expectedTenantInvitationJson = JSON.stringify({
           id: expectedTenantInvitation.id,
           tenant_id: expectedTenantInvitation.tenantId,
@@ -585,7 +579,6 @@ describe('Tenants', () => {
           created_at: expectedTenantInvitation.createdAt,
           created_by: expectedTenantInvitation.createdBy,
         });
-        /* eslint-enable camelcase */
       });
 
       test('should create', async () => {
@@ -659,7 +652,6 @@ describe('Tenants', () => {
           createdBy: chance.guid(),
         };
 
-        /* eslint-disable camelcase */
         expectedTenantInvitationJson = JSON.stringify({
           id: expectedTenantInvitation.id,
           tenant_id: expectedTenantInvitation.tenantId,
@@ -669,7 +661,6 @@ describe('Tenants', () => {
           created_at: expectedTenantInvitation.createdAt,
           created_by: expectedTenantInvitation.createdBy,
         });
-        /* eslint-enable camelcase */
       });
 
       test('should resend invitation', async () => {
@@ -752,7 +743,6 @@ describe('Tenants', () => {
           data: [expectedInvitation],
         };
 
-        /* eslint-disable camelcase */
         expectedTenantInvitationsJson = JSON.stringify({
           pagination: {
             total_items: totalItems,
@@ -772,7 +762,6 @@ describe('Tenants', () => {
             },
           ],
         });
-        /* eslint-enable camelcase */
       });
 
       test('should list', async () => {
@@ -863,7 +852,6 @@ describe('Tenants', () => {
           createdBy: chance.guid(),
         };
 
-        /* eslint-disable camelcase */
         expectedTenantInvitationJson = JSON.stringify({
           id: expectedTenantInvitation.id,
           tenant_id: expectedTenantInvitation.tenantId,
@@ -873,7 +861,6 @@ describe('Tenants', () => {
           created_at: expectedTenantInvitation.createdAt,
           created_by: expectedTenantInvitation.createdBy,
         });
-        /* eslint-enable camelcase */
       });
 
       test('should retrieve', async () => {

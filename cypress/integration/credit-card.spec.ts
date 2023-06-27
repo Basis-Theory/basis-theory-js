@@ -13,7 +13,6 @@ context('Credit Card example', () => {
         pathname: '/tokens',
       },
       (req) => {
-        /* eslint-disable camelcase */
         req.reply({
           statusCode: 201,
           body: {
@@ -27,7 +26,6 @@ context('Credit Card example', () => {
             },
           },
         });
-        /* eslint-enable camelcase */
       }
     ).as('createToken');
   });

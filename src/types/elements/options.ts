@@ -62,11 +62,8 @@ type ElementValueType = 'static' | 'reference';
 
 interface CardElementValue<T extends ElementValueType> {
   number?: T extends 'reference' ? DataElementReference : string;
-  // disabling camecalse so that the element value matches the API data
-  /* eslint-disable camelcase */
   expiration_month?: T extends 'reference' ? DataElementReference : number;
   expiration_year?: T extends 'reference' ? DataElementReference : number;
-  /* eslint-enable camelcase */
   cvc?: T extends 'reference' ? DataElementReference : string;
 }
 
