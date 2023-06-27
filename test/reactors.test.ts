@@ -39,7 +39,6 @@ describe('Reactors', () => {
     const createPayload = {
       name: _chance.string(),
       configuration: {
-        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -51,7 +50,6 @@ describe('Reactors', () => {
     const updatePayload = {
       name: _chance.string(),
       configuration: {
-        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -80,7 +78,7 @@ describe('Reactors', () => {
 
       client.onGet().reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           pagination: {
             total_items: randomNumber,
@@ -107,7 +105,6 @@ describe('Reactors', () => {
             },
           ],
         })
-        /* eslint-enable camelcase */
       );
 
       expect(await bt.reactors.list()).toStrictEqual({
@@ -120,7 +117,7 @@ describe('Reactors', () => {
         data: [
           {
             id: '1',
-            /* eslint-disable camelcase */
+
             snakeCase: randomString,
             configuration: {
               snake_case: randomString,
@@ -134,7 +131,6 @@ describe('Reactors', () => {
               snake_case: randomString,
               camelCase: randomString,
             },
-            /* eslint-enable camelcase */
           },
         ],
       });
@@ -154,7 +150,6 @@ describe('Reactors', () => {
       const fingerprint = chance.string();
       const type = chance.string() as TokenType;
 
-      /* eslint-disable camelcase */
       const args = {
         first: chance.string(),
         second: chance.string(),
@@ -171,7 +166,6 @@ describe('Reactors', () => {
         first_nested: chance.string(),
         second_nested: chance.string(),
       };
-      /* eslint-enable camelcase */
 
       const createdBy = chance.string();
       const createdAt = chance.string();
@@ -180,7 +174,7 @@ describe('Reactors', () => {
 
       client.onPost(`/${reactorId}/react`).reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           tokens: {
             id,
@@ -195,11 +189,9 @@ describe('Reactors', () => {
           },
           raw: data,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(await bt.reactors.react(reactorId, reactRequest)).toStrictEqual({
-        /* eslint-disable camelcase */
         tokens: {
           id,
           tenant_id: tenantId,
@@ -212,7 +204,6 @@ describe('Reactors', () => {
           modified_by: modifiedBy,
         },
         raw: data,
-        /* eslint-enable camelcase */
       });
       expect(client.history.post).toHaveLength(1);
       expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
@@ -233,7 +224,6 @@ describe('Reactors', () => {
       const fingerprint = chance.string();
       const type = chance.string() as TokenType;
 
-      /* eslint-disable camelcase */
       const args = {
         first: chance.string(),
         second: chance.string(),
@@ -250,7 +240,6 @@ describe('Reactors', () => {
         first_nested: chance.string(),
         second_nested: chance.string(),
       };
-      /* eslint-enable camelcase */
 
       const createdBy = chance.string();
       const createdAt = chance.string();
@@ -262,7 +251,7 @@ describe('Reactors', () => {
 
       client.onPost(`/${reactorId}/react`).reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           tokens: {
             id,
@@ -277,7 +266,6 @@ describe('Reactors', () => {
           },
           raw: data,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(
@@ -287,7 +275,6 @@ describe('Reactors', () => {
           idempotencyKey,
         })
       ).toStrictEqual({
-        /* eslint-disable camelcase */
         tokens: {
           id,
           tenant_id: tenantId,
@@ -300,7 +287,6 @@ describe('Reactors', () => {
           modified_by: modifiedBy,
         },
         raw: data,
-        /* eslint-enable camelcase */
       });
       expect(client.history.post).toHaveLength(1);
       expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
@@ -323,7 +309,6 @@ describe('Reactors', () => {
       const fingerprint = chance.string();
       const type = chance.string() as TokenType;
 
-      /* eslint-disable camelcase */
       const args = {
         first: chance.string(),
         second: chance.string(),
@@ -345,7 +330,6 @@ describe('Reactors', () => {
         first_nested: chance.string(),
         second_nested: chance.string(),
       };
-      /* eslint-enable camelcase */
 
       const createdBy = chance.string();
       const createdAt = chance.string();
@@ -357,7 +341,7 @@ describe('Reactors', () => {
 
       client.onPost(`/${reactorId}/react`).reply(
         200,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           tokens: {
             id,
@@ -372,7 +356,6 @@ describe('Reactors', () => {
           },
           raw: data,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(
@@ -382,7 +365,6 @@ describe('Reactors', () => {
           idempotencyKey,
         })
       ).toStrictEqual({
-        /* eslint-disable camelcase */
         tokens: {
           id,
           tenant_id: tenantId,
@@ -395,7 +377,6 @@ describe('Reactors', () => {
           modified_by: modifiedBy,
         },
         raw: data,
-        /* eslint-enable camelcase */
       });
       expect(client.history.post).toHaveLength(1);
       expect(client.history.post[0].url).toStrictEqual(`/${reactorId}/react`);
@@ -417,7 +398,6 @@ describe('Reactors', () => {
       const reactorId = chance.string();
       const status = errorStatus();
 
-      /* eslint-disable camelcase */
       const args = {
         first: chance.string(),
         second: chance.string(),
@@ -430,7 +410,6 @@ describe('Reactors', () => {
       const reactRequest = {
         args,
       };
-      /* eslint-enable camelcase */
 
       client.onPost(`/${reactorId}/react`).reply(status);
 

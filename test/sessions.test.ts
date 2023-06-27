@@ -34,13 +34,12 @@ describe('Sessions', () => {
 
       client.onPost('/').reply(
         201,
-        /* eslint-disable camelcase */
+
         JSON.stringify({
           session_key: sessionKey,
           nonce,
           expires_at: expiresAt,
         })
-        /* eslint-enable camelcase */
       );
 
       expect(await bt.sessions.create()).toStrictEqual({

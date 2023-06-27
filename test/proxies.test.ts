@@ -42,7 +42,6 @@ describe('Proxies', () => {
         id: _chance.guid(),
       },
       configuration: {
-        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -64,7 +63,6 @@ describe('Proxies', () => {
         id: _chance.guid(),
       },
       configuration: {
-        // eslint-disable-next-line camelcase
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
@@ -94,7 +92,6 @@ describe('Proxies', () => {
 
       client.onGet().reply(
         200,
-        /* eslint-disable camelcase */
         JSON.stringify({
           pagination: {
             total_items: randomNumber,
@@ -121,7 +118,6 @@ describe('Proxies', () => {
             },
           ],
         })
-        /* eslint-enable camelcase */
       );
 
       expect(await bt.proxies.list()).toStrictEqual({
@@ -134,7 +130,6 @@ describe('Proxies', () => {
         data: [
           {
             id: '1',
-            /* eslint-disable camelcase */
             snakeCase: randomString,
             configuration: {
               snake_case: randomString,
@@ -148,7 +143,6 @@ describe('Proxies', () => {
               snake_case: randomString,
               camelCase: randomString,
             },
-            /* eslint-enable camelcase */
           },
         ],
       });

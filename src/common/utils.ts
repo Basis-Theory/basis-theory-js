@@ -103,13 +103,13 @@ const transformTokenRequestSnakeCase = (
   } as Token | CreateToken | UpdateToken;
 };
 
-// any as we dont know if its a list or not
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isList = <T>(arg: any): arg is PaginatedList<T> =>
-  arg && arg?.pagination !== undefined && arg?.data !== undefined;
+const isList = <T>(arg: unknown): arg is PaginatedList<T> =>
+  (arg as PaginatedList<T>) &&
+  (arg as PaginatedList<T>)?.pagination !== undefined &&
+  (arg as PaginatedList<T>)?.data !== undefined;
 
 const transformTokenResponseCamelCase = (
-  tokenResponse: Token | PaginatedList<Token>
+  tokenResponse: Token | PaginatedList<Token> | undefined
 ): Token | PaginatedList<Token> | undefined => {
   if (typeof tokenResponse === 'undefined') {
     return undefined;
@@ -140,7 +140,7 @@ const transformTokenResponseCamelCase = (
 };
 
 const transformReactorResponseCamelCase = (
-  reactorResponse: Reactor | PaginatedList<Reactor>
+  reactorResponse: Reactor | PaginatedList<Reactor> | undefined
 ): Reactor | PaginatedList<Reactor> | undefined => {
   if (typeof reactorResponse === 'undefined') {
     return undefined;
@@ -171,7 +171,7 @@ const transformReactorResponseCamelCase = (
 };
 
 const transformProxyResponseCamelCase = (
-  proxyResponse: Proxy | PaginatedList<Proxy>
+  proxyResponse: Proxy | PaginatedList<Proxy> | undefined
 ): Proxy | PaginatedList<Proxy> | undefined => {
   if (typeof proxyResponse === 'undefined') {
     return undefined;
