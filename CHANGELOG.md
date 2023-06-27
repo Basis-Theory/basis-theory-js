@@ -1,3 +1,10 @@
+## [1.77.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.77.1...v1.77.2) (2023-06-27)
+
+
+### Bug Fixes
+
+* fix casing for list tokens, reactors, proxies responses ([#342](https://github.com/Basis-Theory/basis-theory-js/issues/342)) ([62259d7](https://github.com/Basis-Theory/basis-theory-js/commit/62259d741c5c75d411bc5ac3ea6135a115cc028b))
+
 ## [1.77.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.77.0...v1.77.1) (2023-06-26)
 
 
