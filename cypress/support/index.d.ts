@@ -5,7 +5,8 @@ declare namespace Cypress {
   interface Chainable {
     testCreate(serviceName: string);
     testRetrieve(serviceName: string);
-    testUpdate(serviceName: string, method: string);
+    testUpdate(serviceName: string, method?: 'PUT' | 'PATCH');
+    testPatch(serviceName: string);
     testDelete(serviceName: string);
     testRetrieveNoId(serviceName: string);
     testUpdateNoId(serviceName: string);

@@ -4,7 +4,7 @@ import { BasisTheory } from '@/BasisTheory';
 import { API_KEY_HEADER } from '@/common';
 import { transformProxyRequestSnakeCase } from '@/common/utils';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
-import { mockServiceClient, testCRUD } from './setup/utils';
+import { mockServiceClient, testCRUD, testPatch } from './setup/utils';
 
 describe('Proxies', () => {
   let bt: IBasisTheory,
@@ -69,12 +69,20 @@ describe('Proxies', () => {
       requireAuth: _chance.bool(),
     };
 
+    const patchPayload = {
+      ...updatePayload,
+    };
+
     const transformedCreatePayload = transformProxyRequestSnakeCase(
       createPayload
     );
 
     const transformedUpdatePayload = transformProxyRequestSnakeCase(
       updatePayload
+    );
+
+    const transformedPatchPayload = transformProxyRequestSnakeCase(
+      patchPayload
     );
 
     testCRUD(() => ({
@@ -84,6 +92,13 @@ describe('Proxies', () => {
       transformedCreatePayload,
       updatePayload,
       transformedUpdatePayload,
+    }));
+
+    testPatch(() => ({
+      service: bt.proxies,
+      client,
+      patchPayload,
+      transformedPatchPayload,
     }));
 
     test('should list w/o changing config casing', async () => {

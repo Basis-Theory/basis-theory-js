@@ -42,6 +42,19 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add('testPatch', (serviceName: string) => {
+  cy.intercept('PATCH', new RegExp(`/${serviceName}/.+`, 'u'), {}).as('patch');
+
+  cy.visit('./cypress/fixtures/crud_client.html');
+
+  cy.get('#service').type(serviceName);
+  cy.get('#patch').click();
+
+  cy.get('#submit').click();
+
+  cy.wait('@patch');
+});
+
 Cypress.Commands.add('testDelete', (serviceName: string) => {
   cy.intercept('DELETE', new RegExp(`/${serviceName}/.+`, 'u'), {}).as(
     'delete'

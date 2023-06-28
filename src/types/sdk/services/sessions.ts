@@ -1,5 +1,5 @@
+import type { AccessRule } from '@/types/models/applications';
 import type { RequestOptions } from '@/types/sdk';
-import { AccessRule } from '../../models/applications';
 
 type AuthorizeSessionRequest = {
   nonce: string;

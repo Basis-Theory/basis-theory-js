@@ -35,5 +35,6 @@ type CreateProxy = Pick<
 };
 
 type UpdateProxy = CreateProxy;
+type PatchProxy = Partial<UpdateProxy>;
 
-export type { Proxy, CreateProxy, UpdateProxy };
+export type { Proxy, CreateProxy, UpdateProxy, PatchProxy };

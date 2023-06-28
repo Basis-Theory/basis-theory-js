@@ -4,6 +4,7 @@ import type {
   Reactor,
   DataObject,
   ReactResponse,
+  PatchReactor,
 } from '@/types/models';
 import type {
   Create,
@@ -12,6 +13,7 @@ import type {
   PaginatedQuery,
   Retrieve,
   Update,
+  Patch,
   RequestOptions,
 } from './shared';
 
@@ -30,6 +32,7 @@ interface Reactors
   extends Create<Reactor, CreateReactor>,
     Retrieve<Reactor>,
     Update<Reactor, UpdateReactor>,
+    Patch<PatchReactor>,
     Delete,
     List<Reactor, ListReactorQuery> {
   react(

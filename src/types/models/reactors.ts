@@ -20,4 +20,6 @@ type UpdateReactor = Pick<Reactor, 'name' | 'configuration'> & {
   application?: Pick<Application, 'id'>;
 };
 
-export type { Reactor, CreateReactor, UpdateReactor };
+type PatchReactor = Partial<UpdateReactor>;
+
+export type { Reactor, CreateReactor, UpdateReactor, PatchReactor };

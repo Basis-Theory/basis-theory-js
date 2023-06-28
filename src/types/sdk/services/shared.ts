@@ -42,6 +42,10 @@ type Update<T, U> = {
   update(id: string, model: U, options?: RequestOptions): Promise<T>;
 };
 
+type Patch<P> = {
+  patch(id: string, model: P, options?: RequestOptions): Promise<void>;
+};
+
 type Delete = {
   delete(id: string, options?: RequestOptions): Promise<void>;
 };
@@ -59,4 +63,5 @@ export type {
   Update,
   Delete,
   List,
+  Patch,
 };

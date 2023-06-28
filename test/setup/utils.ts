@@ -16,6 +16,7 @@ import {
   IList,
   IRetrieve,
   IUpdate,
+  IPatch,
 } from '@/service/CrudBuilder';
 import type { BasisTheoryElementsInternal } from '@/types/elements';
 import type {
@@ -67,6 +68,14 @@ type TestUpdateParam<T, U> = TestParam<IUpdate<T, U>> & {
    * @default snake case transformed {@link updatePayload}
    */
   transformedUpdatePayload?: unknown;
+};
+
+type TestPatchParam<P> = TestParam<IPatch<P>> & {
+  patchPayload: P;
+  /**
+   * @default snake case transformed {@link patchPayload}
+   */
+  transformedPatchPayload?: unknown;
 };
 
 type TestRetrieveParam<T> = TestParam<IRetrieve<T>>;
@@ -335,6 +344,98 @@ const testUpdate = <T, U>(param: () => TestUpdateParam<T, U>): void => {
   });
 };
 
+const testPatch = <P>(param: () => TestPatchParam<P>): void => {
+  const chance = new Chance();
+  const id = chance.string();
+  const correlationId = chance.string();
+  const apiKey = chance.string();
+  const idempotencyKey = chance.string();
+  const transactionId = chance.string();
+
+  test('should patch', async () => {
+    const {
+      service,
+      client,
+      patchPayload,
+      transformedPatchPayload = transformRequestSnakeCase(patchPayload),
+    } = param();
+    const updatedAt = chance.string();
+
+    client.onPatch(id).reply(
+      200,
+      JSON.stringify({
+        ...(transformedPatchPayload as P),
+        // eslint-disable-next-line camelcase
+        updated_at: updatedAt,
+      })
+    );
+
+    expect(await service.patch(id, patchPayload)).toStrictEqual({
+      ...patchPayload,
+      updatedAt,
+    });
+    expect(client.history.patch).toHaveLength(1);
+    expect(client.history.patch[0].data).toStrictEqual(
+      JSON.stringify(transformedPatchPayload)
+    );
+    expect(client.history.patch[0].headers).toMatchObject({
+      [API_KEY_HEADER]: expect.any(String),
+    });
+  });
+
+  test('should patch with options', async () => {
+    const {
+      service,
+      client,
+      patchPayload,
+      transformedPatchPayload = transformRequestSnakeCase(patchPayload),
+    } = param();
+    const updatedAt = chance.string();
+
+    client.onPatch(id).reply(
+      200,
+      JSON.stringify({
+        ...(transformedPatchPayload as P),
+        // eslint-disable-next-line camelcase
+        updated_at: updatedAt,
+      })
+    );
+
+    expect(
+      await service.patch(id, patchPayload, {
+        apiKey,
+        correlationId,
+        idempotencyKey,
+        transactionId,
+      })
+    ).toStrictEqual({
+      ...patchPayload,
+      updatedAt,
+    });
+    expect(client.history.patch).toHaveLength(1);
+    expect(client.history.patch[0].data).toStrictEqual(
+      JSON.stringify(transformedPatchPayload)
+    );
+    expect(client.history.patch[0].headers).toMatchObject({
+      [API_KEY_HEADER]: apiKey,
+      [BT_TRACE_ID_HEADER]: correlationId,
+      [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+      [BT_TRANSACTION_ID_HEADER]: transactionId,
+    });
+  });
+
+  // eslint-disable-next-line jest/no-identical-title
+  test('should reject with status >= 400 <= 599', async () => {
+    const { service, client, patchPayload } = param();
+    const status = errorStatus();
+
+    client.onPatch(id).reply(status);
+
+    const promise = service.patch(id, patchPayload);
+
+    await expectBasisTheoryApiError(promise, status);
+  });
+};
 const testDelete = (param: () => TestDeleteParam): void => {
   const chance = new Chance();
   const id = chance.string();
@@ -860,6 +961,7 @@ export {
   testCreate,
   testRetrieve,
   testUpdate,
+  testPatch,
   testDelete,
   testList,
   testServiceDelegate,

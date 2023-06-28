@@ -11,6 +11,9 @@ context('Reactors', () => {
   it('should update', () => {
     cy.testUpdate('reactors');
   });
+  it('should patch', () => {
+    cy.testPatch('reactors');
+  });
   it('should delete', () => {
     cy.testDelete('reactors');
   });

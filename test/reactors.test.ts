@@ -10,10 +10,11 @@ import { transformReactorRequestSnakeCase } from '@/common/utils';
 import { TokenType } from '@/types/models';
 import type { BasisTheory as IBasisTheory, ReactRequest } from '@/types/sdk';
 import {
-  testCRUD,
-  mockServiceClient,
   errorStatus,
   expectBasisTheoryApiError,
+  mockServiceClient,
+  testCRUD,
+  testPatch,
 } from './setup/utils';
 
 describe('Reactors', () => {
@@ -55,12 +56,20 @@ describe('Reactors', () => {
       },
     };
 
+    const patchPayload = {
+      ...updatePayload,
+    };
+
     const transformedCreatePayload = transformReactorRequestSnakeCase(
       createPayload
     );
 
     const transformedUpdatePayload = transformReactorRequestSnakeCase(
       updatePayload
+    );
+
+    const transformedPatchPayload = transformReactorRequestSnakeCase(
+      patchPayload
     );
 
     testCRUD(() => ({
@@ -70,6 +79,13 @@ describe('Reactors', () => {
       transformedCreatePayload,
       updatePayload,
       transformedUpdatePayload,
+    }));
+
+    testPatch(() => ({
+      service: bt.reactors,
+      client,
+      patchPayload,
+      transformedPatchPayload,
     }));
 
     test('should list w/o changing config casing', async () => {

@@ -11,6 +11,9 @@ context('Proxies', () => {
   it('should update', () => {
     cy.testUpdate('proxies');
   });
+  it('should patch', () => {
+    cy.testPatch('proxies');
+  });
   it('should delete', () => {
     cy.testDelete('proxies');
   });

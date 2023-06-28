@@ -6,7 +6,12 @@ import {
 import { BasisTheoryService } from '@/service';
 import type { BasisTheoryServiceOptions } from '@/service';
 import { CrudBuilder } from '@/service/CrudBuilder';
-import type { CreateProxy, UpdateProxy, Proxy } from '@/types/models';
+import type {
+  CreateProxy,
+  UpdateProxy,
+  Proxy,
+  PatchProxy,
+} from '@/types/models';
 import type { ListProxyQuery } from '@/types/sdk';
 
 export const BasisTheoryProxies = new CrudBuilder(
@@ -35,6 +40,7 @@ export const BasisTheoryProxies = new CrudBuilder(
   .create<Proxy, CreateProxy>()
   .retrieve<Proxy>()
   .update<Proxy, UpdateProxy>()
+  .patch<PatchProxy>()
   .delete()
   .list<Proxy, ListProxyQuery>()
   .build();

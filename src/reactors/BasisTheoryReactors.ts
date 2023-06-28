@@ -12,6 +12,7 @@ import type {
   CreateReactor,
   UpdateReactor,
   ReactResponse,
+  PatchReactor,
 } from '@/types/models';
 import type {
   ListReactorQuery,
@@ -62,6 +63,7 @@ export const BasisTheoryReactors = new CrudBuilder(
   .create<Reactor, CreateReactor>()
   .retrieve<Reactor>()
   .update<Reactor, UpdateReactor>()
+  .patch<PatchReactor>()
   .delete()
   .list<Reactor, ListReactorQuery>()
   .build();
