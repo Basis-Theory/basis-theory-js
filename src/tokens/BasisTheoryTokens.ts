@@ -3,6 +3,7 @@ import {
   CONTENT_TYPE_HEADER,
   createRequestConfig,
   getQueryParams,
+  MERGE_CONTENT_TYPE,
 } from '@/common';
 import {
   dataExtractor,
@@ -66,7 +67,7 @@ export const BasisTheoryTokens = new CrudBuilder(
           ...config,
           headers: {
             ...(config?.headers || {}),
-            [CONTENT_TYPE_HEADER]: 'application/merge-patch+json',
+            [CONTENT_TYPE_HEADER]: MERGE_CONTENT_TYPE,
           },
         })
         .then(dataExtractor);

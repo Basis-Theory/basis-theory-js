@@ -4,6 +4,7 @@ import {
   createRequestConfig,
   dataExtractor,
   getQueryParams,
+  MERGE_CONTENT_TYPE,
 } from '@/common';
 import type {
   PaginatedList,
@@ -74,7 +75,7 @@ const Patch = <P, S extends BasisTheoryServiceConstructor>(Service: S): S =>
           ...config,
           headers: {
             ...(config?.headers || {}),
-            [CONTENT_TYPE_HEADER]: 'application/merge-patch+json',
+            [CONTENT_TYPE_HEADER]: MERGE_CONTENT_TYPE,
           },
         })
         .then(dataExtractor);
