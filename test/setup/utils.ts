@@ -5,6 +5,7 @@ import {
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
   BT_TRANSACTION_ID_HEADER,
+  CONTENT_TYPE_HEADER,
   transformRequestSnakeCase,
 } from '@/common';
 import { BasisTheoryServiceOptions } from '@/service';
@@ -351,6 +352,7 @@ const testPatch = <P>(param: () => TestPatchParam<P>): void => {
   const apiKey = chance.string();
   const idempotencyKey = chance.string();
   const transactionId = chance.string();
+  const expectedContentType = 'application/merge-patch+json';
 
   test('should patch', async () => {
     const {
@@ -380,6 +382,7 @@ const testPatch = <P>(param: () => TestPatchParam<P>): void => {
     );
     expect(client.history.patch[0].headers).toMatchObject({
       [API_KEY_HEADER]: expect.any(String),
+      [CONTENT_TYPE_HEADER]: expectedContentType,
     });
   });
 
@@ -418,6 +421,7 @@ const testPatch = <P>(param: () => TestPatchParam<P>): void => {
     );
     expect(client.history.patch[0].headers).toMatchObject({
       [API_KEY_HEADER]: apiKey,
+      [CONTENT_TYPE_HEADER]: expectedContentType,
       [BT_TRACE_ID_HEADER]: correlationId,
       [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       [BT_TRANSACTION_ID_HEADER]: transactionId,
