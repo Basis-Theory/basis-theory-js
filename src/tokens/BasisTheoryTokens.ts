@@ -65,7 +65,7 @@ export const BasisTheoryTokens = new CrudBuilder(
         .patch(url, model, {
           ...config,
           headers: {
-            ...config?.headers,
+            ...(config?.headers || {}),
             [CONTENT_TYPE_HEADER]: 'application/merge-patch+json',
           },
         })

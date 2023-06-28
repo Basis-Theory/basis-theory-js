@@ -1,5 +1,10 @@
 /* eslint-disable max-classes-per-file, @typescript-eslint/no-shadow */
-import { createRequestConfig, dataExtractor, getQueryParams } from '@/common';
+import {
+  CONTENT_TYPE_HEADER,
+  createRequestConfig,
+  dataExtractor,
+  getQueryParams,
+} from '@/common';
 import type {
   PaginatedList,
   PaginatedQuery,
@@ -62,8 +67,16 @@ const Patch = <P, S extends BasisTheoryServiceConstructor>(Service: S): S =>
       model: P,
       options?: RequestOptions
     ): Promise<void> {
+      const config = createRequestConfig(options);
+
       return this.client
-        .patch(id, model, createRequestConfig(options))
+        .patch(id, model, {
+          ...config,
+          headers: {
+            ...(config?.headers || {}),
+            [CONTENT_TYPE_HEADER]: 'application/merge-patch+json',
+          },
+        })
         .then(dataExtractor);
     }
   };
