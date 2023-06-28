@@ -1,3 +1,10 @@
+# [1.78.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.77.2...v1.78.0) (2023-06-28)
+
+
+### Features
+
+* add proxies and reactors patch method ([#347](https://github.com/Basis-Theory/basis-theory-js/issues/347)) ([f24e322](https://github.com/Basis-Theory/basis-theory-js/commit/f24e322ad2cb05a8ec82cf94d01b4298d6214caa))
+
 ## [1.77.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.77.1...v1.77.2) (2023-06-27)
 
 
