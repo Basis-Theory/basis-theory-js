@@ -1,3 +1,10 @@
+## [1.78.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.78.0...v1.78.1) (2023-06-28)
+
+
+### Bug Fixes
+
+* use `application/merge-patch+json` on patch endpoints ([#348](https://github.com/Basis-Theory/basis-theory-js/issues/348)) ([648efa4](https://github.com/Basis-Theory/basis-theory-js/commit/648efa4e09752ed53b2438b547e9133eede9cdae))
+
 # [1.78.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.77.2...v1.78.0) (2023-06-28)
 
 
