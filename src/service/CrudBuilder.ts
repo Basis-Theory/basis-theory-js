@@ -9,6 +9,7 @@ import type {
   Update as IUpdate,
   Delete as IDelete,
   List as IList,
+  Patch as IPatch,
 } from '@/types/sdk';
 import { BasisTheoryService } from './BasisTheoryService';
 
@@ -20,6 +21,7 @@ type BasisTheoryServiceConstructor<
 type ICreateConstructor<T, C> = new (...args: any[]) => ICreate<T, C>;
 type IRetrieveConstructor<T> = new (...args: any[]) => IRetrieve<T>;
 type IUpdateConstructor<T, U> = new (...args: any[]) => IUpdate<T, U>;
+type IPatchConstructor<P> = new (...args: any[]) => IPatch<P>;
 type IDeleteConstructor = new (...args: any[]) => IDelete;
 type IListConstructor<T, Q extends PaginatedQuery> = new (
   ...args: any[]
@@ -49,6 +51,19 @@ const Update = <T, U, S extends BasisTheoryServiceConstructor>(Service: S): S =>
     public update(id: string, model: U, options?: RequestOptions): Promise<T> {
       return this.client
         .put(id, model, createRequestConfig(options))
+        .then(dataExtractor);
+    }
+  };
+
+const Patch = <P, S extends BasisTheoryServiceConstructor>(Service: S): S =>
+  class Patch extends Service implements IPatch<P> {
+    public patch(
+      id: string,
+      model: P,
+      options?: RequestOptions
+    ): Promise<void> {
+      return this.client
+        .patch(id, model, createRequestConfig(options))
         .then(dataExtractor);
     }
   };
@@ -108,6 +123,13 @@ class CrudBuilder<Class extends BasisTheoryServiceConstructor> {
     return (this as unknown) as CrudBuilder<Class & IUpdateConstructor<T, U>>;
   }
 
+  public patch<P>(): CrudBuilder<Class & IPatchConstructor<P>> {
+    // eslint-disable-next-line new-cap
+    this.BaseService = Patch<P, Class>(this.BaseService);
+
+    return (this as unknown) as CrudBuilder<Class & IPatchConstructor<P>>;
+  }
+
   public delete(): CrudBuilder<Class & IDeleteConstructor> {
     // eslint-disable-next-line new-cap
     this.BaseService = Delete<Class>(this.BaseService);
@@ -134,6 +156,7 @@ export type {
   ICreate,
   IRetrieve,
   IUpdate,
+  IPatch,
   IDelete,
   IList,
   BasisTheoryServiceConstructor,

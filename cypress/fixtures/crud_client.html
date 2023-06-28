@@ -56,6 +56,9 @@
         if (document.getElementById('update').checked) {
           bt[serviceName].update('1234567890', {});
         }
+        if (document.getElementById('patch').checked) {
+          bt[serviceName].patch('1234567890', {});
+        }
         if (document.getElementById('delete').checked) {
           bt[serviceName].delete('1234567890');
         }
@@ -80,6 +83,8 @@
       <label for="retrieve">Retrieve</label>
       <input type="checkbox" id="update" />
       <label for="update">Update</label>
+      <input type="checkbox" id="patch" />
+      <label for="patch">Patch</label>
       <input type="checkbox" id="delete" />
       <label for="delete">Delete</label>
       <input type="checkbox" id="retrieve-no-id" />

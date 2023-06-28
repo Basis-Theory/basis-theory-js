@@ -1,4 +1,9 @@
-import type { CreateProxy, Proxy, UpdateProxy } from '@/types/models/proxies';
+import type {
+  CreateProxy,
+  PatchProxy,
+  Proxy,
+  UpdateProxy,
+} from '@/types/models/proxies';
 import type {
   Create,
   Delete,
@@ -6,6 +11,7 @@ import type {
   PaginatedQuery,
   Retrieve,
   Update,
+  Patch,
 } from '@/types/sdk';
 
 interface ListProxyQuery extends PaginatedQuery {
@@ -17,6 +23,7 @@ interface Proxies
   extends Create<Proxy, CreateProxy>,
     Retrieve<Proxy>,
     Update<Proxy, UpdateProxy>,
+    Patch<PatchProxy>,
     Delete,
     List<Proxy, ListProxyQuery> {}
 
