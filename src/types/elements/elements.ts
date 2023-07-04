@@ -69,6 +69,7 @@ type CardExpirationDateElement = BaseElement<
 > & {
   month(): ElementWrapper<CardExpirationDateElement>;
   year(): ElementWrapper<CardExpirationDateElement>;
+  format(dateFormat: string): ElementWrapper<CardExpirationDateElement>;
   setValue(value: CardExpirationDateValue<'reference'>): void;
 };
 
@@ -83,6 +84,7 @@ type CardVerificationCodeElement = BaseElement<
 type ElementWrapper<T extends BaseElement<any, any> = BaseElement<any, any>> = {
   element: T;
   method?: string;
+  formattingOptions?: { format: string };
 };
 
 type ElementValue =
