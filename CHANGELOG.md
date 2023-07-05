@@ -1,3 +1,10 @@
+## [1.79.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.0...v1.79.1) (2023-07-05)
+
+
+### Bug Fixes
+
+* remove deprecated proxy reactors and fix patch types ([#350](https://github.com/Basis-Theory/basis-theory-js/issues/350)) ([80e51d7](https://github.com/Basis-Theory/basis-theory-js/commit/80e51d770c299ca7675193f4f2d1516984ea549f))
+
 # [1.79.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.78.1...v1.79.0) (2023-07-05)
 
 
