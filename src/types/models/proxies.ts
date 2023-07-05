@@ -32,10 +32,8 @@ type CreateProxy = Pick<
 };
 
 type UpdateProxy = CreateProxy;
-type PatchProxy =
-  | Partial<UpdateProxy>
-  | {
-      configuration?: Nullable<UpdateProxy['configuration']>;
-    };
+type PatchProxy = Omit<Partial<UpdateProxy>, 'configuration'> & {
+  configuration?: Nullable<UpdateProxy['configuration']>;
+};
 
 export type { Proxy, CreateProxy, UpdateProxy, PatchProxy };
