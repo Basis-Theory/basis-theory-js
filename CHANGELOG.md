@@ -1,3 +1,10 @@
+## [1.79.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.1...v1.79.2) (2023-07-05)
+
+
+### Bug Fixes
+
+* replace patch configuration type ([#351](https://github.com/Basis-Theory/basis-theory-js/issues/351)) ([478c335](https://github.com/Basis-Theory/basis-theory-js/commit/478c335cf848ac121651328361e162aea884d8c9))
+
 ## [1.79.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.0...v1.79.1) (2023-07-05)
 
 
