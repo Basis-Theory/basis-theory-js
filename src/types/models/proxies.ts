@@ -1,5 +1,6 @@
 import type { Application } from './applications';
 import type { Auditable } from './shared';
+import type { Nullable } from './util';
 
 interface Proxy extends Auditable {
   id: string;
@@ -7,8 +8,6 @@ interface Proxy extends Auditable {
   tenantId: string;
   name: string;
   destinationUrl: string;
-  requestReactorId?: string;
-  responseReactorId?: string;
   requestTransform?: ProxyTransform;
   responseTransform?: ProxyTransform;
   applicationId?: string;
@@ -24,8 +23,6 @@ type CreateProxy = Pick<
   Proxy,
   | 'name'
   | 'destinationUrl'
-  | 'requestReactorId'
-  | 'responseReactorId'
   | 'requestTransform'
   | 'responseTransform'
   | 'configuration'
@@ -35,6 +32,10 @@ type CreateProxy = Pick<
 };
 
 type UpdateProxy = CreateProxy;
-type PatchProxy = Partial<UpdateProxy>;
+type PatchProxy =
+  | Partial<UpdateProxy>
+  | {
+      configuration?: Nullable<UpdateProxy['configuration']>;
+    };
 
 export type { Proxy, CreateProxy, UpdateProxy, PatchProxy };

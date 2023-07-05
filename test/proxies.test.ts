@@ -30,8 +30,6 @@ describe('Proxies', () => {
     const createPayload = {
       name: _chance.animal(),
       destinationUrl: _chance.url(),
-      requestReactorId: _chance.guid(),
-      responseReactorId: _chance.guid(),
       requestTransform: {
         code: _chance.string(),
       },
@@ -51,8 +49,6 @@ describe('Proxies', () => {
     const updatePayload = {
       name: _chance.animal(),
       destinationUrl: _chance.url(),
-      requestReactorId: _chance.guid(),
-      responseReactorId: _chance.guid(),
       requestTransform: {
         code: _chance.word(),
       },
