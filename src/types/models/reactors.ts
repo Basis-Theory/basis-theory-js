@@ -1,6 +1,7 @@
 import type { Application } from './applications';
 import type { ReactorFormula } from './reactor-formulas';
 import type { Auditable } from './shared';
+import type { Nullable } from './util';
 
 interface Reactor extends Auditable {
   id: string;
@@ -20,6 +21,10 @@ type UpdateReactor = Pick<Reactor, 'name' | 'configuration'> & {
   application?: Pick<Application, 'id'>;
 };
 
-type PatchReactor = Partial<UpdateReactor>;
+type PatchReactor =
+  | Partial<UpdateReactor>
+  | {
+      configuration?: Nullable<UpdateReactor['configuration']>;
+    };
 
 export type { Reactor, CreateReactor, UpdateReactor, PatchReactor };
