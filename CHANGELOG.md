@@ -1,3 +1,10 @@
+# [1.79.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.78.1...v1.79.0) (2023-07-05)
+
+
+### Features
+
+* adds format function to card expiration date ([#349](https://github.com/Basis-Theory/basis-theory-js/issues/349)) ([ff8f390](https://github.com/Basis-Theory/basis-theory-js/commit/ff8f3907829fec9c9cde60587c36d80a18c923a8))
+
 ## [1.78.1](https://github.com/Basis-Theory/basis-theory-js/compare/v1.78.0...v1.78.1) (2023-06-28)
 
 
