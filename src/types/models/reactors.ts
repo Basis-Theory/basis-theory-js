@@ -21,10 +21,8 @@ type UpdateReactor = Pick<Reactor, 'name' | 'configuration'> & {
   application?: Pick<Application, 'id'>;
 };
 
-type PatchReactor =
-  | Partial<UpdateReactor>
-  | {
-      configuration?: Nullable<UpdateReactor['configuration']>;
-    };
+type PatchReactor = Omit<Partial<UpdateReactor>, 'configuration'> & {
+  configuration?: Nullable<UpdateReactor['configuration']>;
+};
 
 export type { Reactor, CreateReactor, UpdateReactor, PatchReactor };
