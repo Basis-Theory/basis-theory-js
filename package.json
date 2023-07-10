@@ -50,7 +50,7 @@
     "@babel/core": "^7.15.8",
     "@babel/plugin-proposal-class-properties": "^7.12.13",
     "@babel/plugin-transform-arrow-functions": "^7.12.13",
-    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.22.7",
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-typescript": "^7.12.13",
     "@basis-theory/eslint-config": "^1.0.13",
