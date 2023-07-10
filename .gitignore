@@ -3,7 +3,8 @@
 node_modules
 dist
 coverage
-screenshots
+cypress/screenshots
+cypress/downloads
 .nvmrc
 .npmrc
 .idea
