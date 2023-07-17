@@ -1,5 +1,4 @@
 import {
-  Config,
   makeRequestWithElementsPayloadCheck,
   makeRequestWithoutElementsPayloadCheck,
 } from '@/common/BasisTheoryClient';
@@ -8,42 +7,43 @@ import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
   CardElement,
-  CardNumberElement,
   CardExpirationDateElement,
+  CardNumberElement,
   CardVerificationCodeElement,
   CreateCardElementOptions,
-  CreateCardNumberElementOptions,
   CreateCardExpirationDateElementOptions,
+  CreateCardNumberElementOptions,
   CreateCardVerificationCodeElementOptions,
   CreateTextElementOptions,
   CustomizableElementOptions,
   ElementType,
+  Proxy as ElementsProxy,
   TextElement,
   Tokenize as ElementsTokenize,
   TokenizeData as ElementsTokenizeData,
   Tokens as ElementsTokens,
-  Proxy as ElementsProxy,
 } from '@/types/elements';
 import type { TokenizeData } from '@/types/models';
 import type {
   Applications,
   BasisTheory as IBasisTheory,
   BasisTheoryInit,
-  Logs,
-  Permissions,
-  ReactorFormulas,
-  Reactors,
-  RequestOptions,
-  Tenants,
-  Tokenize,
-  Tokens,
   BasisTheoryInitOptions,
   BasisTheoryInitOptionsWithElements,
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitStatus,
+  Logs,
+  Permissions,
   Proxies,
   Proxy,
+  ReactorFormulas,
+  Reactors,
+  RequestConfig,
+  RequestOptions,
   Sessions,
+  Tenants,
+  Tokenize,
+  Tokens,
 } from '@/types/sdk';
 import { Transactions } from '@/types/sdk/services/transactions';
 import { BasisTheoryApplications } from './applications';
@@ -54,9 +54,9 @@ import {
   DEFAULT_ELEMENTS_BASE_URL,
 } from './common';
 import {
+  delegateProxy,
   delegateTokenize,
   delegateTokens,
-  delegateProxy,
   loadElements,
 } from './elements';
 import { ELEMENTS_INIT_ERROR_MESSAGE } from './elements/constants';
@@ -277,7 +277,7 @@ export class BasisTheory
   public post(
     url: string,
     payload: unknown,
-    config?: Config
+    config?: RequestConfig
   ): Promise<unknown> {
     return makeRequestWithElementsPayloadCheck(
       this._elements,
@@ -288,7 +288,11 @@ export class BasisTheory
     );
   }
 
-  public put(url: string, payload: unknown, config?: Config): Promise<unknown> {
+  public put(
+    url: string,
+    payload: unknown,
+    config?: RequestConfig
+  ): Promise<unknown> {
     return makeRequestWithElementsPayloadCheck(
       this._elements,
       'put',
@@ -301,7 +305,7 @@ export class BasisTheory
   public patch(
     url: string,
     payload: unknown,
-    config?: Config
+    config?: RequestConfig
   ): Promise<unknown> {
     return makeRequestWithElementsPayloadCheck(
       this._elements,
@@ -312,7 +316,7 @@ export class BasisTheory
     );
   }
 
-  public get(url: string, config?: Config): Promise<unknown> {
+  public get(url: string, config?: RequestConfig): Promise<unknown> {
     return makeRequestWithoutElementsPayloadCheck(
       this._elements,
       'get',
@@ -321,7 +325,7 @@ export class BasisTheory
     );
   }
 
-  public delete(url: string, config?: Config): Promise<unknown> {
+  public delete(url: string, config?: RequestConfig): Promise<unknown> {
     return makeRequestWithoutElementsPayloadCheck(
       this._elements,
       'delete',

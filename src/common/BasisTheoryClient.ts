@@ -1,8 +1,5 @@
 import type { BasisTheoryElementsInternal } from '@/types/elements';
-
-type Config = {
-  headers?: Record<string, string>;
-};
+import type { RequestConfig } from '@/types/sdk/services';
 
 type MethodWithPayloads = 'post' | 'put' | 'patch';
 type MethodWithoutPayloads = 'get' | 'delete';
@@ -19,7 +16,7 @@ const makeRequestWithElementsPayloadCheck = (
   method: MethodWithPayloads,
   url: string,
   payload: unknown,
-  config: Config = {}
+  config: RequestConfig = {}
 ): Promise<unknown> => {
   if (elements?.hasElement(payload)) {
     return elements.client[method](url, payload, config);
@@ -40,7 +37,7 @@ const makeRequestWithoutElementsPayloadCheck = (
   elements: BasisTheoryElementsInternal | undefined,
   method: MethodWithoutPayloads,
   url: string,
-  config: Config = {}
+  config: RequestConfig = {}
 ): Promise<unknown> => {
   if (elements) {
     return elements.client[method](url, config);
@@ -52,7 +49,6 @@ const makeRequestWithoutElementsPayloadCheck = (
 };
 
 export {
-  Config,
   makeRequestWithElementsPayloadCheck,
   makeRequestWithoutElementsPayloadCheck,
 };
