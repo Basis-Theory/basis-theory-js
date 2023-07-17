@@ -12,6 +12,7 @@ import type {
   Proxies,
   Proxy,
   Sessions,
+  HttpClient,
 } from './services';
 
 interface ApplicationInfo {
@@ -46,8 +47,7 @@ interface BasisTheoryInit {
     options: BasisTheoryInitOptionsWithElements
   ): Promise<BasisTheory & BasisTheoryElements>;
 }
-
-interface BasisTheory extends Tokenize {
+interface BasisTheory extends Tokenize, HttpClient {
   tokens: Tokens;
   applications: Applications;
   tenants: Tenants;
@@ -69,7 +69,7 @@ interface ClientUserAgent {
   application?: ApplicationInfo;
 }
 
-type BasisTheoryServices = keyof BasisTheory;
+type BasisTheoryServices = keyof Omit<BasisTheory, keyof HttpClient>;
 
 type BasisTheoryServicesBasePathMap = {
   [key in BasisTheoryServices]: string;

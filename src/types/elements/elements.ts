@@ -1,29 +1,29 @@
-import type { Config } from '@/common/BasisTheoryClient';
+import type { HttpClient } from '@/types/sdk';
 import type {
+  CardElementEvents,
+  CardExpirationDateElementEvents,
+  CardNumberElementEvents,
+  CardVerificationCodeElementEvents,
   ElementEventListener,
   EventType,
   Subscription,
   TextElementEvents,
-  CardElementEvents,
-  CardNumberElementEvents,
-  CardExpirationDateElementEvents,
-  CardVerificationCodeElementEvents,
 } from './events';
 import type {
+  CardElementValue,
+  CardExpirationDateValue,
   CreateCardElementOptions,
   CreateCardExpirationDateElementOptions,
+  CreateCardNumberElementOptions,
   CreateCardVerificationCodeElementOptions,
   CreateTextElementOptions,
   UpdateCardElementOptions,
-  CreateCardNumberElementOptions,
-  UpdateCardNumberElementOptions,
   UpdateCardExpirationDateElementOptions,
+  UpdateCardNumberElementOptions,
   UpdateCardVerificationCodeElementOptions,
   UpdateTextElementOptions,
-  CardElementValue,
-  CardExpirationDateValue,
 } from './options';
-import type { Tokenize, Tokens, Proxy } from './services';
+import type { Proxy, Tokenize, Tokens } from './services';
 import type {
   CardMetadata,
   DataElementReference,
@@ -95,7 +95,7 @@ type ElementValue =
   | CardVerificationCodeElement
   | ElementWrapper;
 
-interface BasisTheoryElements extends Tokenize {
+interface BasisTheoryElements extends Tokenize, HttpClient {
   tokens: Tokens;
   proxy: Proxy;
 
@@ -114,22 +114,13 @@ interface BasisTheoryElements extends Tokenize {
     options: CreateCardVerificationCodeElementOptions
   ): CardVerificationCodeElement;
 }
-
-interface ElementClient {
-  post(url: string, payload: unknown, config?: Config): Promise<unknown>;
-  put(url: string, payload: unknown, config?: Config): Promise<unknown>;
-  patch(url: string, payload: unknown, config?: Config): Promise<unknown>;
-  get(url: string, config?: Config): Promise<unknown>;
-  delete(url: string, config?: Config): Promise<unknown>;
-}
-
 interface BasisTheoryElementsInternal extends BasisTheoryElements {
   init: (
     apiKey: string | undefined,
     elementsBaseUrl: string
   ) => Promise<BasisTheoryElements>;
   hasElement: (payload: unknown) => boolean;
-  client: ElementClient;
+  client: HttpClient;
 }
 
 declare global {
