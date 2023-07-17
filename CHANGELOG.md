@@ -1,3 +1,10 @@
+## [1.79.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.2...v1.79.3) (2023-07-17)
+
+
+### Bug Fixes
+
+* http method types ([#358](https://github.com/Basis-Theory/basis-theory-js/issues/358)) ([1fe3eaf](https://github.com/Basis-Theory/basis-theory-js/commit/1fe3eafb0a35ea4ecdd7cdbd0fec228a2e9d8bc2))
+
 ## [1.79.2](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.1...v1.79.2) (2023-07-05)
 
 
