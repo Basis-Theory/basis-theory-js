@@ -1,5 +1,5 @@
 import type { BasisTheoryElementsInternal } from '@/types/elements';
-import type { RequestConfig } from '@/types/sdk/services';
+import type { RequestConfig } from '@/types/sdk';
 
 type MethodWithPayloads = 'post' | 'put' | 'patch';
 type MethodWithoutPayloads = 'get' | 'delete';
