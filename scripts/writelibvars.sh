@@ -3,8 +3,6 @@ set -e
 
 current_directory="$PWD"
 
-pulumi login
-
 if [ "$ENVIRONMENT" = dev ]; then
   JS_HOST="js.flock-dev.com"
   API_HOST="api.flock-dev.com"
