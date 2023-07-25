@@ -407,7 +407,17 @@ const getBrowser = (): string => {
   return `${browser?.browserName || 'unknown'}/${version}`;
 };
 
+// the following product property is deprecated but it's the only way
+// I've found to detect react-native
+const isEnvReactNative = (): boolean =>
+  typeof window === 'object' && window.navigator.product === 'ReactNative';
+
 const getOSVersion = (): string => {
+  // react-native
+  if (isEnvReactNative()) {
+    return 'ReactNative';
+  }
+
   // node
   if (typeof window === 'undefined') {
     try {
@@ -433,6 +443,11 @@ const getOSVersion = (): string => {
 };
 
 const getRuntime = (): string => {
+  // react-native
+  if (isEnvReactNative()) {
+    return 'ReactNative';
+  }
+
   // node
   if (typeof window === 'undefined') {
     return `NodeJS/${process.version}`;
