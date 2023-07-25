@@ -1,3 +1,10 @@
+## [1.79.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.3...v1.79.4) (2023-07-25)
+
+
+### Bug Fixes
+
+* fixes BT.js in RN env ([#362](https://github.com/Basis-Theory/basis-theory-js/issues/362)) ([cbb2460](https://github.com/Basis-Theory/basis-theory-js/commit/cbb246086f3ca07214d4f5b5ebe186f4feaf848a))
+
 ## [1.79.3](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.2...v1.79.3) (2023-07-17)
 
 
