@@ -34,7 +34,7 @@ export abstract class BasisTheoryService<
       // known issue with create react app
       // eslint-disable-next-line unicorn/prefer-type-error
       throw new Error(
-        'The Basis Theory SDK is not supported with CRA 5, downgrade to CRA 4 or see https://github.com/facebook/create-react-app/issues/11889#issuecomment-1448107651 for a workaround.'
+        'The Basis Theory SDK is not supported with CRA 5, downgrade to CRA 4 or see https://github.com/facebook/create-react-app/issues/11889#issuecomment-1114928008 for a workaround.'
       );
     } else {
       this.client = axios.create({
