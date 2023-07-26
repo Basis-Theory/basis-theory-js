@@ -1,3 +1,10 @@
+## [1.79.5](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.4...v1.79.5) (2023-07-26)
+
+
+### Bug Fixes
+
+* throw error if axios doesnt resolve ([#364](https://github.com/Basis-Theory/basis-theory-js/issues/364)) ([a4d7901](https://github.com/Basis-Theory/basis-theory-js/commit/a4d79011617e259d7113906016c370f0edf43b26))
+
 ## [1.79.4](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.3...v1.79.4) (2023-07-25)
 
 
