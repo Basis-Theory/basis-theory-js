@@ -1,3 +1,10 @@
+## [1.79.6](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.5...v1.79.6) (2023-08-02)
+
+
+### Bug Fixes
+
+* releasing error message update ([#367](https://github.com/Basis-Theory/basis-theory-js/issues/367)) ([cd426a3](https://github.com/Basis-Theory/basis-theory-js/commit/cd426a3c76401ab3f1d0a725e12b9633a5d5cc5d))
+
 ## [1.79.5](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.4...v1.79.5) (2023-07-26)
 
 
