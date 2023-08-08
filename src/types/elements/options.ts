@@ -23,6 +23,7 @@ interface SanitizedElementOptions {
   enableCopy?: boolean;
   style?: ElementStyle;
   disabled?: boolean;
+  readOnly?: boolean;
   targetId?: string;
   mask?: (RegExp | string)[];
   password?: boolean;
@@ -54,7 +55,7 @@ interface AutoCompleteOption {
 
 type CustomizableElementOptions = Pick<
   ElementOptions,
-  'style' | 'disabled' | 'validateOnChange' | 'enableCopy'
+  'style' | 'disabled' | 'readOnly' | 'validateOnChange' | 'enableCopy'
 > &
   AutoCompleteOption;
 
