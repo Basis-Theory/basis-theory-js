@@ -1,3 +1,10 @@
+# [1.80.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.6...v1.80.0) (2023-08-08)
+
+
+### Features
+
+* adds readOnly to elements ([#370](https://github.com/Basis-Theory/basis-theory-js/issues/370)) ([a52f3f5](https://github.com/Basis-Theory/basis-theory-js/commit/a52f3f573627e15eaaaf555d8ce7238a0d251053))
+
 ## [1.79.6](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.5...v1.79.6) (2023-08-02)
 
 
