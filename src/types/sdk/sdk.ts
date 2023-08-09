@@ -49,7 +49,7 @@ interface BasisTheoryInit {
 }
 interface BasisTheory extends Tokenize {
   applications: Applications;
-  client: HttpClient;
+  client?: HttpClient;
   logs: Logs;
   permissions: Permissions;
   proxies: Proxies;

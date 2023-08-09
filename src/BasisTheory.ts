@@ -307,8 +307,17 @@ export class BasisTheory
     return assertInit(this._applications);
   }
 
-  public get client(): HttpClient {
-    return assertInit(this._elements?.client);
+  public get client(): HttpClient | undefined {
+    if (this._elements) {
+      return this._elements?.client;
+    }
+
+    // eslint-disable-next-line no-console
+    console.error(
+      'Elements are not initialized. Either initialize elements or use a regular HTTP client if no elements are needed.'
+    );
+
+    return undefined;
   }
 
   public get tenants(): Tenants {

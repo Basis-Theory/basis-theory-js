@@ -118,3 +118,44 @@ describe('elements http client requests with element payloads (post, put, patch,
     );
   });
 });
+
+describe('http client error handling/warnings', () => {
+  const chance = new Chance();
+
+  let BasisTheoryClient;
+
+  afterEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+  });
+
+  beforeEach(async () => {
+    const { BasisTheory } = await import('@/BasisTheory');
+
+    BasisTheoryClient = BasisTheory;
+  });
+
+  test('http client returns undefined when elements are not initialized', async () => {
+    const btClient = await new BasisTheoryClient().init(chance.string());
+
+    expect(btClient.client).toBeUndefined();
+  });
+
+  test('logs error to console when trying to use client with elements not initialized', async () => {
+    const consoleErrorMock = jest.spyOn(console, 'error');
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    consoleErrorMock.mockImplementation(() => {});
+
+    const btClient = await new BasisTheoryClient().init(chance.string());
+
+    expect(btClient.client).toBeUndefined();
+
+    // eslint-disable-next-line no-console
+    expect(console.error).toHaveBeenCalledWith(
+      'Elements are not initialized. Either initialize elements or use a regular HTTP client if no elements are needed.'
+    );
+
+    consoleErrorMock.mockRestore();
+  });
+});
