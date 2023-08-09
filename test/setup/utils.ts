@@ -519,7 +519,6 @@ const testList = <T>(param: () => TestListParam<T>): void => {
   const query = {
     page,
     size,
-    // eslint-disable-next-line unicorn/no-null
     nul: null,
     und: undefined,
     camelCase: chance.string({
