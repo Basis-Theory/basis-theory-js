@@ -11,7 +11,7 @@ describe('elements http client requests with element payloads (post, put, patch,
     mockPostResponse: string,
     mockPutResponse: string,
     mockPatchResponse: string,
-    mocks: any,
+    expectationsMap: any,
     elements: any;
 
   afterEach(() => {
@@ -55,7 +55,7 @@ describe('elements http client requests with element payloads (post, put, patch,
       elements: true,
     });
 
-    mocks = {
+    expectationsMap = {
       post: {
         fn: mockPost,
         response: mockPostResponse,
@@ -92,13 +92,13 @@ describe('elements http client requests with element payloads (post, put, patch,
       expectedConfig
     );
 
-    expect(mocks[method].fn).toHaveBeenCalledTimes(1);
-    expect(mocks[method].fn).toHaveBeenCalledWith(
+    expect(expectationsMap[method].fn).toHaveBeenCalledTimes(1);
+    expect(expectationsMap[method].fn).toHaveBeenCalledWith(
       expectedUrl,
       expectedPayload,
       expectedConfig
     );
-    expect(response).toStrictEqual(mocks[method].response);
+    expect(response).toStrictEqual(expectationsMap[method].response);
   });
 
   test.each(['get', 'delete'])('calls %s', async (method) => {
@@ -110,8 +110,11 @@ describe('elements http client requests with element payloads (post, put, patch,
 
     await elements.client[method](expectedUrl, expectedConfig);
 
-    expect(mocks[method].fn).toHaveBeenCalledTimes(1);
+    expect(expectationsMap[method].fn).toHaveBeenCalledTimes(1);
 
-    expect(mocks[method].fn).toHaveBeenCalledWith(expectedUrl, expectedConfig);
+    expect(expectationsMap[method].fn).toHaveBeenCalledWith(
+      expectedUrl,
+      expectedConfig
+    );
   });
 });
