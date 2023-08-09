@@ -1,7 +1,3 @@
-import {
-  makeRequestWithElementsPayloadCheck,
-  makeRequestWithoutElementsPayloadCheck,
-} from '@/common/BasisTheoryClient';
 import { BasisTheoryTransactions } from '@/transactions';
 import type {
   BasisTheoryElements,
@@ -32,13 +28,13 @@ import type {
   BasisTheoryInitOptionsWithElements,
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitStatus,
+  HttpClient,
   Logs,
   Permissions,
   Proxies,
   Proxy,
   ReactorFormulas,
   Reactors,
-  RequestConfig,
   RequestOptions,
   Sessions,
   Tenants,
@@ -274,66 +270,6 @@ export class BasisTheory
     return assertInit(this._tokenize).tokenize(tokens, options);
   }
 
-  public post(
-    url: string,
-    payload: unknown,
-    config?: RequestConfig
-  ): Promise<unknown> {
-    return makeRequestWithElementsPayloadCheck(
-      this._elements,
-      'post',
-      url,
-      payload,
-      config
-    );
-  }
-
-  public put(
-    url: string,
-    payload: unknown,
-    config?: RequestConfig
-  ): Promise<unknown> {
-    return makeRequestWithElementsPayloadCheck(
-      this._elements,
-      'put',
-      url,
-      payload,
-      config
-    );
-  }
-
-  public patch(
-    url: string,
-    payload: unknown,
-    config?: RequestConfig
-  ): Promise<unknown> {
-    return makeRequestWithElementsPayloadCheck(
-      this._elements,
-      'patch',
-      url,
-      payload,
-      config
-    );
-  }
-
-  public get(url: string, config?: RequestConfig): Promise<unknown> {
-    return makeRequestWithoutElementsPayloadCheck(
-      this._elements,
-      'get',
-      url,
-      config
-    );
-  }
-
-  public delete(url: string, config?: RequestConfig): Promise<unknown> {
-    return makeRequestWithoutElementsPayloadCheck(
-      this._elements,
-      'delete',
-      url,
-      config
-    );
-  }
-
   private async loadElements(apiKey: string): Promise<void> {
     let elementsBaseUrl: URL;
 
@@ -369,6 +305,10 @@ export class BasisTheory
 
   public get applications(): Applications {
     return assertInit(this._applications);
+  }
+
+  public get client(): HttpClient {
+    return assertInit(this._elements?.client);
   }
 
   public get tenants(): Tenants {

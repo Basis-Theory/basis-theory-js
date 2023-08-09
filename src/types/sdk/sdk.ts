@@ -1,18 +1,18 @@
 import type { BasisTheoryElements } from '@/types/elements';
 import { Transactions } from '@/types/sdk/services/transactions';
 import type {
-  Tokens,
-  Tokenize,
   Applications,
-  Tenants,
+  HttpClient,
   Logs,
-  ReactorFormulas,
-  Reactors,
   Permissions,
   Proxies,
   Proxy,
+  ReactorFormulas,
+  Reactors,
   Sessions,
-  HttpClient,
+  Tenants,
+  Tokenize,
+  Tokens,
 } from './services';
 
 interface ApplicationInfo {
@@ -47,17 +47,18 @@ interface BasisTheoryInit {
     options: BasisTheoryInitOptionsWithElements
   ): Promise<BasisTheory & BasisTheoryElements>;
 }
-interface BasisTheory extends Tokenize, HttpClient {
-  tokens: Tokens;
+interface BasisTheory extends Tokenize {
   applications: Applications;
-  tenants: Tenants;
+  client: HttpClient;
   logs: Logs;
-  reactorFormulas: ReactorFormulas;
-  reactors: Reactors;
   permissions: Permissions;
   proxies: Proxies;
   proxy: Proxy;
+  reactorFormulas: ReactorFormulas;
+  reactors: Reactors;
   sessions: Sessions;
+  tenants: Tenants;
+  tokens: Tokens;
   transactions: Transactions;
 }
 
@@ -69,7 +70,7 @@ interface ClientUserAgent {
   application?: ApplicationInfo;
 }
 
-type BasisTheoryServices = keyof Omit<BasisTheory, keyof HttpClient>;
+type BasisTheoryServices = keyof Omit<BasisTheory, 'client'>;
 
 type BasisTheoryServicesBasePathMap = {
   [key in BasisTheoryServices]: string;
