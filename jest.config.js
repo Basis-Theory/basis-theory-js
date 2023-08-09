@@ -4,7 +4,6 @@ const { compilerOptions } = require('./tsconfig');
 const common = {
   automock: false,
   coveragePathIgnorePatterns: ['test', 'dist'],
-  transformIgnorePatterns: ['<root>/node_modules/(?!(query-string)/)'],
   transform: { '^.+\\.(t|j)sx?$': ['@swc/jest'] },
   testPathIgnorePatterns: ['cypress'],
   roots: ['<rootDir>'],
