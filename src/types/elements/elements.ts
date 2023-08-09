@@ -98,11 +98,6 @@ type ElementValue =
 interface BasisTheoryElements extends Tokenize {
   tokens: Tokens;
   proxy: Proxy;
-  /**
-   * @description Element values can be used in a request to a third-party API using our HTTP client service.
-   * @see [Basis Theory Docs - HTTPClient](https://developers.basistheory.com/docs/sdks/web/javascript/methods#http-client-service)
-   */
-  client?: HttpClient;
 
   createElement(type: 'card', options?: CreateCardElementOptions): CardElement;
   createElement(type: 'text', options: CreateTextElementOptions): TextElement;
@@ -125,6 +120,7 @@ interface BasisTheoryElementsInternal extends BasisTheoryElements {
     elementsBaseUrl: string
   ) => Promise<BasisTheoryElements>;
   hasElement: (payload: unknown) => boolean;
+  client: HttpClient;
 }
 
 declare global {

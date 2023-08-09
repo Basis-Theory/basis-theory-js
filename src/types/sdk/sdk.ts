@@ -49,6 +49,11 @@ interface BasisTheoryInit {
 }
 interface BasisTheory extends Tokenize {
   applications: Applications;
+  /**
+   * @description Allows you to utilize element values in requests to a third-party API using our HTTP client service.
+   * @requires Before proceeding, ensure that the elements are properly initialized. Refer to the [Basis Theory Docs - Initialize elements]((https://developers.basistheory.com/docs/sdks/web/javascript/#initialization)) for more information.
+   * @see For details on how to use the HTTP client service, refer to [Basis Theory Docs - HTTP Client](https://developers.basistheory.com/docs/sdks/web/javascript/methods#http-client-service).
+   */
   client?: HttpClient;
   logs: Logs;
   permissions: Permissions;
