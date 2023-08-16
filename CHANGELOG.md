@@ -1,3 +1,23 @@
+# [2.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.80.0...v2.0.0) (2023-08-16)
+
+
+### Features
+
+* **dual writing:** reorganize http client methods into a dedicated namespace ([#371](https://github.com/Basis-Theory/basis-theory-js/issues/371)) ([8cb4801](https://github.com/Basis-Theory/basis-theory-js/commit/8cb4801853c5804430348f01b452ff8a8980b575))
+
+
+### BREAKING CHANGES
+
+* **dual writing:** Use bt.client instead of bt instance to access http client methods.
+
+* test(http client): rename variable
+
+* feat: make http client optional
+
+* fix: properly expose http client types and update implementation docs
+
+* feat: add :read-only to supported pseudo-classes
+
 # [1.80.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.6...v1.80.0) (2023-08-08)
 
 
