@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   extends: '@basis-theory/eslint-config/typescript',
   rules: {
+    'unicorn/no-null': 'warn',
     camelcase: [
       'error',
       {

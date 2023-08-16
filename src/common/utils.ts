@@ -39,7 +39,6 @@ import {
 } from './constants';
 
 const assertInit = <T>(prop: T): NonNullable<T> => {
-  // eslint-disable-next-line unicorn/no-null
   if (prop === null || prop === undefined) {
     throw new Error('BasisTheory has not yet been properly initialized.');
   }
@@ -342,7 +341,6 @@ const getQueryParams = <Q>(query: Q = {} as Q): string => {
 
       const formattedKey = isNested ? key : snakeCase(key);
 
-      // eslint-disable-next-line unicorn/no-null
       if (value === null || ['boolean', 'number', 'string'].includes(type)) {
         params.append(formattedKey, value as string);
       }
