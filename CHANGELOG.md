@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.0.0...v2.1.0) (2023-08-17)
+
+
+### Features
+
+* adds inputMode to elements options ([#372](https://github.com/Basis-Theory/basis-theory-js/issues/372)) ([9ecf7a6](https://github.com/Basis-Theory/basis-theory-js/commit/9ecf7a61a0b650103e08292ec319886f49a9b21d))
+
 # [2.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.80.0...v2.0.0) (2023-08-16)
 
 
