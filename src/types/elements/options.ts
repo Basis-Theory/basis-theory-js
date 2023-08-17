@@ -3,42 +3,54 @@ import type { ElementStyle } from './styles';
 
 const ELEMENTS_TYPES = [
   'card',
-  'text',
-  'cardNumber',
   'cardExpirationDate',
+  'cardNumber',
   'cardVerificationCode',
   'data',
+  'text',
 ] as const;
 
 type ElementType = typeof ELEMENTS_TYPES[number];
 
 interface ElementInternalOptions {
   apiKey: string | undefined;
-  type: ElementType;
   baseUrl: string;
+  type: ElementType;
+}
+
+enum InputMode {
+  DECIMAL = 'decimal',
+  EMAIL = 'email',
+  NONE = 'none',
+  NUMERIC = 'numeric',
+  SEARCH = 'search',
+  TEL = 'tel',
+  TEXT = 'text',
+  URL = 'url',
 }
 
 interface SanitizedElementOptions {
-  validateOnChange?: boolean;
-  enableCopy?: boolean;
-  style?: ElementStyle;
+  ariaDescription?: string;
+  ariaLabel?: string;
+  autoComplete?: string;
+  cardBrand?: string;
   disabled?: boolean;
-  readOnly?: boolean;
-  targetId?: string;
+  enableCopy?: boolean;
+  iconPosition?: string;
+  inputMode?: `${InputMode}`;
   mask?: (RegExp | string)[];
   password?: boolean;
   placeholder?: string;
+  readOnly?: boolean;
+  style?: ElementStyle;
+  targetId?: string;
   transform?: [RegExp, string] | null;
-  ariaDescription?: string;
-  ariaLabel?: string;
-  iconPosition?: string;
-  cardBrand?: string;
-  autoComplete?: string;
+  validateOnChange?: boolean;
+  validation?: RegExp;
   value?:
     | CardElementValue<'static'>
     | CardExpirationDateValue<'static'>
     | string;
-  validation?: RegExp;
 }
 
 type ElementOptions = ElementInternalOptions & SanitizedElementOptions;
@@ -55,17 +67,22 @@ interface AutoCompleteOption {
 
 type CustomizableElementOptions = Pick<
   ElementOptions,
-  'style' | 'disabled' | 'readOnly' | 'validateOnChange' | 'enableCopy'
+  | 'disabled'
+  | 'enableCopy'
+  | 'inputMode'
+  | 'readOnly'
+  | 'style'
+  | 'validateOnChange'
 > &
   AutoCompleteOption;
 
 type ElementValueType = 'static' | 'reference';
 
 interface CardElementValue<T extends ElementValueType> {
-  number?: T extends 'reference' ? DataElementReference : string;
+  cvc?: T extends 'reference' ? DataElementReference : string;
   expiration_month?: T extends 'reference' ? DataElementReference : number;
   expiration_year?: T extends 'reference' ? DataElementReference : number;
-  cvc?: T extends 'reference' ? DataElementReference : string;
+  number?: T extends 'reference' ? DataElementReference : string;
 }
 
 interface CardExpirationDateValue<T extends ElementValueType> {
@@ -132,24 +149,25 @@ type UpdateCardVerificationCodeElementOptions = Omit<
 >;
 
 export type {
-  ElementInternalOptions,
-  ElementType,
-  ElementOptions,
-  SanitizedElementOptions,
-  Transform,
-  CustomizableElementOptions,
-  CreateCardElementOptions,
-  UpdateCardElementOptions,
-  CreateTextElementOptions,
-  UpdateTextElementOptions,
-  CreateCardNumberElementOptions,
-  UpdateCardNumberElementOptions,
-  CreateCardExpirationDateElementOptions,
-  UpdateCardExpirationDateElementOptions,
-  CreateCardVerificationCodeElementOptions,
-  UpdateCardVerificationCodeElementOptions,
   CardElementValue,
   CardExpirationDateValue,
+  CreateCardElementOptions,
+  CreateCardExpirationDateElementOptions,
+  CreateCardNumberElementOptions,
+  CreateCardVerificationCodeElementOptions,
+  CreateTextElementOptions,
+  CustomizableElementOptions,
+  ElementInternalOptions,
+  ElementOptions,
+  ElementType,
+  InputMode,
+  SanitizedElementOptions,
+  Transform,
+  UpdateCardElementOptions,
+  UpdateCardExpirationDateElementOptions,
+  UpdateCardNumberElementOptions,
+  UpdateCardVerificationCodeElementOptions,
+  UpdateTextElementOptions,
 };
 
 export { ELEMENTS_TYPES };
