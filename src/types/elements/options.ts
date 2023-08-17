@@ -18,6 +18,17 @@ interface ElementInternalOptions {
   baseUrl: string;
 }
 
+enum InputMode {
+  DECIMAL = 'decimal',
+  EMAIL = 'email',
+  NONE = 'none',
+  NUMERIC = 'numeric',
+  SEARCH = 'search',
+  TEL = 'tel',
+  TEXT = 'text',
+  URL = 'url',
+}
+
 interface SanitizedElementOptions {
   validateOnChange?: boolean;
   enableCopy?: boolean;
@@ -25,6 +36,7 @@ interface SanitizedElementOptions {
   disabled?: boolean;
   readOnly?: boolean;
   targetId?: string;
+  inputMode?: `${InputMode}`;
   mask?: (RegExp | string)[];
   password?: boolean;
   placeholder?: string;
@@ -55,7 +67,12 @@ interface AutoCompleteOption {
 
 type CustomizableElementOptions = Pick<
   ElementOptions,
-  'style' | 'disabled' | 'readOnly' | 'validateOnChange' | 'enableCopy'
+  | 'style'
+  | 'disabled'
+  | 'readOnly'
+  | 'inputMode'
+  | 'validateOnChange'
+  | 'enableCopy'
 > &
   AutoCompleteOption;
 
