@@ -7,11 +7,11 @@ import {
   BT_TRACE_ID_HEADER,
   BT_TRANSACTION_ID_HEADER,
   CONTENT_TYPE_HEADER,
-  getQueryParams,
   transformTokenRequestSnakeCase,
 } from '@/common';
 import type {
   CreateToken,
+  TokenEnrichments,
   Token,
   TokenType,
   UpdateToken,
@@ -54,6 +54,43 @@ describe('Tokens', () => {
     client.resetHistory();
   });
 
+  const getEnrichments = (): TokenEnrichments => ({
+    binDetails: {
+      cardBrand: chance.string(),
+      type: chance.string(),
+      prepaid: chance.bool(),
+      cardSegmentType: chance.string(),
+      reloadable: chance.bool(),
+      panOrToken: chance.string(),
+      accountUpdater: chance.bool(),
+      alm: chance.bool(),
+      domesticOnly: chance.bool(),
+      gamblingBlocked: chance.bool(),
+      level2: chance.bool(),
+      level3: chance.bool(),
+      issuerCurrency: chance.string(),
+      comboCard: chance.string(),
+      binLength: chance.integer(),
+      authentication: {},
+      cost: {},
+      bank: {
+        name: chance.string(),
+        phone: chance.string(),
+        url: chance.string(),
+        cleanName: chance.string(),
+      },
+      country: {
+        alpha2: chance.string(),
+        name: chance.string(),
+        numeric: chance.string(),
+      },
+      product: {
+        code: chance.string(),
+        name: chance.string(),
+      },
+    },
+  });
+
   describe('retrieve', () => {
     test('should retrieve', async () => {
       const id = chance.string();
@@ -61,6 +98,7 @@ describe('Tokens', () => {
       const tenantId = chance.string();
       const type = chance.string() as TokenType;
       const containers = [`/${chance.string()}/`];
+      const enrichments = getEnrichments();
 
       const data = {
         camelCaseParameter: chance.string(),
@@ -87,6 +125,7 @@ describe('Tokens', () => {
           data,
           metadata,
           containers,
+          enrichments,
           created_at: createdAt,
           created_by: createdBy,
           modified_at: modifiedAt,
@@ -102,6 +141,7 @@ describe('Tokens', () => {
         data,
         metadata,
         containers,
+        enrichments,
         createdAt,
         createdBy,
         modifiedAt,
@@ -123,6 +163,7 @@ describe('Tokens', () => {
       const type = chance.string() as TokenType;
       const data = chance.string();
       const containers = [`/${chance.string()}/`];
+      const enrichments = getEnrichments();
       const createdBy = chance.string();
       const createdAt = chance.string();
       const modifiedBy = chance.string();
@@ -138,6 +179,7 @@ describe('Tokens', () => {
           type,
           data,
           containers,
+          enrichments,
           created_at: createdAt,
           created_by: createdBy,
           modified_at: modifiedAt,
@@ -158,6 +200,7 @@ describe('Tokens', () => {
         type,
         data,
         containers,
+        enrichments,
         createdAt,
         createdBy,
         modifiedAt,
@@ -265,6 +308,7 @@ describe('Tokens', () => {
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
         containers: [`/${chance.string()}/`],
+        enrichments: getEnrichments(),
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
         mask: _chance.string(),
@@ -321,6 +365,7 @@ describe('Tokens', () => {
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
         containers: [`/${chance.string()}/`],
+        enrichments: getEnrichments(),
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
       };
