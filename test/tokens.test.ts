@@ -71,8 +71,8 @@ describe('Tokens', () => {
       issuerCurrency: chance.string(),
       comboCard: chance.string(),
       binLength: chance.integer(),
-      authentication: {},
-      cost: {},
+      authentication: [],
+      cost: [],
       bank: {
         name: chance.string(),
         phone: chance.string(),
