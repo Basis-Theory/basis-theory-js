@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.1.0...v2.2.0) (2023-08-29)
+
+
+### Features
+
+* Adds support for token enrichments and removes token associations ([#373](https://github.com/Basis-Theory/basis-theory-js/issues/373)) ([cb99230](https://github.com/Basis-Theory/basis-theory-js/commit/cb99230dc74e013edc9d73942f10fdbc1051735c))
+
 # [2.1.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.0.0...v2.1.0) (2023-08-17)
 
 
