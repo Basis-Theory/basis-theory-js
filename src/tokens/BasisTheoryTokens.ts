@@ -2,7 +2,6 @@ import type { AxiosRequestTransformer, AxiosResponseTransformer } from 'axios';
 import {
   CONTENT_TYPE_HEADER,
   createRequestConfig,
-  getQueryParams,
   MERGE_CONTENT_TYPE,
 } from '@/common';
 import {
@@ -70,50 +69,6 @@ export const BasisTheoryTokens = new CrudBuilder(
             [CONTENT_TYPE_HEADER]: MERGE_CONTENT_TYPE,
           },
         })
-        .then(dataExtractor);
-    }
-
-    public async createAssociation(
-      parentId: string,
-      childId: string,
-      options?: RequestOptions
-    ): Promise<void> {
-      const url = `/${parentId}/children/${childId}`;
-
-      await this.client.post(url, {}, createRequestConfig(options));
-    }
-
-    public async deleteAssociation(
-      parentId: string,
-      childId: string,
-      options?: RequestOptions
-    ): Promise<void> {
-      const url = `/${parentId}/children/${childId}`;
-
-      await this.client.delete(url, createRequestConfig(options));
-    }
-
-    public createChild(
-      parentId: string,
-      token: CreateToken,
-      options?: RequestOptions
-    ): Promise<Token> {
-      const url = `/${parentId}/children`;
-
-      return this.client
-        .post(url, token, createRequestConfig(options))
-        .then(dataExtractor);
-    }
-
-    public listChildren(
-      parentId: string,
-      query: ListTokensQuery = {},
-      options: RequestOptions = {}
-    ): Promise<PaginatedList<Token>> {
-      const url = `/${parentId}/children${getQueryParams(query)}`;
-
-      return this.client
-        .get(url, createRequestConfig(options))
         .then(dataExtractor);
     }
 

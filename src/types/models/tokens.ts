@@ -1,3 +1,4 @@
+import type { BinDetails } from './bin-details';
 import type { Primitive, TokenBase } from './shared';
 
 const DATA_CLASSIFICATIONS = ['general', 'bank', 'pci', 'pii'] as const;
@@ -44,6 +45,10 @@ interface TokenPrivacy {
   restrictionPolicy?: DataRestrictionPolicy;
 }
 
+interface TokenEnrichments {
+  binDetails?: BinDetails;
+}
+
 interface Token<DataType = Primitive> extends TokenBase {
   data: TokenData<DataType>;
   privacy?: TokenPrivacy;
@@ -53,6 +58,7 @@ interface Token<DataType = Primitive> extends TokenBase {
   fingerprintExpression?: string;
   mask?: TokenMask;
   expiresAt?: string;
+  enrichments?: TokenEnrichments;
 }
 
 type CreateToken<DataType = Primitive> = Pick<
@@ -91,6 +97,7 @@ type UpdateToken<DataType = Primitive> = Partial<
 
 export type {
   Token,
+  TokenEnrichments,
   CreateToken,
   UpdateToken,
   DataArray,
