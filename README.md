@@ -31,7 +31,7 @@ For a complete list of endpoints and examples, please refer to our [API docs](ht
 ```javascript
 import { BasisTheory } from '@basis-theory/basis-theory-js';
 
-const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED'); // replace with your application key
+const bt = await new BasisTheory().init('<API Key>'); // replace with your application key
 ```
 
 ### Per-request configuration
@@ -45,7 +45,7 @@ import { v4 as uuid } from 'uuid';
 await bt.applications.list(
   {},
   {
-    apiKey: 'key_N88mVGsp3sCXkykyN2EFED',
+    apiKey: '<Management API Key>',
     correlationId: 'aa5d3379-6385-4ef4-9fdb-ca1341572153',
     idempotencyKey: 'bb5d3379-6385-4ef4-9fdb-ca1341572154',
   }
@@ -57,7 +57,7 @@ await bt.tokens.create(
     data: "Sensitive Value",
   },
   {
-    apiKey: 'key_N88mVGsp3sCXkykyN2EFED',
+    apiKey: '<API Key>',
     correlationId: 'aa5d3379-6385-4ef4-9fdb-ca1341572153',
     idempotencyKey: 'bb5d3379-6385-4ef4-9fdb-ca1341572154',
     transactionId: 'cc5d3379-3921-4ef4-9fdb-ca1341572169',
@@ -72,7 +72,7 @@ You can set a custom API Url to be used across all clients when creating a new S
 ```javascript
 import { BasisTheory } from '@basis-theory/basis-theory-js';
 
-const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED', {
+const bt = await new BasisTheory().init('<API Key>', {
   apiBaseUrl: 'https://api.somedomain.com',
 }); // replace with your application key and api base URL.
 ```
