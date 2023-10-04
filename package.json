@@ -114,7 +114,8 @@
     "tar": "^4.4.19",
     "minimist": "^1.2.6",
     "json-schema": "^0.4.0",
-    "terser": "^5.14.2"
+    "terser": "^5.14.2",
+    "word-wrap": "^1.2.5"
   },
   "engines": {
     "node": ">=10.12.0"
