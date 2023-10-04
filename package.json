@@ -46,11 +46,11 @@
     "snakecase-keys": "^3.2.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
+    "@babel/cli": "^7.22.15",
     "@babel/core": "^7.15.8",
     "@babel/plugin-proposal-class-properties": "^7.12.13",
     "@babel/plugin-transform-arrow-functions": "^7.12.13",
-    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.22.15",
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-typescript": "^7.12.13",
     "@basis-theory/eslint-config": "^1.0.13",
@@ -79,7 +79,7 @@
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-plugin-tsconfig-paths-module-resolver": "^1.0.3",
     "chance": "^1.1.11",
-    "concurrently": "^7.1.0",
+    "concurrently": "^8.2.1",
     "cypress": "^12.16.0",
     "dotenv-webpack": "^8.0.1",
     "eslint": "^7.32.0",
@@ -92,7 +92,7 @@
     "rimraf": "^3.0.2",
     "semantic-release": "^19.0.3",
     "size-limit": "^7.0.5",
-    "ts-jest": "^29.1.0",
+    "ts-jest": "^29.1.1",
     "tsc-alias": "^1.7.0",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "^5.0.4",
@@ -114,7 +114,8 @@
     "tar": "^4.4.19",
     "minimist": "^1.2.6",
     "json-schema": "^0.4.0",
-    "terser": "^5.14.2"
+    "terser": "^5.14.2",
+    "word-wrap": "^1.2.5"
   },
   "engines": {
     "node": ">=10.12.0"
