@@ -117,7 +117,8 @@ interface BasisTheoryElements extends Tokenize {
 interface BasisTheoryElementsInternal extends BasisTheoryElements {
   init: (
     apiKey: string | undefined,
-    elementsBaseUrl: string
+    elementsBaseUrl: string,
+    elementsUseNgApi: boolean
   ) => Promise<BasisTheoryElements>;
   hasElement: (payload: unknown) => boolean;
   client: HttpClient;
