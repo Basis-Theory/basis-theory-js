@@ -288,7 +288,7 @@ export class BasisTheory
 
     const elementsUseNgApi =
       (this.initOptions as BasisTheoryInitOptionsWithElements)
-        .elementsUseNgApi ?? false;
+        .elementsUseNgApi || false;
 
     await (elements as BasisTheoryElementsInternal).init(
       apiKey,
