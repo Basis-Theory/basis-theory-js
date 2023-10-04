@@ -7,11 +7,11 @@ import {
   BT_TRACE_ID_HEADER,
   BT_TRANSACTION_ID_HEADER,
   CONTENT_TYPE_HEADER,
-  getQueryParams,
   transformTokenRequestSnakeCase,
 } from '@/common';
 import type {
   CreateToken,
+  TokenEnrichments,
   Token,
   TokenType,
   UpdateToken,
@@ -54,6 +54,43 @@ describe('Tokens', () => {
     client.resetHistory();
   });
 
+  const getEnrichments = (): TokenEnrichments => ({
+    binDetails: {
+      cardBrand: chance.string(),
+      type: chance.string(),
+      prepaid: chance.bool(),
+      cardSegmentType: chance.string(),
+      reloadable: chance.bool(),
+      panOrToken: chance.string(),
+      accountUpdater: chance.bool(),
+      alm: chance.bool(),
+      domesticOnly: chance.bool(),
+      gamblingBlocked: chance.bool(),
+      level2: chance.bool(),
+      level3: chance.bool(),
+      issuerCurrency: chance.string(),
+      comboCard: chance.string(),
+      binLength: chance.integer(),
+      authentication: [],
+      cost: [],
+      bank: {
+        name: chance.string(),
+        phone: chance.string(),
+        url: chance.string(),
+        cleanName: chance.string(),
+      },
+      country: {
+        alpha2: chance.string(),
+        name: chance.string(),
+        numeric: chance.string(),
+      },
+      product: {
+        code: chance.string(),
+        name: chance.string(),
+      },
+    },
+  });
+
   describe('retrieve', () => {
     test('should retrieve', async () => {
       const id = chance.string();
@@ -61,6 +98,7 @@ describe('Tokens', () => {
       const tenantId = chance.string();
       const type = chance.string() as TokenType;
       const containers = [`/${chance.string()}/`];
+      const enrichments = getEnrichments();
 
       const data = {
         camelCaseParameter: chance.string(),
@@ -87,6 +125,7 @@ describe('Tokens', () => {
           data,
           metadata,
           containers,
+          enrichments,
           created_at: createdAt,
           created_by: createdBy,
           modified_at: modifiedAt,
@@ -102,6 +141,7 @@ describe('Tokens', () => {
         data,
         metadata,
         containers,
+        enrichments,
         createdAt,
         createdBy,
         modifiedAt,
@@ -123,6 +163,7 @@ describe('Tokens', () => {
       const type = chance.string() as TokenType;
       const data = chance.string();
       const containers = [`/${chance.string()}/`];
+      const enrichments = getEnrichments();
       const createdBy = chance.string();
       const createdAt = chance.string();
       const modifiedBy = chance.string();
@@ -138,6 +179,7 @@ describe('Tokens', () => {
           type,
           data,
           containers,
+          enrichments,
           created_at: createdAt,
           created_by: createdBy,
           modified_at: modifiedAt,
@@ -158,6 +200,7 @@ describe('Tokens', () => {
         type,
         data,
         containers,
+        enrichments,
         createdAt,
         createdBy,
         modifiedAt,
@@ -179,413 +222,6 @@ describe('Tokens', () => {
       client.onGet(id).reply(status);
 
       const promise = bt.tokens.retrieve(id);
-
-      await expectBasisTheoryApiError(promise, status);
-    });
-  });
-
-  describe('create association', () => {
-    test('should create association', async () => {
-      const parentId = chance.string();
-      const childId = chance.string();
-
-      client.onPost(`/${parentId}/children/${childId}`).reply(204, {});
-
-      expect(
-        await bt.tokens.createAssociation(parentId, childId)
-      ).toBeUndefined();
-
-      expect(client.history.post).toHaveLength(1);
-      expect(client.history.post[0].url).toStrictEqual(
-        `/${parentId}/children/${childId}`
-      );
-      expect(client.history.post[0].headers).toMatchObject({
-        [API_KEY_HEADER]: expect.any(String),
-      });
-    });
-
-    test('should create association with options', async () => {
-      const _apiKey = chance.string();
-      const correlationId = chance.string();
-      const idempotencyKey = chance.string();
-      const transactionId = chance.string();
-      const parentId = chance.string();
-      const childId = chance.string();
-
-      client.onPost(`/${parentId}/children/${childId}`).reply(204, {});
-
-      expect(
-        await bt.tokens.createAssociation(parentId, childId, {
-          apiKey: _apiKey,
-          correlationId,
-          idempotencyKey,
-          transactionId,
-        })
-      ).toBeUndefined();
-
-      expect(client.history.post).toHaveLength(1);
-      expect(client.history.post[0].url).toStrictEqual(
-        `/${parentId}/children/${childId}`
-      );
-      expect(client.history.post[0].headers).toMatchObject({
-        [API_KEY_HEADER]: _apiKey,
-        [BT_TRACE_ID_HEADER]: correlationId,
-        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
-        [BT_TRANSACTION_ID_HEADER]: transactionId,
-      });
-    });
-
-    test('should reject with status >= 400 <= 599', async () => {
-      const parentId = chance.string();
-      const childId = chance.string();
-      const status = errorStatus();
-
-      client.onPost(`/${parentId}/children/${childId}`).reply(status);
-
-      const promise = bt.tokens.createAssociation(parentId, childId);
-
-      await expectBasisTheoryApiError(promise, status);
-    });
-  });
-
-  describe('delete association', () => {
-    test('should delete association', async () => {
-      const parentId = chance.string();
-      const childId = chance.string();
-
-      client.onDelete(`/${parentId}/children/${childId}`).reply(204, {});
-
-      expect(
-        await bt.tokens.deleteAssociation(parentId, childId)
-      ).toBeUndefined();
-
-      expect(client.history.delete).toHaveLength(1);
-      expect(client.history.delete[0].url).toStrictEqual(
-        `/${parentId}/children/${childId}`
-      );
-      expect(client.history.delete[0].headers).toMatchObject({
-        [API_KEY_HEADER]: expect.any(String),
-      });
-    });
-
-    test('should delete association with options', async () => {
-      const _apiKey = chance.string();
-      const correlationId = chance.string();
-      const idempotencyKey = chance.string();
-      const parentId = chance.string();
-      const childId = chance.string();
-
-      client.onDelete(`/${parentId}/children/${childId}`).reply(204, {});
-
-      expect(
-        await bt.tokens.deleteAssociation(parentId, childId, {
-          apiKey: _apiKey,
-          correlationId,
-          idempotencyKey,
-        })
-      ).toBeUndefined();
-
-      expect(client.history.delete).toHaveLength(1);
-      expect(client.history.delete[0].url).toStrictEqual(
-        `/${parentId}/children/${childId}`
-      );
-      expect(client.history.delete[0].headers).toMatchObject({
-        [API_KEY_HEADER]: _apiKey,
-        [BT_TRACE_ID_HEADER]: correlationId,
-        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
-      });
-    });
-
-    test('should reject with status >= 400 <= 599', async () => {
-      const parentId = chance.string();
-      const childId = chance.string();
-      const status = errorStatus();
-
-      client.onDelete(`/${parentId}/children/${childId}`).reply(status);
-
-      const promise = bt.tokens.deleteAssociation(parentId, childId);
-
-      await expectBasisTheoryApiError(promise, status);
-    });
-  });
-
-  describe('create child', () => {
-    test('should create child token for a token', async () => {
-      const parentId = chance.string();
-
-      const tokenPayload = {
-        type: 'token',
-        data: {
-          camelCaseParameter: chance.string(),
-          snake_case_parameter: chance.string(),
-        },
-        metadata: {
-          camelCaseParameter: chance.string(),
-          snake_case_parameter: chance.string(),
-        },
-      } as CreateToken;
-
-      const createdAt = chance.string();
-      const createdBy = chance.string();
-      const modifiedBy = chance.string();
-      const modifiedAt = chance.string();
-
-      client.onPost(`/${parentId}/children`).reply(
-        201,
-
-        JSON.stringify({
-          ...tokenPayload,
-          created_at: createdAt,
-          created_by: createdBy,
-          modified_at: modifiedAt,
-          modified_by: modifiedBy,
-        })
-      );
-
-      expect(await bt.tokens.createChild(parentId, tokenPayload)).toStrictEqual(
-        {
-          ...tokenPayload,
-          createdAt,
-          createdBy,
-          modifiedAt,
-          modifiedBy,
-        }
-      );
-
-      expect(client.history.post).toHaveLength(1);
-      expect(client.history.post[0].url).toStrictEqual(`/${parentId}/children`);
-      expect(client.history.post[0].data).toStrictEqual(
-        JSON.stringify(tokenPayload)
-      );
-      expect(client.history.post[0].headers).toMatchObject({
-        [API_KEY_HEADER]: expect.any(String),
-      });
-    });
-
-    test('should create child token for a token with options', async () => {
-      const _apiKey = chance.string();
-      const correlationId = chance.string();
-      const idempotencyKey = chance.string();
-      const parentId = chance.string();
-      const tokenPayload = {
-        data: chance.string(),
-      } as CreateToken;
-
-      const createdAt = chance.string();
-      const createdBy = chance.string();
-      const modifiedBy = chance.string();
-      const modifiedAt = chance.string();
-
-      client.onPost(`/${parentId}/children`).reply(
-        201,
-
-        JSON.stringify({
-          ...tokenPayload,
-          created_at: createdAt,
-          created_by: createdBy,
-          modified_at: modifiedAt,
-          modified_by: modifiedBy,
-        })
-      );
-
-      expect(
-        await bt.tokens.createChild(parentId, tokenPayload, {
-          apiKey: _apiKey,
-          correlationId,
-          idempotencyKey,
-        })
-      ).toStrictEqual({
-        ...tokenPayload,
-        createdAt,
-        createdBy,
-        modifiedAt,
-        modifiedBy,
-      });
-
-      expect(client.history.post).toHaveLength(1);
-      expect(client.history.post[0].url).toStrictEqual(`/${parentId}/children`);
-      expect(client.history.post[0].data).toStrictEqual(
-        JSON.stringify(tokenPayload)
-      );
-      expect(client.history.post[0].headers).toMatchObject({
-        [API_KEY_HEADER]: _apiKey,
-        [BT_TRACE_ID_HEADER]: correlationId,
-        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
-      });
-    });
-
-    test('should reject with status >= 400 <= 599', async () => {
-      const parentId = chance.string();
-      const tokenPayload: CreateToken = {
-        type: 'token',
-        data: chance.string(),
-      };
-      const status = errorStatus();
-
-      client.onPost(`/${parentId}/children`).reply(status);
-
-      const promise = bt.tokens.createChild(parentId, tokenPayload);
-
-      await expectBasisTheoryApiError(promise, status);
-    });
-  });
-
-  describe('list children', () => {
-    test('should list child tokens for a token', async () => {
-      const parentId = chance.string();
-      const totalItems = chance.integer();
-      const pageNumber = chance.integer();
-      const pageSize = chance.integer();
-      const totalPages = chance.integer();
-
-      client.onGet(`/${parentId}/children`).reply(
-        200,
-
-        JSON.stringify({
-          pagination: {
-            total_items: totalItems,
-            page_number: pageNumber,
-            page_size: pageSize,
-            total_pages: totalPages,
-          },
-          data: [],
-        })
-      );
-
-      expect(await bt.tokens.listChildren(parentId)).toStrictEqual({
-        pagination: {
-          totalItems,
-          pageNumber,
-          pageSize,
-          totalPages,
-        },
-        data: [], // no need to assert this conversion, since we are asserting pagination already
-      } as PaginatedList<Token>);
-      expect(client.history.get).toHaveLength(1);
-      expect(client.history.get[0].url).toStrictEqual(`/${parentId}/children`);
-      expect(client.history.get[0].headers).toMatchObject({
-        [API_KEY_HEADER]: expect.any(String),
-      });
-    });
-
-    test('should list child tokens for a token w/ query', async () => {
-      const parentId = chance.string();
-      const totalItems = chance.integer();
-      const pageNumber = chance.integer();
-      const pageSize = chance.integer();
-      const totalPages = chance.integer();
-      const query = {
-        page: chance.integer(),
-        size: chance.integer(),
-        id: chance.string({
-          alpha: true,
-          numeric: true,
-        }),
-        type: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
-      } as ListTokensQuery;
-      const url = `/${parentId}/children${getQueryParams(query)}`;
-
-      client.onGet(url).reply(
-        200,
-
-        JSON.stringify({
-          pagination: {
-            total_items: totalItems,
-            page_number: pageNumber,
-            page_size: pageSize,
-            total_pages: totalPages,
-          },
-          data: [],
-        })
-      );
-
-      expect(await bt.tokens.listChildren(parentId, query)).toStrictEqual({
-        pagination: {
-          totalItems,
-          pageNumber,
-          pageSize,
-          totalPages,
-        },
-        data: [],
-      } as PaginatedList<Token>);
-      expect(client.history.get).toHaveLength(1);
-      expect(client.history.get[0].url).toStrictEqual(url);
-      expect(client.history.get[0].headers).toMatchObject({
-        [API_KEY_HEADER]: expect.any(String),
-      });
-    });
-
-    test('should list child tokens for a token w/ options', async () => {
-      const _apiKey = chance.string();
-      const correlationId = chance.string();
-      const idempotencyKey = chance.string();
-      const parentId = chance.string();
-      const totalItems = chance.integer();
-      const pageNumber = chance.integer();
-      const pageSize = chance.integer();
-      const totalPages = chance.integer();
-      const query = {
-        page: chance.integer(),
-        size: chance.integer(),
-        id: chance.string({
-          alpha: true,
-          numeric: true,
-        }),
-        type: chance.string({
-          alpha: true,
-          numeric: true,
-        }) as TokenType,
-      } as ListTokensQuery;
-      const url = `/${parentId}/children${getQueryParams(query)}`;
-
-      client.onGet(url).reply(
-        200,
-
-        JSON.stringify({
-          pagination: {
-            total_items: totalItems,
-            page_number: pageNumber,
-            page_size: pageSize,
-            total_pages: totalPages,
-          },
-          data: [],
-        })
-      );
-
-      expect(
-        await bt.tokens.listChildren(parentId, query, {
-          apiKey: _apiKey,
-          correlationId,
-          idempotencyKey,
-        })
-      ).toStrictEqual({
-        pagination: {
-          totalItems,
-          pageNumber,
-          pageSize,
-          totalPages,
-        },
-        data: [],
-      } as PaginatedList<Token>);
-      expect(client.history.get).toHaveLength(1);
-      expect(client.history.get[0].url).toStrictEqual(url);
-      expect(client.history.get[0].headers).toMatchObject({
-        [API_KEY_HEADER]: _apiKey,
-        [BT_TRACE_ID_HEADER]: correlationId,
-        [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
-      });
-    });
-
-    test('should reject with status >= 400 <= 599', async () => {
-      const parentId = chance.string();
-      const status = errorStatus();
-
-      client.onGet(`/${parentId}/children`).reply(status);
-
-      const promise = bt.tokens.listChildren(parentId);
 
       await expectBasisTheoryApiError(promise, status);
     });
@@ -672,6 +308,7 @@ describe('Tokens', () => {
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
         containers: [`/${chance.string()}/`],
+        enrichments: getEnrichments(),
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
         mask: _chance.string(),
@@ -728,6 +365,7 @@ describe('Tokens', () => {
           restrictionPolicy: _chance.pickone([...DATA_RESTRICTION_POLICIES]),
         },
         containers: [`/${chance.string()}/`],
+        enrichments: getEnrichments(),
         searchIndexes: [_chance.string(), _chance.string()],
         fingerprintExpression: _chance.string(),
       };

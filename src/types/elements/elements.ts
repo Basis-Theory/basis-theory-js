@@ -95,7 +95,7 @@ type ElementValue =
   | CardVerificationCodeElement
   | ElementWrapper;
 
-interface BasisTheoryElements extends Tokenize, HttpClient {
+interface BasisTheoryElements extends Tokenize {
   tokens: Tokens;
   proxy: Proxy;
 

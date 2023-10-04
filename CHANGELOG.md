@@ -1,3 +1,37 @@
+# [2.2.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.1.0...v2.2.0) (2023-08-29)
+
+
+### Features
+
+* Adds support for token enrichments and removes token associations ([#373](https://github.com/Basis-Theory/basis-theory-js/issues/373)) ([cb99230](https://github.com/Basis-Theory/basis-theory-js/commit/cb99230dc74e013edc9d73942f10fdbc1051735c))
+
+# [2.1.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.0.0...v2.1.0) (2023-08-17)
+
+
+### Features
+
+* adds inputMode to elements options ([#372](https://github.com/Basis-Theory/basis-theory-js/issues/372)) ([9ecf7a6](https://github.com/Basis-Theory/basis-theory-js/commit/9ecf7a61a0b650103e08292ec319886f49a9b21d))
+
+# [2.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.80.0...v2.0.0) (2023-08-16)
+
+
+### Features
+
+* **dual writing:** reorganize http client methods into a dedicated namespace ([#371](https://github.com/Basis-Theory/basis-theory-js/issues/371)) ([8cb4801](https://github.com/Basis-Theory/basis-theory-js/commit/8cb4801853c5804430348f01b452ff8a8980b575))
+
+
+### BREAKING CHANGES
+
+* **dual writing:** Use bt.client instead of bt instance to access http client methods.
+
+* test(http client): rename variable
+
+* feat: make http client optional
+
+* fix: properly expose http client types and update implementation docs
+
+* feat: add :read-only to supported pseudo-classes
+
 # [1.80.0](https://github.com/Basis-Theory/basis-theory-js/compare/v1.79.6...v1.80.0) (2023-08-08)
 
 

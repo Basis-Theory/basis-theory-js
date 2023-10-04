@@ -36,7 +36,6 @@ describe('Utils', () => {
       expect(
         dataExtractor((undefined as unknown) as AxiosResponse)
       ).toBeUndefined();
-      // eslint-disable-next-line unicorn/no-null
       expect(dataExtractor((null as unknown) as AxiosResponse)).toBeUndefined();
     });
     test('should extract data', () => {
@@ -51,7 +50,6 @@ describe('Utils', () => {
     test('should handle falsy data', () => {
       expect(createRequestConfig(undefined)).toBeUndefined();
       expect(
-        // eslint-disable-next-line unicorn/no-null
         createRequestConfig((null as unknown) as RequestOptions)
       ).toBeUndefined();
     });

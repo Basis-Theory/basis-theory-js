@@ -35,6 +35,7 @@ type SafeStyle = Pick<CSSProperties, SafeCSSProperty>;
 const CARD_ELEMENT_STYLE_VARIANT_SELECTORS = [
   ':hover',
   ':focus',
+  ':read-only',
   '::placeholder',
   '::selection',
   ':disabled',
