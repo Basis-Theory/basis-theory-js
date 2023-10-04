@@ -99,6 +99,68 @@ describe('Elements', () => {
       ).resolves.toBe(bt);
     });
 
+    test('should initialize BasisTheoryElements with useNgApi false if not specified', async () => {
+      let loadElements: () => unknown = jest.fn();
+
+      jest.isolateModules(() => {
+        ({ loadElements } = require('../src/elements'));
+      });
+
+      const expectedElements = ({
+        init: jest.fn(),
+      } as unknown) as BasisTheoryType;
+
+      window.BasisTheoryElements = (expectedElements as unknown) as BasisTheoryElementsInternal;
+      expect(await loadElements()).toBe(expectedElements);
+      const baseUrl = chance.url({
+        protocol: 'https',
+        path: '',
+      });
+
+      await new BasisTheory().init('', {
+        elements: true,
+        elementsBaseUrl: baseUrl,
+      });
+
+      expect(expectedElements.init).toHaveBeenCalledWith(
+        '',
+        baseUrl.replace(/\/$/u, ''),
+        false
+      );
+    });
+
+    test('should initialize BasisTheoryElements with specified useNgApi param', async () => {
+      let loadElements: () => unknown = jest.fn();
+
+      jest.isolateModules(() => {
+        ({ loadElements } = require('../src/elements'));
+      });
+
+      const expectedElements = ({
+        init: jest.fn(),
+      } as unknown) as BasisTheoryType;
+
+      window.BasisTheoryElements = (expectedElements as unknown) as BasisTheoryElementsInternal;
+      expect(await loadElements()).toBe(expectedElements);
+      const baseUrl = chance.url({
+        protocol: 'https',
+        path: '',
+      });
+      const useNgApi = chance.bool();
+
+      await new BasisTheory().init('', {
+        elements: true,
+        elementsBaseUrl: baseUrl,
+        elementsUseNgApi: useNgApi,
+      });
+
+      expect(expectedElements.init).toHaveBeenCalledWith(
+        '',
+        baseUrl.replace(/\/$/u, ''),
+        useNgApi
+      );
+    });
+
     test('should resolve to previously initialized BasisTheoryElements', async () => {
       let loadElements: () => unknown = jest.fn();
 
@@ -125,7 +187,8 @@ describe('Elements', () => {
 
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
-        baseUrl.replace(/\/$/u, '')
+        baseUrl.replace(/\/$/u, ''),
+        false
       );
     });
 
@@ -282,7 +345,8 @@ describe('Elements', () => {
         expect(bt.elements).toBeDefined();
         expect(elementsInit).toHaveBeenCalledWith(
           'el-123',
-          baseUrl.replace(/\/$/u, '')
+          baseUrl.replace(/\/$/u, ''),
+          false
         );
       });
     });
