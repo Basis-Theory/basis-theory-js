@@ -92,7 +92,7 @@
     "rimraf": "^3.0.2",
     "semantic-release": "^19.0.3",
     "size-limit": "^7.0.5",
-    "ts-jest": "^29.1.0",
+    "ts-jest": "^29.1.1",
     "tsc-alias": "^1.7.0",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "^5.0.4",
