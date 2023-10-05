@@ -16,6 +16,7 @@ interface ElementInternalOptions {
   apiKey: string | undefined;
   baseUrl: string;
   type: ElementType;
+  useNgApi: boolean | undefined;
 }
 
 enum InputMode {
