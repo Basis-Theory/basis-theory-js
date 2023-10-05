@@ -5,7 +5,7 @@ type DataType = 'string' | 'boolean' | 'number';
 
 /**
  * @deprecated Reactor Formulas are now deprecated and will be removed in a future release.
- * @docs For more details visit [our API reference](https://developers.basistheory.com/docs/api/reactors#create-reactor).
+ * @description We have introduced a `code` property for Reactors to replace Formula's code. For more details visit [our API reference](https://developers.basistheory.com/docs/api/reactors#create-reactor).
  */
 interface ReactorFormula extends Auditable {
   id: string;
@@ -32,7 +32,7 @@ interface ReactorFormulaRequestParam {
 }
 /**
  * @deprecated Reactor Formulas are now deprecated and will be removed in a future release.
- * @docs For more details visit [our API reference](https://developers.basistheory.com/docs/api/reactors#create-reactor).
+ * @description We have introduced a `code` property for Reactors to replace Formula's code. For more details visit [our API reference](https://developers.basistheory.com/docs/api/reactors#create-reactor).
  */
 type CreateReactorFormula = Omit<
   ReactorFormula,
