@@ -7,7 +7,7 @@ import {
   BT_TRACE_ID_HEADER,
 } from '@/common';
 import { transformReactorRequestSnakeCase } from '@/common/utils';
-import { TokenType } from '@/types/models';
+import { CreateReactor, TokenType } from '@/types/models';
 import type { BasisTheory as IBasisTheory, ReactRequest } from '@/types/sdk';
 import {
   errorStatus,
@@ -37,15 +37,13 @@ describe('Reactors', () => {
 
   describe('CRUD', () => {
     const _chance = new Chance();
-    const createPayload = {
+    const createPayload: CreateReactor = {
       name: _chance.string(),
       configuration: {
         snake_case: _chance.string(),
         camelCase: _chance.string(),
       },
-      formula: {
-        id: _chance.string(),
-      },
+      code: 'test',
     };
 
     const updatePayload = {
