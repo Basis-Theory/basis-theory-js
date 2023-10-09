@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/Basis-Theory/basis-theory-js/compare/v2.3.0...v2.3.1) (2023-10-09)
+
+
+### Bug Fixes
+
+* adds use NG api flag for elements ([#382](https://github.com/Basis-Theory/basis-theory-js/issues/382)) ([faf6a34](https://github.com/Basis-Theory/basis-theory-js/commit/faf6a3475cac544cb4d7cca810fda47922f3a718))
+
 # [2.3.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.2.0...v2.3.0) (2023-10-06)
 
 
