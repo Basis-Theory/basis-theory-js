@@ -7,17 +7,22 @@ interface Reactor extends Auditable {
   id: string;
   tenantId: string;
   name: string;
-  formula: ReactorFormula;
   application?: Application;
+  code?: string;
   configuration?: Record<string, string>;
+  /**
+   * @deprecated Reactor Formulas are now deprecated and will be removed in a future release.
+   * @description We have introduced a `code` property for Reactors to replace Formula's code. For more details visit [our API reference](https://developers.basistheory.com/docs/api/reactors#create-reactor).
+   */
+  formula?: ReactorFormula;
 }
 
 type CreateReactor = Pick<Reactor, 'name' | 'configuration'> & {
-  formula: Pick<ReactorFormula, 'id'>;
+  code?: string;
   application?: Pick<Application, 'id'>;
 };
 
-type UpdateReactor = Pick<Reactor, 'name' | 'configuration'> & {
+type UpdateReactor = Pick<Reactor, 'name' | 'configuration' | 'code'> & {
   application?: Pick<Application, 'id'>;
 };
 

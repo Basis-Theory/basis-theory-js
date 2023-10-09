@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.2.0...v2.3.0) (2023-10-06)
+
+
+### Features
+
+* adds code and deprecates reactor formulas ([#381](https://github.com/Basis-Theory/basis-theory-js/issues/381)) ([070229f](https://github.com/Basis-Theory/basis-theory-js/commit/070229fd3e67181033675e4da1772dee5384ad75))
+
 # [2.2.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.1.0...v2.2.0) (2023-08-29)
 
 
