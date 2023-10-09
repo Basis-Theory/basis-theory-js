@@ -286,9 +286,14 @@ export class BasisTheory
       (this.initOptions as BasisTheoryInitOptionsWithElements).elementsClientUrl
     );
 
+    const elementsUseNgApi =
+      (this.initOptions as BasisTheoryInitOptionsWithElements)
+        .elementsUseNgApi || false;
+
     await (elements as BasisTheoryElementsInternal).init(
       apiKey,
-      elementsBaseUrl.toString().replace(/\/$/u, '')
+      elementsBaseUrl.toString().replace(/\/$/u, ''),
+      elementsUseNgApi
     );
     this.elements = elements;
   }
