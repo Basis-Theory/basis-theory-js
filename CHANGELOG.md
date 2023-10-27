@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/Basis-Theory/basis-theory-js/compare/v2.3.1...v2.3.2) (2023-10-27)
+
+
+### Bug Fixes
+
+* upgrade dependencies ([#386](https://github.com/Basis-Theory/basis-theory-js/issues/386)) ([f4dc966](https://github.com/Basis-Theory/basis-theory-js/commit/f4dc9668f70a523a14f4fdd3d9f144a1f1481356))
+
 ## [2.3.1](https://github.com/Basis-Theory/basis-theory-js/compare/v2.3.0...v2.3.1) (2023-10-09)
 
 
