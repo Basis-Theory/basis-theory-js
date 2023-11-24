@@ -64,6 +64,44 @@ describe('Permissions', () => {
       });
     });
 
+    test('should list permissions w/ query', async () => {
+      const type = chance.string();
+      const description = chance.string();
+      const applicationTypes = [
+        chance.string({ alpha: true }) as ApplicationType,
+      ];
+
+      const query = {
+        applicationType: applicationTypes[0],
+      };
+      const url = `/?application_type=${query.applicationType}`;
+
+      client.onGet(url).reply(
+        200,
+        JSON.stringify([
+          {
+            type,
+            description,
+            // eslint-disable-next-line camelcase
+            application_types: applicationTypes,
+          },
+        ])
+      );
+
+      expect(await bt.permissions.list(query)).toStrictEqual([
+        {
+          type,
+          description,
+          applicationTypes,
+        },
+      ]);
+      expect(client.history.get).toHaveLength(1);
+      expect(client.history.get[0].url).toStrictEqual(url);
+      expect(client.history.get[0].headers).toMatchObject({
+        [API_KEY_HEADER]: expect.any(String),
+      });
+    });
+
     test('should list permissions w/ options', async () => {
       const type = chance.string();
       const description = chance.string();
@@ -85,7 +123,7 @@ describe('Permissions', () => {
       );
 
       expect(
-        await bt.permissions.list({
+        await bt.permissions.list(undefined, {
           apiKey: _apiKey,
           correlationId,
           idempotencyKey,
