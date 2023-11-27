@@ -39,7 +39,7 @@
   "dependencies": {
     "axios": "^1.6.0",
     "camelcase-keys": "^6.2.2",
-    "csstype": "^3.0.11",
+    "csstype": "^3.1.2",
     "os": "^0.1.2",
     "os-browserify": "^0.3.0",
     "snake-case": "^3.0.4",
