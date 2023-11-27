@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.3.2...v2.4.0) (2023-11-27)
+
+
+### Features
+
+* support application type query param in permissions list ([#392](https://github.com/Basis-Theory/basis-theory-js/issues/392)) ([ebc15fc](https://github.com/Basis-Theory/basis-theory-js/commit/ebc15fc779f5570a595d59fb00331f5d2d9b1fa7))
+
 ## [2.3.2](https://github.com/Basis-Theory/basis-theory-js/compare/v2.3.1...v2.3.2) (2023-10-27)
 
 
