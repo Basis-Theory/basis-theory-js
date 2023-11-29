@@ -1,3 +1,4 @@
+import { CreditCardType } from './cardTypes';
 import { AutoCompleteValue, DataElementReference } from './shared';
 import type { ElementStyle } from './styles';
 
@@ -35,6 +36,7 @@ interface SanitizedElementOptions {
   ariaLabel?: string;
   autoComplete?: string;
   cardBrand?: string;
+  cardTypes?: CreditCardType[];
   disabled?: boolean;
   enableCopy?: boolean;
   iconPosition?: string;
@@ -68,6 +70,7 @@ interface AutoCompleteOption {
 
 type CustomizableElementOptions = Pick<
   ElementOptions,
+  | 'cardTypes'
   | 'disabled'
   | 'enableCopy'
   | 'inputMode'
@@ -91,9 +94,10 @@ interface CardExpirationDateValue<T extends ElementValueType> {
   year: T extends 'reference' ? DataElementReference : number;
 }
 
-type CreateCardElementOptions = CustomizableElementOptions & {
-  value?: CardElementValue<'static'>;
-};
+type CreateCardElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'cardTypes'> & {
+    value?: CardElementValue<'static'>;
+  };
 
 type UpdateCardElementOptions = Omit<
   CreateCardElementOptions,
@@ -114,7 +118,7 @@ type UpdateTextElementOptions = Omit<
 >;
 
 type CreateCardNumberElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'iconPosition'> &
+  Pick<ElementOptions, 'placeholder' | 'iconPosition' | 'cardTypes'> &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
     value?: string;
