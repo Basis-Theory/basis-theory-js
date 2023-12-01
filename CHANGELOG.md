@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.4.0...v2.5.0) (2023-12-01)
+
+
+### Features
+
+* adds cardTypes for custom bin ([#393](https://github.com/Basis-Theory/basis-theory-js/issues/393)) ([4905a50](https://github.com/Basis-Theory/basis-theory-js/commit/4905a50312730a209c630ac01483e2c85e35ae9d))
+
 # [2.4.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.3.2...v2.4.0) (2023-11-27)
 
 
