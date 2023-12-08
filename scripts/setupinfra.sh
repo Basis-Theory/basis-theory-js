@@ -12,12 +12,6 @@ cd $script_directory
 
 pulumi login
 
-if [ "$IS_PR_WORKFLOW" = true ] ; then
-  PULUMI_GLOBAL_STACK=$PULUMI_GLOBAL_DEV_STACK
-else
-  PULUMI_GLOBAL_STACK=$PULUMI_GLOBAL_PROD_STACK
-fi
-
 if [[ -z "${ENVIRONMENT}" ]]; then
     echo "environment variable is not set"
     exit 1
@@ -28,11 +22,6 @@ if [ "${ENVIRONMENT}" = dev  ]; then
 else
     JS_HOST="js.basistheory.com"
 fi
-
-GLOBAL_STACK_OUTPUTS=$(pulumi stack output --stack $PULUMI_GLOBAL_STACK --json)
-EDGE_RESOURCE_GROUP_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .edgeResourceGroupName)
-JS_STORAGE_ACCOUNT_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsStorageAccountName)
-JS_CONTAINER_NAME=$(echo $GLOBAL_STACK_OUTPUTS | jq -r .jsContainerName)
 
 MAJOR_VERSION=$(cat package.json | jq -r '.version' | cut -d. -f1)
 BUNDLE_PATH=$dist_directory/basis-theory-js.bundle.js
