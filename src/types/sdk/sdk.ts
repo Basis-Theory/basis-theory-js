@@ -2,6 +2,7 @@ import type { BasisTheoryElements } from '@/types/elements';
 import { Transactions } from '@/types/sdk/services/transactions';
 import type {
   Applications,
+  ApplicationTemplates,
   HttpClient,
   Logs,
   Permissions,
@@ -50,6 +51,7 @@ interface BasisTheoryInit {
 }
 interface BasisTheory extends Tokenize {
   applications: Applications;
+  applicationTemplates: ApplicationTemplates;
   /**
    * @description Allows you to utilize element values in requests to a third-party API using our HTTP client service.
    * @requires Before proceeding, ensure that the elements are properly initialized. Refer to the [Basis Theory Docs - Initialize elements]((https://developers.basistheory.com/docs/sdks/web/javascript/#initialization)) for more information.

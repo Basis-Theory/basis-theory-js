@@ -28,6 +28,7 @@ const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   tokens: 'tokens',
   tokenize: 'tokenize',
   applications: 'applications',
+  applicationTemplates: 'application-templates',
   tenants: 'tenants/self',
   logs: 'logs',
   reactorFormulas: 'reactor-formulas',

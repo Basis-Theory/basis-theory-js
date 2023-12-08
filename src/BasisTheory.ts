@@ -22,6 +22,7 @@ import type {
 import type { TokenizeData } from '@/types/models';
 import type {
   Applications,
+  ApplicationTemplates,
   BasisTheory as IBasisTheory,
   BasisTheoryInit,
   BasisTheoryInitOptions,
@@ -42,6 +43,7 @@ import type {
   Tokens,
 } from '@/types/sdk';
 import { Transactions } from '@/types/sdk/services/transactions';
+import { BasisTheoryApplicationTemplates } from './application-templates';
 import { BasisTheoryApplications } from './applications';
 import {
   assertInit,
@@ -83,6 +85,8 @@ export class BasisTheory
   private _elements?: BasisTheoryElementsInternal;
 
   private _applications?: BasisTheoryApplications;
+
+  private _applicationTemplates?: BasisTheoryApplicationTemplates;
 
   private _tenants?: BasisTheoryTenants;
 
@@ -165,6 +169,14 @@ export class BasisTheory
       this._applications = new BasisTheoryApplications({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.applications, baseUrl).toString(),
+        appInfo,
+      });
+      this._applicationTemplates = new BasisTheoryApplicationTemplates({
+        apiKey,
+        baseURL: new URL(
+          CLIENT_BASE_PATHS.applicationTemplates,
+          baseUrl
+        ).toString(),
         appInfo,
       });
       this._tenants = new BasisTheoryTenants({
@@ -310,6 +322,10 @@ export class BasisTheory
 
   public get applications(): Applications {
     return assertInit(this._applications);
+  }
+
+  public get applicationTemplates(): ApplicationTemplates {
+    return assertInit(this._applicationTemplates);
   }
 
   public get client(): HttpClient | undefined {

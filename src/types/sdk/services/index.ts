@@ -12,3 +12,4 @@ export * from './proxy';
 export * from './sessions';
 export * from './transactions';
 export * from './http';
+export * from './application-templates';

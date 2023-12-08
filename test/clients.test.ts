@@ -46,6 +46,10 @@ describe('clients', () => {
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.applicationTemplates}`,
+    });
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.tenants}`,
     });
     expect(create).toHaveBeenCalledWith({
@@ -80,7 +84,7 @@ describe('clients', () => {
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.transactions}`,
     });
-    expect(create).toHaveBeenCalledTimes(12);
+    expect(create).toHaveBeenCalledTimes(13);
   });
 
   test('should throw error if not properly initialized', () => {

@@ -193,7 +193,6 @@ const testRetrieve = <T>(param: () => TestRetrieveParam<T>): void => {
       200,
       JSON.stringify({
         id,
-
         created_at: createdAt,
       })
     );
