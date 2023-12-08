@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.5.0...v2.6.0) (2023-12-08)
+
+
+### Features
+
+* remove pulumi ([#396](https://github.com/Basis-Theory/basis-theory-js/issues/396)) ([3dd6e7d](https://github.com/Basis-Theory/basis-theory-js/commit/3dd6e7d27389f6b5dead489664f92e975c11813b))
+
 # [2.5.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.4.0...v2.5.0) (2023-12-01)
 
 
