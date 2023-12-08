@@ -14,8 +14,6 @@ jobs:
     env:
       CI: 1 # prevents extra Cypress installation progress messages
       HUSKY: 0 # disables husky hooks
-      PULUMI_GLOBAL_DEV_STACK: basistheory/btinfra-global/dev
-      PULUMI_GLOBAL_PROD_STACK: basistheory/btinfra-global/prod
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -27,14 +25,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Setup Pulumi CLI
-        uses: pulumi/action-install-pulumi-cli@v1.0.1
-
-      - name: Login in Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_PROD_CREDENTIALS }}
-
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
         env:
@@ -43,7 +33,6 @@ jobs:
       - name: Write .env
         run: make write-lib-vars
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           ENVIRONMENT: prod
 
       - name: Build
@@ -56,7 +45,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_RELEASE_TOKEN }}
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.JS_AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
           S3_CF_PROD_STATE: ${{ vars.S3_CF_PROD_STATE }}
