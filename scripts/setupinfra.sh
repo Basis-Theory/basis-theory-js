@@ -10,8 +10,6 @@ dist_directory="$PWD"
 # back to script directory
 cd $script_directory
 
-pulumi login
-
 if [[ -z "${ENVIRONMENT}" ]]; then
     echo "environment variable is not set"
     exit 1
