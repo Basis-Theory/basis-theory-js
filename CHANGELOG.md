@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.6.0...v2.7.0) (2023-12-11)
+
+
+### Features
+
+* add applicationTemplates client ([#395](https://github.com/Basis-Theory/basis-theory-js/issues/395)) ([5129d3d](https://github.com/Basis-Theory/basis-theory-js/commit/5129d3dc27af332e10c24a14034416b7c90a7430))
+
 # [2.6.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.5.0...v2.6.0) (2023-12-08)
 
 
