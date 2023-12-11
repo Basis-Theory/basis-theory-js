@@ -44,7 +44,6 @@ describe('Permissions', () => {
           {
             type,
             description,
-            // eslint-disable-next-line camelcase
             application_types: applicationTypes,
           },
         ])
@@ -82,7 +81,6 @@ describe('Permissions', () => {
           {
             type,
             description,
-            // eslint-disable-next-line camelcase
             application_types: applicationTypes,
           },
         ])
@@ -116,7 +114,6 @@ describe('Permissions', () => {
           {
             type,
             description,
-            // eslint-disable-next-line camelcase
             application_types: applicationTypes,
           },
         ])

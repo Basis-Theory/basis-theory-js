@@ -28,6 +28,8 @@ module.exports = {
           'metrics_by_type',
           'monthly_active_tokens',
           'included_monthly_active_tokens',
+          'application_type',
+          'template_type',
         ],
       },
     ],
