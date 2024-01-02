@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.7.0...v2.8.0) (2024-01-02)
+
+
+### Features
+
+* upgrade axios ([#401](https://github.com/Basis-Theory/basis-theory-js/issues/401)) ([3b27d4e](https://github.com/Basis-Theory/basis-theory-js/commit/3b27d4ea39b2f14e9be786ffb97e68a14f0d4201))
+
 # [2.7.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.6.0...v2.7.0) (2023-12-11)
 
 
