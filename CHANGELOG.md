@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.8.0...v2.9.0) (2024-01-05)
+
+
+### Features
+
+* patch axios ([#402](https://github.com/Basis-Theory/basis-theory-js/issues/402)) ([287921e](https://github.com/Basis-Theory/basis-theory-js/commit/287921e9c12a5e70fd8fc26099b1a143c2a876b1))
+
 # [2.8.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.7.0...v2.8.0) (2024-01-02)
 
 
