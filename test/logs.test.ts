@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
-import { testList, mockServiceClient } from './setup/utils';
+import { mockServiceClient, testCursorPaginatedList } from './setup/utils';
 
 describe('Logs', () => {
   let bt: IBasisTheory,
@@ -23,7 +23,7 @@ describe('Logs', () => {
   });
 
   describe('List', () => {
-    testList(() => ({
+    testCursorPaginatedList(() => ({
       service: bt.logs,
       client,
     }));
