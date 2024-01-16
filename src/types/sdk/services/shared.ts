@@ -19,13 +19,15 @@ interface PaginatedQuery {
   [key: number]: QueryValue;
   page?: number;
   size?: number;
+  start?: string;
 }
 interface PaginatedList<T> {
   pagination: {
-    totalItems: number;
-    pageNumber: number;
+    totalItems?: number;
+    pageNumber?: number;
     pageSize: number;
-    totalPages: number;
+    totalPages?: number;
+    after?: string;
   };
   data: T[];
 }

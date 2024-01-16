@@ -669,6 +669,160 @@ const testList = <T>(param: () => TestListParam<T>): void => {
   });
 };
 
+const testCursorPaginatedList = <T>(param: () => TestListParam<T>): void => {
+  const chance = new Chance();
+  const correlationId = chance.string();
+  const apiKey = chance.string();
+  const idempotencyKey = chance.string();
+  const start = chance.string({
+    alpha: true,
+    numeric: true,
+  });
+  const pageSize = chance.integer();
+  const after = chance.string();
+  const size = chance.integer();
+  const query = {
+    start,
+    size,
+    nul: null,
+    und: undefined,
+    camelCase: chance.string({
+      alpha: true,
+      numeric: true,
+    }),
+    bool: chance.bool(),
+    int: chance.integer(),
+    float: chance.floating(),
+    str: chance.string({
+      alpha: true,
+      numeric: true,
+    }),
+    arr: [
+      chance.bool(),
+      chance.integer(),
+      chance.floating(),
+      chance.string({
+        alpha: true,
+        numeric: true,
+      }),
+      [chance.string()],
+      {},
+    ],
+    obj: {
+      str: chance.string({ alpha: true }),
+      bool: chance.bool(),
+      int: chance.integer(),
+      float: chance.floating(),
+      obj: {
+        [chance.string()]: chance.string(),
+      },
+    },
+    fn: (): undefined => undefined,
+    [Symbol(chance.string())]: Symbol(chance.string()),
+  } as const;
+
+  test('should list with cursor pagination', async () => {
+    const { service, client } = param();
+
+    client.onGet().reply(
+      200,
+
+      JSON.stringify({
+        pagination: {
+          after,
+          page_size: pageSize,
+        },
+        data: [],
+      })
+    );
+
+    expect(await service.list()).toStrictEqual({
+      pagination: {
+        after,
+        pageSize,
+      },
+      data: [], // no need to assert this conversion, since we are asserting pagination already
+    } as PaginatedList<T>);
+    expect(client.history.get).toHaveLength(1);
+    expect(client.history.get[0].url).toStrictEqual('/');
+    expect(client.history.get[0].headers).toMatchObject({
+      [API_KEY_HEADER]: expect.any(String),
+    });
+  });
+
+  test('should list with cursor paginated query', async () => {
+    const { service, client } = param();
+
+    client.onGet().reply(
+      200,
+
+      JSON.stringify({
+        pagination: {
+          after,
+          page_size: pageSize,
+        },
+        data: [],
+      })
+    );
+
+    expect(
+      await service.list((query as unknown) as PaginatedQuery)
+    ).toStrictEqual({
+      pagination: {
+        after,
+        pageSize,
+      },
+      data: [], // no need to assert this conversion, since we are asserting pagination already
+    } as PaginatedList<T>);
+    expect(client.history.get).toHaveLength(1);
+    expect(client.history.get[0].url).toStrictEqual(
+      `/?start=${query.start}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}&obj.str=${query.obj.str}&obj.bool=${query.obj.bool}&obj.int=${query.obj.int}&obj.float=${query.obj.float}`
+    );
+    expect(client.history.get[0].headers).toMatchObject({
+      [API_KEY_HEADER]: expect.any(String),
+    });
+  });
+
+  test('should list with cursor pagination and options', async () => {
+    const { service, client } = param();
+
+    client.onGet().reply(
+      200,
+
+      JSON.stringify({
+        pagination: {
+          after,
+          page_size: pageSize,
+        },
+        data: [],
+      })
+    );
+
+    expect(
+      await service.list((query as unknown) as PaginatedQuery, {
+        apiKey,
+        correlationId,
+        idempotencyKey,
+      })
+    ).toStrictEqual({
+      pagination: {
+        after,
+        pageSize,
+      },
+      data: [], // no need to assert this conversion, since we are asserting pagination already
+    } as PaginatedList<T>);
+    expect(client.history.get).toHaveLength(1);
+    expect(client.history.get[0].url).toStrictEqual(
+      `/?start=${query.start}&size=${size}&nul=null&camel_case=${query.camelCase}&bool=${query.bool}&int=${query.int}&float=${query.float}&str=${query.str}&arr=${query.arr[0]}&arr=${query.arr[1]}&arr=${query.arr[2]}&arr=${query.arr[3]}&obj.str=${query.obj.str}&obj.bool=${query.obj.bool}&obj.int=${query.obj.int}&obj.float=${query.obj.float}`
+    );
+    expect(client.history.get[0].headers).toMatchObject({
+      [API_KEY_HEADER]: apiKey,
+      [BT_TRACE_ID_HEADER]: correlationId,
+      [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
+    });
+  });
+};
+
 const testCRUD = <T, C, U>(
   param: () => TestCreateParam<T, C> &
     TestRetrieveParam<T> &
@@ -966,6 +1120,7 @@ export {
   testPatch,
   testDelete,
   testList,
+  testCursorPaginatedList,
   testServiceDelegate,
   testMethodDelegate,
   getTestAppInfo,
