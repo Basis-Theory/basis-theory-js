@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.9.0...v3.0.0) (2024-01-16)
+
+
+* feat!: support logs cursor pagination (#403) ([c1d116d](https://github.com/Basis-Theory/basis-theory-js/commit/c1d116dd1df3b9de967808da45bc37b100cacd4b)), closes [#403](https://github.com/Basis-Theory/basis-theory-js/issues/403)
+
+
+### BREAKING CHANGES
+
+* logs api changed from using offset pagination to cursor pagination
+
 # [2.9.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.8.0...v2.9.0) (2024-01-05)
 
 
