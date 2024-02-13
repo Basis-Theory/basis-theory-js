@@ -34,7 +34,6 @@ import {
   BROWSER_LIST,
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
-  BT_TRANSACTION_ID_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
 
@@ -266,7 +265,6 @@ const createRequestConfig = (
     apiKey,
     correlationId,
     idempotencyKey,
-    transactionId,
     query,
     headers,
   } = options as ProxyRequestOptions;
@@ -286,18 +284,12 @@ const createRequestConfig = (
         [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       }
     : {};
-  const transactionIdHeader = transactionId
-    ? {
-        [BT_TRANSACTION_ID_HEADER]: transactionId,
-      }
-    : {};
 
   return {
     headers: {
       ...apiKeyHeader,
       ...correlationIdHeader,
       ...idempotencyKeyHeader,
-      ...transactionIdHeader,
       ...(typeof headers !== 'undefined' && { ...headers }),
     },
     ...(typeof query !== 'undefined' && { params: query }),

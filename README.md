@@ -36,8 +36,7 @@ const bt = await new BasisTheory().init('<API Key>'); // replace with your appli
 
 ### Per-request configuration
 
-All of the service methods accept an optional `RequestOptions` object. This is used if you want to set a per-request `BT-TRACE-ID`, `BT-API-KEY`, `BT-IDEMPOTENCY-KEY`
-and/or `BT-TRANSACTION-ID`.
+All of the service methods accept an optional `RequestOptions` object. This is used if you want to set a per-request `BT-TRACE-ID`, `BT-API-KEY` and/or `BT-IDEMPOTENCY-KEY`.
 
 ```javascript
 import { v4 as uuid } from 'uuid';
@@ -60,7 +59,6 @@ await bt.tokens.create(
     apiKey: '<API Key>',
     correlationId: 'aa5d3379-6385-4ef4-9fdb-ca1341572153',
     idempotencyKey: 'bb5d3379-6385-4ef4-9fdb-ca1341572154',
-    transactionId: 'cc5d3379-3921-4ef4-9fdb-ca1341572169',
   }
 );
 ```

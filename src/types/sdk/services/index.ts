@@ -10,6 +10,5 @@ export * from './permissions';
 export * from './proxies';
 export * from './proxy';
 export * from './sessions';
-export * from './transactions';
 export * from './http';
 export * from './application-templates';
