@@ -1,3 +1,13 @@
+# [4.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v3.0.0...v4.0.0) (2024-02-14)
+
+
+* feat!: remove transactions (#404) ([482edda](https://github.com/Basis-Theory/basis-theory-js/commit/482edda48fbd023c51d05b47bcde64695e26fe6a)), closes [#404](https://github.com/Basis-Theory/basis-theory-js/issues/404)
+
+
+### BREAKING CHANGES
+
+* removing transactions
+
 # [3.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.9.0...v3.0.0) (2024-01-16)
 
 
