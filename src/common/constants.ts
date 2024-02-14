@@ -8,8 +8,6 @@ const BT_IDEMPOTENCY_KEY_HEADER = 'bt-idempotency-key';
 
 const BT_EXPOSE_PROXY_RESPONSE_HEADER = 'BT-EXPOSE-RAW-PROXY-RESPONSE';
 
-const BT_TRANSACTION_ID_HEADER = 'BT-TRANSACTION-ID';
-
 const CONTENT_TYPE_HEADER = 'Content-Type';
 
 const MERGE_CONTENT_TYPE = 'application/merge-patch+json';
@@ -37,7 +35,6 @@ const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   proxies: 'proxies',
   proxy: 'proxy',
   sessions: 'sessions',
-  transactions: 'transactions',
 };
 
 const BROWSER_LIST = [
@@ -93,5 +90,4 @@ export {
   DEFAULT_ELEMENTS_BASE_URL,
   CLIENT_BASE_PATHS,
   BROWSER_LIST,
-  BT_TRANSACTION_ID_HEADER,
 };
