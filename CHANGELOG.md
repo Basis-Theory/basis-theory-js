@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.0.0...v4.1.0) (2024-03-05)
+
+
+### Features
+
+* adds skipLuhnValidation ([#405](https://github.com/Basis-Theory/basis-theory-js/issues/405)) ([40f175f](https://github.com/Basis-Theory/basis-theory-js/commit/40f175faa04be8de2aa9d18e8cd5fad0ac6aea0a))
+
 # [4.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v3.0.0...v4.0.0) (2024-02-14)
 
 
