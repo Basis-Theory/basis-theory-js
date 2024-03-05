@@ -45,6 +45,7 @@ interface SanitizedElementOptions {
   password?: boolean;
   placeholder?: string;
   readOnly?: boolean;
+  skipLuhnValidation?: boolean;
   style?: ElementStyle;
   targetId?: string;
   transform?: [RegExp, string] | null;
@@ -75,6 +76,7 @@ type CustomizableElementOptions = Pick<
   | 'enableCopy'
   | 'inputMode'
   | 'readOnly'
+  | 'skipLuhnValidation'
   | 'style'
   | 'validateOnChange'
 > &
@@ -95,7 +97,7 @@ interface CardExpirationDateValue<T extends ElementValueType> {
 }
 
 type CreateCardElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'cardTypes'> & {
+  Pick<ElementOptions, 'cardTypes' | 'skipLuhnValidation'> & {
     value?: CardElementValue<'static'>;
   };
 
@@ -118,7 +120,10 @@ type UpdateTextElementOptions = Omit<
 >;
 
 type CreateCardNumberElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'iconPosition' | 'cardTypes'> &
+  Pick<
+    ElementOptions,
+    'placeholder' | 'iconPosition' | 'cardTypes' | 'skipLuhnValidation'
+  > &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
     value?: string;
