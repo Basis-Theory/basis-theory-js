@@ -51,7 +51,6 @@ interface BaseElement<UpdateOptions, ElementEvents> {
 type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents> & {
   readonly cardMetadata?: CardMetadata;
   setValue: ValueSetter<CardElementValue<'reference'>>;
-  setValueRef: ValueSetter<CardElementValue<'reference'>>;
 };
 
 type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents> & {
