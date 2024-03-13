@@ -1,3 +1,10 @@
+# [4.2.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.1.0...v4.2.0) (2024-03-13)
+
+
+### Features
+
+* adds setValueRef to elements ([#406](https://github.com/Basis-Theory/basis-theory-js/issues/406)) ([f1b5f2a](https://github.com/Basis-Theory/basis-theory-js/commit/f1b5f2aa5a362f1e82ab0cf7cfe76e7fdc35fe9c))
+
 # [4.1.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.0.0...v4.1.0) (2024-03-05)
 
 
