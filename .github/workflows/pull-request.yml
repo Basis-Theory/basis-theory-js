@@ -142,6 +142,17 @@ jobs:
           content="${content//$'\r'/'%0D'}"
           echo "::set-output name=packageJson::$content"
 
+      - name: Cache Cypress Binaries
+        id: cache-cypress
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-v2-${{ runner.os }}-${{ fromJson(steps.read-package-json.outputs.packageJson).devDependencies.cypress }}
+
+      # Install and check Cypress binary
+      - run: yarn run cypress install
+      - run: yarn run cypress cache list
+
       - name: Write .env
         run: make write-lib-vars
         env:
@@ -151,7 +162,14 @@ jobs:
       - name: Verify
         run: make verify
         env:
-          SKIP_INSTALL: 0 # install with cache was done already
+          SKIP_INSTALL: 1 # install with cache was done already
+
+      - name: Upload failed e2e tests screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
 
       - name: Verify Infrastructure
         run: make setup-infra
