@@ -1,3 +1,10 @@
+## [4.2.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.0...v4.2.1) (2024-03-18)
+
+
+### Bug Fixes
+
+* revert setValue types ([#408](https://github.com/Basis-Theory/basis-theory-js/issues/408)) ([9a2f48b](https://github.com/Basis-Theory/basis-theory-js/commit/9a2f48bac071a6ff9804a1ff763139d2e0950a10))
+
 # [4.2.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.1.0...v4.2.0) (2024-03-13)
 
 
