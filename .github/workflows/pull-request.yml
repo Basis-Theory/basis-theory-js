@@ -151,7 +151,7 @@ jobs:
       - name: Verify
         run: make verify
         env:
-          SKIP_INSTALL: 1 # install with cache was done already
+          SKIP_INSTALL: 0 # install with cache was done already
 
       - name: Verify Infrastructure
         run: make setup-infra
