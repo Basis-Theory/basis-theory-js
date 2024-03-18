@@ -29,8 +29,13 @@ VERSIONED_JS_NAME=$(cat package.json | jq -r '.version')
 
 echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
+if [[ -z ${AWS} ]]; then
+  JS_BUCKET_NAME=$(aws s3 cp s3://basis-theory-tf-state/basistheory-cloudflare/$ENVIRONMENT/terraform.tfstate - | jq -r .outputs.js_bucket_name.value)
+else
+  JS_BUCKET_NAME="${ENVIRONMENT}-${JS_HOST}"
+fi
+
 # Upload Contnet
-JS_BUCKET_NAME=$(aws s3 cp s3://basis-theory-tf-state/basistheory-cloudflare/$ENVIRONMENT/terraform.tfstate - | jq -r .outputs.js_bucket_name.value)
 aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}"
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then

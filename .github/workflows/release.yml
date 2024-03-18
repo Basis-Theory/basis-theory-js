@@ -76,3 +76,58 @@ jobs:
           fields: 'repo,commit,message,workflow,job'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  build-release-ng:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: [ '14.x' ]
+        os: [ ubuntu-latest ]
+    env:
+      CI: 1 # prevents extra Cypress installation progress messages
+      HUSKY: 0 # disables husky hooks
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.SEMANTIC_RELEASE_PAT }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::914054469264:role/github-actions-admin-dev
+          aws-region: us-east-2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::914054469264:role/terraform-admin
+          aws-region: us-east-2
+          role-chaining: true
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1
+        env:
+          CYPRESS_INSTALL_BINARY: 0
+
+      - name: Write .env
+        run: make write-lib-vars
+        env:
+          ENVIRONMENT: prod
+
+      - name: Build
+        run: make build
+        env:
+          SKIP_INSTALL: 1 # install with cache was done already
+
+      - name: Release
+        run: make setup-infra
+        env:
+          AWS: true
+          AWS_REGION: us-east-2
+          ENVIRONMENT: prod
