@@ -30,8 +30,6 @@ import type {
   ElementMetadata,
 } from './shared';
 
-type ValueSetter<T> = (value: T) => void;
-
 interface BaseElement<UpdateOptions, ElementEvents> {
   readonly mounted: boolean;
   readonly metadata: ElementMetadata;
@@ -54,7 +52,7 @@ type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents> & {
 };
 
 type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents> & {
-  setValueRef: ValueSetter<TextElement>;
+  setValueRef(value: TextElement): void;
   setValue(value: DataElementReference): void;
 };
 
@@ -63,7 +61,7 @@ type CardNumberElement = BaseElement<
   CardNumberElementEvents
 > & {
   readonly cardMetadata?: CardMetadata;
-  setValueRef: ValueSetter<CardNumberElement>;
+  setValueRef(value: CardNumberElement): void;
   setValue(value: DataElementReference): void;
 };
 
@@ -71,7 +69,7 @@ type CardExpirationDateElement = BaseElement<
   UpdateCardExpirationDateElementOptions,
   CardExpirationDateElementEvents
 > & {
-  setValueRef: ValueSetter<CardExpirationDateElement>;
+  setValueRef(value: CardExpirationDateElement): void;
   setValue(value: CardExpirationDateValue<'reference'>): void;
   month(): ElementWrapper<CardExpirationDateElement>;
   year(): ElementWrapper<CardExpirationDateElement>;
@@ -82,7 +80,7 @@ type CardVerificationCodeElement = BaseElement<
   UpdateCardVerificationCodeElementOptions,
   CardVerificationCodeElementEvents
 > & {
-  setValueRef: ValueSetter<CardVerificationCodeElement>;
+  setValueRef(value: CardVerificationCodeElement): void;
   setValue(value: DataElementReference): void;
 };
 
