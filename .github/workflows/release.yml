@@ -79,6 +79,9 @@ jobs:
 
   build-release-ng:
     runs-on: ${{ matrix.os }}
+    permissions:
+      id-token: write
+      contents: read
     strategy:
       matrix:
         node: [ '14.x' ]
