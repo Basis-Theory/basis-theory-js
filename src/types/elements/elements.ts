@@ -50,12 +50,12 @@ interface BaseElement<UpdateOptions, ElementEvents> {
 
 type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents> & {
   readonly cardMetadata?: CardMetadata;
-  setValue: ValueSetter<CardElementValue<'reference'>>;
+  setValue(value: CardElementValue<'reference'>): void;
 };
 
 type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents> & {
-  setValue: ValueSetter<DataElementReference>;
   setValueRef: ValueSetter<TextElement>;
+  setValue(value: DataElementReference): void;
 };
 
 type CardNumberElement = BaseElement<
@@ -63,16 +63,16 @@ type CardNumberElement = BaseElement<
   CardNumberElementEvents
 > & {
   readonly cardMetadata?: CardMetadata;
-  setValue: ValueSetter<DataElementReference>;
   setValueRef: ValueSetter<CardNumberElement>;
+  setValue(value: DataElementReference): void;
 };
 
 type CardExpirationDateElement = BaseElement<
   UpdateCardExpirationDateElementOptions,
   CardExpirationDateElementEvents
 > & {
-  setValue: ValueSetter<CardExpirationDateValue<'reference'>>;
   setValueRef: ValueSetter<CardExpirationDateElement>;
+  setValue(value: CardExpirationDateValue<'reference'>): void;
   month(): ElementWrapper<CardExpirationDateElement>;
   year(): ElementWrapper<CardExpirationDateElement>;
   format(dateFormat: string): ElementWrapper<CardExpirationDateElement>;
@@ -82,8 +82,8 @@ type CardVerificationCodeElement = BaseElement<
   UpdateCardVerificationCodeElementOptions,
   CardVerificationCodeElementEvents
 > & {
-  setValue: ValueSetter<DataElementReference>;
   setValueRef: ValueSetter<CardVerificationCodeElement>;
+  setValue(value: DataElementReference): void;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
