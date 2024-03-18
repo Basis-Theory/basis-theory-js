@@ -126,7 +126,7 @@ jobs:
       - name: Build
         run: make build
         env:
-          SKIP_INSTALL: 1 # install with cache was done already
+          SKIP_INSTALL: 0 # install with cache was done already
 
       - name: Release
         run: make setup-infra
