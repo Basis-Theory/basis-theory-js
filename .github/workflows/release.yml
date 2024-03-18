@@ -94,17 +94,16 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.SEMANTIC_RELEASE_PAT }}
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::914054469264:role/github-actions-admin-dev
+          role-to-assume: arn:aws:iam::469828239459:role/github-actions-admin-prod
           aws-region: us-east-2
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::914054469264:role/terraform-admin
+          role-to-assume: arn:aws:iam::469828239459:role/terraform-admin
           aws-region: us-east-2
           role-chaining: true
 
