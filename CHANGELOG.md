@@ -1,3 +1,10 @@
+## [4.2.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.1...v4.2.2) (2024-03-18)
+
+
+### Bug Fixes
+
+* remove value setter generic altogether ([#409](https://github.com/Basis-Theory/basis-theory-js/issues/409)) ([800cf4a](https://github.com/Basis-Theory/basis-theory-js/commit/800cf4a7dbc2173fa18e091a181db3d32be5d708))
+
 ## [4.2.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.0...v4.2.1) (2024-03-18)
 
 
