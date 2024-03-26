@@ -40,6 +40,7 @@ import type {
   Tenants,
   Tokenize,
   Tokens,
+  ThreeDS,
 } from '@/types/sdk';
 import { BasisTheoryApplicationTemplates } from './application-templates';
 import { BasisTheoryApplications } from './applications';
@@ -63,6 +64,7 @@ import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheorySessions } from './sessions';
 import { BasisTheoryTenants } from './tenants';
+import { BasisTheoryThreeDS } from './threeds';
 
 const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
@@ -101,6 +103,8 @@ export class BasisTheory
   private _proxy?: Proxy & ElementsProxy;
 
   private _sessions?: Sessions;
+
+  private _threeds?: ThreeDS;
 
   public init(
     apiKey: string | undefined,
@@ -213,6 +217,11 @@ export class BasisTheory
       this._sessions = new BasisTheorySessions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.sessions, baseUrl).toString(),
+        appInfo,
+      });
+      this._threeds = new BasisTheoryThreeDS({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.threeds, baseUrl).toString(),
         appInfo,
       });
 
@@ -366,6 +375,10 @@ export class BasisTheory
 
   public get sessions(): Sessions {
     return assertInit(this._sessions);
+  }
+
+  public get threeds(): ThreeDS {
+    return assertInit(this._threeds);
   }
 
   /* eslint-enable accessor-pairs */
