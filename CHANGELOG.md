@@ -1,3 +1,10 @@
+# [4.3.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.2...v4.3.0) (2024-03-28)
+
+
+### Features
+
+* add 3ds client ([#410](https://github.com/Basis-Theory/basis-theory-js/issues/410)) ([ae3064a](https://github.com/Basis-Theory/basis-theory-js/commit/ae3064a04665c5947537f4178603067bc10ee469))
+
 ## [4.2.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.1...v4.2.2) (2024-03-18)
 
 
