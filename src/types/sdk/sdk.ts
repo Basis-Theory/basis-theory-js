@@ -13,6 +13,7 @@ import type {
   Tenants,
   Tokenize,
   Tokens,
+  ThreeDS,
 } from './services';
 
 interface ApplicationInfo {
@@ -66,6 +67,7 @@ interface BasisTheory extends Tokenize {
   sessions: Sessions;
   tenants: Tenants;
   tokens: Tokens;
+  threeds: ThreeDS;
 }
 
 interface ClientUserAgent {
