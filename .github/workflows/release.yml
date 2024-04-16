@@ -43,7 +43,6 @@ jobs:
       - name: Release
         run: make release
         env:
-          AWS: true
           AWS_ACCESS_KEY_ID: ${{ secrets.JS_AWS_ACCESS_KEY }}
           AWS_REGION: us-east-2
           AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
