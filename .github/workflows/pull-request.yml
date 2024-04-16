@@ -73,11 +73,11 @@ jobs:
       - name: Verify Infrastructure
         run: make setup-infra
         env:
-          ENVIRONMENT: dev
-          S3_CF_DEV_STATE: ${{ vars.S3_CF_DEV_STATE }}
+          AWS: true
           AWS_ACCESS_KEY_ID: ${{ secrets.JS_AWS_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-east-2
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
+          ENVIRONMENT: dev
           IS_PR_WORKFLOW: true
 
       - name: Purge cache
@@ -94,86 +94,3 @@ jobs:
           clover_file: 'coverage/clover.xml'
           threshold_alert: 80
           threshold_warning: 90
-  build-ng:
-    runs-on: ${{ matrix.os }}
-    permissions:
-      id-token: write
-      contents: read
-    strategy:
-      matrix:
-        node: [ '14.x' ]
-        os: [ ubuntu-latest ]
-    env:
-      CI: 1 # prevents extra Cypress installation progress messages
-      HUSKY: 0 # disables husky hooks
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::914054469264:role/github-actions-admin-dev
-          aws-region: us-east-2
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::914054469264:role/terraform-admin
-          aws-region: us-east-2
-          role-chaining: true
-
-      - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
-
-      - name: Install deps (with cache)
-        uses: bahmutov/npm-install@v1
-        env:
-          CYPRESS_INSTALL_BINARY: 0
-
-      - id: read-package-json
-        name: Read package.json
-        run: |
-          content=`cat package.json`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=packageJson::$content"
-
-      - name: Cache Cypress Binaries
-        id: cache-cypress
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/Cypress
-          key: cypress-cache-v2-${{ runner.os }}-${{ fromJson(steps.read-package-json.outputs.packageJson).devDependencies.cypress }}
-
-      # Install and check Cypress binary
-      - run: yarn run cypress install
-      - run: yarn run cypress cache list
-
-      - name: Write .env
-        run: make write-lib-vars
-        env:
-          ENVIRONMENT: dev
-          IS_PR_WORKFLOW: true
-
-      - name: Verify
-        run: make verify
-        env:
-          SKIP_INSTALL: 1 # install with cache was done already
-
-      - name: Upload failed e2e tests screenshots
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-
-      - name: Verify Infrastructure
-        run: make setup-infra
-        env:
-          AWS: true
-          ENVIRONMENT: dev
-          IS_PR_WORKFLOW: true
