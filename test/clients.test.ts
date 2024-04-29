@@ -38,6 +38,10 @@ describe('clients', () => {
     });
     expect(create).toHaveBeenCalledWith({
       ...baseConfig,
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.applicationKeys}`,
+    });
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.tokenize}`,
     });
     expect(create).toHaveBeenCalledWith({
@@ -84,7 +88,7 @@ describe('clients', () => {
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.threeds}`,
     });
-    expect(create).toHaveBeenCalledTimes(13);
+    expect(create).toHaveBeenCalledTimes(14);
   });
 
   test('should throw error if not properly initialized', () => {
