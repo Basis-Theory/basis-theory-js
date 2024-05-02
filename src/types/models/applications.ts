@@ -39,7 +39,7 @@ type Condition = {
 type ApplicationKey = {
   id?: string;
   key?: string;
-  createAt?: string;
+  createdAt?: string;
   createdBy?: string;
 };
 
