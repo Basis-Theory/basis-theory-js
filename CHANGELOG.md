@@ -1,3 +1,10 @@
+# [4.4.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.3.0...v4.4.0) (2024-05-02)
+
+
+### Features
+
+* add application keys endpoints ([#412](https://github.com/Basis-Theory/basis-theory-js/issues/412)) ([2b2be74](https://github.com/Basis-Theory/basis-theory-js/commit/2b2be7437b3bf9d25693b08c197cdb49b44e9aee))
+
 # [4.3.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.2...v4.3.0) (2024-03-28)
 
 
