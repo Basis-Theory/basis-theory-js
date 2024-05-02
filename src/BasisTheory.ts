@@ -20,6 +20,7 @@ import type {
 } from '@/types/elements';
 import type { TokenizeData } from '@/types/models';
 import type {
+  ApplicationKeys,
   Applications,
   ApplicationTemplates,
   BasisTheory as IBasisTheory,
@@ -38,11 +39,12 @@ import type {
   RequestOptions,
   Sessions,
   Tenants,
+  ThreeDS,
   Tokenize,
   Tokens,
-  ThreeDS,
 } from '@/types/sdk';
 import { BasisTheoryApplicationTemplates } from './application-templates';
+import { BasisTheoryApplicationKeys } from './applicationKeys';
 import { BasisTheoryApplications } from './applications';
 import {
   assertInit,
@@ -76,25 +78,17 @@ export class BasisTheory
   implements BasisTheoryInit, IBasisTheory, BasisTheoryElements {
   private _initStatus: BasisTheoryInitStatus = 'not-started';
 
-  private _initOptions?: Required<BasisTheoryInitOptions>;
-
-  private _tokens?: Tokens & ElementsTokens;
-
-  private _tokenize?: Tokenize & ElementsTokenize;
-
-  private _elements?: BasisTheoryElementsInternal;
+  private _applicationKeys?: BasisTheoryApplicationKeys;
 
   private _applications?: BasisTheoryApplications;
 
   private _applicationTemplates?: BasisTheoryApplicationTemplates;
 
-  private _tenants?: BasisTheoryTenants;
+  private _elements?: BasisTheoryElementsInternal;
+
+  private _initOptions?: Required<BasisTheoryInitOptions>;
 
   private _logs?: BasisTheoryLogs;
-
-  private _reactorFormulas?: BasisTheoryReactorFormulas;
-
-  private _reactors?: BasisTheoryReactors;
 
   private _permissions?: BasisTheoryPermissions;
 
@@ -102,9 +96,19 @@ export class BasisTheory
 
   private _proxy?: Proxy & ElementsProxy;
 
+  private _reactorFormulas?: BasisTheoryReactorFormulas;
+
+  private _reactors?: BasisTheoryReactors;
+
   private _sessions?: Sessions;
 
+  private _tenants?: BasisTheoryTenants;
+
   private _threeds?: ThreeDS;
+
+  private _tokenize?: Tokenize & ElementsTokenize;
+
+  private _tokens?: Tokens & ElementsTokens;
 
   public init(
     apiKey: string | undefined,
@@ -169,6 +173,11 @@ export class BasisTheory
       this._applications = new BasisTheoryApplications({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.applications, baseUrl).toString(),
+        appInfo,
+      });
+      this._applicationKeys = new BasisTheoryApplicationKeys({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.applicationKeys, baseUrl).toString(),
         appInfo,
       });
       this._applicationTemplates = new BasisTheoryApplicationTemplates({
@@ -322,6 +331,10 @@ export class BasisTheory
 
   public get applications(): Applications {
     return assertInit(this._applications);
+  }
+
+  public get applicationKeys(): ApplicationKeys {
+    return assertInit(this._applicationKeys);
   }
 
   public get applicationTemplates(): ApplicationTemplates {

@@ -23,6 +23,9 @@ export const BasisTheoryApplications = new CrudBuilder(
         .then(dataExtractor);
     }
 
+    /**
+     * @deprecated This method is deprecated. Use Terraform or https://portal.basistheory.com to manage keys instead.
+     */
     public regenerateKey(
       id: string,
       options?: RequestOptions

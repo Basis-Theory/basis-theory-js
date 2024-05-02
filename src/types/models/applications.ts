@@ -10,7 +10,11 @@ interface Application extends Auditable {
   id: string;
   tenantId: string;
   name?: string;
+  /**
+   * @deprecated use `keys` instead.
+   */
   key?: string;
+  keys?: ApplicationKey[];
   type: ApplicationType;
   permissions?: string[];
   rules?: AccessRule[];
@@ -32,16 +36,24 @@ type Condition = {
   value: string;
 };
 
+type ApplicationKey = {
+  id?: string;
+  key?: string;
+  createdAt?: string;
+  createdBy?: string;
+};
+
 type CreateApplication = Pick<
   Application,
   'name' | 'type' | 'permissions' | 'rules' | 'expiresAt'
->;
+> & { createKey?: boolean };
 
 type UpdateApplication = Pick<Application, 'name' | 'permissions' | 'rules'>;
 
 export type {
-  ApplicationType,
   Application,
+  ApplicationKey,
+  ApplicationType,
   CreateApplication,
   TransformType,
   UpdateApplication,

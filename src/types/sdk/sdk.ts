@@ -15,6 +15,7 @@ import type {
   Tokens,
   ThreeDS,
 } from './services';
+import { ApplicationKeys } from './services/applicationKeys';
 
 interface ApplicationInfo {
   name?: string;
@@ -51,6 +52,7 @@ interface BasisTheoryInit {
 }
 interface BasisTheory extends Tokenize {
   applications: Applications;
+  applicationKeys: ApplicationKeys;
   applicationTemplates: ApplicationTemplates;
   /**
    * @description Allows you to utilize element values in requests to a third-party API using our HTTP client service.
