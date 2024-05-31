@@ -1,3 +1,10 @@
+# [4.5.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.4.0...v4.5.0) (2024-05-31)
+
+
+### Features
+
+* updating token usage report ([#413](https://github.com/Basis-Theory/basis-theory-js/issues/413)) ([4cf3750](https://github.com/Basis-Theory/basis-theory-js/commit/4cf37505c301cc7115da453dc7fb3a3007f54736))
+
 # [4.4.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.3.0...v4.4.0) (2024-05-02)
 
 
