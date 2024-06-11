@@ -73,6 +73,7 @@ interface AutoCompleteOption {
 type CustomizableElementOptions = Pick<
   ElementOptions,
   | 'cardTypes'
+  | 'copyIconStyles'
   | 'disabled'
   | 'enableCopy'
   | 'inputMode'
