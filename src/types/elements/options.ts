@@ -1,6 +1,6 @@
 import { CreditCardType } from './cardTypes';
 import { AutoCompleteValue, DataElementReference } from './shared';
-import type { ElementStyle } from './styles';
+import type { CopyIconStyles, ElementStyle } from './styles';
 
 const ELEMENTS_TYPES = [
   'card',
@@ -37,6 +37,7 @@ interface SanitizedElementOptions {
   autoComplete?: string;
   cardBrand?: string;
   cardTypes?: CreditCardType[];
+  copyIconStyles?: CopyIconStyles;
   disabled?: boolean;
   enableCopy?: boolean;
   iconPosition?: string;
