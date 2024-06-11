@@ -1,3 +1,10 @@
+# [4.6.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.5.0...v4.6.0) (2024-06-11)
+
+
+### Features
+
+* adds copyIconStyles ([#414](https://github.com/Basis-Theory/basis-theory-js/issues/414)) ([c03744b](https://github.com/Basis-Theory/basis-theory-js/commit/c03744b98d8349d978c36ab781ae7742b6d5149e))
+
 # [4.5.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.4.0...v4.5.0) (2024-05-31)
 
 
