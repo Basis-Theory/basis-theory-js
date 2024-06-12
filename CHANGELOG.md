@@ -1,3 +1,10 @@
+## [4.6.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.1...v4.6.2) (2024-06-12)
+
+
+### Bug Fixes
+
+* typo in copy icon styles prop ([#416](https://github.com/Basis-Theory/basis-theory-js/issues/416)) ([6caf2fc](https://github.com/Basis-Theory/basis-theory-js/commit/6caf2fc9ba3e0f5c4cb5503984f5451f0f32104e))
+
 ## [4.6.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.0...v4.6.1) (2024-06-12)
 
 
