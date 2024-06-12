@@ -73,7 +73,7 @@ type ElementStyle = CardElementStyle; // add others here as union type
 type CopyIconStyles = {
   size?: string;
   color?: string;
-  sucessColor?: string;
+  successColor?: string;
 };
 
 export {
