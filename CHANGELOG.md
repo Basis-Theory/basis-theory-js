@@ -1,3 +1,10 @@
+## [4.6.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.0...v4.6.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* add missing types ([#415](https://github.com/Basis-Theory/basis-theory-js/issues/415)) ([43d683a](https://github.com/Basis-Theory/basis-theory-js/commit/43d683aecd9e8fb4ea65b207bde202ee2f34de29))
+
 # [4.6.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.5.0...v4.6.0) (2024-06-11)
 
 
