@@ -6,7 +6,7 @@ context('Credit Card example', () => {
       try {
         req.redirect('/dist/basis-theory-js.bundle.js');
       } catch (error) {
-        console.log(error);
+        cy.log(error);
         throw error;
       }
     });
