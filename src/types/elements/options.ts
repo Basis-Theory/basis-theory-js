@@ -43,6 +43,7 @@ interface SanitizedElementOptions {
   iconPosition?: string;
   inputMode?: `${InputMode}`;
   mask?: (RegExp | string)[];
+  maxLength?: HTMLInputElement['maxLength'];
   password?: boolean;
   placeholder?: string;
   readOnly?: boolean;
@@ -109,7 +110,10 @@ type UpdateCardElementOptions = Omit<
 >;
 
 type CreateTextElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'mask' | 'password' | 'validation'> &
+  Pick<
+    ElementOptions,
+    'placeholder' | 'mask' | 'maxLength' | 'password' | 'validation'
+  > &
   TransformOption &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
