@@ -5,9 +5,9 @@ context('Credit Card example', () => {
     cy.intercept('https://js.basistheory.com/', (req) => {
       try {
         req.redirect('/dist/basis-theory-js.bundle.js');
-      } catch (e) {
-        console.log(e);
-	throw e;
+      } catch (error) {
+        console.log(error);
+        throw error;
       }
     });
 
