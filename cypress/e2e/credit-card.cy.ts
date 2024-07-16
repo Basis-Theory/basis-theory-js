@@ -3,7 +3,12 @@ import { v4 as uuid } from 'uuid';
 context('Credit Card example', () => {
   beforeEach(() => {
     cy.intercept('https://js.basistheory.com/', (req) => {
-      req.redirect('/dist/basis-theory-js.bundle.js');
+      try {
+        req.redirect('/dist/basis-theory-js.bundle.js');
+      } catch (e) {
+        console.log(e);
+	throw e;
+      }
     });
 
     cy.visit('examples/credit_card.html');
