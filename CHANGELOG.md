@@ -1,3 +1,10 @@
+# [4.7.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.2...v4.7.0) (2024-07-16)
+
+
+### Features
+
+* adds maxLength to text element ([#417](https://github.com/Basis-Theory/basis-theory-js/issues/417)) ([c13cdac](https://github.com/Basis-Theory/basis-theory-js/commit/c13cdacea04a12173980407ffc2a42a9ae14c4eb))
+
 ## [4.6.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.1...v4.6.2) (2024-06-12)
 
 
