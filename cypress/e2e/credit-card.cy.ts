@@ -5,6 +5,7 @@ context('Credit Card example', () => {
     cy.intercept('https://js.basistheory.com/', (req) => {
       try {
         req.redirect('/dist/basis-theory-js.bundle.js');
+	cy.task('log', `BSTERNE: it worked...`);
       } catch (error) {
         cy.task('log', `BSTERNE: ${error}`);
         throw error;
