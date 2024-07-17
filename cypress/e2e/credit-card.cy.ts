@@ -1,9 +1,11 @@
 import { v4 as uuid } from 'uuid';
 
 context('Credit Card example', () => {
+  const port = Cypress.config('port');
+
   beforeEach(() => {
     cy.intercept('https://js.basistheory.com/', (req) => {
-      req.redirect(`${req.headers.referer}/dist/basis-theory-js.bundle.js`);
+      req.redirect(`http://localhost:${port}/dist/basis-theory-js.bundle.js`);
     });
 
     cy.visit('examples/credit_card.html');
