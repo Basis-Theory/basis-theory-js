@@ -1,3 +1,10 @@
+## [4.7.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.0...v4.7.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* patch axios ([#419](https://github.com/Basis-Theory/basis-theory-js/issues/419)) ([00e3220](https://github.com/Basis-Theory/basis-theory-js/commit/00e3220ce497cef608c1e6189ed053b4a22573bd))
+
 # [4.7.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.2...v4.7.0) (2024-07-16)
 
 
