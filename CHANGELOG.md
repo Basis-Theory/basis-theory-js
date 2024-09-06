@@ -1,3 +1,10 @@
+## [4.7.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.1...v4.7.2) (2024-09-06)
+
+
+### Bug Fixes
+
+* corrects 3ds request paths ([#420](https://github.com/Basis-Theory/basis-theory-js/issues/420)) ([ccaceda](https://github.com/Basis-Theory/basis-theory-js/commit/ccacedaaea9fc0234cc5d3cfd3754886d1f7fdf1))
+
 ## [4.7.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.0...v4.7.1) (2024-08-14)
 
 
