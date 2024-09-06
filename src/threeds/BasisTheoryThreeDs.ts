@@ -9,7 +9,7 @@ import { ThreeDS } from '@/types/sdk/services/threeds';
 
 export class BasisTheoryThreeDS extends BasisTheoryService implements ThreeDS {
   public getSessionById(sessionId: string): Promise<ThreeDSSession> {
-    return this.client.get(`/${sessionId}`).then(dataExtractor);
+    return this.client.get(`/sessions/${sessionId}`).then(dataExtractor);
   }
 
   public authenticateSession(
@@ -17,13 +17,13 @@ export class BasisTheoryThreeDS extends BasisTheoryService implements ThreeDS {
     authenticateRequest: AuthenticateThreeDSSessionRequest
   ): Promise<ThreeDSAuthentication> {
     return this.client
-      .post(`/${sessionId}/authenticate`, authenticateRequest)
+      .post(`/sessions/${sessionId}/authenticate`, authenticateRequest)
       .then(dataExtractor);
   }
 
   public getChallengeResult(sessionId: string): Promise<ThreeDSAuthentication> {
     return this.client
-      .get(`/${sessionId}/challenge-result`)
+      .get(`/sessions/${sessionId}/challenge-result`)
       .then(dataExtractor);
   }
 }

@@ -100,7 +100,7 @@ describe('ThreeDS', () => {
       };
       /* eslint-enable camelcase */
 
-      client.onGet(id).reply(200, JSON.stringify(response));
+      client.onGet(`/sessions/${id}`).reply(200, JSON.stringify(response));
 
       expect(await bt.threeds.getSessionById(id)).toStrictEqual(
         transformResponseCamelCase(response)
@@ -115,7 +115,7 @@ describe('ThreeDS', () => {
       const id = chance.string();
       const status = errorStatus();
 
-      client.onGet(id).reply(status);
+      client.onGet(`/sessions/${id}`).reply(status);
 
       const promise = bt.threeds.getSessionById(id);
 
@@ -172,7 +172,9 @@ describe('ThreeDS', () => {
       };
       /* eslint-enable camelcase */
 
-      client.onPost(`${id}/authenticate`).reply(200, JSON.stringify(response));
+      client
+        .onPost(`/sessions/${id}/authenticate`)
+        .reply(200, JSON.stringify(response));
 
       expect(await bt.threeds.authenticateSession(id, request)).toStrictEqual(
         transformResponseCamelCase(response)
@@ -190,7 +192,7 @@ describe('ThreeDS', () => {
       const id = chance.string();
       const status = errorStatus();
 
-      client.onPost(`${id}/authenticate`).reply(status);
+      client.onPost(`/sessions/${id}/authenticate`).reply(status);
 
       const promise = bt.threeds.authenticateSession(
         id,
@@ -224,7 +226,7 @@ describe('ThreeDS', () => {
       /* eslint-enable camelcase */
 
       client
-        .onGet(`${id}/challenge-result`)
+        .onGet(`/sessions/${id}/challenge-result`)
         .reply(200, JSON.stringify(response));
 
       expect(await bt.threeds.getChallengeResult(id)).toStrictEqual(
@@ -240,7 +242,7 @@ describe('ThreeDS', () => {
       const id = chance.string();
       const status = errorStatus();
 
-      client.onGet(`${id}/challenge-result`).reply(status);
+      client.onGet(`/sessions/${id}/challenge-result`).reply(status);
 
       const promise = bt.threeds.getChallengeResult(id);
 
