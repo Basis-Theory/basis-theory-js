@@ -1,3 +1,10 @@
+# [4.8.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.2...v4.8.0) (2024-09-12)
+
+
+### Features
+
+* add script integrity checks for BT-JS ([#421](https://github.com/Basis-Theory/basis-theory-js/issues/421)) ([68b9070](https://github.com/Basis-Theory/basis-theory-js/commit/68b90702ecb91d2f63abdab742665e5c743b33c6))
+
 ## [4.7.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.1...v4.7.2) (2024-09-06)
 
 
