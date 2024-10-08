@@ -37,6 +37,7 @@ const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   proxy: 'proxy',
   sessions: 'sessions',
   threeds: '3ds',
+  tokenIntents: 'token-intents',
 };
 
 const BROWSER_LIST = [

@@ -1,3 +1,4 @@
+import { BasisTheoryTokenIntents } from '@/token-intents';
 import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
@@ -40,6 +41,7 @@ import type {
   Sessions,
   Tenants,
   ThreeDS,
+  TokenIntents,
   Tokenize,
   Tokens,
 } from '@/types/sdk';
@@ -109,6 +111,8 @@ export class BasisTheory
   private _tokenize?: Tokenize & ElementsTokenize;
 
   private _tokens?: Tokens & ElementsTokens;
+
+  private _tokenIntents?: TokenIntents;
 
   public init(
     apiKey: string | undefined,
@@ -231,6 +235,11 @@ export class BasisTheory
       this._threeds = new BasisTheoryThreeDS({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.threeds, baseUrl).toString(),
+        appInfo,
+      });
+      this._tokenIntents = new BasisTheoryTokenIntents({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.tokenIntents, baseUrl).toString(),
         appInfo,
       });
 
@@ -392,6 +401,10 @@ export class BasisTheory
 
   public get threeds(): ThreeDS {
     return assertInit(this._threeds);
+  }
+
+  public get tokenIntents(): TokenIntents {
+    return assertInit(this._tokenIntents);
   }
 
   /* eslint-enable accessor-pairs */
