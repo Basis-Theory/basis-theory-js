@@ -18,7 +18,8 @@ interface TokenIntentCardDetails {
   };
 }
 
-interface TokenIntent<DataType = TokenIntentCardData> extends Auditable {
+interface TokenIntent<DataType = TokenIntentCardData>
+  extends Omit<Auditable, 'modifiedAt' | 'modifiedBy'> {
   data: DataType;
   type: 'card';
   enrichments?: TokenIntentCardDetails;
