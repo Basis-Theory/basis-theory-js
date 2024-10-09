@@ -88,7 +88,11 @@ describe('clients', () => {
       ...baseConfig,
       baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.threeds}`,
     });
-    expect(create).toHaveBeenCalledTimes(14);
+    expect(create).toHaveBeenCalledWith({
+      ...baseConfig,
+      baseURL: `${DEFAULT_BASE_URL}/${CLIENT_BASE_PATHS.tokenIntents}`,
+    });
+    expect(create).toHaveBeenCalledTimes(15);
   });
 
   test('should throw error if not properly initialized', () => {
