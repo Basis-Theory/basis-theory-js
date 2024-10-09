@@ -23,6 +23,8 @@ interface TokenIntent<DataType = TokenIntentCardData>
   data: DataType;
   type: 'card';
   enrichments?: TokenIntentCardDetails;
+  tenantId: string;
+  expiresAt: string;
 }
 
 type CreateTokenIntent = Pick<TokenIntent, 'type' | 'data'> & {
