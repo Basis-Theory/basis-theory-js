@@ -1,11 +1,5 @@
-import type { Auditable } from '@/types/models/shared';
-
-interface TokenIntentCardData {
-  number: number;
-  expirationMonth: number;
-  expirationYear: number;
-  cvc?: string;
-}
+import type { TokenData } from '@/types/models';
+import type { Auditable, TokenType } from '@/types/models/shared';
 
 interface TokenIntentCardDetails {
   cardDetails: {
@@ -18,10 +12,9 @@ interface TokenIntentCardDetails {
   };
 }
 
-interface TokenIntent<DataType = TokenIntentCardData>
-  extends Omit<Auditable, 'modifiedAt' | 'modifiedBy'> {
-  data: DataType;
-  type: 'card';
+interface TokenIntent extends Omit<Auditable, 'modifiedAt' | 'modifiedBy'> {
+  data: TokenData;
+  type: TokenType;
   enrichments?: TokenIntentCardDetails;
   tenantId: string;
   expiresAt: string;
@@ -31,9 +24,4 @@ type CreateTokenIntent = Pick<TokenIntent, 'type' | 'data'> & {
   id: string;
 };
 
-export type {
-  TokenIntent,
-  CreateTokenIntent,
-  TokenIntentCardData,
-  TokenIntentCardDetails,
-};
+export type { TokenIntent, CreateTokenIntent, TokenIntentCardDetails };
