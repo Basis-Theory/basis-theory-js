@@ -1,3 +1,4 @@
+import { TokenIntents } from '@/types/elements/services/token-intents';
 import type { HttpClient } from '@/types/sdk';
 import type {
   CardElementEvents,
@@ -102,6 +103,7 @@ type ElementValue =
 interface BasisTheoryElements extends Tokenize {
   tokens: Tokens;
   proxy: Proxy;
+  tokenIntents: TokenIntents;
 
   createElement(type: 'card', options?: CreateCardElementOptions): CardElement;
   createElement(type: 'text', options: CreateTextElementOptions): TextElement;

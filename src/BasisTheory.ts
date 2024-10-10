@@ -1,4 +1,3 @@
-import { BasisTheoryTokenIntents } from '@/token-intents';
 import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
@@ -18,6 +17,7 @@ import type {
   Tokenize as ElementsTokenize,
   TokenizeData as ElementsTokenizeData,
   Tokens as ElementsTokens,
+  TokenIntents as ElementsTokenIntents,
 } from '@/types/elements';
 import type { TokenizeData } from '@/types/models';
 import type {
@@ -56,6 +56,7 @@ import {
 } from './common';
 import {
   delegateProxy,
+  delegateTokenIntents,
   delegateTokenize,
   delegateTokens,
   loadElements,
@@ -112,7 +113,7 @@ export class BasisTheory
 
   private _tokens?: Tokens & ElementsTokens;
 
-  private _tokenIntents?: TokenIntents;
+  private _tokenIntents?: TokenIntents & ElementsTokenIntents;
 
   public init(
     apiKey: string | undefined,
@@ -237,7 +238,7 @@ export class BasisTheory
         baseURL: new URL(CLIENT_BASE_PATHS.threeds, baseUrl).toString(),
         appInfo,
       });
-      this._tokenIntents = new BasisTheoryTokenIntents({
+      this._tokenIntents = new (delegateTokenIntents(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokenIntents, baseUrl).toString(),
         appInfo,
@@ -403,7 +404,7 @@ export class BasisTheory
     return assertInit(this._threeds);
   }
 
-  public get tokenIntents(): TokenIntents {
+  public get tokenIntents(): TokenIntents & ElementsTokenIntents {
     return assertInit(this._tokenIntents);
   }
 
