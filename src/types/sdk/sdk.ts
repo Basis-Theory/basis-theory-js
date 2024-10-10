@@ -14,6 +14,7 @@ import type {
   Tokenize,
   Tokens,
   ThreeDS,
+  TokenIntents,
 } from './services';
 import { ApplicationKeys } from './services/applicationKeys';
 
@@ -70,6 +71,7 @@ interface BasisTheory extends Tokenize {
   tenants: Tenants;
   tokens: Tokens;
   threeds: ThreeDS;
+  tokenIntents: TokenIntents;
 }
 
 interface ClientUserAgent {

@@ -23,7 +23,7 @@ import type {
   UpdateCardVerificationCodeElementOptions,
   UpdateTextElementOptions,
 } from './options';
-import type { Proxy, Tokenize, Tokens } from './services';
+import type { Proxy, Tokenize, Tokens, TokenIntents } from './services';
 import type {
   CardMetadata,
   DataElementReference,
@@ -102,6 +102,7 @@ type ElementValue =
 interface BasisTheoryElements extends Tokenize {
   tokens: Tokens;
   proxy: Proxy;
+  tokenIntents: TokenIntents;
 
   createElement(type: 'card', options?: CreateCardElementOptions): CardElement;
   createElement(type: 'text', options: CreateTextElementOptions): TextElement;
