@@ -6,13 +6,10 @@ import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import { mockServiceClient, testCreate, testDelete } from './setup/utils';
 
 describe('Token Intents', () => {
-  let bt: IBasisTheory,
-    chance: Chance.Chance,
-    apiKey: string,
-    client: MockAdapter;
+  const chance = new Chance();
+  let bt: IBasisTheory, apiKey: string, client: MockAdapter;
 
   beforeAll(async () => {
-    chance = new Chance();
     apiKey = chance.string();
     bt = await new BasisTheory().init(apiKey);
     client = mockServiceClient(bt.tokenIntents);
@@ -24,16 +21,14 @@ describe('Token Intents', () => {
   });
 
   describe('create', () => {
-    const _chance = new Chance();
-
     const createPayload: CreateTokenIntent = {
-      id: _chance.string(),
+      id: chance.string(),
       type: 'card',
       data: {
-        number: _chance.integer(),
-        expirationMonth: _chance.date().getMonth(),
-        expirationYear: _chance.date().getFullYear(),
-        cvc: _chance.integer().toString(),
+        number: chance.integer(),
+        expirationMonth: chance.date().getMonth(),
+        expirationYear: chance.date().getFullYear(),
+        cvc: chance.integer().toString(),
       },
     };
 

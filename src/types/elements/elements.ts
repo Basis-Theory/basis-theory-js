@@ -1,4 +1,3 @@
-import { TokenIntents } from '@/types/elements/services/token-intents';
 import type { HttpClient } from '@/types/sdk';
 import type {
   CardElementEvents,
@@ -24,7 +23,7 @@ import type {
   UpdateCardVerificationCodeElementOptions,
   UpdateTextElementOptions,
 } from './options';
-import type { Proxy, Tokenize, Tokens } from './services';
+import type { Proxy, Tokenize, Tokens, TokenIntents } from './services';
 import type {
   CardMetadata,
   DataElementReference,

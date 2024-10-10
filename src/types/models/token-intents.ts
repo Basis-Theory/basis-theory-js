@@ -1,5 +1,9 @@
-import { DataObject, TokenData } from '@/types/models';
-import type { Auditable, TokenType } from '@/types/models/shared';
+import type {
+  DataObject,
+  TokenData,
+  Auditable,
+  TokenType,
+} from '@/types/models';
 
 interface TokenIntentCardDetails {
   cardDetails: {
