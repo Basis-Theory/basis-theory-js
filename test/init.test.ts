@@ -5,6 +5,7 @@ import {
   delegateTokens,
   delegateTokenize,
   delegateProxy,
+  delegateTokenIntents,
 } from '@/elements';
 
 jest.mock('../src/elements');
@@ -21,6 +22,9 @@ describe('Init', () => {
       jest.fn().mockReturnValue({})
     );
     (delegateProxy as jest.Mock).mockImplementation(() =>
+      jest.fn().mockReturnValue({})
+    );
+    (delegateTokenIntents as jest.Mock).mockImplementation(() =>
       jest.fn().mockReturnValue({})
     );
   });
