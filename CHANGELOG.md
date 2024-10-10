@@ -1,3 +1,10 @@
+# [4.9.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.8.0...v4.9.0) (2024-10-10)
+
+
+### Features
+
+* adds token-intents ([#422](https://github.com/Basis-Theory/basis-theory-js/issues/422)) ([0286272](https://github.com/Basis-Theory/basis-theory-js/commit/028627238399fbc368d832f8e3482294ea3471d1))
+
 # [4.8.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.2...v4.8.0) (2024-09-12)
 
 
