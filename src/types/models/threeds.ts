@@ -1,3 +1,20 @@
+interface CreateThreeDSSessionRequest {
+  pan: string;
+  type: 'customer' | 'merchant';
+  device?: string;
+  deviceInfo?: ThreeDSDeviceInfo;
+}
+
+interface CreateThreeDSSessionResponse {
+  id: string;
+  type: 'customer' | 'merchant';
+  cardBrand?: string;
+  methodUrl?: string;
+  methodNotificationUrl?: string;
+  directoryServerId?: string;
+  recommendedVersion?: string;
+}
+
 interface AuthenticateThreeDSSessionRequest {
   authenticationCategory: string;
   authenticationType: string;
@@ -119,6 +136,7 @@ interface ThreeDSMessageExtension {
 
 interface ThreeDSSession {
   id: string;
+  type?: 'customer' | 'merchant';
   tenantId: string;
   panTokenId: string;
   cardBrand: string;
@@ -135,28 +153,28 @@ interface ThreeDSSession {
 }
 
 interface ThreeDSDeviceInfo {
-  browserAcceptHeader: string;
-  browserIpAddress: string;
-  browserJavascriptEnabled: boolean | null;
-  browserJavaEnabled: boolean | null;
-  browserLanguage: string;
-  browserColorDepth: string;
-  browserScreenHeight: string;
-  browserScreenWidth: string;
-  browserTimezone: string;
-  browserUserAgent: string;
-  sdkTransactionId: string;
-  sdkApplicationId: string;
-  sdkEncryptionData: string;
-  sdkEphemeralPublicKey: string;
-  sdkMaxTimeout: string;
-  sdkReferenceNumber: string;
-  sdkRenderOptions: ThreeDSMobileSdkRenderOptions;
+  browserAcceptHeader?: string;
+  browserIpAddress?: string;
+  browserJavascriptEnabled?: boolean | null;
+  browserJavaEnabled?: boolean | null;
+  browserLanguage?: string;
+  browserColorDepth?: string;
+  browserScreenHeight?: string;
+  browserScreenWidth?: string;
+  browserTimezone?: string;
+  browserUserAgent?: string;
+  sdkTransactionId?: string;
+  sdkApplicationId?: string;
+  sdkEncryptionData?: string;
+  sdkEphemeralPublicKey?: string;
+  sdkMaxTimeout?: string;
+  sdkReferenceNumber?: string;
+  sdkRenderOptions?: ThreeDSMobileSdkRenderOptions;
 }
 
 interface ThreeDSMobileSdkRenderOptions {
-  sdkInterface: string;
-  sdkUiType: string;
+  sdkInterface?: string;
+  sdkUiType?: string;
 }
 
 interface ThreeDSVersion {
@@ -204,6 +222,8 @@ interface ThreeDSAcsRenderingType {
 }
 
 export type {
+  CreateThreeDSSessionRequest,
+  CreateThreeDSSessionResponse,
   AuthenticateThreeDSSessionRequest,
   ThreeDSPurchaseInfo,
   ThreeDSMerchantInfo,

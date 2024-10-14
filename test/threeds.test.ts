@@ -6,7 +6,10 @@ import {
   transformRequestSnakeCase,
   transformResponseCamelCase,
 } from '@/common';
-import { AuthenticateThreeDSSessionRequest } from '@/types/models/threeds';
+import {
+  AuthenticateThreeDSSessionRequest,
+  CreateThreeDSSessionRequest,
+} from '@/types/models/threeds';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import { mockServiceClient } from './setup/utils';
 
@@ -42,6 +45,48 @@ describe('ThreeDS', () => {
     client.resetHistory();
   });
 
+  describe('create session', () => {
+    test('should create session', async () => {
+      const request: CreateThreeDSSessionRequest = {
+        pan: chance.guid(),
+        type: chance.pickone(['customer', 'merchant']),
+        device: chance.pickone([chance.string(), undefined]),
+        deviceInfo: {
+          browserAcceptHeader: chance.string(),
+          browserJavascriptEnabled: chance.bool(),
+          browserJavaEnabled: chance.bool(),
+          browserLanguage: chance.string(),
+          browserColorDepth: chance.string(),
+          browserScreenHeight: chance.string(),
+          browserScreenWidth: chance.string(),
+          browserUserAgent: chance.string(),
+        },
+      };
+
+      /* eslint-disable camelcase */
+      const response = {
+        id: chance.guid(),
+        type: chance.pickone(['customer', 'merchant']),
+        card_brand: chance.string(),
+        method_url: chance.url(),
+        method_notification_url: chance.url(),
+        directory_server_id: chance.guid(),
+        recommended_version: chance.string(),
+      };
+      /* eslint-enable camelcase */
+
+      client.onPost('/sessions').reply(200, JSON.stringify(response));
+
+      expect(await bt.threeds.createSession(request)).toStrictEqual(
+        transformResponseCamelCase(response)
+      );
+      expect(client.history.post).toHaveLength(1);
+      expect(client.history.post[0].headers).toMatchObject({
+        [API_KEY_HEADER]: apiKey,
+      });
+    });
+  });
+
   describe('get session by id', () => {
     test('should return 3ds session', async () => {
       const id = chance.string();
@@ -49,6 +94,7 @@ describe('ThreeDS', () => {
       /* eslint-disable camelcase */
       const response = {
         id: chance.string(),
+        type: chance.string(),
         tenant_id: chance.string(),
         pan_token_id: chance.string(),
         card_brand: chance.string(),
