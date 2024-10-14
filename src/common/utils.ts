@@ -10,7 +10,7 @@ import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import type { RequestTransformers } from '@/service';
-import type {
+import {
   Reactor,
   Proxy,
   Token,
@@ -18,6 +18,7 @@ import type {
   UpdateReactor,
   CreateProxy,
   UpdateProxy,
+  Primitive,
 } from '@/types/models';
 import type {
   ApplicationInfo,
@@ -85,11 +86,11 @@ const transformProxyRequestSnakeCase = (
   } as Proxy | CreateProxy | UpdateProxy;
 };
 
-type TokenLike = Partial<Token> & Record<string, unknown>;
+type TokenLike<DataType> = Partial<Token<DataType>> & Record<string, unknown>;
 
-const transformTokenRequestSnakeCase = (
-  payload: TokenLike
-): TokenLike | undefined => {
+const transformTokenRequestSnakeCase = <DataType = Primitive>(
+  payload: TokenLike<DataType>
+): TokenLike<DataType> | undefined => {
   if (typeof payload === 'undefined') {
     return undefined;
   }
@@ -98,7 +99,7 @@ const transformTokenRequestSnakeCase = (
     ...snakecaseKeys(payload, { deep: true }),
     ...(payload.data !== undefined ? { data: payload.data } : {}),
     ...(payload.metadata !== undefined ? { metadata: payload.metadata } : {}),
-  } as TokenLike;
+  } as TokenLike<DataType>;
 };
 
 const isList = <T>(arg: unknown): arg is PaginatedList<T> =>
@@ -106,9 +107,9 @@ const isList = <T>(arg: unknown): arg is PaginatedList<T> =>
   (arg as PaginatedList<T>)?.pagination !== undefined &&
   (arg as PaginatedList<T>)?.data !== undefined;
 
-const transformTokenResponseCamelCase = (
-  tokenResponse: TokenLike | PaginatedList<Token> | undefined
-): TokenLike | PaginatedList<Token> | undefined => {
+const transformTokenResponseCamelCase = <DataType = Primitive>(
+  tokenResponse: TokenLike<DataType> | PaginatedList<Token> | undefined
+): TokenLike<DataType> | PaginatedList<Token> | undefined => {
   if (typeof tokenResponse === 'undefined') {
     return undefined;
   }
@@ -134,7 +135,7 @@ const transformTokenResponseCamelCase = (
     ...(tokenResponse.metadata !== undefined
       ? { metadata: tokenResponse.metadata }
       : {}),
-  } as TokenLike;
+  } as TokenLike<DataType>;
 };
 
 const transformReactorResponseCamelCase = (
