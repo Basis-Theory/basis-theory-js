@@ -1,7 +1,13 @@
-import type { TokenBase, DataObject, Auditable } from '@/types/models';
+import type {
+  TokenBase,
+  DataObject,
+  Auditable,
+  TokenType,
+} from '@/types/models';
 
 interface TokenIntentCardDetails {
-  cardDetails: {
+  type: 'card';
+  card: {
     bin: string;
     last4: string;
     brand: string;
@@ -11,13 +17,28 @@ interface TokenIntentCardDetails {
   };
 }
 
-type TokenIntent<DataType = DataObject> = TokenBase<DataType> &
+type AvailableTokenTypes = Exclude<TokenType, 'token' | 'card'>;
+
+type TokenTypeMap = {
+  [K in AvailableTokenTypes]: {
+    type: K;
+  } & Record<K, Record<string, unknown>>;
+};
+
+type TokenIntent<DataType = DataObject> = (TokenBase<DataType> &
   Omit<Auditable, 'modifiedAt' | 'modifiedBy'> & {
-    enrichments?: TokenIntentCardDetails;
+    id: string;
     tenantId: string;
     expiresAt: string;
-    id: string;
-  };
+    fingerprint?: string;
+  }) &
+  (
+    | TokenTypeMap[AvailableTokenTypes]
+    | TokenIntentCardDetails
+    | {
+        type: 'token';
+      }
+  );
 
 type CreateTokenIntent<DataType = DataObject> = Pick<
   TokenIntent<DataType>,
