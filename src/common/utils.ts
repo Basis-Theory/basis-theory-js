@@ -10,7 +10,7 @@ import os from 'os';
 import { snakeCase } from 'snake-case';
 import snakecaseKeys from 'snakecase-keys';
 import type { RequestTransformers } from '@/service';
-import {
+import type {
   Reactor,
   Proxy,
   Token,
