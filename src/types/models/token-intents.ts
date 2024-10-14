@@ -1,9 +1,4 @@
-import type {
-  DataObject,
-  TokenData,
-  Auditable,
-  TokenType,
-} from '@/types/models';
+import type { TokenBase, DataObject, Auditable } from '@/types/models';
 
 interface TokenIntentCardDetails {
   cardDetails: {
@@ -16,14 +11,12 @@ interface TokenIntentCardDetails {
   };
 }
 
-interface TokenIntent<DataType = DataObject>
-  extends Omit<Auditable, 'modifiedAt' | 'modifiedBy'> {
-  data: TokenData<DataType>;
-  type: TokenType;
-  enrichments?: TokenIntentCardDetails;
-  tenantId: string;
-  expiresAt: string;
-}
+type TokenIntent<DataType = DataObject> = TokenBase<DataType> &
+  Omit<Auditable, 'modifiedAt' | 'modifiedBy'> & {
+    enrichments?: TokenIntentCardDetails;
+    tenantId: string;
+    expiresAt: string;
+  };
 
 type CreateTokenIntent<DataType = DataObject> = Pick<
   TokenIntent<DataType>,

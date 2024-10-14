@@ -13,16 +13,6 @@ const DATA_RESTRICTION_POLICIES = ['mask', 'redact'] as const;
 
 type DataRestrictionPolicy = typeof DATA_RESTRICTION_POLICIES[number];
 
-type DataObject<DataType = Primitive> = {
-  [member: string]: TokenData<DataType>;
-};
-type DataArray<DataType> = Array<TokenData<DataType>>;
-type TokenData<DataType = Primitive> =
-  | Primitive
-  | DataObject<DataType>
-  | DataArray<DataType>
-  | DataType;
-
 type MaskObject = {
   [member: string]: TokenMask;
 };
@@ -49,8 +39,8 @@ interface TokenEnrichments {
   binDetails?: BinDetails;
 }
 
-interface Token<DataType = Primitive> extends TokenBase {
-  data: TokenData<DataType>;
+type Token<DataType = Primitive> = TokenBase<DataType> & {
+  id: string;
   privacy?: TokenPrivacy;
   containers?: string[];
   encryption?: TokenEncryption;
@@ -59,7 +49,10 @@ interface Token<DataType = Primitive> extends TokenBase {
   mask?: TokenMask;
   expiresAt?: string;
   enrichments?: TokenEnrichments;
-}
+  tenantId: string;
+  fingerprint?: string;
+  metadata?: Record<string, string>;
+};
 
 type CreateToken<DataType = Primitive> = Pick<
   Token<DataType>,
@@ -100,9 +93,6 @@ export type {
   TokenEnrichments,
   CreateToken,
   UpdateToken,
-  DataArray,
-  DataObject,
-  TokenData,
   DataClassification,
   DataImpactLevel,
   DataRestrictionPolicy,
