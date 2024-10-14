@@ -16,13 +16,12 @@ type TokenIntent<DataType = DataObject> = TokenBase<DataType> &
     enrichments?: TokenIntentCardDetails;
     tenantId: string;
     expiresAt: string;
+    id: string;
   };
 
 type CreateTokenIntent<DataType = DataObject> = Pick<
   TokenIntent<DataType>,
   'type' | 'data'
-> & {
-  id: string;
-};
+>;
 
 export type { TokenIntent, CreateTokenIntent, TokenIntentCardDetails };
