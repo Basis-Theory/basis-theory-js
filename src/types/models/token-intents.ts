@@ -17,10 +17,10 @@ interface TokenIntentCardDetails {
   };
 }
 
-type AvailableTokenTypes = Exclude<TokenType, 'token' | 'card'>;
+type TokenTypesForTokenIntents = Exclude<TokenType, 'token' | 'card'>;
 
 type TokenTypeMap = {
-  [K in AvailableTokenTypes]: {
+  [K in TokenTypesForTokenIntents]: {
     type: K;
   } & Record<K, Record<string, unknown>>;
 };
@@ -33,7 +33,7 @@ type TokenIntent<DataType = DataObject> = (TokenBase<DataType> &
     fingerprint?: string;
   }) &
   (
-    | TokenTypeMap[AvailableTokenTypes]
+    | TokenTypeMap[TokenTypesForTokenIntents]
     | TokenIntentCardDetails
     | {
         type: 'token';
