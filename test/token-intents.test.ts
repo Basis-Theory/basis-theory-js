@@ -1,7 +1,8 @@
 import MockAdapter from 'axios-mock-adapter';
 import { Chance } from 'chance';
 import { BasisTheory } from '@/BasisTheory';
-import type { CreateTokenIntent } from '@/types/models';
+import { transformTokenRequestSnakeCase } from '@/common';
+import type { CreateTokenIntent, DataObject } from '@/types/models';
 import type { BasisTheory as IBasisTheory } from '@/types/sdk';
 import { mockServiceClient, testCreate, testDelete } from './setup/utils';
 
@@ -36,6 +37,9 @@ describe('Token Intents', () => {
       service: bt.tokenIntents,
       client,
       createPayload,
+      transformedCreatePayload: transformTokenRequestSnakeCase<DataObject>(
+        createPayload
+      ),
     }));
   });
 

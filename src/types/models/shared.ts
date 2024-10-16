@@ -1,5 +1,3 @@
-import type { DataObject } from './tokens';
-
 type Primitive = string | number | boolean | null;
 type TokenType =
   | 'token'
@@ -17,16 +15,31 @@ interface Auditable {
   modifiedAt?: string;
 }
 
-interface TokenBase<T extends TokenType = TokenType> extends Auditable {
-  id: string;
-  type: T;
-  tenantId: string;
-  fingerprint?: string;
-  metadata?: Record<string, string>;
+type DataObject<DataType = Primitive> = {
+  [member: string]: TokenData<DataType>;
+};
+type DataArray<DataType> = Array<TokenData<DataType>>;
+type TokenData<DataType = Primitive> =
+  | Primitive
+  | DataObject<DataType>
+  | DataArray<DataType>
+  | DataType;
+
+interface TokenBase<DataType = Primitive> extends Auditable {
+  data: TokenData<DataType>;
+  type: TokenType;
 }
+
 interface ReactResponse {
   tokens: DataObject;
   raw: DataObject;
 }
 
-export type { Primitive, Auditable, TokenType, TokenBase, ReactResponse };
+export type {
+  Primitive,
+  Auditable,
+  TokenType,
+  TokenBase,
+  ReactResponse,
+  DataObject,
+};

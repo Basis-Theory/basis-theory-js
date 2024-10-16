@@ -1,35 +1,48 @@
 import type {
+  TokenBase,
   DataObject,
-  TokenData,
   Auditable,
   TokenType,
 } from '@/types/models';
 
 interface TokenIntentCardDetails {
-  cardDetails: {
+  type: 'card';
+  card: {
     bin: string;
     last4: string;
     brand: string;
-    type: string;
-    expirationMonth: string;
-    expirationYear: string;
+    funding: string;
+    expirationMonth: number;
+    expirationYear: number;
   };
 }
 
-interface TokenIntent<DataType = DataObject>
-  extends Omit<Auditable, 'modifiedAt' | 'modifiedBy'> {
-  data: TokenData<DataType>;
-  type: TokenType;
-  enrichments?: TokenIntentCardDetails;
-  tenantId: string;
-  expiresAt: string;
-}
+type TokenTypesForTokenIntents = Exclude<TokenType, 'token' | 'card'>;
+
+type TokenTypeMap = {
+  [K in TokenTypesForTokenIntents]: {
+    type: K;
+  } & Record<K, Record<string, unknown>>;
+};
+
+type TokenIntent<DataType = DataObject> = (TokenBase<DataType> &
+  Omit<Auditable, 'modifiedAt' | 'modifiedBy'> & {
+    id: string;
+    tenantId: string;
+    expiresAt: string;
+    fingerprint?: string;
+  }) &
+  (
+    | TokenTypeMap[TokenTypesForTokenIntents]
+    | TokenIntentCardDetails
+    | {
+        type: 'token';
+      }
+  );
 
 type CreateTokenIntent<DataType = DataObject> = Pick<
   TokenIntent<DataType>,
   'type' | 'data'
-> & {
-  id: string;
-};
+>;
 
 export type { TokenIntent, CreateTokenIntent, TokenIntentCardDetails };
