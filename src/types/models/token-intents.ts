@@ -11,9 +11,9 @@ interface TokenIntentCardDetails {
     bin: string;
     last4: string;
     brand: string;
-    type: string;
-    expirationMonth: string;
-    expirationYear: string;
+    funding: string;
+    expirationMonth: number;
+    expirationYear: number;
   };
 }
 
