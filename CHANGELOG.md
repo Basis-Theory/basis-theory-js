@@ -1,3 +1,10 @@
+# [4.10.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.9.0...v4.10.0) (2024-10-17)
+
+
+### Features
+
+* add 3ds create session endpoint and session type ([#424](https://github.com/Basis-Theory/basis-theory-js/issues/424)) ([09c1799](https://github.com/Basis-Theory/basis-theory-js/commit/09c17998fb87607e89eab50e1ca9db3bab235d70))
+
 # [4.9.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.8.0...v4.9.0) (2024-10-10)
 
 
