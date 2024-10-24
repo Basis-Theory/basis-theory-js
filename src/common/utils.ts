@@ -16,10 +16,9 @@ import type {
   Token,
   CreateReactor,
   UpdateReactor,
-  CreateToken,
-  UpdateToken,
   CreateProxy,
   UpdateProxy,
+  Primitive,
 } from '@/types/models';
 import type {
   ApplicationInfo,
@@ -87,18 +86,20 @@ const transformProxyRequestSnakeCase = (
   } as Proxy | CreateProxy | UpdateProxy;
 };
 
-const transformTokenRequestSnakeCase = (
-  token: Token | CreateToken | UpdateToken
-): Token | CreateToken | UpdateToken | undefined => {
-  if (typeof token === 'undefined') {
+type TokenLike<DataType> = Partial<Token<DataType>> & Record<string, unknown>;
+
+const transformTokenRequestSnakeCase = <DataType = Primitive>(
+  payload: TokenLike<DataType>
+): TokenLike<DataType> | undefined => {
+  if (typeof payload === 'undefined') {
     return undefined;
   }
 
   return {
-    ...snakecaseKeys(token, { deep: true }),
-    ...(token.data !== undefined ? { data: token.data } : {}),
-    ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
-  } as Token | CreateToken | UpdateToken;
+    ...snakecaseKeys(payload, { deep: true }),
+    ...(payload.data !== undefined ? { data: payload.data } : {}),
+    ...(payload.metadata !== undefined ? { metadata: payload.metadata } : {}),
+  } as TokenLike<DataType>;
 };
 
 const isList = <T>(arg: unknown): arg is PaginatedList<T> =>
@@ -106,9 +107,9 @@ const isList = <T>(arg: unknown): arg is PaginatedList<T> =>
   (arg as PaginatedList<T>)?.pagination !== undefined &&
   (arg as PaginatedList<T>)?.data !== undefined;
 
-const transformTokenResponseCamelCase = (
-  tokenResponse: Token | PaginatedList<Token> | undefined
-): Token | PaginatedList<Token> | undefined => {
+const transformTokenResponseCamelCase = <DataType = Primitive>(
+  tokenResponse: TokenLike<DataType> | PaginatedList<Token> | undefined
+): TokenLike<DataType> | PaginatedList<Token> | undefined => {
   if (typeof tokenResponse === 'undefined') {
     return undefined;
   }
@@ -134,7 +135,7 @@ const transformTokenResponseCamelCase = (
     ...(tokenResponse.metadata !== undefined
       ? { metadata: tokenResponse.metadata }
       : {}),
-  } as Token;
+  } as TokenLike<DataType>;
 };
 
 const transformReactorResponseCamelCase = (
