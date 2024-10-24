@@ -1,3 +1,10 @@
+## [4.10.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.10.0...v4.10.1) (2024-10-24)
+
+
+### Bug Fixes
+
+* adds token transformers to token-intents service ([#423](https://github.com/Basis-Theory/basis-theory-js/issues/423)) ([80c56f1](https://github.com/Basis-Theory/basis-theory-js/commit/80c56f1ce99bbab1bcb9e5858e35b77c702ff4b2))
+
 # [4.10.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.9.0...v4.10.0) (2024-10-17)
 
 
