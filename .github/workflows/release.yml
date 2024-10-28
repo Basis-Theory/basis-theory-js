@@ -2,15 +2,29 @@ name: Release
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
+  request_approval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Deploy Request
+        uses: Basis-Theory/github-actions/deploy-slack-action@master
+        with:
+          slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
+          channel: ${{ vars.SLACK_DUCKBOT_PRODUCT_APPROVAL_CHANNEL }}
+          mention-person: ${{ vars.SLACK_DUCKBOT_PRODUCT_APPROVER }}
+          status: "request"
+
   build-release:
+    environment: PROD
+    needs:
+      - request_approval
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: [ '14.x' ]
-        os: [ ubuntu-latest ]
+        node: ["14.x"]
+        os: [ubuntu-latest]
     env:
       CI: 1 # prevents extra Cypress installation progress messages
       HUSKY: 0 # disables husky hooks
@@ -18,7 +32,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.SEMANTIC_RELEASE_PAT }}
+          token: ${{ secrets.GH_SEMANTIC_RELEASE_PAT }}
+
+      - name: Start Deploy Message
+        uses: Basis-Theory/github-actions/deploy-slack-action@master
+        with:
+          slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
+          channel: ${{ vars.SLACK_DUCKBOT_PRODUCT_DEPLOY_CHANNEL }}
 
       - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
@@ -43,26 +63,24 @@ jobs:
       - name: Release
         run: make release
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.JS_AWS_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: us-east-2
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
           ENVIRONMENT: prod
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_PAT }}
-          NPM_TOKEN: ${{ secrets.NPM_RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_SEMANTIC_RELEASE_PAT }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@master
         env:
-          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_PROD_ZONE_ID }}
+          CLOUDFLARE_ZONE: ${{ secrets.CF_PROD_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
           PURGE_URLS: '["https://js.basistheory.com/*"]'
 
-      - name: Slack Deploy / Release Alert
-        uses: 8398a7/action-slack@v3
+      - name: Stop Deploy Message
         if: always()
+        uses: Basis-Theory/github-actions/deploy-slack-action@master
         with:
-          status: ${{ job.status }}
-          channel: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
-          fields: 'repo,commit,message,workflow,job'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
+          channel: ${{ vars.SLACK_DUCKBOT_PRODUCT_DEPLOY_CHANNEL }}
+          status: "done"
