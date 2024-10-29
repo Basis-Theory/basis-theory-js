@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   build:
-    environment: PR
+    environment: DEV
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
