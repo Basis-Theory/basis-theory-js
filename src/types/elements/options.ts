@@ -34,7 +34,7 @@ enum InputMode {
 interface SanitizedElementOptions {
   ariaDescription?: string;
   ariaLabel?: string;
-  autoComplete?: string;
+  autoComplete?: AutoCompleteValue;
   cardBrand?: string;
   cardTypes?: CreditCardType[];
   copyIconStyles?: CopyIconStyles;
