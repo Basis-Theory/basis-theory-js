@@ -23,7 +23,6 @@ describe('Token Intents', () => {
 
   describe('create', () => {
     const createPayload: CreateTokenIntent = {
-      id: chance.string(),
       type: 'card',
       data: {
         number: chance.integer(),
