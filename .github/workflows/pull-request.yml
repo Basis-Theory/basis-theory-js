@@ -2,7 +2,7 @@ name: Pull Request
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -10,11 +10,12 @@ concurrency:
 
 jobs:
   build:
+    environment: DEV
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: [ '14.x' ]
-        os: [ ubuntu-latest ]
+        node: ["14.x"]
+        os: [ubuntu-latest]
     env:
       CI: 1 # prevents extra Cypress installation progress messages
       HUSKY: 0 # disables husky hooks
@@ -73,16 +74,16 @@ jobs:
       - name: Verify Infrastructure
         run: make setup-infra
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.JS_AWS_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: us-east-2
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
           ENVIRONMENT: dev
           IS_PR_WORKFLOW: true
 
       - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@master
         env:
-          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_DEV_ZONE_ID }}
+          CLOUDFLARE_ZONE: ${{ vars.CF_DEV_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
           PURGE_URLS: '["https://js.flock-dev.com/*"]'
 
@@ -90,6 +91,6 @@ jobs:
         uses: slavcodev/coverage-monitor-action@1.2.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          clover_file: 'coverage/clover.xml'
+          clover_file: "coverage/clover.xml"
           threshold_alert: 80
           threshold_warning: 90
