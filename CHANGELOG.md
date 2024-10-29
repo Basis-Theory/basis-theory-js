@@ -1,3 +1,10 @@
+# [4.12.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.11.0...v4.12.0) (2024-10-29)
+
+
+### Features
+
+* update workflows new secrets ([#426](https://github.com/Basis-Theory/basis-theory-js/issues/426)) ([a5d2774](https://github.com/Basis-Theory/basis-theory-js/commit/a5d277469128ae9d8cd614b8cae7df3d7d13fb86))
+
 # [4.11.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.10.1...v4.11.0) (2024-10-29)
 
 
