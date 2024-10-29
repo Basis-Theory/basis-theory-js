@@ -73,7 +73,7 @@ jobs:
       - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@master
         env:
-          CLOUDFLARE_ZONE: ${{ secrets.CF_PROD_ZONE_ID }}
+          CLOUDFLARE_ZONE: ${{ vars.CF_PROD_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
           PURGE_URLS: '["https://js.basistheory.com/*"]'
 
