@@ -1,3 +1,10 @@
+# [4.11.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.10.1...v4.11.0) (2024-10-29)
+
+
+### Features
+
+* add support for autocomplete values ([#427](https://github.com/Basis-Theory/basis-theory-js/issues/427)) ([0b8b4a5](https://github.com/Basis-Theory/basis-theory-js/commit/0b8b4a59dd31e12f66c87991d166fa0a17c1b52f))
+
 ## [4.10.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.10.0...v4.10.1) (2024-10-24)
 
 
