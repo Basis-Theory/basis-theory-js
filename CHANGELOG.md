@@ -1,3 +1,10 @@
+# [4.13.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.12.0...v4.13.0) (2024-10-31)
+
+
+### Features
+
+* add errors to element metadata ([#431](https://github.com/Basis-Theory/basis-theory-js/issues/431)) ([c86193d](https://github.com/Basis-Theory/basis-theory-js/commit/c86193d147296d16dfa047843b23627c95736c71))
+
 # [4.12.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.11.0...v4.12.0) (2024-10-29)
 
 
