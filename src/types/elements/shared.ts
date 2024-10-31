@@ -36,6 +36,7 @@ interface ElementMetadata {
   valid: boolean;
   maskSatisfied?: boolean;
   empty: boolean;
+  errors?: FieldError[] | Omit<FieldError, 'targetId'>[];
 }
 
 interface CardMetadata {
@@ -69,17 +70,17 @@ type DataElementReference = {
 };
 
 export type {
-  FieldErrorType,
-  ConfigErrorType,
-  ConfigError,
-  Targeted,
-  ListenableKey,
-  FieldError,
-  PropertyError,
+  AutoCompleteValue,
   Brand,
   CardIconPosition,
-  AutoCompleteValue,
+  CardMetadata,
+  ConfigError,
+  ConfigErrorType,
   DataElementReference,
   ElementMetadata,
-  CardMetadata,
+  FieldError,
+  FieldErrorType,
+  ListenableKey,
+  PropertyError,
+  Targeted,
 };
