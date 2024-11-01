@@ -41,7 +41,7 @@ fi
 
 # Upload Content
 aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}"
-aws s3 cp --acl public-read "$JS_HASH_PATH" s3://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}-hash"
+aws s3 cp --acl public-read --content-type text/plain "$JS_HASH_PATH" s3://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}-hash"
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   BLOB_NAME=$BLOB_DIR/$(git rev-parse HEAD).js
@@ -54,7 +54,7 @@ else
   echo "Uploading bundle to $JS_HOST/$VERSIONED_JS_NAME"
 
   aws s3 cp --acl public-read "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}"
-  aws s3 cp --acl public-read "$JS_HASH_PATH" s3://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}-hash"
+  aws s3 cp --acl public-read --content-type text/plain "$JS_HASH_PATH" s3://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}-hash"
 fi
 
 result=$?
