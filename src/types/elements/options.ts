@@ -94,6 +94,12 @@ interface CardElementValue<T extends ElementValueType> {
   number?: T extends 'reference' ? DataElementReference : string;
 }
 
+interface CardElementPlaceholder {
+  cardNumber?: string;
+  cardExpirationDate?: string;
+  cardSecurityCode?: string;
+}
+
 interface CardExpirationDateValue<T extends ElementValueType> {
   month: T extends 'reference' ? DataElementReference : number;
   year: T extends 'reference' ? DataElementReference : number;
@@ -101,6 +107,7 @@ interface CardExpirationDateValue<T extends ElementValueType> {
 
 type CreateCardElementOptions = CustomizableElementOptions &
   Pick<ElementOptions, 'cardTypes' | 'skipLuhnValidation'> & {
+    placeholder?: CardElementPlaceholder;
     value?: CardElementValue<'static'>;
   };
 
@@ -165,6 +172,7 @@ type UpdateCardVerificationCodeElementOptions = Omit<
 >;
 
 export type {
+  CardElementPlaceholder,
   CardElementValue,
   CardExpirationDateValue,
   CreateCardElementOptions,
