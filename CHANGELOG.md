@@ -1,3 +1,10 @@
+# [4.14.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.13.0...v4.14.0) (2024-11-07)
+
+
+### Features
+
+* add support for custom card element placeholder ([#433](https://github.com/Basis-Theory/basis-theory-js/issues/433)) ([b48e408](https://github.com/Basis-Theory/basis-theory-js/commit/b48e4081079cd17ad1b0230c9bcf512ee679b717))
+
 # [4.13.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.12.0...v4.13.0) (2024-10-31)
 
 
