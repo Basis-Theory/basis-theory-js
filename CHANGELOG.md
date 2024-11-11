@@ -1,3 +1,10 @@
+# [4.15.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.14.0...v4.15.0) (2024-11-11)
+
+
+### Features
+
+* support token intents in 3ds, add mit props ([#434](https://github.com/Basis-Theory/basis-theory-js/issues/434)) ([77f91c2](https://github.com/Basis-Theory/basis-theory-js/commit/77f91c239ee3132151243e1393693b8d60d3f41e))
+
 # [4.14.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.13.0...v4.14.0) (2024-11-07)
 
 
