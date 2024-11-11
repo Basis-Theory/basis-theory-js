@@ -48,7 +48,7 @@ describe('ThreeDS', () => {
   describe('create session', () => {
     test('should create session', async () => {
       const request: CreateThreeDSSessionRequest = {
-        pan: chance.guid(),
+        tokenId: chance.guid(),
         type: chance.pickone(['customer', 'merchant']),
         device: chance.pickone([chance.string(), undefined]),
         deviceInfo: {
@@ -176,6 +176,8 @@ describe('ThreeDS', () => {
       const request: AuthenticateThreeDSSessionRequest = {
         authenticationCategory: 'payment',
         authenticationType: 'payment-transaction',
+        requestDecoupledChallenge: chance.bool(),
+        decoupledChallengeMaxTime: chance.integer(),
         purchaseInfo: {
           amount: '80000',
           currency: '826',

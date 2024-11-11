@@ -1,5 +1,10 @@
 interface CreateThreeDSSessionRequest {
-  pan: string;
+  /**
+   * @deprecated Use `tokenId` instead.
+   */
+  pan?: string;
+  tokenId?: string;
+  tokenIntentId?: string;
   type: 'customer' | 'merchant';
   device?: string;
   deviceInfo?: ThreeDSDeviceInfo;
@@ -19,6 +24,8 @@ interface AuthenticateThreeDSSessionRequest {
   authenticationCategory: string;
   authenticationType: string;
   challengePreference?: string;
+  requestDecoupledChallenge?: boolean;
+  decoupledChallengeMaxTime?: number;
   purchaseInfo?: ThreeDSPurchaseInfo;
   merchantInfo?: ThreeDSMerchantInfo;
   requestorInfo?: ThreeDSRequestorInfo;
