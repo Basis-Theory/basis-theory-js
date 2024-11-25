@@ -1,3 +1,10 @@
+# [4.16.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.15.0...v4.16.0) (2024-11-25)
+
+
+### Features
+
+* adds validate to CardElement ([#435](https://github.com/Basis-Theory/basis-theory-js/issues/435)) ([8c7c0c2](https://github.com/Basis-Theory/basis-theory-js/commit/8c7c0c20cdc200ef0f10d6d1cce659cc5c924b7f))
+
 # [4.15.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.14.0...v4.15.0) (2024-11-11)
 
 
