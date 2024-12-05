@@ -20,6 +20,10 @@ import {
   DATA_IMPACT_LEVELS,
   DATA_RESTRICTION_POLICIES,
 } from '@/types/models';
+import {
+  enrichmentCardBrands,
+  enrichmentFundingTypes,
+} from '@/types/models/card-details';
 import type {
   BasisTheory as IBasisTheory,
   PaginatedList,
@@ -87,6 +91,15 @@ describe('Tokens', () => {
         code: chance.string(),
         name: chance.string(),
       },
+    },
+    cardDetails: {
+      bin: chance.string(),
+      last4: chance.string(),
+      expirationMonth: chance.integer(),
+      expirationYear: chance.integer(),
+      brand: chance.pickone([...enrichmentCardBrands]),
+      funding: chance.pickone([...enrichmentFundingTypes]),
+      authentication: chance.string(),
     },
   });
 
