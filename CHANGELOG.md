@@ -1,3 +1,10 @@
+# [4.17.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.16.0...v4.17.0) (2024-12-05)
+
+
+### Features
+
+* add card details to enrichments ([#437](https://github.com/Basis-Theory/basis-theory-js/issues/437)) ([4fe4dd8](https://github.com/Basis-Theory/basis-theory-js/commit/4fe4dd8eb52c3cf05af0ba5929f6a1cc1b3d1056))
+
 # [4.16.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.15.0...v4.16.0) (2024-11-25)
 
 

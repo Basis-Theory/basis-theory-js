@@ -1,4 +1,5 @@
 import type { BinDetails } from './bin-details';
+import { CardDetails } from './card-details';
 import type { Primitive, TokenBase } from './shared';
 
 const DATA_CLASSIFICATIONS = ['general', 'bank', 'pci', 'pii'] as const;
@@ -37,6 +38,7 @@ interface TokenPrivacy {
 
 interface TokenEnrichments {
   binDetails?: BinDetails;
+  cardDetails?: CardDetails;
 }
 
 type Token<DataType = Primitive> = TokenBase<DataType> & {
