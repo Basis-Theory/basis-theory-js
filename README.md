@@ -1,5 +1,12 @@
 # Basis Theory JS SDK (aka BasisTheory.js)
 
+> [!CAUTION]
+> This SDK has been deprecated.
+>
+> Our new SDK can be found at https://github.com/Basis-Theory/node-sdk
+>
+> See our documentation site for more information. https://developers.basistheory.com/docs/sdks/server-side/node
+
 [![Version](https://img.shields.io/npm/v/@basis-theory/basis-theory-js.svg)](https://www.npmjs.org/package/@basis-theory/basis-theory-js)
 [![Downloads](https://img.shields.io/npm/dm/@basis-theory/basis-theory-js.svg)](https://www.npmjs.org/package/@basis-theory/basis-theory-js)
 [![Verify](https://github.com/Basis-Theory/basis-theory-js/actions/workflows/release.yml/badge.svg)](https://github.com/Basis-Theory/basis-theory-js/actions/workflows/release.yml)
