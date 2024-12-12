@@ -1,3 +1,10 @@
+## [4.17.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.17.0...v4.17.1) (2024-12-12)
+
+
+### Bug Fixes
+
+* add authentication to TokenIntentCardDetails ([#439](https://github.com/Basis-Theory/basis-theory-js/issues/439)) ([927aa23](https://github.com/Basis-Theory/basis-theory-js/commit/927aa23b8514e13ce7e4df59fa14627d8c204063))
+
 # [4.17.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.16.0...v4.17.0) (2024-12-05)
 
 
