@@ -14,6 +14,7 @@ interface TokenIntentCardDetails {
     funding: string;
     expirationMonth: number;
     expirationYear: number;
+    authentication?: string;
   };
 }
 
