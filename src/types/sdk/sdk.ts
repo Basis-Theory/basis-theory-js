@@ -38,6 +38,7 @@ interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
   elementsBaseUrl?: string;
   elementsClientUrl?: string;
   elementsUseNgApi?: boolean;
+  disableTelemetry?: boolean;
 }
 
 interface BasisTheoryInit {
