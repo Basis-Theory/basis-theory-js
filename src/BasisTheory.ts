@@ -321,11 +321,17 @@ export class BasisTheory
       (this.initOptions as BasisTheoryInitOptionsWithElements)
         .elementsUseNgApi || false;
 
+    const disableTelemetry =
+      (this.initOptions as BasisTheoryInitOptionsWithElements)
+        .disableTelemetry || false;
+
     await (elements as BasisTheoryElementsInternal).init(
       apiKey,
       elementsBaseUrl.toString().replace(/\/$/u, ''),
-      elementsUseNgApi
+      elementsUseNgApi,
+      disableTelemetry
     );
+
     this.elements = elements;
   }
 
