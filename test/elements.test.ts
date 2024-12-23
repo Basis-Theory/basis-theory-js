@@ -125,6 +125,7 @@ describe('Elements', () => {
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
         baseUrl.replace(/\/$/u, ''),
+        false,
         false
       );
     });
@@ -157,7 +158,8 @@ describe('Elements', () => {
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
         baseUrl.replace(/\/$/u, ''),
-        useNgApi
+        useNgApi,
+        false
       );
     });
 
@@ -188,6 +190,7 @@ describe('Elements', () => {
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
         baseUrl.replace(/\/$/u, ''),
+        false,
         false
       );
     });
@@ -346,6 +349,7 @@ describe('Elements', () => {
         expect(elementsInit).toHaveBeenCalledWith(
           'el-123',
           baseUrl.replace(/\/$/u, ''),
+          false,
           false
         );
       });
