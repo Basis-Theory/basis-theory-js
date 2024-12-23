@@ -1,3 +1,10 @@
+# [4.18.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.17.1...v4.18.0) (2024-12-23)
+
+
+### Features
+
+* adds `disableTelemetry` init option ([#440](https://github.com/Basis-Theory/basis-theory-js/issues/440)) ([c6589b4](https://github.com/Basis-Theory/basis-theory-js/commit/c6589b4326fbdea39f32b944955bfccf05224520))
+
 ## [4.17.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.17.0...v4.17.1) (2024-12-12)
 
 
