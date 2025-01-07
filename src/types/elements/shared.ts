@@ -33,16 +33,16 @@ interface PropertyError {
 
 interface ElementMetadata {
   complete: boolean;
-  valid: boolean;
-  maskSatisfied?: boolean;
   empty: boolean;
   errors?: FieldError[] | Omit<FieldError, 'targetId'>[];
+  maskSatisfied?: boolean;
+  valid: boolean;
 }
 
 interface CardMetadata {
+  cardBin?: string;
   cardBrand: Brand;
   cardLast4?: string;
-  cardBin?: string;
 }
 
 /**
