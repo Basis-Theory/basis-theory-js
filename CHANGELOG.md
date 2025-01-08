@@ -1,3 +1,10 @@
+# [4.19.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.18.0...v4.19.0) (2025-01-08)
+
+
+### Features
+
+* adds metadata to blur event ([#441](https://github.com/Basis-Theory/basis-theory-js/issues/441)) ([06f343d](https://github.com/Basis-Theory/basis-theory-js/commit/06f343df2691e075468f9d7d43a09c40423931af))
+
 # [4.18.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.17.1...v4.18.0) (2024-12-23)
 
 
