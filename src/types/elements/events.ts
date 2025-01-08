@@ -1,4 +1,9 @@
-import type { Brand, FieldError, ListenableKey, Targeted } from './shared';
+import type {
+  CardMetadata,
+  ElementMetadata,
+  ListenableKey,
+  Targeted,
+} from './shared';
 
 type EventType = 'ready' | 'change' | 'focus' | 'blur' | 'keydown';
 
@@ -8,23 +13,15 @@ interface BaseEvent<T extends EventType> {
 
 type ReadyEvent = BaseEvent<'ready'>;
 
-type ChangeEvent = BaseEvent<'change'> & {
-  empty: boolean;
-  complete: boolean;
-  valid?: boolean;
-  maskSatisfied?: boolean;
-  errors?: FieldError[];
-};
+type ChangeEvent = BaseEvent<'change'> & ElementMetadata;
 
-type CardChangeEvent = ChangeEvent & {
-  cardBrand: Brand;
-  cardLast4?: string;
-  cardBin?: string;
-};
+type BlurEvent = BaseEvent<'blur'> & ElementMetadata;
+
+type CardChangeEvent = ChangeEvent & CardMetadata;
 
 type InputFocusEvent = BaseEvent<'focus'> & Targeted;
 
-type InputBlurEvent = BaseEvent<'blur'> & Targeted;
+type InputBlurEvent = BlurEvent & Targeted;
 
 type InputKeydownEvent = BaseEvent<'keydown'> &
   Targeted & {
