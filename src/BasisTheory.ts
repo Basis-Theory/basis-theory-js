@@ -327,6 +327,10 @@ export class BasisTheory
       (this.initOptions as BasisTheoryInitOptionsWithElements)
         .elementsUseNgApi || false;
 
+    const elementsUseSameOriginApi =
+      (this.initOptions as BasisTheoryInitOptionsWithElements)
+        .elementsUseSameOriginApi || false;
+
     const disableTelemetry =
       (this.initOptions as BasisTheoryInitOptionsWithElements)
         .disableTelemetry || false;
@@ -335,6 +339,7 @@ export class BasisTheory
       apiKey,
       elementsBaseUrl.toString().replace(/\/$/u, ''),
       elementsUseNgApi,
+      elementsUseSameOriginApi,
       disableTelemetry
     );
 

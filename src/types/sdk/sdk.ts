@@ -39,6 +39,7 @@ interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
   elementsBaseUrl?: string;
   elementsClientUrl?: string;
   elementsUseNgApi?: boolean;
+  elementsUseSameOriginApi?: boolean;
 }
 
 interface BasisTheoryInit {

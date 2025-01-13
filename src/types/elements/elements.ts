@@ -125,6 +125,7 @@ interface BasisTheoryElementsInternal extends BasisTheoryElements {
     apiKey: string | undefined,
     elementsBaseUrl: string,
     elementsUseNgApi: boolean | undefined,
+    elementsUseSameOriginApi: boolean | undefined,
     disableTelemetry: boolean | undefined
   ) => Promise<BasisTheoryElements>;
   hasElement: (payload: unknown) => boolean;

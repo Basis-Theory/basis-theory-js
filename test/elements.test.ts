@@ -148,17 +148,20 @@ describe('Elements', () => {
         path: '',
       });
       const useNgApi = chance.bool();
+      const useSameOriginApi = chance.bool();
 
       await new BasisTheory().init('', {
         elements: true,
         elementsBaseUrl: baseUrl,
         elementsUseNgApi: useNgApi,
+        elementsUseSameOriginApi: useSameOriginApi,
       });
 
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
         baseUrl.replace(/\/$/u, ''),
         useNgApi,
+        useSameOriginApi,
         false
       );
     });
@@ -349,6 +352,7 @@ describe('Elements', () => {
         expect(elementsInit).toHaveBeenCalledWith(
           'el-123',
           baseUrl.replace(/\/$/u, ''),
+          false,
           false,
           false
         );
