@@ -131,10 +131,6 @@ export class BasisTheory
     apiKey: string,
     options: BasisTheoryInitOptions = {}
   ): Promise<IBasisTheory & BasisTheoryElements> {
-    if (!options.disableTelemetry) {
-      initTelemetryLogger();
-    }
-
     if (this._initStatus !== 'not-started' && this._initStatus !== 'error') {
       throw new Error(
         'This BasisTheory instance has been already initialized.'
@@ -249,6 +245,10 @@ export class BasisTheory
         baseURL: new URL(CLIENT_BASE_PATHS.tokenIntents, baseUrl).toString(),
         appInfo,
       });
+
+      if (!options.disableTelemetry && process.env.NODE_ENV !== 'test') {
+        initTelemetryLogger();
+      }
 
       this._initStatus = 'done';
     } catch (error) {

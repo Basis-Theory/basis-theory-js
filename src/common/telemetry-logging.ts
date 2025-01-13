@@ -12,7 +12,7 @@ const initTelemetryLogger = (): void => {
     env = 'prod';
   }
 
-  if (window?.DD_LOGS && DD_TOKEN) {
+  if (window?.DD_LOGS && DD_TOKEN && process.env.NODE_ENV !== 'test') {
     window?.DD_LOGS.init({
       clientToken: DD_TOKEN,
       forwardErrorsToLogs: false,
@@ -31,13 +31,25 @@ const initTelemetryLogger = (): void => {
 const telemetryLogger = {
   logger: {
     error: (message: string, attributes?: Record<string, unknown>): void => {
-      datadogLogs.logger.error(message, attributes);
+      if (datadogLogs && process.env.NODE_ENV !== 'test') {
+        datadogLogs.logger.error(message, attributes);
+      }
+
+      return;
     },
     info: (message: string, attributes?: Record<string, unknown>): void => {
-      datadogLogs.logger.info(message, attributes);
+      if (datadogLogs && process.env.NODE_ENV !== 'test') {
+        datadogLogs.logger.info(message, attributes);
+      }
+
+      return;
     },
     warn: (message: string, attributes?: Record<string, unknown>): void => {
-      datadogLogs.logger.warn(message, attributes);
+      if (datadogLogs && process.env.NODE_ENV !== 'test') {
+        datadogLogs.logger.warn(message, attributes);
+      }
+
+      return;
     },
   },
 };

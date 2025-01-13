@@ -68,7 +68,7 @@ const loadElements = (
               logOrigin: 'loadElements',
               eventObject: event,
               event: {
-                type: event.type,
+                type: event?.type,
                 src: script?.src,
               },
             }
@@ -86,7 +86,7 @@ const loadElements = (
                 logOrigin: 'loadElements',
                 eventObject: event,
                 event: {
-                  type: event.type,
+                  type: event?.type,
                   src: script?.src,
                 },
               }
@@ -102,7 +102,7 @@ const loadElements = (
             logOrigin: 'loadElements',
             eventObject: event,
             event: {
-              type: event.type,
+              type: event?.type,
               src: script?.src,
             },
           });
