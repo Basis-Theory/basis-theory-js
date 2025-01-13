@@ -12,8 +12,8 @@ const initTelemetryLogger = (): void => {
     env = 'prod';
   }
 
-  if (window.DD_LOGS && DD_TOKEN) {
-    window.DD_LOGS.init({
+  if (window?.DD_LOGS && DD_TOKEN) {
+    window?.DD_LOGS.init({
       clientToken: DD_TOKEN,
       forwardErrorsToLogs: false,
       sessionSampleRate: 100,
@@ -21,7 +21,7 @@ const initTelemetryLogger = (): void => {
       env,
     });
 
-    window.DD_LOGS.setGlobalContext({
+    window?.DD_LOGS.setGlobalContext({
       referrer: document.referrer,
       gitSha: DD_GIT_SHA ?? 'unknown',
     });
