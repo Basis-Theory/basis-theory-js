@@ -134,6 +134,9 @@ interface BasisTheoryElementsInternal extends BasisTheoryElements {
 declare global {
   interface Window {
     BasisTheoryElements?: BasisTheoryElementsInternal;
+    // datadog logs is a bundle, it has no defined type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    DD_LOGS: any;
   }
 }
 

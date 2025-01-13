@@ -54,6 +54,7 @@ import {
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
 } from './common';
+import { initTelemetryLogger } from './common/telemetry-logging';
 import {
   delegateProxy,
   delegateTokenIntents,
@@ -74,6 +75,7 @@ import { BasisTheoryThreeDS } from './threeds';
 const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
+  disableTelemetry: false,
   appInfo: {},
 };
 
@@ -129,6 +131,10 @@ export class BasisTheory
     apiKey: string,
     options: BasisTheoryInitOptions = {}
   ): Promise<IBasisTheory & BasisTheoryElements> {
+    if (!options.disableTelemetry) {
+      initTelemetryLogger();
+    }
+
     if (this._initStatus !== 'not-started' && this._initStatus !== 'error') {
       throw new Error(
         'This BasisTheory instance has been already initialized.'

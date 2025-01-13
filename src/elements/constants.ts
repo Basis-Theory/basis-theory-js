@@ -5,7 +5,7 @@ const ELEMENTS_NOM_DOM_ERROR_MESSAGE =
   'Tried to load BasisTheoryElements in a non-DOM environment.';
 
 const ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE =
-  'Basis Theory Elements did not load properly.';
+  'Basis Theory Elements did not load properly. Check network tab for more details.';
 
 const ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE =
   'There was an unknown error when loading Basis Theory Elements. Check the console for details.';

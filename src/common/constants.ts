@@ -22,6 +22,10 @@ const DEFAULT_BASE_URL = `https://${process.env.API_HOST}`;
 
 const DEFAULT_ELEMENTS_BASE_URL = `https://${process.env.ELEMENTS_HOST}`;
 
+const DD_TOKEN = process.env.DD_TOKEN;
+
+const DD_GIT_SHA = process.env.DD_GIT_SHA;
+
 const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   tokens: 'tokens',
   tokenize: 'tokenize',
@@ -93,4 +97,6 @@ export {
   DEFAULT_ELEMENTS_BASE_URL,
   CLIENT_BASE_PATHS,
   BROWSER_LIST,
+  DD_TOKEN,
+  DD_GIT_SHA,
 };

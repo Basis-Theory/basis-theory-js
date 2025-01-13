@@ -27,6 +27,7 @@ interface ApplicationInfo {
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
   appInfo?: ApplicationInfo;
+  disableTelemetry?: boolean;
 }
 
 interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {
@@ -38,7 +39,6 @@ interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
   elementsBaseUrl?: string;
   elementsClientUrl?: string;
   elementsUseNgApi?: boolean;
-  disableTelemetry?: boolean;
 }
 
 interface BasisTheoryInit {

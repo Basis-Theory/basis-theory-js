@@ -41,6 +41,7 @@ jobs:
         run: make write-lib-vars
         env:
           ENVIRONMENT: prod
+          DD_GIT_SHA: ${{ github.sha }}
 
       - name: Build
         run: make build
