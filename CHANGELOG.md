@@ -1,3 +1,10 @@
+# [4.20.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.19.0...v4.20.0) (2025-01-13)
+
+
+### Features
+
+* add telemetry for elements script ([#442](https://github.com/Basis-Theory/basis-theory-js/issues/442)) ([8268783](https://github.com/Basis-Theory/basis-theory-js/commit/82687839b3e74ee9466184449c528d4f323b7c1f))
+
 # [4.19.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.18.0...v4.19.0) (2025-01-08)
 
 
