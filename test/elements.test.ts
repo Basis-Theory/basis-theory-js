@@ -126,6 +126,7 @@ describe('Elements', () => {
         '',
         baseUrl.replace(/\/$/u, ''),
         false,
+        false,
         false
       );
     });
@@ -193,6 +194,7 @@ describe('Elements', () => {
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
         baseUrl.replace(/\/$/u, ''),
+        false,
         false,
         false
       );
