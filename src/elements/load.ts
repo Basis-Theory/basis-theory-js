@@ -59,21 +59,25 @@ const loadElements = (
           script = injectScript(url);
         }
 
-        // list for window error events for same script
-        window.addEventListener('error', (event) => {
+        // listen for window error events for same script
+        // eslint-disable-next-line unicorn/prefer-add-event-listener
+        window.onerror = (message, source, lineno, colno, error) => {
           telemetryLogger.logger.error(
             'Elements script onError event from window',
             {
               logType: 'elementsNotFoundOnWindow',
               logOrigin: 'loadElements',
-              eventObject: event,
-              event: {
-                type: event?.type,
-                src: script?.src,
+              errorObject: error,
+              error: {
+                message,
+                source,
+                lineno,
+                colno,
+                error,
               },
             }
           );
-        });
+        };
 
         script.addEventListener('load', (event) => {
           if (window.BasisTheoryElements) {
