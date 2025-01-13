@@ -54,6 +54,7 @@ import {
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
 } from './common';
+import { initTelemetryLogger } from './common/telemetry-logging';
 import {
   delegateProxy,
   delegateTokenIntents,
@@ -74,6 +75,7 @@ import { BasisTheoryThreeDS } from './threeds';
 const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
+  disableTelemetry: false,
   appInfo: {},
 };
 
@@ -244,6 +246,10 @@ export class BasisTheory
         appInfo,
       });
 
+      if (!options.disableTelemetry && process.env.NODE_ENV !== 'test') {
+        initTelemetryLogger();
+      }
+
       this._initStatus = 'done';
     } catch (error) {
       this._initStatus = 'error';
@@ -321,6 +327,10 @@ export class BasisTheory
       (this.initOptions as BasisTheoryInitOptionsWithElements)
         .elementsUseNgApi || false;
 
+    const elementsUseSameOriginApi =
+      (this.initOptions as BasisTheoryInitOptionsWithElements)
+        .elementsUseSameOriginApi || false;
+
     const disableTelemetry =
       (this.initOptions as BasisTheoryInitOptionsWithElements)
         .disableTelemetry || false;
@@ -329,6 +339,7 @@ export class BasisTheory
       apiKey,
       elementsBaseUrl.toString().replace(/\/$/u, ''),
       elementsUseNgApi,
+      elementsUseSameOriginApi,
       disableTelemetry
     );
 

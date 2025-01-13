@@ -57,6 +57,7 @@ jobs:
         run: make write-lib-vars
         env:
           ENVIRONMENT: dev
+          DD_GIT_SHA: ${{ github.sha }}
           IS_PR_WORKFLOW: true
 
       - name: Verify

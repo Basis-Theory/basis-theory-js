@@ -37,6 +37,7 @@
     "postinstall": "husky install"
   },
   "dependencies": {
+    "@datadog/browser-logs": "^5.35.0",
     "axios": "^1.7.4",
     "camelcase-keys": "^6.2.2",
     "csstype": "^3.0.11",

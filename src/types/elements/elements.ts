@@ -125,6 +125,7 @@ interface BasisTheoryElementsInternal extends BasisTheoryElements {
     apiKey: string | undefined,
     elementsBaseUrl: string,
     elementsUseNgApi: boolean | undefined,
+    elementsUseSameOriginApi: boolean | undefined,
     disableTelemetry: boolean | undefined
   ) => Promise<BasisTheoryElements>;
   hasElement: (payload: unknown) => boolean;
@@ -134,6 +135,9 @@ interface BasisTheoryElementsInternal extends BasisTheoryElements {
 declare global {
   interface Window {
     BasisTheoryElements?: BasisTheoryElementsInternal;
+    // datadog logs is a bundle, it has no defined type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    DD_LOGS: any;
   }
 }
 
