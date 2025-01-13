@@ -107,6 +107,11 @@ const loadElements = (
             event: {
               type: event?.type,
               src: script?.src,
+              message: event?.message,
+              source: event?.filename,
+              lineno: event?.lineno,
+              colno: event?.colno,
+              error: event?.error,
             },
           });
 
@@ -114,7 +119,9 @@ const loadElements = (
           // eslint-disable-next-line no-console
           console.error(event);
           reject(
-            event?.error || new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE)
+            event?.error ||
+              event?.message ||
+              new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE)
           );
         });
       } catch (error) {
