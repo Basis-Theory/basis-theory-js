@@ -69,7 +69,7 @@ const loadElements = (
               eventObject: event,
               event: {
                 type: event.type,
-                src: script.src,
+                src: script?.src,
               },
             }
           );
@@ -87,7 +87,7 @@ const loadElements = (
                 eventObject: event,
                 event: {
                   type: event.type,
-                  src: script.src,
+                  src: script?.src,
                 },
               }
             );
@@ -103,7 +103,7 @@ const loadElements = (
             eventObject: event,
             event: {
               type: event.type,
-              src: script.src,
+              src: script?.src,
             },
           });
 
