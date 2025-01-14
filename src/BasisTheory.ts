@@ -156,7 +156,7 @@ export class BasisTheory
           baseUrlObject.protocol = 'https';
         }
 
-        baseUrl = baseUrlObject.toString().replace(/\/$/u, '');
+        baseUrl = `${baseUrlObject.toString().replace(/\/$/u, '')}/`;
       } catch {
         throw new Error('Invalid format for the given API base url.');
       }

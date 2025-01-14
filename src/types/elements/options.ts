@@ -18,6 +18,7 @@ interface ElementInternalOptions {
   baseUrl: string;
   type: ElementType;
   useNgApi: boolean | undefined;
+  useSameOriginApi: boolean | undefined;
   disableTelemetry?: boolean | undefined;
 }
 
