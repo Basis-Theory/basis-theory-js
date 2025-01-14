@@ -99,7 +99,7 @@ describe('Elements', () => {
       ).resolves.toBe(bt);
     });
 
-    test('should initialize BasisTheoryElements with useNgApi false if not specified', async () => {
+    test('should initialize BasisTheoryElements with useNgApi and useSameOriginApi false if not specified', async () => {
       let loadElements: () => unknown = jest.fn();
 
       jest.isolateModules(() => {
@@ -131,7 +131,7 @@ describe('Elements', () => {
       );
     });
 
-    test('should initialize BasisTheoryElements with specified useNgApi param', async () => {
+    test('should initialize BasisTheoryElements with specified useNgApi and useSameOriginApi params', async () => {
       let loadElements: () => unknown = jest.fn();
 
       jest.isolateModules(() => {
