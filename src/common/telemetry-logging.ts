@@ -22,6 +22,7 @@ const initTelemetryLogger = (): void => {
       datadogLogs.init({
         clientToken: DD_TOKEN,
         forwardErrorsToLogs: false,
+        silentMultipleInit: true,
         sessionSampleRate: 100,
       });
     }
