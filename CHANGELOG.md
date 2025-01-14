@@ -1,3 +1,10 @@
+## [4.21.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.1...v4.21.2) (2025-01-14)
+
+
+### Bug Fixes
+
+* fix log name ([#445](https://github.com/Basis-Theory/basis-theory-js/issues/445)) ([038f3ed](https://github.com/Basis-Theory/basis-theory-js/commit/038f3ed25f16236277bd4c16ddac7bad74fb1a83))
+
 ## [4.21.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.0...v4.21.1) (2025-01-14)
 
 
