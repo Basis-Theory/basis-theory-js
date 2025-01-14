@@ -1,6 +1,9 @@
 import { datadogLogs } from '@datadog/browser-logs';
 import { DD_GIT_SHA, DD_TOKEN, DEFAULT_BASE_URL } from './constants';
 
+const LOGGER_NAME = 'js-sdk-logger';
+const SERVICE_NAME = 'js-sdk';
+
 let env = '';
 const initTelemetryLogger = (): void => {
   if (DEFAULT_BASE_URL.includes('localhost')) {
@@ -20,7 +23,6 @@ const initTelemetryLogger = (): void => {
         clientToken: DD_TOKEN,
         forwardErrorsToLogs: false,
         sessionSampleRate: 100,
-        env,
       });
     }
 
@@ -28,7 +30,7 @@ const initTelemetryLogger = (): void => {
       referrer: document.referrer,
     });
 
-    datadogLogs.createLogger('js-sdk-logger');
+    datadogLogs.createLogger(LOGGER_NAME);
   }
 };
 
@@ -36,8 +38,8 @@ const telemetryLogger = {
   logger: {
     error: (message: string, attributes?: Record<string, unknown>): void => {
       if (datadogLogs && process.env.NODE_ENV !== 'test') {
-        datadogLogs.getLogger('js-sdk-logger')?.error(message, {
-          service: 'js-sdk',
+        datadogLogs.getLogger(LOGGER_NAME)?.error(message, {
+          service: SERVICE_NAME,
           gitSha: DD_GIT_SHA ?? 'unknown',
           env,
           ...attributes,
@@ -48,8 +50,8 @@ const telemetryLogger = {
     },
     info: (message: string, attributes?: Record<string, unknown>): void => {
       if (datadogLogs && process.env.NODE_ENV !== 'test') {
-        datadogLogs.getLogger('js-sdk-logger')?.info(message, {
-          service: 'js-sdk',
+        datadogLogs.getLogger(LOGGER_NAME)?.info(message, {
+          service: SERVICE_NAME,
           gitSha: DD_GIT_SHA ?? 'unknown',
           env,
           ...attributes,
@@ -59,8 +61,8 @@ const telemetryLogger = {
       return;
     },
     warn: (message: string, attributes?: Record<string, unknown>): void => {
-      datadogLogs.getLogger('js-sdk-logger')?.warn(message, {
-        service: 'js-sdk',
+      datadogLogs.getLogger(LOGGER_NAME)?.warn(message, {
+        service: SERVICE_NAME,
         gitSha: DD_GIT_SHA ?? 'unknown',
         env,
         ...attributes,
