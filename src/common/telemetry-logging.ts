@@ -1,9 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs';
 import { DD_GIT_SHA, DD_TOKEN, DEFAULT_BASE_URL } from './constants';
 
+let env = '';
 const initTelemetryLogger = (): void => {
-  let env = '';
-
   if (DEFAULT_BASE_URL.includes('localhost')) {
     env = 'local';
   } else if (DEFAULT_BASE_URL.includes('dev')) {
@@ -12,19 +11,24 @@ const initTelemetryLogger = (): void => {
     env = 'prod';
   }
 
-  if (window?.DD_LOGS && DD_TOKEN && process.env.NODE_ENV !== 'test') {
-    window?.DD_LOGS.init({
-      clientToken: DD_TOKEN,
-      forwardErrorsToLogs: false,
-      sessionSampleRate: 100,
-      service: 'basis-theory-js-sdk',
-      env,
+  if (DD_TOKEN && process.env.NODE_ENV !== 'test') {
+    if (
+      !datadogLogs.getInitConfiguration() ||
+      datadogLogs.getInitConfiguration()?.clientToken !== DD_TOKEN
+    ) {
+      datadogLogs.init({
+        clientToken: DD_TOKEN,
+        forwardErrorsToLogs: false,
+        sessionSampleRate: 100,
+        env,
+      });
+    }
+
+    datadogLogs.setGlobalContext({
+      referrer: document.referrer,
     });
 
-    window?.DD_LOGS.setGlobalContext({
-      referrer: document.referrer,
-      gitSha: DD_GIT_SHA ?? 'unknown',
-    });
+    datadogLogs.createLogger('js-sdk-logger');
   }
 };
 
@@ -32,22 +36,35 @@ const telemetryLogger = {
   logger: {
     error: (message: string, attributes?: Record<string, unknown>): void => {
       if (datadogLogs && process.env.NODE_ENV !== 'test') {
-        datadogLogs.logger.error(message, attributes);
+        datadogLogs.getLogger('js-sdk-logger')?.error(message, {
+          service: 'js-sdk',
+          gitSha: DD_GIT_SHA ?? 'unknown',
+          env,
+          ...attributes,
+        });
       }
 
       return;
     },
     info: (message: string, attributes?: Record<string, unknown>): void => {
       if (datadogLogs && process.env.NODE_ENV !== 'test') {
-        datadogLogs.logger.info(message, attributes);
+        datadogLogs.getLogger('js-sdk-logger')?.info(message, {
+          service: 'js-sdk',
+          gitSha: DD_GIT_SHA ?? 'unknown',
+          env,
+          ...attributes,
+        });
       }
 
       return;
     },
     warn: (message: string, attributes?: Record<string, unknown>): void => {
-      if (datadogLogs && process.env.NODE_ENV !== 'test') {
-        datadogLogs.logger.warn(message, attributes);
-      }
+      datadogLogs.getLogger('js-sdk-logger')?.warn(message, {
+        service: 'js-sdk',
+        gitSha: DD_GIT_SHA ?? 'unknown',
+        env,
+        ...attributes,
+      });
 
       return;
     },
