@@ -64,7 +64,7 @@ const loadElements = (
           telemetryLogger.logger.error(
             'Elements script onError event from window',
             {
-              logType: 'elementsNotFoundOnWindow',
+              logType: 'elementsScriptOnErrorFromWindow',
               logOrigin: 'loadElements',
               eventObject: event,
               event: {
@@ -101,7 +101,7 @@ const loadElements = (
 
         script.addEventListener('error', (event) => {
           telemetryLogger.logger.warn('Elements script onError event', {
-            logType: 'elementsNotFoundOnWindow',
+            logType: 'elementsScriptOnError',
             logOrigin: 'loadElements',
             eventObject: event,
             event: {
