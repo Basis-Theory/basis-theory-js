@@ -150,7 +150,7 @@ describe('clients', () => {
 
     await bt.tokens.retrieve(id);
     expect(mockClient.history.get[0].baseURL).toBe(
-      `${url}/path/${CLIENT_BASE_PATHS.tokens}`
+      `${url}/subpath/${CLIENT_BASE_PATHS.tokens}`
     );
   });
 
