@@ -1,3 +1,10 @@
+# [4.21.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.20.0...v4.21.0) (2025-01-14)
+
+
+### Features
+
+* allow api base urls with subpaths ([#443](https://github.com/Basis-Theory/basis-theory-js/issues/443)) ([4fe9c4a](https://github.com/Basis-Theory/basis-theory-js/commit/4fe9c4a1cdb6e43934ba20dcc12b4587b9af8289))
+
 # [4.20.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.19.0...v4.20.0) (2025-01-13)
 
 
