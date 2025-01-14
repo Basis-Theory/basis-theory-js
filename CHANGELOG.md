@@ -1,3 +1,10 @@
+## [4.21.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.0...v4.21.1) (2025-01-14)
+
+
+### Bug Fixes
+
+* avoid re-initializing logger ([#444](https://github.com/Basis-Theory/basis-theory-js/issues/444)) ([24689d7](https://github.com/Basis-Theory/basis-theory-js/commit/24689d706a1a55d0b3476014e368067d5f3b9c48))
+
 # [4.21.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.20.0...v4.21.0) (2025-01-14)
 
 
