@@ -1,9 +1,11 @@
 import { datadogLogs } from '@datadog/browser-logs';
 import { DD_GIT_SHA, DD_TOKEN, DEFAULT_BASE_URL } from './constants';
 
-const initTelemetryLogger = (): void => {
-  let env = '';
+const LOGGER_NAME = 'js-sdk-logger';
+const SERVICE_NAME = 'js-sdk';
 
+let env = '';
+const initTelemetryLogger = (): void => {
   if (DEFAULT_BASE_URL.includes('localhost')) {
     env = 'local';
   } else if (DEFAULT_BASE_URL.includes('dev')) {
@@ -12,19 +14,23 @@ const initTelemetryLogger = (): void => {
     env = 'prod';
   }
 
-  if (window?.DD_LOGS && DD_TOKEN && process.env.NODE_ENV !== 'test') {
-    window?.DD_LOGS.init({
-      clientToken: DD_TOKEN,
-      forwardErrorsToLogs: false,
-      sessionSampleRate: 100,
-      service: 'basis-theory-js-sdk',
-      env,
+  if (DD_TOKEN && process.env.NODE_ENV !== 'test') {
+    if (
+      !datadogLogs.getInitConfiguration() ||
+      datadogLogs.getInitConfiguration()?.clientToken !== DD_TOKEN
+    ) {
+      datadogLogs.init({
+        clientToken: DD_TOKEN,
+        forwardErrorsToLogs: false,
+        sessionSampleRate: 100,
+      });
+    }
+
+    datadogLogs.setGlobalContext({
+      referrer: document.referrer,
     });
 
-    window?.DD_LOGS.setGlobalContext({
-      referrer: document.referrer,
-      gitSha: DD_GIT_SHA ?? 'unknown',
-    });
+    datadogLogs.createLogger(LOGGER_NAME);
   }
 };
 
@@ -32,22 +38,35 @@ const telemetryLogger = {
   logger: {
     error: (message: string, attributes?: Record<string, unknown>): void => {
       if (datadogLogs && process.env.NODE_ENV !== 'test') {
-        datadogLogs.logger.error(message, attributes);
+        datadogLogs.getLogger(LOGGER_NAME)?.error(message, {
+          service: SERVICE_NAME,
+          gitSha: DD_GIT_SHA ?? 'unknown',
+          env,
+          ...attributes,
+        });
       }
 
       return;
     },
     info: (message: string, attributes?: Record<string, unknown>): void => {
       if (datadogLogs && process.env.NODE_ENV !== 'test') {
-        datadogLogs.logger.info(message, attributes);
+        datadogLogs.getLogger(LOGGER_NAME)?.info(message, {
+          service: SERVICE_NAME,
+          gitSha: DD_GIT_SHA ?? 'unknown',
+          env,
+          ...attributes,
+        });
       }
 
       return;
     },
     warn: (message: string, attributes?: Record<string, unknown>): void => {
-      if (datadogLogs && process.env.NODE_ENV !== 'test') {
-        datadogLogs.logger.warn(message, attributes);
-      }
+      datadogLogs.getLogger(LOGGER_NAME)?.warn(message, {
+        service: SERVICE_NAME,
+        gitSha: DD_GIT_SHA ?? 'unknown',
+        env,
+        ...attributes,
+      });
 
       return;
     },
