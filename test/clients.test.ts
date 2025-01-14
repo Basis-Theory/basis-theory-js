@@ -130,6 +130,30 @@ describe('clients', () => {
     );
   });
 
+  test('should be able to handle base URLs with subpath with trailing slash', async () => {
+    const chance = new Chance();
+    const url = chance.url({
+      protocol: 'https',
+      path: '',
+    });
+    const id = chance.string();
+
+    const bt = await new BasisTheory().init(chance.string(), {
+      apiBaseUrl: `${url}/subpath/`,
+    });
+
+    const mockClient = new MockAdapter(
+      ((bt.tokens as unknown) as BasisTheoryService).client
+    );
+
+    mockClient.onGet(id).reply(200, {});
+
+    await bt.tokens.retrieve(id);
+    expect(mockClient.history.get[0].baseURL).toBe(
+      `${url}/path/${CLIENT_BASE_PATHS.tokens}`
+    );
+  });
+
   test('should be able to handle base URLs without trailing slash', async () => {
     const chance = new Chance();
     const url = chance
@@ -153,6 +177,30 @@ describe('clients', () => {
     await bt.tokens.retrieve(id);
     expect(mockClient.history.get[0].baseURL).toBe(
       `${url}/${CLIENT_BASE_PATHS.tokens}`
+    );
+  });
+
+  test('should be able to handle base URLs with subpath without trailing slash', async () => {
+    const chance = new Chance();
+    const url = chance.url({
+      protocol: 'https',
+      path: '',
+    });
+    const id = chance.string();
+
+    const bt = await new BasisTheory().init(chance.string(), {
+      apiBaseUrl: `${url}/subpath`,
+    });
+
+    const mockClient = new MockAdapter(
+      ((bt.tokens as unknown) as BasisTheoryService).client
+    );
+
+    mockClient.onGet(id).reply(200, {});
+
+    await bt.tokens.retrieve(id);
+    expect(mockClient.history.get[0].baseURL).toBe(
+      `${url}/subpath/${CLIENT_BASE_PATHS.tokens}`
     );
   });
 });
