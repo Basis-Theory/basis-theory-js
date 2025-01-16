@@ -69,6 +69,7 @@ describe('Elements', () => {
         bt.init(chance.string(), {
           elements: true,
           elementsClientUrl: chance.string(),
+          disableTelemetry: true,
         })
       ).rejects.toThrow('Invalid format for the given Elements client url.');
     });

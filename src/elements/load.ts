@@ -1,4 +1,4 @@
-import { telemetryLogger } from '@/common/telemetry-logging';
+import { logger } from '@/common/logging';
 import type { BasisTheoryElements } from '@/types/elements';
 import {
   ELEMENTS_NOM_DOM_ERROR_MESSAGE,
@@ -15,11 +15,14 @@ const loadElements = (
   if (!elementsPromise) {
     elementsPromise = new Promise((resolve, reject) => {
       if (typeof window !== 'object') {
-        telemetryLogger.logger.warn(ELEMENTS_NOM_DOM_ERROR_MESSAGE, {
-          logType: 'elementsNonDomError',
-          logOrigin: 'loadElements',
-        });
-        reject(new Error(ELEMENTS_NOM_DOM_ERROR_MESSAGE));
+        (async () => {
+          await logger.log.warn(ELEMENTS_NOM_DOM_ERROR_MESSAGE, {
+            logType: 'elementsNonDomError',
+            logOrigin: 'loadElements',
+          });
+
+          reject(new Error(ELEMENTS_NOM_DOM_ERROR_MESSAGE));
+        })();
 
         return;
       }
@@ -39,13 +42,15 @@ const loadElements = (
 
             url = urlObject.toString().replace(/\/$/u, '');
           } catch {
-            telemetryLogger.logger.warn(
-              'Invalid format for the given Elements client url.',
-              {
-                logType: 'invalidClientUrlError',
-                logOrigin: 'loadElements',
-              }
-            );
+            (async () => {
+              await logger.log.warn(
+                'Invalid format for the given Elements client url.',
+                {
+                  logType: 'invalidClientUrlError',
+                  logOrigin: 'loadElements',
+                }
+              );
+            })();
 
             throw new Error(
               'Invalid format for the given Elements client url.'
@@ -59,65 +64,33 @@ const loadElements = (
           script = injectScript(url);
         }
 
-        // listen for window error events for same script
-        window.addEventListener('error', (event) => {
-          telemetryLogger.logger.error(
-            'Elements script onError event from window',
-            {
-              logType: 'elementsScriptOnErrorFromWindow',
-              logOrigin: 'loadElements',
-              eventObject: event,
-              event: {
-                message: event?.message,
-                source: event?.filename,
-                lineno: event?.lineno,
-                colno: event?.colno,
-                error: event?.error,
-              },
-            }
-          );
-        });
-
-        script.addEventListener('load', (event) => {
+        script.addEventListener('load', async () => {
           if (window.BasisTheoryElements) {
             resolve(window.BasisTheoryElements);
           } else {
-            telemetryLogger.logger.error(
-              'Elements not found on window on load',
-              {
-                logType: 'elementsNotFoundOnWindow',
-                logOrigin: 'loadElements',
-                eventObject: event,
-                event: {
-                  type: event?.type,
-                  src: script?.src,
-                },
-              }
-            );
+            await logger.log.error('Elements not found on window on load', {
+              logType: 'elementsNotFoundOnWindow',
+              logOrigin: 'loadElements',
+            });
 
             reject(new Error(ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE));
           }
         });
 
-        script.addEventListener('error', (event) => {
-          telemetryLogger.logger.warn('Elements script onError event', {
+        script.addEventListener('error', async (event) => {
+          await logger.log.error('Elements script onError event', {
             logType: 'elementsScriptOnError',
             logOrigin: 'loadElements',
-            eventObject: event,
             event: {
-              type: event?.type,
-              src: script?.src,
               message: event?.message,
               source: event?.filename,
               lineno: event?.lineno,
               colno: event?.colno,
               error: event?.error,
+              target: event?.target,
             },
           });
 
-          // printing full error event to console for debugging
-          // eslint-disable-next-line no-console
-          console.error(event);
           reject(
             event?.error ||
               event?.message ||
@@ -125,14 +98,11 @@ const loadElements = (
           );
         });
       } catch (error) {
-        telemetryLogger.logger.error(
-          'Unexpected error loading Elements script',
-          {
-            logType: 'unexpectedError',
-            logOrigin: 'loadElements',
-            error,
-          }
-        );
+        logger.log.error('Unexpected error loading Elements script', {
+          logType: 'unexpectedError',
+          logOrigin: 'loadElements',
+          errorObject: error,
+        });
 
         reject(error);
 

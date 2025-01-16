@@ -2081,18 +2081,6 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@datadog/browser-core@5.35.0":
-  version "5.35.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-5.35.0.tgz#50f07fff9002f34babe8d24b4f377d5aa077de09"
-  integrity sha512-m4KxWufXsQ7nFiMumMZjlub4jJdvXQXrQcTR6Dg2MFER82rIl3npPfups3n4RaAbekFYtgKpo/JMnaxZJSq96g==
-
-"@datadog/browser-logs@^5.35.0":
-  version "5.35.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-5.35.0.tgz#fdec6ab3b01a1dcce3bc7303fe606f3c3a5cc5f3"
-  integrity sha512-TNcqTk1TP4pYzeHFNsA4Fn/JmY54hxsbjBQaiuYmLBBWiVzwEIs64CybHecRlflPzvjOV955wEs7VU+2MTg/zw==
-  dependencies:
-    "@datadog/browser-core" "5.35.0"
-
 "@discoveryjs/json-ext@0.5.7":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
