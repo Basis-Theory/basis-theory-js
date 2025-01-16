@@ -1,3 +1,10 @@
+# [4.22.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.2...v4.22.0) (2025-01-16)
+
+
+### Features
+
+* improve logs, use http instead of dd browser logs ([#447](https://github.com/Basis-Theory/basis-theory-js/issues/447)) ([5378f46](https://github.com/Basis-Theory/basis-theory-js/commit/5378f467085983961242b86ab1ac550e56c1ab19))
+
 ## [4.21.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.1...v4.21.2) (2025-01-14)
 
 
