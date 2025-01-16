@@ -54,7 +54,7 @@ import {
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
 } from './common';
-import { initTelemetryLogger } from './common/telemetry-logging';
+import { logger } from './common/logging';
 import {
   delegateProxy,
   delegateTokenIntents,
@@ -246,8 +246,8 @@ export class BasisTheory
         appInfo,
       });
 
-      if (!options.disableTelemetry && process.env.NODE_ENV !== 'test') {
-        initTelemetryLogger();
+      if (options.disableTelemetry) {
+        logger.setTelemetryEnabled(false);
       }
 
       this._initStatus = 'done';

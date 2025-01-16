@@ -3,6 +3,7 @@ import type {
   AxiosResponse,
   AxiosRequestTransformer,
   AxiosResponseTransformer,
+  AxiosError,
 } from 'axios';
 import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
@@ -35,6 +36,7 @@ import {
   BT_TRACE_ID_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
+import { logger } from './logging';
 
 const assertInit = <T>(prop: T): NonNullable<T> => {
   if (prop === null || prop === undefined) {
@@ -311,10 +313,28 @@ const createRequestConfig = (
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
-const errorInterceptor = (error: any): void => {
-  const status = error.response?.status || -1;
+const errorInterceptor = (error: AxiosError): void => {
+  const status = error.response?.status ?? -1;
   const data = error.response?.data;
+
+  const logSeverity = status < 499 ? 'warn' : 'error';
+
+  logger.log[logSeverity](
+    `Error when calling ${error.config?.url} from the SDK`,
+    {
+      apiStatus: status,
+      errorDetails: {
+        url: error.config?.url,
+        method: error.config?.method,
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data,
+        headers: error.response?.headers,
+        message: error.message,
+      },
+      errorObject: error,
+    }
+  );
 
   throw new BasisTheoryApiError(error.message, status, data);
 };
