@@ -318,7 +318,7 @@ const errorInterceptor = (error: AxiosError): void => {
   const status = error.response?.status ?? -1;
   const data = error.response?.data;
 
-  const logSeverity = status < 499 ? 'warn' : 'error';
+  const logSeverity = status > -1 && status < 499 ? 'warn' : 'error';
 
   logger.log[logSeverity](
     `Error when making ${error?.config?.method?.toUpperCase()} request to ${
