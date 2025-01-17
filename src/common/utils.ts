@@ -322,20 +322,20 @@ const errorInterceptor = (error: AxiosError): void => {
 
   logger.log[logSeverity](
     `Error when making ${error?.config?.method?.toUpperCase()} request to ${
-      error.config?.baseURL
+      error?.config?.baseURL
     } from the JS SDK`,
     {
       apiStatus: status,
       requestDetails: {
-        url: error?.config?.url,
-        method: error?.config?.method,
+        url: error?.config?.baseURL,
+        method: error?.config?.method?.toUpperCase(),
         btUserAgent: error?.config?.headers?.[CLIENT_USER_AGENT_HEADER],
       },
       errorDetails: {
         code: error?.code,
         name: error?.name,
         stack: error?.stack,
-        headers: error.response?.headers,
+        headers: error?.response?.headers,
         message: error?.message,
         status: error?.response?.status,
         statusText: error?.response?.statusText,
