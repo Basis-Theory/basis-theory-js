@@ -326,6 +326,8 @@ const errorInterceptor = (error: AxiosError): void => {
     } from the JS SDK`,
     {
       apiStatus: status,
+      logType: 'axiosError',
+      logOrigin: 'axiosErrorInterceptor',
       requestDetails: {
         url: error?.config?.baseURL,
         method: error?.config?.method?.toUpperCase(),
