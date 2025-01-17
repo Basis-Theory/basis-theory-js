@@ -1,3 +1,10 @@
+## [4.22.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.22.0...v4.22.1) (2025-01-17)
+
+
+### Bug Fixes
+
+* tweak interceptor error message ([#448](https://github.com/Basis-Theory/basis-theory-js/issues/448)) ([316bf0c](https://github.com/Basis-Theory/basis-theory-js/commit/316bf0c2304e914cd0a3767fdb3fc684c2fe0779))
+
 # [4.22.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.2...v4.22.0) (2025-01-16)
 
 
