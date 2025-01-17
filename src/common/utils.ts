@@ -34,6 +34,7 @@ import {
   BROWSER_LIST,
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
+  CLIENT_USER_AGENT_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
 import { logger } from './logging';
@@ -320,19 +321,25 @@ const errorInterceptor = (error: AxiosError): void => {
   const logSeverity = status < 499 ? 'warn' : 'error';
 
   logger.log[logSeverity](
-    `Error when calling ${error.config?.url} from the SDK`,
+    `Error when making ${error?.config?.method?.toUpperCase()} request to ${
+      error.config?.baseURL
+    } from the JS SDK`,
     {
       apiStatus: status,
-      errorDetails: {
-        url: error.config?.url,
-        method: error.config?.method,
-        status: error.response?.status,
-        statusText: error.response?.statusText,
-        data,
-        headers: error.response?.headers,
-        message: error.message,
+      requestDetails: {
+        url: error?.config?.url,
+        method: error?.config?.method,
+        btUserAgent: error?.config?.headers?.[CLIENT_USER_AGENT_HEADER],
       },
-      errorObject: error,
+      errorDetails: {
+        code: error?.code,
+        name: error?.name,
+        stack: error?.stack,
+        headers: error.response?.headers,
+        message: error?.message,
+        status: error?.response?.status,
+        statusText: error?.response?.statusText,
+      },
     }
   );
 
