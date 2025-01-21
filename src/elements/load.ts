@@ -21,6 +21,9 @@ const loadScript = (
       script = injectScript(url);
     }
 
+    // flag to prevent double rejection (if somehow script was not removed)
+    let isSettled = false;
+
     // script load success
     script.addEventListener('load', () => {
       if (window.BasisTheoryElements) {
@@ -40,6 +43,11 @@ const loadScript = (
 
     // script error event
     script.addEventListener('error', async (event) => {
+      if (isSettled) {
+        return;
+      }
+
+      isSettled = true;
       await logger.log.error('Elements script onError event', {
         logType: 'elementsScriptOnError',
         logOrigin: 'loadScript',
@@ -56,7 +64,7 @@ const loadScript = (
 
       // remove from dom to avoid duplicates
       try {
-        script.remove();
+        script?.remove();
       } catch (error) {
         await logger.log.error(
           `Error removing script from DOM on retry attempt ${retryCount}`,
@@ -74,13 +82,30 @@ const loadScript = (
         loadScript(url, retryCount + 1)
           .then(resolve)
           .catch(reject);
-      } else {
-        // second attempt has failed: try fetching the script to inspect the response
-        try {
-          const response = await fetch(url);
 
+        return;
+      }
+
+      // second attempt has failed: try fetching the script to inspect the response
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
           await logger.log.error(
-            'Second attempt to load elements script failed, fetch success.',
+            `Second attempt to load elements script failed, fetch failed with status: ${response.status}.`,
+            {
+              logType: 'elementsScriptFetchFailure',
+              logOrigin: 'loadScript',
+              retryCount,
+              fetchResult: 'error',
+              fetchResponse: response,
+            }
+          );
+
+          reject(new Error(ELEMENTS_SCRIPT_FAILED_TO_DELIVER));
+        } else {
+          await logger.log.error(
+            `Second attempt to load elements script failed, fetch success`,
             {
               logType: 'elementsScriptFetchFailure',
               logOrigin: 'loadScript',
@@ -89,29 +114,31 @@ const loadScript = (
               fetchResponse: response,
             }
           );
-        } catch (error) {
-          // fetch also failed
-          await logger.log.error(
-            'Second attempt failed to load elements script failed, fetch error.',
-            {
-              logType: 'elementsScriptFetchError',
-              logOrigin: 'loadScript',
-              retryCount,
-              fetchResult: 'error',
-              fetchError: error,
-            }
-          );
 
-          reject(new Error(ELEMENTS_SCRIPT_FAILED_TO_DELIVER));
+          reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
         }
-
-        // ultimately reject with browser message
-        reject(
-          event?.error ||
-            event?.message ||
-            new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE)
+      } catch (error) {
+        // fetch also failed
+        await logger.log.error(
+          'Second attempt failed to load elements script failed, fetch network error.',
+          {
+            logType: 'elementsScriptFetchError',
+            logOrigin: 'loadScript',
+            retryCount,
+            fetchResult: 'error',
+            fetchError: error,
+          }
         );
+
+        reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
       }
+
+      // ultimately reject with browser message
+      reject(
+        event?.error ||
+          event?.message ||
+          new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE)
+      );
     });
   });
 
@@ -164,12 +191,6 @@ const loadElements = (
       loadScript(url, 0)
         .then(resolve)
         .catch((error) => {
-          // if an error occurred outside of the `error` event, log & reject here
-          logger.log.error('Unexpected error loading Elements script', {
-            logType: 'unexpectedError',
-            logOrigin: 'loadElements',
-            errorObject: error,
-          });
           reject(error);
         });
     });
