@@ -1,3 +1,10 @@
+# [4.23.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.22.1...v4.23.0) (2025-01-21)
+
+
+### Features
+
+* add retry for elements script ([#452](https://github.com/Basis-Theory/basis-theory-js/issues/452)) ([f6e1c47](https://github.com/Basis-Theory/basis-theory-js/commit/f6e1c47d5deee3b136e999171243c4cad67757a2))
+
 ## [4.22.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.22.0...v4.22.1) (2025-01-17)
 
 
