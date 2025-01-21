@@ -8,7 +8,10 @@ const ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE =
   'Basis Theory Elements did not load properly. Check network tab for more details.';
 
 const ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE =
-  'There was an unknown error when loading Basis Theory Elements. Check the console for details.';
+  'Unable to load the Elements script. This may be due to network restrictions or browser extensions like ad blockers interfering with script loading. Check browser settings or network connection and try again.';
+
+const ELEMENTS_SCRIPT_FAILED_TO_DELIVER =
+  'Failed to deliver Elements script from Basis Theory. Check your network connection and try again or contact support@basistheory.com';
 
 const CARD_BRANDS = [
   'visa',
@@ -98,6 +101,7 @@ export {
   ELEMENTS_NOM_DOM_ERROR_MESSAGE,
   ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE,
   ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE,
+  ELEMENTS_SCRIPT_FAILED_TO_DELIVER,
   CARD_BRANDS,
   CARD_ICON_POSITIONS,
   AUTOCOMPLETE_VALUES,
