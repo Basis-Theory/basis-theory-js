@@ -95,3 +95,8 @@ jobs:
           clover_file: "coverage/clover.xml"
           threshold_alert: 80
           threshold_warning: 90
+
+  pr-security-check:
+    name: PR Security Check
+    uses: Basis-Theory/public-security-workflows/.github/workflows/pr-check.yml@master
+    secrets: inherit
