@@ -30,7 +30,7 @@ context('Elements example', () => {
       .its('request.body')
       .should(
         'equal',
-        'There was an unknown error when loading Basis Theory Elements. Check the console for details.'
+        'Failed to deliver Elements script from Basis Theory. Check your network connection and try again or contact support@basistheory.com'
       );
   });
 });
