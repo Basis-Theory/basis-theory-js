@@ -1,3 +1,10 @@
+## [4.23.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.23.0...v4.23.1) (2025-01-22)
+
+
+### Bug Fixes
+
+* safe escape logging ops ([#453](https://github.com/Basis-Theory/basis-theory-js/issues/453)) ([c87a19b](https://github.com/Basis-Theory/basis-theory-js/commit/c87a19b595c31ac80783989cd97d882a8cbd74d8))
+
 # [4.23.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.22.1...v4.23.0) (2025-01-21)
 
 
