@@ -14,36 +14,36 @@ export const logger = (() => {
       return;
     }
 
-    let env;
-
-    if (DEFAULT_BASE_URL.includes('localhost')) {
-      env = 'local';
-    } else if (DEFAULT_BASE_URL.includes('dev')) {
-      env = 'dev';
-    } else {
-      env = 'prod';
-    }
-
-    const payload = {
-      // dd info
-      level,
-      message,
-
-      // for basis theory tracking
-      service: 'js-sdk',
-      env,
-
-      // browser information
-      referrer: document?.referrer,
-      origin: window.location.origin,
-      url: window.location.href,
-      userAgent: navigator.userAgent,
-
-      // custom values
-      ...attributes,
-    };
-
     try {
+      let env;
+
+      if (DEFAULT_BASE_URL.includes('localhost')) {
+        env = 'local';
+      } else if (DEFAULT_BASE_URL.includes('dev')) {
+        env = 'dev';
+      } else {
+        env = 'prod';
+      }
+
+      const payload = {
+        // dd info
+        level,
+        message,
+
+        // for basis theory tracking
+        service: 'js-sdk',
+        env,
+
+        // browser information
+        referrer: document?.referrer,
+        origin: window?.location?.origin,
+        url: window?.location?.href,
+        userAgent: navigator?.userAgent,
+
+        // custom values
+        ...attributes,
+      };
+
       await fetch(`https://http-intake.logs.datadoghq.com/v1/input/${ddTok}`, {
         method: 'POST',
         body: JSON.stringify(payload),
