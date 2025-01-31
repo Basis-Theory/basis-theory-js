@@ -28,6 +28,7 @@ interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
   appInfo?: ApplicationInfo;
   disableTelemetry?: boolean;
+  debug?: boolean;
 }
 
 interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {

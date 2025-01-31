@@ -4,6 +4,8 @@ const API_KEY_HEADER = 'BT-API-KEY';
 
 const BT_TRACE_ID_HEADER = 'bt-trace-id';
 
+const CF_RAY_HEADER = 'cf-ray';
+
 const BT_IDEMPOTENCY_KEY_HEADER = 'bt-idempotency-key';
 
 const BT_EXPOSE_PROXY_RESPONSE_HEADER = 'BT-EXPOSE-RAW-PROXY-RESPONSE';
@@ -99,4 +101,5 @@ export {
   BROWSER_LIST,
   DD_TOKEN,
   DD_GIT_SHA,
+  CF_RAY_HEADER,
 };

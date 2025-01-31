@@ -34,6 +34,7 @@ import {
   BROWSER_LIST,
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
+  CF_RAY_HEADER,
   CLIENT_USER_AGENT_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
@@ -314,9 +315,18 @@ const createRequestConfig = (
   };
 };
 
-const errorInterceptor = (error: AxiosError): void => {
-  const status = error.response?.status ?? -1;
-  const data = error.response?.data;
+const handleAxiosError = (error: AxiosError, debug?: boolean): void => {
+  const status = error?.response?.status ?? -1;
+  const data = error?.response?.data;
+
+  let _debug;
+
+  if (debug) {
+    _debug = {
+      cfRay: error?.response?.headers?.[CF_RAY_HEADER],
+      btTraceId: error?.response?.headers?.[BT_TRACE_ID_HEADER],
+    };
+  }
 
   const logSeverity = status > -1 && status < 499 ? 'warn' : 'error';
 
@@ -346,8 +356,14 @@ const errorInterceptor = (error: AxiosError): void => {
     }
   );
 
-  throw new BasisTheoryApiError(error.message, status, data);
+  throw new BasisTheoryApiError(error.message, status, data, _debug);
 };
+
+const errorInterceptor = (error: AxiosError): void =>
+  handleAxiosError(error, false);
+
+const errorInterceptorDebug = (error: AxiosError): void =>
+  handleAxiosError(error, true);
 
 const getQueryParams = <Q>(query: Q = {} as Q): string => {
   const keys = Object.keys(query as Record<string, unknown>) as (keyof Q)[];
@@ -494,6 +510,20 @@ const buildClientUserAgentString = (appInfo?: ApplicationInfo): string => {
   return JSON.stringify(snakecaseKeys(clientUserAgent));
 };
 
+const debugTransform: AxiosResponseTransformer = (data, headers) => {
+  if (headers && typeof data === 'object' && data !== undefined) {
+    // we are deliberately mutating the data object here to include the debug headers
+    // eslint-disable-next-line no-param-reassign
+    data._debug = {
+      ...data._debug,
+      cfRay: headers[CF_RAY_HEADER],
+      btTraceId: headers[BT_TRACE_ID_HEADER],
+    };
+  }
+
+  return data;
+};
+
 export {
   assertInit,
   transformRequestSnakeCase,
@@ -517,4 +547,6 @@ export {
   getOSVersion,
   getRuntime,
   getBrowser,
+  debugTransform,
+  errorInterceptorDebug,
 };

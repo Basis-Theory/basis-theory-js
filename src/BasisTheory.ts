@@ -76,6 +76,7 @@ const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
   disableTelemetry: false,
+  debug: false,
   appInfo: {},
 };
 
@@ -171,11 +172,13 @@ export class BasisTheory
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
       this._tokenize = new (delegateTokenize(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokenize, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
@@ -229,11 +232,13 @@ export class BasisTheory
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxy, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
       this._sessions = new BasisTheorySessions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.sessions, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
       this._threeds = new BasisTheoryThreeDS({
         apiKey,
@@ -244,6 +249,7 @@ export class BasisTheory
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokenIntents, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
 
       if (options.disableTelemetry) {

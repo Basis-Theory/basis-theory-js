@@ -12,6 +12,8 @@ type TokenizeArray<DataType = Primitive> = Array<
 >;
 type TokenizeData<DataType = Primitive> =
   | TokenizeArray<DataType>
-  | TokenizeObject<DataType>;
+  | (TokenizeObject<DataType> & {
+      _debug?: Record<string, unknown>;
+    });
 
 export type { TokenizeObject, TokenizeArray, TokenizeData };
