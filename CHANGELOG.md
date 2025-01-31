@@ -1,3 +1,10 @@
+## [4.24.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.24.0...v4.24.1) (2025-01-31)
+
+
+### Bug Fixes
+
+* add missing debug elements option ([#456](https://github.com/Basis-Theory/basis-theory-js/issues/456)) ([a150543](https://github.com/Basis-Theory/basis-theory-js/commit/a15054318b703833dd7a54ce4c8520e908900355))
+
 # [4.24.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.23.1...v4.24.0) (2025-01-31)
 
 
