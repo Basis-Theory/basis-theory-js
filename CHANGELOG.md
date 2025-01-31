@@ -1,3 +1,10 @@
+# [4.24.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.23.1...v4.24.0) (2025-01-31)
+
+
+### Features
+
+* add debug init option ([#455](https://github.com/Basis-Theory/basis-theory-js/issues/455)) ([1484386](https://github.com/Basis-Theory/basis-theory-js/commit/14843864d437c11f7676a56886d65e3359da17c1))
+
 ## [4.23.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.23.0...v4.23.1) (2025-01-22)
 
 
