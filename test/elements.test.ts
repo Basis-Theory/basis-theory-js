@@ -128,6 +128,7 @@ describe('Elements', () => {
         baseUrl.replace(/\/$/u, ''),
         false,
         false,
+        false,
         false
       );
     });
@@ -164,6 +165,7 @@ describe('Elements', () => {
         baseUrl.replace(/\/$/u, ''),
         useNgApi,
         useSameOriginApi,
+        false,
         false
       );
     });
@@ -195,6 +197,7 @@ describe('Elements', () => {
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
         baseUrl.replace(/\/$/u, ''),
+        false,
         false,
         false,
         false
@@ -355,6 +358,7 @@ describe('Elements', () => {
         expect(elementsInit).toHaveBeenCalledWith(
           'el-123',
           baseUrl.replace(/\/$/u, ''),
+          false,
           false,
           false,
           false
