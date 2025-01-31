@@ -1,3 +1,10 @@
+# [4.25.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.24.1...v4.25.0) (2025-01-31)
+
+
+### Features
+
+* add debug to element internal options ([#457](https://github.com/Basis-Theory/basis-theory-js/issues/457)) ([222b973](https://github.com/Basis-Theory/basis-theory-js/commit/222b9733abb65640b4868eb0ffb5d9f234a04026))
+
 ## [4.24.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.24.0...v4.24.1) (2025-01-31)
 
 
