@@ -20,6 +20,7 @@ interface ElementInternalOptions {
   useNgApi: boolean | undefined;
   useSameOriginApi: boolean | undefined;
   disableTelemetry?: boolean | undefined;
+  debug?: boolean | undefined;
 }
 
 enum InputMode {
