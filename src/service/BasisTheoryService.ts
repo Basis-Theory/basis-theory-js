@@ -14,6 +14,7 @@ import {
   buildUserAgentString,
   buildClientUserAgentString,
   debugTransform,
+  errorInterceptorDebug,
 } from '@/common';
 import { BasisTheoryServiceOptions } from './types';
 
@@ -60,7 +61,10 @@ export abstract class BasisTheoryService<
         ),
         /* eslint-enable unicorn/prefer-spread */
       });
-      this.client.interceptors.response.use(undefined, errorInterceptor);
+      this.client.interceptors.response.use(
+        undefined,
+        debug ? errorInterceptorDebug : errorInterceptor
+      );
     }
   }
 }
