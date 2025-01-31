@@ -34,6 +34,7 @@ import {
   BROWSER_LIST,
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
+  CF_RAY_HEADER,
   CLIENT_USER_AGENT_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
@@ -494,6 +495,20 @@ const buildClientUserAgentString = (appInfo?: ApplicationInfo): string => {
   return JSON.stringify(snakecaseKeys(clientUserAgent));
 };
 
+const debugTransform: AxiosResponseTransformer = (data, headers) => {
+  if (headers && typeof data === 'object' && data !== undefined) {
+    // we are deliberately mutating the data object here to include the debug headers
+    // eslint-disable-next-line no-param-reassign
+    data._debug = {
+      ...data._debug,
+      cfRay: headers[CF_RAY_HEADER],
+      btTraceId: headers[BT_TRACE_ID_HEADER],
+    };
+  }
+
+  return data;
+};
+
 export {
   assertInit,
   transformRequestSnakeCase,
@@ -517,4 +532,5 @@ export {
   getOSVersion,
   getRuntime,
   getBrowser,
+  debugTransform,
 };

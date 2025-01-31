@@ -13,6 +13,7 @@ import {
   transformResponseCamelCase,
   buildUserAgentString,
   buildClientUserAgentString,
+  debugTransform,
 } from '@/common';
 import { BasisTheoryServiceOptions } from './types';
 
@@ -28,6 +29,7 @@ export abstract class BasisTheoryService<
       transformRequest,
       transformResponse,
       appInfo,
+      debug,
     } = options;
 
     if (typeof axios === 'string') {
@@ -53,7 +55,8 @@ export abstract class BasisTheoryService<
         ),
         transformResponse: (axios.defaults
           .transformResponse as AxiosResponseTransformer[]).concat(
-          transformResponse || transformResponseCamelCase
+          transformResponse || transformResponseCamelCase,
+          debug ? debugTransform : []
         ),
         /* eslint-enable unicorn/prefer-spread */
       });

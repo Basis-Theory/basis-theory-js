@@ -5,6 +5,7 @@ interface BasisTheoryServiceOptions
   extends Pick<AxiosRequestConfig, 'transformRequest' | 'transformResponse'> {
   apiKey: string;
   baseURL: string;
+  debug?: boolean;
   appInfo?: ApplicationInfo;
 }
 

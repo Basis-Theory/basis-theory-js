@@ -54,6 +54,7 @@ type Token<DataType = Primitive> = TokenBase<DataType> & {
   tenantId: string;
   fingerprint?: string;
   metadata?: Record<string, string>;
+  _debug?: Record<string, unknown>;
 };
 
 type CreateToken<DataType = Primitive> = Pick<
@@ -71,6 +72,7 @@ type CreateToken<DataType = Primitive> = Pick<
 > & {
   deduplicateToken?: boolean;
   id?: string;
+  _debug?: Record<string, unknown>;
 };
 
 type UpdateToken<DataType = Primitive> = Partial<
@@ -87,6 +89,7 @@ type UpdateToken<DataType = Primitive> = Partial<
   > & {
     privacy: Omit<TokenPrivacy, 'classification'>;
     deduplicateToken: boolean;
+    _debug?: Record<string, unknown>;
   }
 >;
 

@@ -32,6 +32,7 @@ type TokenIntent<DataType = DataObject> = (TokenBase<DataType> &
     tenantId: string;
     expiresAt: string;
     fingerprint?: string;
+    _debug?: Record<string, unknown>;
   }) &
   (
     | TokenTypeMap[TokenTypesForTokenIntents]
