@@ -126,7 +126,8 @@ interface BasisTheoryElementsInternal extends BasisTheoryElements {
     elementsBaseUrl: string,
     elementsUseNgApi: boolean | undefined,
     elementsUseSameOriginApi: boolean | undefined,
-    disableTelemetry: boolean | undefined
+    disableTelemetry: boolean | undefined,
+    debug: boolean | undefined
   ) => Promise<BasisTheoryElements>;
   hasElement: (payload: unknown) => boolean;
   client: HttpClient;
