@@ -45,6 +45,8 @@ const loadScript = (
           })();
 
           reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
+
+          return;
         }
 
         // re-inject the script
