@@ -103,14 +103,15 @@ const loadScript = (
       // second attempt has failed: try fetching the script to inspect the response
       try {
         const response = await fetch(url);
+
         let responseObject;
+        let responseText;
 
         try {
-          responseObject = await response.json();
+          responseText = await response.text();
+          responseObject = JSON.parse(responseText);
         } catch {
-          responseObject = await response.text();
-        } finally {
-          responseObject = '';
+          responseObject = responseText ?? '';
         }
 
         if (!response.ok) {
