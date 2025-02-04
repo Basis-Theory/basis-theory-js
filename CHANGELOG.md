@@ -1,3 +1,10 @@
+# [4.26.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.25.0...v4.26.0) (2025-02-04)
+
+
+### Features
+
+* improve logging for elements script loading ([#458](https://github.com/Basis-Theory/basis-theory-js/issues/458)) ([8c0a1d5](https://github.com/Basis-Theory/basis-theory-js/commit/8c0a1d5ebffdad0a1dae01cf6ef18832607a6525))
+
 # [4.25.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.24.1...v4.25.0) (2025-01-31)
 
 
