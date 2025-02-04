@@ -19,35 +19,60 @@ const loadScript = (
 
     if (!script) {
       script = injectScript(url);
-    }
+    } else {
+      if (window.BasisTheoryElements) {
+        resolve(window.BasisTheoryElements);
 
-    // flag to prevent double rejection (if somehow script was not removed)
-    let isSettled = false;
+        return;
+      }
+
+      // script already exists in dom
+      // remove it to avoid duplicates
+      try {
+        script?.remove();
+      } catch (error) {
+        (async () => {
+          await logger.log.error(
+            `Error removing script from DOM on retry attempt ${retryCount}`,
+            {
+              logType: 'scriptRemovalError',
+              logOrigin: 'loadScript',
+              retryCount,
+              removalError: error,
+            }
+          );
+        })();
+
+        reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
+      }
+
+      // re-inject the script
+      script = injectScript(url);
+    }
 
     // script load success
     script.addEventListener('load', () => {
       if (window.BasisTheoryElements) {
         resolve(window.BasisTheoryElements);
-      } else {
-        (async () => {
-          await logger.log.error('Elements not found on window on load', {
-            logType: 'elementsNotFoundOnWindow',
-            logOrigin: 'loadScript',
-            retryCount,
-          });
-        })();
 
-        reject(new Error(ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE));
+        return;
       }
+
+      (async () => {
+        await logger.log.error('Elements not found on window on load', {
+          logType: 'elementsNotFoundOnWindow',
+          logOrigin: 'loadScript',
+          retryCount,
+        });
+      })();
+
+      reject(new Error(ELEMENTS_SCRIPT_LOAD_ERROR_MESSAGE));
+
+      return;
     });
 
     // script error event
     script.addEventListener('error', async (event) => {
-      if (isSettled) {
-        return;
-      }
-
-      isSettled = true;
       await logger.log.error('Elements script onError event', {
         logType: 'elementsScriptOnError',
         logOrigin: 'loadScript',
@@ -62,21 +87,6 @@ const loadScript = (
         },
       });
 
-      // remove from dom to avoid duplicates
-      try {
-        script?.remove();
-      } catch (error) {
-        await logger.log.error(
-          `Error removing script from DOM on retry attempt ${retryCount}`,
-          {
-            logType: 'scriptRemovalError',
-            logOrigin: 'loadScript',
-            retryCount,
-            removalError: error,
-          }
-        );
-      }
-
       // retry 1x if first attempt
       if (retryCount === 0) {
         loadScript(url, retryCount + 1)
@@ -89,6 +99,15 @@ const loadScript = (
       // second attempt has failed: try fetching the script to inspect the response
       try {
         const response = await fetch(url);
+        let responseObject;
+
+        try {
+          responseObject = await response.json();
+        } catch {
+          responseObject = await response.text();
+        } finally {
+          responseObject = '';
+        }
 
         if (!response.ok) {
           await logger.log.error(
@@ -98,25 +117,33 @@ const loadScript = (
               logOrigin: 'loadScript',
               retryCount,
               fetchResult: 'error',
-              fetchResponse: response,
+              fetchResponse: responseObject,
+              fetchHeaders: response.headers,
+              fetchStatusText: response.statusText,
             }
           );
 
           reject(new Error(ELEMENTS_SCRIPT_FAILED_TO_DELIVER));
-        } else {
-          await logger.log.error(
-            `Second attempt to load elements script failed, fetch success`,
-            {
-              logType: 'elementsScriptFetchFailure',
-              logOrigin: 'loadScript',
-              retryCount,
-              fetchResult: 'success',
-              fetchResponse: response,
-            }
-          );
 
-          reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
+          return;
         }
+
+        await logger.log.error(
+          `Second attempt to load elements script failed, fetch success`,
+          {
+            logType: 'elementsScriptFetchFailure',
+            logOrigin: 'loadScript',
+            retryCount,
+            fetchResult: 'success',
+            fetchResponse: responseObject,
+            fetchHeaders: response.headers,
+            fetchStatusText: response.statusText,
+          }
+        );
+
+        reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
+
+        return;
       } catch (error) {
         // fetch also failed
         await logger.log.error(
@@ -131,14 +158,9 @@ const loadScript = (
         );
 
         reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
-      }
 
-      // ultimately reject with browser message
-      reject(
-        event?.error ||
-          event?.message ||
-          new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE)
-      );
+        return;
+      }
     });
   });
 
