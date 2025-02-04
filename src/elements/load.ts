@@ -26,28 +26,30 @@ const loadScript = (
         return;
       }
 
-      // script already exists in dom
-      // remove it to avoid duplicates
-      try {
-        script?.remove();
-      } catch (error) {
-        (async () => {
-          await logger.log.error(
-            `Error removing script from DOM on retry attempt ${retryCount}`,
-            {
-              logType: 'scriptRemovalError',
-              logOrigin: 'loadScript',
-              retryCount,
-              removalError: error,
-            }
-          );
-        })();
+      if (retryCount > 0) {
+        // script already exists in dom
+        // remove it to avoid duplicates
+        try {
+          script?.remove();
+        } catch (error) {
+          (async () => {
+            await logger.log.error(
+              `Error removing script from DOM on retry attempt ${retryCount}`,
+              {
+                logType: 'scriptRemovalError',
+                logOrigin: 'loadScript',
+                retryCount,
+                removalError: error,
+              }
+            );
+          })();
 
-        reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
+          reject(new Error(ELEMENTS_SCRIPT_UNKNOWN_ERROR_MESSAGE));
+        }
+
+        // re-inject the script
+        script = injectScript(url);
       }
-
-      // re-inject the script
-      script = injectScript(url);
     }
 
     // script load success
