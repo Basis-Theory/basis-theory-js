@@ -1,3 +1,10 @@
+# [4.27.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.26.0...v4.27.0) (2025-02-06)
+
+
+### Features
+
+* pin btjs to web-elements 1.5.0 ([#449](https://github.com/Basis-Theory/basis-theory-js/issues/449)) ([914bc61](https://github.com/Basis-Theory/basis-theory-js/commit/914bc612513ae2b176e5673fb36d4fc812458d2d))
+
 # [4.26.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.25.0...v4.26.0) (2025-02-04)
 
 
