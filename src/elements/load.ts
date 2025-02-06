@@ -193,7 +193,7 @@ const loadElements = (
         return;
       }
 
-      let url = `https://${process.env.JS_HOST}/elements`;
+      let url = `https://${process.env.JS_HOST}/web-elements/1.5.0/client/index.js`;
 
       if (typeof elementsClientUrl !== 'undefined') {
         try {

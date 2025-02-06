@@ -20,9 +20,9 @@ context('Elements example', () => {
   });
   it('should handle blocked BasisTheoryElements script request', () => {
     cy.intercept(`http://cypress.test/events/initError`, (req) => {
-      req.reply({});
+      req.reply({ body: req.body });
     }).as(`initErrorEvent`);
-    cy.intercept(/https:\/\/.+?\/elements/u, {
+    cy.intercept(/https:\/\/.+?\/web-elements/u, {
       statusCode: 400,
     });
     cy.visit('cypress/fixtures/elements.html');
