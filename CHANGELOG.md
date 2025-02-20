@@ -1,3 +1,10 @@
+## [4.27.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.1...v4.27.2) (2025-02-20)
+
+
+### Bug Fixes
+
+* pin client and hosted to specific version of elements ([#460](https://github.com/Basis-Theory/basis-theory-js/issues/460)) ([9f23bec](https://github.com/Basis-Theory/basis-theory-js/commit/9f23bec985c4abb6a446ea57f009abf1d460b71a))
+
 ## [4.27.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.0...v4.27.1) (2025-02-20)
 
 
