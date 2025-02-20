@@ -1,3 +1,10 @@
+## [4.27.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.0...v4.27.1) (2025-02-20)
+
+
+### Bug Fixes
+
+* bump elements version ([#459](https://github.com/Basis-Theory/basis-theory-js/issues/459)) ([9f1a922](https://github.com/Basis-Theory/basis-theory-js/commit/9f1a922124544cd316d7a263f6ac3fa94448a8e7))
+
 # [4.27.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.26.0...v4.27.0) (2025-02-06)
 
 
