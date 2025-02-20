@@ -150,7 +150,7 @@ const loadScript = (
 
         return;
       } catch (error) {
-        // fetch also failed
+        // fetch also failed to make the request; most likely a browser/network error
         await logger.log.error(
           'Second attempt failed to load elements script failed, fetch network error.',
           {
@@ -158,7 +158,7 @@ const loadScript = (
             logOrigin: 'loadScript',
             retryCount,
             fetchResult: 'error',
-            fetchError: error,
+            fetchError: JSON.stringify(error ?? 'Unknown Error'),
           }
         );
 
@@ -193,7 +193,7 @@ const loadElements = (
         return;
       }
 
-      let url = `https://${process.env.JS_HOST}/web-elements/1.5.0/client/index.js`;
+      let url = `https://${process.env.JS_HOST}/web-elements/1.7.2/client/index.js`;
 
       if (typeof elementsClientUrl !== 'undefined') {
         try {
