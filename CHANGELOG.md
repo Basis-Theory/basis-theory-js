@@ -1,3 +1,10 @@
+## [4.28.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.0...v4.28.1) (2025-02-21)
+
+
+### Bug Fixes
+
+* revert to elements 1.5 ([#463](https://github.com/Basis-Theory/basis-theory-js/issues/463)) ([b7689de](https://github.com/Basis-Theory/basis-theory-js/commit/b7689dec81c3e49cf047d7180a5001e45bc58e6b))
+
 # [4.28.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.2...v4.28.0) (2025-02-21)
 
 
