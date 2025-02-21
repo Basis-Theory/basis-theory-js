@@ -303,6 +303,7 @@ describe('Tenants', () => {
           includedMonthlyActiveTokens: chance.integer(),
           monthlyActiveTokens: chance.integer(),
         },
+        totalTokens: chance.integer(),
       };
 
       expectedUsageReportJson = JSON.stringify({
@@ -313,6 +314,7 @@ describe('Tenants', () => {
           included_monthly_active_tokens:
             expectedUsageReport.tokenReport.includedMonthlyActiveTokens,
         },
+        totalTokens: expectedUsageReport.totalTokens,
       });
     });
 
