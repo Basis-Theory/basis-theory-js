@@ -11,6 +11,7 @@ type UpdateTenant = Pick<Tenant, 'name' | 'settings'>;
 
 interface TenantUsageReport {
   tokenReport: TokenReport;
+  totalTokens: number;
 }
 
 interface TokenReport {
