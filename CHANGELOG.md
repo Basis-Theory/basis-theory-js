@@ -1,3 +1,15 @@
+# [4.28.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.2...v4.28.0) (2025-02-21)
+
+
+### Bug Fixes
+
+* remove hardcoded elements path ([#462](https://github.com/Basis-Theory/basis-theory-js/issues/462)) ([87425b7](https://github.com/Basis-Theory/basis-theory-js/commit/87425b746c87b3cce7f7f847cb51b53f118c8c2d))
+
+
+### Features
+
+* adding totalTokens at root level ([#461](https://github.com/Basis-Theory/basis-theory-js/issues/461)) ([4df11c9](https://github.com/Basis-Theory/basis-theory-js/commit/4df11c901bd0434732bcd25df56de402f5ee2968))
+
 ## [4.27.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.1...v4.27.2) (2025-02-20)
 
 
