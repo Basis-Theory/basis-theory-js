@@ -6,11 +6,11 @@ current_directory="$PWD"
 if [ "$ENVIRONMENT" = dev ]; then
   JS_HOST="js.flock-dev.com"
   API_HOST="api.flock-dev.com"
-  ELEMENTS_HOST="js.flock-dev.com"
+  ELEMENTS_HOST="js.flock-dev.com/hosted-elements"
 else
   JS_HOST="js.basistheory.com"
   API_HOST="api.basistheory.com"
-  ELEMENTS_HOST="js.basistheory.com"
+  ELEMENTS_HOST="js.basistheory.com/hosted-elements"
 fi
 
 DD_TOKEN="pub5f53501515584007899577554c4aeda6"

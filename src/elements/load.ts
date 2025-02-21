@@ -1,4 +1,3 @@
-import { WEB_ELEMENTS_VERSION } from '@/common';
 import { logger } from '@/common/logging';
 import type { BasisTheoryElements } from '@/types/elements';
 import {
@@ -194,7 +193,7 @@ const loadElements = (
         return;
       }
 
-      let url = `https://${process.env.JS_HOST}/web-elements/${WEB_ELEMENTS_VERSION}/client/index.js`;
+      let url = `https://${process.env.JS_HOST}/web-elements/1.5.0/client/index.js`;
 
       if (typeof elementsClientUrl !== 'undefined') {
         try {

@@ -24,7 +24,7 @@ const USER_AGENT_CLIENT = 'BasisTheoryJS';
 
 const DEFAULT_BASE_URL = `https://${process.env.API_HOST}`;
 
-const DEFAULT_ELEMENTS_BASE_URL = `https://${process.env.ELEMENTS_HOST}/web-elements/${WEB_ELEMENTS_VERSION}/hosted-elements`;
+const DEFAULT_ELEMENTS_BASE_URL = `https://${process.env.ELEMENTS_HOST}`;
 
 const DD_TOKEN = process.env.DD_TOKEN;
 
