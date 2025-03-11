@@ -1,3 +1,10 @@
+## [4.28.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.1...v4.28.2) (2025-03-11)
+
+
+### Bug Fixes
+
+* patch axios ([#464](https://github.com/Basis-Theory/basis-theory-js/issues/464)) ([4aaa32f](https://github.com/Basis-Theory/basis-theory-js/commit/4aaa32fc8d4c3e0491dc97aa353cdc66983459b5))
+
 ## [4.28.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.0...v4.28.1) (2025-02-21)
 
 
