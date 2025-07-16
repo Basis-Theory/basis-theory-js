@@ -12,6 +12,9 @@ acceptance:
 setup-infra:
 	./scripts/setupinfra.sh
 
+deploy-to-r2:
+	./scripts/deploy-to-r2.sh
+
 release:
 	yarn release
 	$(MAKE) setup-infra
