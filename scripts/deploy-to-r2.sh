@@ -39,12 +39,12 @@ echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 rclone --config ../.rclone.conf \
   --s3-access-key-id ${R2_ACCESS_KEY} \
   --s3-secret-access-key ${R2_SECRET_KEY} \
-  copyto "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}"
+  copyto "$BUNDLE_PATH" r2://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}"
 
 rclone --config ../.rclone.conf \
   --s3-access-key-id ${R2_ACCESS_KEY} \
   --s3-secret-access-key ${R2_SECRET_KEY} \
-  copyto "$JS_HASH_PATH" s3://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}-hash"
+  copyto "$JS_HASH_PATH" r2://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}-hash"
 
 if [ "$IS_PR_WORKFLOW" = true ] ; then
   BLOB_NAME=$BLOB_DIR/$(git rev-parse HEAD).js
@@ -54,22 +54,22 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
   rclone --config ../.rclone.conf \
     --s3-access-key-id ${R2_ACCESS_KEY} \
     --s3-secret-access-key ${R2_SECRET_KEY} \
-    copyto "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${BLOB_NAME}"
+    copyto "$BUNDLE_PATH" r2://"${JS_BUCKET_NAME}"/"${BLOB_NAME}"
   rclone --config ../.rclone.conf \
     --s3-access-key-id ${R2_ACCESS_KEY} \
     --s3-secret-access-key ${R2_SECRET_KEY} \
-    copyto "$JS_HASH_PATH" s3://"${JS_BUCKET_NAME}"/"${BLOB_NAME}-hash"
+    copyto "$JS_HASH_PATH" r2://"${JS_BUCKET_NAME}"/"${BLOB_NAME}-hash"
 else
   echo "Uploading bundle to $JS_HOST/$VERSIONED_JS_NAME"
 
   rclone --config ../.rclone.conf \
     --s3-access-key-id ${R2_ACCESS_KEY} \
     --s3-secret-access-key ${R2_SECRET_KEY} \
-    copyto "$BUNDLE_PATH" s3://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}"
+    copyto "$BUNDLE_PATH" r2://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}"
   rclone --config ../.rclone.conf \
     --s3-access-key-id ${R2_ACCESS_KEY} \
     --s3-secret-access-key ${R2_SECRET_KEY} \
-    copyto "$JS_HASH_PATH" s3://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}-hash"
+    copyto "$JS_HASH_PATH" r2://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}-hash"
 fi
 
 result=$?
