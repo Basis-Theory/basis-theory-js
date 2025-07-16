@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 script_directory="$PWD"
 
@@ -36,12 +36,12 @@ shasum -b -a 384 $dist_directory/basis-theory-js.bundle.js | awk '{ print $1 }' 
 echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
 # Upload Content
-rclone --config ../.rclone.conf \
+rclone --config .rclone.conf \
   --s3-access-key-id ${R2_ACCESS_KEY} \
   --s3-secret-access-key ${R2_SECRET_KEY} \
   copyto "$BUNDLE_PATH" r2://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}"
 
-rclone --config ../.rclone.conf \
+rclone --config .rclone.conf \
   --s3-access-key-id ${R2_ACCESS_KEY} \
   --s3-secret-access-key ${R2_SECRET_KEY} \
   copyto "$JS_HASH_PATH" r2://"${JS_BUCKET_NAME}"/"${INDEX_JS_NAME}-hash"
@@ -51,18 +51,18 @@ if [ "$IS_PR_WORKFLOW" = true ] ; then
 
   echo "Uploading bundle to $JS_HOST/$BLOB_NAME"
 
-  rclone --config ../.rclone.conf \
+  rclone --config .rclone.conf \
     --s3-access-key-id ${R2_ACCESS_KEY} \
     --s3-secret-access-key ${R2_SECRET_KEY} \
     copyto "$BUNDLE_PATH" r2://"${JS_BUCKET_NAME}"/"${BLOB_NAME}"
-  rclone --config ../.rclone.conf \
+  rclone --config .rclone.conf \
     --s3-access-key-id ${R2_ACCESS_KEY} \
     --s3-secret-access-key ${R2_SECRET_KEY} \
     copyto "$JS_HASH_PATH" r2://"${JS_BUCKET_NAME}"/"${BLOB_NAME}-hash"
 else
   echo "Uploading bundle to $JS_HOST/$VERSIONED_JS_NAME"
 
-  rclone --config ../.rclone.conf \
+  rclone --config .rclone.conf \
     --s3-access-key-id ${R2_ACCESS_KEY} \
     --s3-secret-access-key ${R2_SECRET_KEY} \
     copyto "$BUNDLE_PATH" r2://"${JS_BUCKET_NAME}"/"${VERSIONED_JS_NAME}"
