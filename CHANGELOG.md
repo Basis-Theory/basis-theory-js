@@ -1,3 +1,10 @@
+# [4.29.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.2...v4.29.0) (2025-07-17)
+
+
+### Features
+
+* parallel r2 deploy ([#465](https://github.com/Basis-Theory/basis-theory-js/issues/465)) ([0b80633](https://github.com/Basis-Theory/basis-theory-js/commit/0b8063372b3f901a4239683ab1b3754dc44482dd))
+
 ## [4.28.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.1...v4.28.2) (2025-03-11)
 
 
