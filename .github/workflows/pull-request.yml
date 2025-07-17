@@ -23,6 +23,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: Setup rclone
+        uses: AnimMouse/setup-rclone@v1
+
       - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
@@ -78,6 +81,14 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: us-east-2
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+          ENVIRONMENT: dev
+          IS_PR_WORKFLOW: true
+
+      - name: Deploy to R2
+        run: make deploy-to-r2
+        env:
+          R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
+          R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
           ENVIRONMENT: dev
           IS_PR_WORKFLOW: true
 
