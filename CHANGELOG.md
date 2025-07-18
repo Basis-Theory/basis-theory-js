@@ -1,3 +1,10 @@
+# [4.30.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.29.0...v4.30.0) (2025-07-18)
+
+
+### Features
+
+* add uat deployment ([#466](https://github.com/Basis-Theory/basis-theory-js/issues/466)) ([b862d8e](https://github.com/Basis-Theory/basis-theory-js/commit/b862d8e634020f77c61023ffeee4f0e01c36e871))
+
 # [4.29.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.2...v4.29.0) (2025-07-17)
 
 
