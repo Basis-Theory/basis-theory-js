@@ -1,11 +1,14 @@
 # Basis Theory JS SDK (aka BasisTheory.js)
 
 > [!CAUTION]
-> This SDK has been deprecated for use in Node.js environments. It is still supported for use in web elements and reactor environments.
+> This SDK has been deprecated for node and web use. It is still supported for use in reactor environments.
 >
-> Our new Node.js SDK can be found at https://github.com/Basis-Theory/node-sdk
+> - Our new Node.js SDK can be found at https://github.com/Basis-Theory/node-sdk
 >
-> See our documentation site for more information. https://developers.basistheory.com/docs/sdks/server-side/node
+>   - See our documentation site for more information. https://developers.basistheory.com/docs/sdks/server-side/node
+>
+> - Our new web elements package can be found at https://github.com/Basis-Theory/web-elements
+>   - See our documentation site for more information. https://developers.basistheory.com/docs/sdks/web/web-elements
 
 [![Version](https://img.shields.io/npm/v/@basis-theory/basis-theory-js.svg)](https://www.npmjs.org/package/@basis-theory/basis-theory-js)
 [![Downloads](https://img.shields.io/npm/dm/@basis-theory/basis-theory-js.svg)](https://www.npmjs.org/package/@basis-theory/basis-theory-js)
