@@ -1,7 +1,7 @@
 # Basis Theory JS SDK (aka BasisTheory.js)
 
 > [!CAUTION]
-> This SDK has been deprecated for use in Node.js environments. It is still supported for use in web elements and reactor environments.
+> This SDK has been deprecated for use in Node.js environments. It is still supported for use in reactor environments.
 >
 > Our new Node.js SDK can be found at https://github.com/Basis-Theory/node-sdk
 >
