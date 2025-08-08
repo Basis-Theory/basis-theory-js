@@ -12,8 +12,8 @@ acceptance:
 setup-infra:
 	./scripts/setupinfra.sh
 
-deploy-to-r2:
-	./scripts/deploy-to-r2.sh
+deploy-index-hash:
+	./scripts/deploy-index-hash.sh
 
 release:
 	yarn release
