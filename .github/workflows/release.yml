@@ -7,6 +7,9 @@ on:
 jobs:
   build-release:
     environment: PROD
+    permissions:
+      id-token: write
+      contents: read
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -67,12 +70,37 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_SEMANTIC_RELEASE_PAT }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::469828239459:role/github-actions-admin-prod
+          aws-region: us-east-2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::469828239459:role/terraform-admin
+          aws-region: us-east-2
+          role-chaining: true
+
+      - name: UAT Deploy Index Hash
+        run: make deploy-index-hash
+        env:
+          AWS_REGION: us-east-2
+          ENVIRONMENT:  prod
+
       - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@master
         env:
           CLOUDFLARE_ZONE: ${{ vars.CF_PROD_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
           PURGE_URLS: '["https://js.basistheory.com/*"]'
+
+      # - name: Purge prod wl cache
+      #   uses: jakejarvis/cloudflare-purge-action@master
+      #   env:
+      #     CLOUDFLARE_ZONE: ${{ vars.CF_PROD_ELEMENTS_ZONE_ID }}
+      #     CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
 
       - name: Stop Deploy Message
         if: always()
@@ -81,3 +109,52 @@ jobs:
           slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
           channel: ${{ vars.SLACK_DUCKBOT_RELEASE_CHANNEL_ID }}
           status: "done"
+
+  release-to-uat:
+    environment: UAT
+    permissions:
+      id-token: write
+      contents: read
+    needs: build-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download Client dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::244923700941:role/github-actions-admin-uat
+          aws-region: us-east-2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::244923700941:role/terraform-admin
+          aws-region: us-east-2
+          role-chaining: true
+
+      - name: UAT Deploy Index Hash
+        run: make deploy-index-hash
+        env:
+          AWS_REGION: us-east-2
+          ENVIRONMENT:  uat
+
+      # - name: Purge uat cache
+      #   uses: jakejarvis/cloudflare-purge-action@master
+      #   env:
+      #     CLOUDFLARE_ZONE: ${{ vars.CF_UAT_ZONE_ID }}
+      #     CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+      #     PURGE_URLS: '["https://js.btsandbox.com/*"]'
+
+      # - name: Purge uat wl cache
+      #   uses: jakejarvis/cloudflare-purge-action@master
+      #   env:
+      #     CLOUDFLARE_ZONE: ${{ vars.CF_UAT_ELEMENTS_ZONE_ID }}
+      #     CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}

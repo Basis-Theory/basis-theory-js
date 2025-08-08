@@ -11,6 +11,11 @@ concurrency:
 jobs:
   build:
     environment: DEV
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+      statuses: write
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -84,12 +89,38 @@ jobs:
           ENVIRONMENT: dev
           IS_PR_WORKFLOW: true
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::914054469264:role/github-actions-admin-dev
+          aws-region: us-east-2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::914054469264:role/terraform-admin
+          aws-region: us-east-2
+          role-chaining: true
+
+      - name: Deploy Index Hash
+        run: make deploy-index-hash
+        env:
+          AWS_REGION: us-east-2
+          ENVIRONMENT: dev 
+          IS_PR_WORKFLOW: true
+
       - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@master
         env:
           CLOUDFLARE_ZONE: ${{ vars.CF_DEV_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
           PURGE_URLS: '["https://js.flock-dev.com/*"]'
+
+      # - name: Purge cache
+      #   uses: jakejarvis/cloudflare-purge-action@master
+      #   env:
+      #     CLOUDFLARE_ZONE: ${{ vars.CF_DEV_ELEMENTS_ZONE_ID }}
+      #     CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
 
       - name: Monitor coverage
         uses: slavcodev/coverage-monitor-action@1.2.0
