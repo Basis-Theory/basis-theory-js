@@ -7,6 +7,9 @@ on:
 jobs:
   build-release:
     environment: PROD
+    permissions:
+      id-token: write
+      contents: read
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -109,6 +112,9 @@ jobs:
 
   release-to-uat:
     environment: UAT
+    permissions:
+      id-token: write
+      contents: read
     needs: build-release
     runs-on: ubuntu-latest
     steps:

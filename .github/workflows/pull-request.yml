@@ -11,6 +11,9 @@ concurrency:
 jobs:
   build:
     environment: DEV
+    permissions:
+      id-token: write
+      contents: read
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
