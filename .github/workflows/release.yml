@@ -96,11 +96,11 @@ jobs:
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
           PURGE_URLS: '["https://js.basistheory.com/*"]'
 
-      # - name: Purge prod wl cache
-      #   uses: jakejarvis/cloudflare-purge-action@master
-      #   env:
-      #     CLOUDFLARE_ZONE: ${{ vars.CF_PROD_ELEMENTS_ZONE_ID }}
-      #     CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+      - name: Purge prod wl cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: ${{ vars.CF_PROD_ELEMENTS_ZONE_ID }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
 
       - name: Stop Deploy Message
         if: always()
@@ -146,15 +146,15 @@ jobs:
           AWS_REGION: us-east-2
           ENVIRONMENT:  uat
 
-      # - name: Purge uat cache
-      #   uses: jakejarvis/cloudflare-purge-action@master
-      #   env:
-      #     CLOUDFLARE_ZONE: ${{ vars.CF_UAT_ZONE_ID }}
-      #     CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
-      #     PURGE_URLS: '["https://js.btsandbox.com/*"]'
+      - name: Purge uat cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: ${{ vars.CF_UAT_ZONE_ID }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+          PURGE_URLS: '["https://js.btsandbox.com/*"]'
 
-      # - name: Purge uat wl cache
-      #   uses: jakejarvis/cloudflare-purge-action@master
-      #   env:
-      #     CLOUDFLARE_ZONE: ${{ vars.CF_UAT_ELEMENTS_ZONE_ID }}
-      #     CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+      - name: Purge uat wl cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: ${{ vars.CF_UAT_ELEMENTS_ZONE_ID }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
