@@ -28,7 +28,7 @@ jobs:
         uses: AnimMouse/setup-rclone@v1
 
       - name: Start Deploy Message
-        uses: Basis-Theory/github-actions/deploy-slack-action@master
+        uses: Basis-Theory/public-github-actions/deploy-slack-action@master
         with:
           slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
           channel: ${{ vars.SLACK_DUCKBOT_RELEASE_CHANNEL_ID }}
@@ -104,7 +104,7 @@ jobs:
 
       - name: Stop Deploy Message
         if: always()
-        uses: Basis-Theory/github-actions/deploy-slack-action@master
+        uses: Basis-Theory/public-github-actions/deploy-slack-action@master
         with:
           slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
           channel: ${{ vars.SLACK_DUCKBOT_RELEASE_CHANNEL_ID }}
