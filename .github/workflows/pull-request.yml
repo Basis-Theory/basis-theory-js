@@ -92,15 +92,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::914054469264:role/github-actions-admin-dev
+          role-to-assume: arn:aws:iam::914054469264:role/basis-theory-js-gh-admin
           aws-region: us-east-2
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::914054469264:role/terraform-admin
-          aws-region: us-east-2
-          role-chaining: true
 
       - name: Deploy Index Hash
         run: make deploy-index-hash
