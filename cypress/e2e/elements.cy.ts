@@ -20,9 +20,9 @@ context('Elements example', () => {
   });
   it('should handle blocked BasisTheoryElements script request', () => {
     cy.intercept(`http://cypress.test/events/initError`, (req) => {
-      req.reply({});
+      req.reply({ body: req.body });
     }).as(`initErrorEvent`);
-    cy.intercept(/https:\/\/.+?\/elements/u, {
+    cy.intercept(/https:\/\/.+?\/web-elements/u, {
       statusCode: 400,
     });
     cy.visit('cypress/fixtures/elements.html');
@@ -30,7 +30,7 @@ context('Elements example', () => {
       .its('request.body')
       .should(
         'equal',
-        'There was an unknown error when loading Basis Theory Elements. Check the console for details.'
+        'Failed to deliver Elements script from Basis Theory. Check your network connection and try again or contact support@basistheory.com'
       );
   });
 });

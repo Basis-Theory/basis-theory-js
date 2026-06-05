@@ -1,5 +1,4 @@
 import type { BasisTheoryElements } from '@/types/elements';
-import { Transactions } from '@/types/sdk/services/transactions';
 import type {
   Applications,
   ApplicationTemplates,
@@ -14,7 +13,10 @@ import type {
   Tenants,
   Tokenize,
   Tokens,
+  ThreeDS,
+  TokenIntents,
 } from './services';
+import { ApplicationKeys } from './services/applicationKeys';
 
 interface ApplicationInfo {
   name?: string;
@@ -25,6 +27,8 @@ interface ApplicationInfo {
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
   appInfo?: ApplicationInfo;
+  disableTelemetry?: boolean;
+  debug?: boolean;
 }
 
 interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {
@@ -36,6 +40,7 @@ interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
   elementsBaseUrl?: string;
   elementsClientUrl?: string;
   elementsUseNgApi?: boolean;
+  elementsUseSameOriginApi?: boolean;
 }
 
 interface BasisTheoryInit {
@@ -51,6 +56,7 @@ interface BasisTheoryInit {
 }
 interface BasisTheory extends Tokenize {
   applications: Applications;
+  applicationKeys: ApplicationKeys;
   applicationTemplates: ApplicationTemplates;
   /**
    * @description Allows you to utilize element values in requests to a third-party API using our HTTP client service.
@@ -67,7 +73,8 @@ interface BasisTheory extends Tokenize {
   sessions: Sessions;
   tenants: Tenants;
   tokens: Tokens;
-  transactions: Transactions;
+  threeds: ThreeDS;
+  tokenIntents: TokenIntents;
 }
 
 interface ClientUserAgent {

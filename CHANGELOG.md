@@ -1,3 +1,357 @@
+# [4.30.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.29.0...v4.30.0) (2025-07-18)
+
+
+### Features
+
+* add uat deployment ([#466](https://github.com/Basis-Theory/basis-theory-js/issues/466)) ([b862d8e](https://github.com/Basis-Theory/basis-theory-js/commit/b862d8e634020f77c61023ffeee4f0e01c36e871))
+
+# [4.29.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.2...v4.29.0) (2025-07-17)
+
+
+### Features
+
+* parallel r2 deploy ([#465](https://github.com/Basis-Theory/basis-theory-js/issues/465)) ([0b80633](https://github.com/Basis-Theory/basis-theory-js/commit/0b8063372b3f901a4239683ab1b3754dc44482dd))
+
+## [4.28.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.1...v4.28.2) (2025-03-11)
+
+
+### Bug Fixes
+
+* patch axios ([#464](https://github.com/Basis-Theory/basis-theory-js/issues/464)) ([4aaa32f](https://github.com/Basis-Theory/basis-theory-js/commit/4aaa32fc8d4c3e0491dc97aa353cdc66983459b5))
+
+## [4.28.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.28.0...v4.28.1) (2025-02-21)
+
+
+### Bug Fixes
+
+* revert to elements 1.5 ([#463](https://github.com/Basis-Theory/basis-theory-js/issues/463)) ([b7689de](https://github.com/Basis-Theory/basis-theory-js/commit/b7689dec81c3e49cf047d7180a5001e45bc58e6b))
+
+# [4.28.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.2...v4.28.0) (2025-02-21)
+
+
+### Bug Fixes
+
+* remove hardcoded elements path ([#462](https://github.com/Basis-Theory/basis-theory-js/issues/462)) ([87425b7](https://github.com/Basis-Theory/basis-theory-js/commit/87425b746c87b3cce7f7f847cb51b53f118c8c2d))
+
+
+### Features
+
+* adding totalTokens at root level ([#461](https://github.com/Basis-Theory/basis-theory-js/issues/461)) ([4df11c9](https://github.com/Basis-Theory/basis-theory-js/commit/4df11c901bd0434732bcd25df56de402f5ee2968))
+
+## [4.27.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.1...v4.27.2) (2025-02-20)
+
+
+### Bug Fixes
+
+* pin client and hosted to specific version of elements ([#460](https://github.com/Basis-Theory/basis-theory-js/issues/460)) ([9f23bec](https://github.com/Basis-Theory/basis-theory-js/commit/9f23bec985c4abb6a446ea57f009abf1d460b71a))
+
+## [4.27.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.27.0...v4.27.1) (2025-02-20)
+
+
+### Bug Fixes
+
+* bump elements version ([#459](https://github.com/Basis-Theory/basis-theory-js/issues/459)) ([9f1a922](https://github.com/Basis-Theory/basis-theory-js/commit/9f1a922124544cd316d7a263f6ac3fa94448a8e7))
+
+# [4.27.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.26.0...v4.27.0) (2025-02-06)
+
+
+### Features
+
+* pin btjs to web-elements 1.5.0 ([#449](https://github.com/Basis-Theory/basis-theory-js/issues/449)) ([914bc61](https://github.com/Basis-Theory/basis-theory-js/commit/914bc612513ae2b176e5673fb36d4fc812458d2d))
+
+# [4.26.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.25.0...v4.26.0) (2025-02-04)
+
+
+### Features
+
+* improve logging for elements script loading ([#458](https://github.com/Basis-Theory/basis-theory-js/issues/458)) ([8c0a1d5](https://github.com/Basis-Theory/basis-theory-js/commit/8c0a1d5ebffdad0a1dae01cf6ef18832607a6525))
+
+# [4.25.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.24.1...v4.25.0) (2025-01-31)
+
+
+### Features
+
+* add debug to element internal options ([#457](https://github.com/Basis-Theory/basis-theory-js/issues/457)) ([222b973](https://github.com/Basis-Theory/basis-theory-js/commit/222b9733abb65640b4868eb0ffb5d9f234a04026))
+
+## [4.24.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.24.0...v4.24.1) (2025-01-31)
+
+
+### Bug Fixes
+
+* add missing debug elements option ([#456](https://github.com/Basis-Theory/basis-theory-js/issues/456)) ([a150543](https://github.com/Basis-Theory/basis-theory-js/commit/a15054318b703833dd7a54ce4c8520e908900355))
+
+# [4.24.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.23.1...v4.24.0) (2025-01-31)
+
+
+### Features
+
+* add debug init option ([#455](https://github.com/Basis-Theory/basis-theory-js/issues/455)) ([1484386](https://github.com/Basis-Theory/basis-theory-js/commit/14843864d437c11f7676a56886d65e3359da17c1))
+
+## [4.23.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.23.0...v4.23.1) (2025-01-22)
+
+
+### Bug Fixes
+
+* safe escape logging ops ([#453](https://github.com/Basis-Theory/basis-theory-js/issues/453)) ([c87a19b](https://github.com/Basis-Theory/basis-theory-js/commit/c87a19b595c31ac80783989cd97d882a8cbd74d8))
+
+# [4.23.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.22.1...v4.23.0) (2025-01-21)
+
+
+### Features
+
+* add retry for elements script ([#452](https://github.com/Basis-Theory/basis-theory-js/issues/452)) ([f6e1c47](https://github.com/Basis-Theory/basis-theory-js/commit/f6e1c47d5deee3b136e999171243c4cad67757a2))
+
+## [4.22.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.22.0...v4.22.1) (2025-01-17)
+
+
+### Bug Fixes
+
+* tweak interceptor error message ([#448](https://github.com/Basis-Theory/basis-theory-js/issues/448)) ([316bf0c](https://github.com/Basis-Theory/basis-theory-js/commit/316bf0c2304e914cd0a3767fdb3fc684c2fe0779))
+
+# [4.22.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.2...v4.22.0) (2025-01-16)
+
+
+### Features
+
+* improve logs, use http instead of dd browser logs ([#447](https://github.com/Basis-Theory/basis-theory-js/issues/447)) ([5378f46](https://github.com/Basis-Theory/basis-theory-js/commit/5378f467085983961242b86ab1ac550e56c1ab19))
+
+## [4.21.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.1...v4.21.2) (2025-01-14)
+
+
+### Bug Fixes
+
+* fix log name ([#445](https://github.com/Basis-Theory/basis-theory-js/issues/445)) ([038f3ed](https://github.com/Basis-Theory/basis-theory-js/commit/038f3ed25f16236277bd4c16ddac7bad74fb1a83))
+
+## [4.21.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.21.0...v4.21.1) (2025-01-14)
+
+
+### Bug Fixes
+
+* avoid re-initializing logger ([#444](https://github.com/Basis-Theory/basis-theory-js/issues/444)) ([24689d7](https://github.com/Basis-Theory/basis-theory-js/commit/24689d706a1a55d0b3476014e368067d5f3b9c48))
+
+# [4.21.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.20.0...v4.21.0) (2025-01-14)
+
+
+### Features
+
+* allow api base urls with subpaths ([#443](https://github.com/Basis-Theory/basis-theory-js/issues/443)) ([4fe9c4a](https://github.com/Basis-Theory/basis-theory-js/commit/4fe9c4a1cdb6e43934ba20dcc12b4587b9af8289))
+
+# [4.20.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.19.0...v4.20.0) (2025-01-13)
+
+
+### Features
+
+* add telemetry for elements script ([#442](https://github.com/Basis-Theory/basis-theory-js/issues/442)) ([8268783](https://github.com/Basis-Theory/basis-theory-js/commit/82687839b3e74ee9466184449c528d4f323b7c1f))
+
+# [4.19.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.18.0...v4.19.0) (2025-01-08)
+
+
+### Features
+
+* adds metadata to blur event ([#441](https://github.com/Basis-Theory/basis-theory-js/issues/441)) ([06f343d](https://github.com/Basis-Theory/basis-theory-js/commit/06f343df2691e075468f9d7d43a09c40423931af))
+
+# [4.18.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.17.1...v4.18.0) (2024-12-23)
+
+
+### Features
+
+* adds `disableTelemetry` init option ([#440](https://github.com/Basis-Theory/basis-theory-js/issues/440)) ([c6589b4](https://github.com/Basis-Theory/basis-theory-js/commit/c6589b4326fbdea39f32b944955bfccf05224520))
+
+## [4.17.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.17.0...v4.17.1) (2024-12-12)
+
+
+### Bug Fixes
+
+* add authentication to TokenIntentCardDetails ([#439](https://github.com/Basis-Theory/basis-theory-js/issues/439)) ([927aa23](https://github.com/Basis-Theory/basis-theory-js/commit/927aa23b8514e13ce7e4df59fa14627d8c204063))
+
+# [4.17.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.16.0...v4.17.0) (2024-12-05)
+
+
+### Features
+
+* add card details to enrichments ([#437](https://github.com/Basis-Theory/basis-theory-js/issues/437)) ([4fe4dd8](https://github.com/Basis-Theory/basis-theory-js/commit/4fe4dd8eb52c3cf05af0ba5929f6a1cc1b3d1056))
+
+# [4.16.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.15.0...v4.16.0) (2024-11-25)
+
+
+### Features
+
+* adds validate to CardElement ([#435](https://github.com/Basis-Theory/basis-theory-js/issues/435)) ([8c7c0c2](https://github.com/Basis-Theory/basis-theory-js/commit/8c7c0c20cdc200ef0f10d6d1cce659cc5c924b7f))
+
+# [4.15.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.14.0...v4.15.0) (2024-11-11)
+
+
+### Features
+
+* support token intents in 3ds, add mit props ([#434](https://github.com/Basis-Theory/basis-theory-js/issues/434)) ([77f91c2](https://github.com/Basis-Theory/basis-theory-js/commit/77f91c239ee3132151243e1393693b8d60d3f41e))
+
+# [4.14.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.13.0...v4.14.0) (2024-11-07)
+
+
+### Features
+
+* add support for custom card element placeholder ([#433](https://github.com/Basis-Theory/basis-theory-js/issues/433)) ([b48e408](https://github.com/Basis-Theory/basis-theory-js/commit/b48e4081079cd17ad1b0230c9bcf512ee679b717))
+
+# [4.13.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.12.0...v4.13.0) (2024-10-31)
+
+
+### Features
+
+* add errors to element metadata ([#431](https://github.com/Basis-Theory/basis-theory-js/issues/431)) ([c86193d](https://github.com/Basis-Theory/basis-theory-js/commit/c86193d147296d16dfa047843b23627c95736c71))
+
+# [4.12.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.11.0...v4.12.0) (2024-10-29)
+
+
+### Features
+
+* update workflows new secrets ([#426](https://github.com/Basis-Theory/basis-theory-js/issues/426)) ([a5d2774](https://github.com/Basis-Theory/basis-theory-js/commit/a5d277469128ae9d8cd614b8cae7df3d7d13fb86))
+
+# [4.11.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.10.1...v4.11.0) (2024-10-29)
+
+
+### Features
+
+* add support for autocomplete values ([#427](https://github.com/Basis-Theory/basis-theory-js/issues/427)) ([0b8b4a5](https://github.com/Basis-Theory/basis-theory-js/commit/0b8b4a59dd31e12f66c87991d166fa0a17c1b52f))
+
+## [4.10.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.10.0...v4.10.1) (2024-10-24)
+
+
+### Bug Fixes
+
+* adds token transformers to token-intents service ([#423](https://github.com/Basis-Theory/basis-theory-js/issues/423)) ([80c56f1](https://github.com/Basis-Theory/basis-theory-js/commit/80c56f1ce99bbab1bcb9e5858e35b77c702ff4b2))
+
+# [4.10.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.9.0...v4.10.0) (2024-10-17)
+
+
+### Features
+
+* add 3ds create session endpoint and session type ([#424](https://github.com/Basis-Theory/basis-theory-js/issues/424)) ([09c1799](https://github.com/Basis-Theory/basis-theory-js/commit/09c17998fb87607e89eab50e1ca9db3bab235d70))
+
+# [4.9.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.8.0...v4.9.0) (2024-10-10)
+
+
+### Features
+
+* adds token-intents ([#422](https://github.com/Basis-Theory/basis-theory-js/issues/422)) ([0286272](https://github.com/Basis-Theory/basis-theory-js/commit/028627238399fbc368d832f8e3482294ea3471d1))
+
+# [4.8.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.2...v4.8.0) (2024-09-12)
+
+
+### Features
+
+* add script integrity checks for BT-JS ([#421](https://github.com/Basis-Theory/basis-theory-js/issues/421)) ([68b9070](https://github.com/Basis-Theory/basis-theory-js/commit/68b90702ecb91d2f63abdab742665e5c743b33c6))
+
+## [4.7.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.1...v4.7.2) (2024-09-06)
+
+
+### Bug Fixes
+
+* corrects 3ds request paths ([#420](https://github.com/Basis-Theory/basis-theory-js/issues/420)) ([ccaceda](https://github.com/Basis-Theory/basis-theory-js/commit/ccacedaaea9fc0234cc5d3cfd3754886d1f7fdf1))
+
+## [4.7.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.7.0...v4.7.1) (2024-08-14)
+
+
+### Bug Fixes
+
+* patch axios ([#419](https://github.com/Basis-Theory/basis-theory-js/issues/419)) ([00e3220](https://github.com/Basis-Theory/basis-theory-js/commit/00e3220ce497cef608c1e6189ed053b4a22573bd))
+
+# [4.7.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.2...v4.7.0) (2024-07-16)
+
+
+### Features
+
+* adds maxLength to text element ([#417](https://github.com/Basis-Theory/basis-theory-js/issues/417)) ([c13cdac](https://github.com/Basis-Theory/basis-theory-js/commit/c13cdacea04a12173980407ffc2a42a9ae14c4eb))
+
+## [4.6.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.1...v4.6.2) (2024-06-12)
+
+
+### Bug Fixes
+
+* typo in copy icon styles prop ([#416](https://github.com/Basis-Theory/basis-theory-js/issues/416)) ([6caf2fc](https://github.com/Basis-Theory/basis-theory-js/commit/6caf2fc9ba3e0f5c4cb5503984f5451f0f32104e))
+
+## [4.6.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.6.0...v4.6.1) (2024-06-12)
+
+
+### Bug Fixes
+
+* add missing types ([#415](https://github.com/Basis-Theory/basis-theory-js/issues/415)) ([43d683a](https://github.com/Basis-Theory/basis-theory-js/commit/43d683aecd9e8fb4ea65b207bde202ee2f34de29))
+
+# [4.6.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.5.0...v4.6.0) (2024-06-11)
+
+
+### Features
+
+* adds copyIconStyles ([#414](https://github.com/Basis-Theory/basis-theory-js/issues/414)) ([c03744b](https://github.com/Basis-Theory/basis-theory-js/commit/c03744b98d8349d978c36ab781ae7742b6d5149e))
+
+# [4.5.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.4.0...v4.5.0) (2024-05-31)
+
+
+### Features
+
+* updating token usage report ([#413](https://github.com/Basis-Theory/basis-theory-js/issues/413)) ([4cf3750](https://github.com/Basis-Theory/basis-theory-js/commit/4cf37505c301cc7115da453dc7fb3a3007f54736))
+
+# [4.4.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.3.0...v4.4.0) (2024-05-02)
+
+
+### Features
+
+* add application keys endpoints ([#412](https://github.com/Basis-Theory/basis-theory-js/issues/412)) ([2b2be74](https://github.com/Basis-Theory/basis-theory-js/commit/2b2be7437b3bf9d25693b08c197cdb49b44e9aee))
+
+# [4.3.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.2...v4.3.0) (2024-03-28)
+
+
+### Features
+
+* add 3ds client ([#410](https://github.com/Basis-Theory/basis-theory-js/issues/410)) ([ae3064a](https://github.com/Basis-Theory/basis-theory-js/commit/ae3064a04665c5947537f4178603067bc10ee469))
+
+## [4.2.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.1...v4.2.2) (2024-03-18)
+
+
+### Bug Fixes
+
+* remove value setter generic altogether ([#409](https://github.com/Basis-Theory/basis-theory-js/issues/409)) ([800cf4a](https://github.com/Basis-Theory/basis-theory-js/commit/800cf4a7dbc2173fa18e091a181db3d32be5d708))
+
+## [4.2.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.2.0...v4.2.1) (2024-03-18)
+
+
+### Bug Fixes
+
+* revert setValue types ([#408](https://github.com/Basis-Theory/basis-theory-js/issues/408)) ([9a2f48b](https://github.com/Basis-Theory/basis-theory-js/commit/9a2f48bac071a6ff9804a1ff763139d2e0950a10))
+
+# [4.2.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.1.0...v4.2.0) (2024-03-13)
+
+
+### Features
+
+* adds setValueRef to elements ([#406](https://github.com/Basis-Theory/basis-theory-js/issues/406)) ([f1b5f2a](https://github.com/Basis-Theory/basis-theory-js/commit/f1b5f2aa5a362f1e82ab0cf7cfe76e7fdc35fe9c))
+
+# [4.1.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.0.0...v4.1.0) (2024-03-05)
+
+
+### Features
+
+* adds skipLuhnValidation ([#405](https://github.com/Basis-Theory/basis-theory-js/issues/405)) ([40f175f](https://github.com/Basis-Theory/basis-theory-js/commit/40f175faa04be8de2aa9d18e8cd5fad0ac6aea0a))
+
+# [4.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v3.0.0...v4.0.0) (2024-02-14)
+
+
+* feat!: remove transactions (#404) ([482edda](https://github.com/Basis-Theory/basis-theory-js/commit/482edda48fbd023c51d05b47bcde64695e26fe6a)), closes [#404](https://github.com/Basis-Theory/basis-theory-js/issues/404)
+
+
+### BREAKING CHANGES
+
+* removing transactions
+
+# [3.0.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.9.0...v3.0.0) (2024-01-16)
+
+
+* feat!: support logs cursor pagination (#403) ([c1d116d](https://github.com/Basis-Theory/basis-theory-js/commit/c1d116dd1df3b9de967808da45bc37b100cacd4b)), closes [#403](https://github.com/Basis-Theory/basis-theory-js/issues/403)
+
+
+### BREAKING CHANGES
+
+* logs api changed from using offset pagination to cursor pagination
+
 # [2.9.0](https://github.com/Basis-Theory/basis-theory-js/compare/v2.8.0...v2.9.0) (2024-01-05)
 
 

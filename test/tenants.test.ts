@@ -299,28 +299,22 @@ describe('Tenants', () => {
     beforeEach(() => {
       expectedUsageReport = {
         tokenReport: {
-          metricsByType: {
-            [chance.string({
-              alpha: true,
-              casing: 'lower',
-            })]: {
-              count: chance.integer(),
-              lastCreatedAt: chance.string(),
-            },
-          },
+          totalTokens: chance.integer(),
           includedMonthlyActiveTokens: chance.integer(),
           monthlyActiveTokens: chance.integer(),
         },
+        totalTokens: chance.integer(),
       };
 
       expectedUsageReportJson = JSON.stringify({
         token_report: {
-          metrics_by_type: expectedUsageReport.tokenReport.metricsByType,
+          totalTokens: expectedUsageReport.tokenReport.totalTokens,
           monthly_active_tokens:
             expectedUsageReport.tokenReport.monthlyActiveTokens,
           included_monthly_active_tokens:
             expectedUsageReport.tokenReport.includedMonthlyActiveTokens,
         },
+        totalTokens: expectedUsageReport.totalTokens,
       });
     });
 

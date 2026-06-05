@@ -3,6 +3,7 @@ import type {
   AxiosResponse,
   AxiosRequestTransformer,
   AxiosResponseTransformer,
+  AxiosError,
 } from 'axios';
 import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
@@ -16,10 +17,9 @@ import type {
   Token,
   CreateReactor,
   UpdateReactor,
-  CreateToken,
-  UpdateToken,
   CreateProxy,
   UpdateProxy,
+  Primitive,
 } from '@/types/models';
 import type {
   ApplicationInfo,
@@ -34,9 +34,11 @@ import {
   BROWSER_LIST,
   BT_IDEMPOTENCY_KEY_HEADER,
   BT_TRACE_ID_HEADER,
-  BT_TRANSACTION_ID_HEADER,
+  CF_RAY_HEADER,
+  CLIENT_USER_AGENT_HEADER,
   USER_AGENT_CLIENT,
 } from './constants';
+import { logger } from './logging';
 
 const assertInit = <T>(prop: T): NonNullable<T> => {
   if (prop === null || prop === undefined) {
@@ -88,18 +90,20 @@ const transformProxyRequestSnakeCase = (
   } as Proxy | CreateProxy | UpdateProxy;
 };
 
-const transformTokenRequestSnakeCase = (
-  token: Token | CreateToken | UpdateToken
-): Token | CreateToken | UpdateToken | undefined => {
-  if (typeof token === 'undefined') {
+type TokenLike<DataType> = Partial<Token<DataType>> & Record<string, unknown>;
+
+const transformTokenRequestSnakeCase = <DataType = Primitive>(
+  payload: TokenLike<DataType>
+): TokenLike<DataType> | undefined => {
+  if (typeof payload === 'undefined') {
     return undefined;
   }
 
   return {
-    ...snakecaseKeys(token, { deep: true }),
-    ...(token.data !== undefined ? { data: token.data } : {}),
-    ...(token.metadata !== undefined ? { metadata: token.metadata } : {}),
-  } as Token | CreateToken | UpdateToken;
+    ...snakecaseKeys(payload, { deep: true }),
+    ...(payload.data !== undefined ? { data: payload.data } : {}),
+    ...(payload.metadata !== undefined ? { metadata: payload.metadata } : {}),
+  } as TokenLike<DataType>;
 };
 
 const isList = <T>(arg: unknown): arg is PaginatedList<T> =>
@@ -107,9 +111,9 @@ const isList = <T>(arg: unknown): arg is PaginatedList<T> =>
   (arg as PaginatedList<T>)?.pagination !== undefined &&
   (arg as PaginatedList<T>)?.data !== undefined;
 
-const transformTokenResponseCamelCase = (
-  tokenResponse: Token | PaginatedList<Token> | undefined
-): Token | PaginatedList<Token> | undefined => {
+const transformTokenResponseCamelCase = <DataType = Primitive>(
+  tokenResponse: TokenLike<DataType> | PaginatedList<Token> | undefined
+): TokenLike<DataType> | PaginatedList<Token> | undefined => {
   if (typeof tokenResponse === 'undefined') {
     return undefined;
   }
@@ -135,7 +139,7 @@ const transformTokenResponseCamelCase = (
     ...(tokenResponse.metadata !== undefined
       ? { metadata: tokenResponse.metadata }
       : {}),
-  } as Token;
+  } as TokenLike<DataType>;
 };
 
 const transformReactorResponseCamelCase = (
@@ -266,7 +270,6 @@ const createRequestConfig = (
     apiKey,
     correlationId,
     idempotencyKey,
-    transactionId,
     query,
     headers,
   } = options as ProxyRequestOptions;
@@ -286,18 +289,12 @@ const createRequestConfig = (
         [BT_IDEMPOTENCY_KEY_HEADER]: idempotencyKey,
       }
     : {};
-  const transactionIdHeader = transactionId
-    ? {
-        [BT_TRANSACTION_ID_HEADER]: transactionId,
-      }
-    : {};
 
   return {
     headers: {
       ...apiKeyHeader,
       ...correlationIdHeader,
       ...idempotencyKeyHeader,
-      ...transactionIdHeader,
       ...(typeof headers !== 'undefined' && { ...headers }),
     },
     ...(typeof query !== 'undefined' && { params: query }),
@@ -318,13 +315,55 @@ const createRequestConfig = (
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
-const errorInterceptor = (error: any): void => {
-  const status = error.response?.status || -1;
-  const data = error.response?.data;
+const handleAxiosError = (error: AxiosError, debug?: boolean): void => {
+  const status = error?.response?.status ?? -1;
+  const data = error?.response?.data;
 
-  throw new BasisTheoryApiError(error.message, status, data);
+  let _debug;
+
+  if (debug) {
+    _debug = {
+      cfRay: error?.response?.headers?.[CF_RAY_HEADER],
+      btTraceId: error?.response?.headers?.[BT_TRACE_ID_HEADER],
+    };
+  }
+
+  const logSeverity = status > -1 && status < 499 ? 'warn' : 'error';
+
+  logger.log[logSeverity](
+    `Error when making ${error?.config?.method?.toUpperCase()} request to ${
+      error?.config?.baseURL
+    } from the JS SDK`,
+    {
+      apiStatus: status,
+      logType: 'axiosError',
+      logOrigin: 'axiosErrorInterceptor',
+      requestDetails: {
+        url: error?.config?.baseURL,
+        method: error?.config?.method?.toUpperCase(),
+        btUserAgent: error?.config?.headers?.[CLIENT_USER_AGENT_HEADER],
+      },
+      errorDetails: {
+        code: error?.code,
+        name: error?.name,
+        stack: error?.stack,
+        headers: error?.response?.headers,
+        message: error?.message,
+        status: error?.response?.status,
+        statusText: error?.response?.statusText,
+        data: error?.response?.data,
+      },
+    }
+  );
+
+  throw new BasisTheoryApiError(error.message, status, data, _debug);
 };
+
+const errorInterceptor = (error: AxiosError): void =>
+  handleAxiosError(error, false);
+
+const errorInterceptorDebug = (error: AxiosError): void =>
+  handleAxiosError(error, true);
 
 const getQueryParams = <Q>(query: Q = {} as Q): string => {
   const keys = Object.keys(query as Record<string, unknown>) as (keyof Q)[];
@@ -471,6 +510,20 @@ const buildClientUserAgentString = (appInfo?: ApplicationInfo): string => {
   return JSON.stringify(snakecaseKeys(clientUserAgent));
 };
 
+const debugTransform: AxiosResponseTransformer = (data, headers) => {
+  if (headers && typeof data === 'object' && data !== undefined) {
+    // we are deliberately mutating the data object here to include the debug headers
+    // eslint-disable-next-line no-param-reassign
+    data._debug = {
+      ...data._debug,
+      cfRay: headers[CF_RAY_HEADER],
+      btTraceId: headers[BT_TRACE_ID_HEADER],
+    };
+  }
+
+  return data;
+};
+
 export {
   assertInit,
   transformRequestSnakeCase,
@@ -494,4 +547,6 @@ export {
   getOSVersion,
   getRuntime,
   getBrowser,
+  debugTransform,
+  errorInterceptorDebug,
 };
