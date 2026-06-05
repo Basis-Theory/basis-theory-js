@@ -23,7 +23,7 @@ import type {
   UpdateCardVerificationCodeElementOptions,
   UpdateTextElementOptions,
 } from './options';
-import type { Proxy, Tokenize, Tokens } from './services';
+import type { Proxy, Tokenize, Tokens, TokenIntents } from './services';
 import type {
   CardMetadata,
   DataElementReference,
@@ -49,9 +49,11 @@ interface BaseElement<UpdateOptions, ElementEvents> {
 type CardElement = BaseElement<UpdateCardElementOptions, CardElementEvents> & {
   readonly cardMetadata?: CardMetadata;
   setValue(value: CardElementValue<'reference'>): void;
+  validate(): void;
 };
 
 type TextElement = BaseElement<UpdateTextElementOptions, TextElementEvents> & {
+  setValueRef(value: TextElement): void;
   setValue(value: DataElementReference): void;
 };
 
@@ -60,6 +62,7 @@ type CardNumberElement = BaseElement<
   CardNumberElementEvents
 > & {
   readonly cardMetadata?: CardMetadata;
+  setValueRef(value: CardNumberElement): void;
   setValue(value: DataElementReference): void;
 };
 
@@ -67,16 +70,18 @@ type CardExpirationDateElement = BaseElement<
   UpdateCardExpirationDateElementOptions,
   CardExpirationDateElementEvents
 > & {
+  setValueRef(value: CardExpirationDateElement): void;
+  setValue(value: CardExpirationDateValue<'reference'>): void;
   month(): ElementWrapper<CardExpirationDateElement>;
   year(): ElementWrapper<CardExpirationDateElement>;
   format(dateFormat: string): ElementWrapper<CardExpirationDateElement>;
-  setValue(value: CardExpirationDateValue<'reference'>): void;
 };
 
 type CardVerificationCodeElement = BaseElement<
   UpdateCardVerificationCodeElementOptions,
   CardVerificationCodeElementEvents
 > & {
+  setValueRef(value: CardVerificationCodeElement): void;
   setValue(value: DataElementReference): void;
 };
 
@@ -98,6 +103,7 @@ type ElementValue =
 interface BasisTheoryElements extends Tokenize {
   tokens: Tokens;
   proxy: Proxy;
+  tokenIntents: TokenIntents;
 
   createElement(type: 'card', options?: CreateCardElementOptions): CardElement;
   createElement(type: 'text', options: CreateTextElementOptions): TextElement;
@@ -118,7 +124,10 @@ interface BasisTheoryElementsInternal extends BasisTheoryElements {
   init: (
     apiKey: string | undefined,
     elementsBaseUrl: string,
-    elementsUseNgApi: boolean | undefined
+    elementsUseNgApi: boolean | undefined,
+    elementsUseSameOriginApi: boolean | undefined,
+    disableTelemetry: boolean | undefined,
+    debug: boolean | undefined
   ) => Promise<BasisTheoryElements>;
   hasElement: (payload: unknown) => boolean;
   client: HttpClient;
