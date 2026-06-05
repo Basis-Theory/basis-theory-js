@@ -1,4 +1,5 @@
 import type { BinDetails } from './bin-details';
+import { CardDetails } from './card-details';
 import type { Primitive, TokenBase } from './shared';
 
 const DATA_CLASSIFICATIONS = ['general', 'bank', 'pci', 'pii'] as const;
@@ -12,16 +13,6 @@ type DataImpactLevel = typeof DATA_IMPACT_LEVELS[number];
 const DATA_RESTRICTION_POLICIES = ['mask', 'redact'] as const;
 
 type DataRestrictionPolicy = typeof DATA_RESTRICTION_POLICIES[number];
-
-type DataObject<DataType = Primitive> = {
-  [member: string]: TokenData<DataType>;
-};
-type DataArray<DataType> = Array<TokenData<DataType>>;
-type TokenData<DataType = Primitive> =
-  | Primitive
-  | DataObject<DataType>
-  | DataArray<DataType>
-  | DataType;
 
 type MaskObject = {
   [member: string]: TokenMask;
@@ -47,10 +38,11 @@ interface TokenPrivacy {
 
 interface TokenEnrichments {
   binDetails?: BinDetails;
+  cardDetails?: CardDetails;
 }
 
-interface Token<DataType = Primitive> extends TokenBase {
-  data: TokenData<DataType>;
+type Token<DataType = Primitive> = TokenBase<DataType> & {
+  id: string;
   privacy?: TokenPrivacy;
   containers?: string[];
   encryption?: TokenEncryption;
@@ -59,7 +51,11 @@ interface Token<DataType = Primitive> extends TokenBase {
   mask?: TokenMask;
   expiresAt?: string;
   enrichments?: TokenEnrichments;
-}
+  tenantId: string;
+  fingerprint?: string;
+  metadata?: Record<string, string>;
+  _debug?: Record<string, unknown>;
+};
 
 type CreateToken<DataType = Primitive> = Pick<
   Token<DataType>,
@@ -76,6 +72,7 @@ type CreateToken<DataType = Primitive> = Pick<
 > & {
   deduplicateToken?: boolean;
   id?: string;
+  _debug?: Record<string, unknown>;
 };
 
 type UpdateToken<DataType = Primitive> = Partial<
@@ -92,6 +89,7 @@ type UpdateToken<DataType = Primitive> = Partial<
   > & {
     privacy: Omit<TokenPrivacy, 'classification'>;
     deduplicateToken: boolean;
+    _debug?: Record<string, unknown>;
   }
 >;
 
@@ -100,9 +98,6 @@ export type {
   TokenEnrichments,
   CreateToken,
   UpdateToken,
-  DataArray,
-  DataObject,
-  TokenData,
   DataClassification,
   DataImpactLevel,
   DataRestrictionPolicy,
