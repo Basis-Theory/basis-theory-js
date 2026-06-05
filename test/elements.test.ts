@@ -69,6 +69,7 @@ describe('Elements', () => {
         bt.init(chance.string(), {
           elements: true,
           elementsClientUrl: chance.string(),
+          disableTelemetry: true,
         })
       ).rejects.toThrow('Invalid format for the given Elements client url.');
     });
@@ -99,6 +100,76 @@ describe('Elements', () => {
       ).resolves.toBe(bt);
     });
 
+    test('should initialize BasisTheoryElements with useNgApi and useSameOriginApi false if not specified', async () => {
+      let loadElements: () => unknown = jest.fn();
+
+      jest.isolateModules(() => {
+        ({ loadElements } = require('../src/elements'));
+      });
+
+      const expectedElements = ({
+        init: jest.fn(),
+      } as unknown) as BasisTheoryType;
+
+      window.BasisTheoryElements = (expectedElements as unknown) as BasisTheoryElementsInternal;
+      expect(await loadElements()).toBe(expectedElements);
+      const baseUrl = chance.url({
+        protocol: 'https',
+        path: '',
+      });
+
+      await new BasisTheory().init('', {
+        elements: true,
+        elementsBaseUrl: baseUrl,
+      });
+
+      expect(expectedElements.init).toHaveBeenCalledWith(
+        '',
+        baseUrl.replace(/\/$/u, ''),
+        false,
+        false,
+        false,
+        false
+      );
+    });
+
+    test('should initialize BasisTheoryElements with specified useNgApi and useSameOriginApi params', async () => {
+      let loadElements: () => unknown = jest.fn();
+
+      jest.isolateModules(() => {
+        ({ loadElements } = require('../src/elements'));
+      });
+
+      const expectedElements = ({
+        init: jest.fn(),
+      } as unknown) as BasisTheoryType;
+
+      window.BasisTheoryElements = (expectedElements as unknown) as BasisTheoryElementsInternal;
+      expect(await loadElements()).toBe(expectedElements);
+      const baseUrl = chance.url({
+        protocol: 'https',
+        path: '',
+      });
+      const useNgApi = chance.bool();
+      const useSameOriginApi = chance.bool();
+
+      await new BasisTheory().init('', {
+        elements: true,
+        elementsBaseUrl: baseUrl,
+        elementsUseNgApi: useNgApi,
+        elementsUseSameOriginApi: useSameOriginApi,
+      });
+
+      expect(expectedElements.init).toHaveBeenCalledWith(
+        '',
+        baseUrl.replace(/\/$/u, ''),
+        useNgApi,
+        useSameOriginApi,
+        false,
+        false
+      );
+    });
+
     test('should resolve to previously initialized BasisTheoryElements', async () => {
       let loadElements: () => unknown = jest.fn();
 
@@ -125,7 +196,11 @@ describe('Elements', () => {
 
       expect(expectedElements.init).toHaveBeenCalledWith(
         '',
-        baseUrl.replace(/\/$/u, '')
+        baseUrl.replace(/\/$/u, ''),
+        false,
+        false,
+        false,
+        false
       );
     });
 
@@ -282,7 +357,11 @@ describe('Elements', () => {
         expect(bt.elements).toBeDefined();
         expect(elementsInit).toHaveBeenCalledWith(
           'el-123',
-          baseUrl.replace(/\/$/u, '')
+          baseUrl.replace(/\/$/u, ''),
+          false,
+          false,
+          false,
+          false
         );
       });
     });

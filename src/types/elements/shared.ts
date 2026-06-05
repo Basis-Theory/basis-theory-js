@@ -33,15 +33,16 @@ interface PropertyError {
 
 interface ElementMetadata {
   complete: boolean;
-  valid: boolean;
-  maskSatisfied?: boolean;
   empty: boolean;
+  errors?: FieldError[] | Omit<FieldError, 'targetId'>[];
+  maskSatisfied?: boolean;
+  valid: boolean;
 }
 
 interface CardMetadata {
+  cardBin?: string;
   cardBrand: Brand;
   cardLast4?: string;
-  cardBin?: string;
 }
 
 /**
@@ -69,17 +70,17 @@ type DataElementReference = {
 };
 
 export type {
-  FieldErrorType,
-  ConfigErrorType,
-  ConfigError,
-  Targeted,
-  ListenableKey,
-  FieldError,
-  PropertyError,
+  AutoCompleteValue,
   Brand,
   CardIconPosition,
-  AutoCompleteValue,
+  CardMetadata,
+  ConfigError,
+  ConfigErrorType,
   DataElementReference,
   ElementMetadata,
-  CardMetadata,
+  FieldError,
+  FieldErrorType,
+  ListenableKey,
+  PropertyError,
+  Targeted,
 };

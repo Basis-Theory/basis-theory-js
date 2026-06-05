@@ -12,6 +12,9 @@ acceptance:
 setup-infra:
 	./scripts/setupinfra.sh
 
+deploy-index-hash:
+	./scripts/deploy-index-hash.sh
+
 release:
 	yarn release
 	$(MAKE) setup-infra

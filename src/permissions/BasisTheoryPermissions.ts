@@ -1,12 +1,17 @@
-import { createRequestConfig, dataExtractor } from '@/common';
+import { createRequestConfig, dataExtractor, getQueryParams } from '@/common';
 import { BasisTheoryService } from '@/service';
 import type { Permission } from '@/types/models';
-import type { RequestOptions } from '@/types/sdk';
+import type { ListPermissionsQuery, RequestOptions } from '@/types/sdk';
 
 export class BasisTheoryPermissions extends BasisTheoryService {
-  public list(options?: RequestOptions): Promise<Permission[]> {
+  public list(
+    query?: ListPermissionsQuery,
+    options?: RequestOptions
+  ): Promise<Permission[]> {
+    const url = `/${getQueryParams(query)}`;
+
     return this.client
-      .get('/', createRequestConfig(options))
+      .get(url, createRequestConfig(options))
       .then(dataExtractor);
   }
 }

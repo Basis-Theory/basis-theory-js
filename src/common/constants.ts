@@ -1,14 +1,16 @@
 import type { BasisTheoryServicesBasePathMap } from '@/types/sdk';
 
+const WEB_ELEMENTS_VERSION = '1.7.2';
+
 const API_KEY_HEADER = 'BT-API-KEY';
 
 const BT_TRACE_ID_HEADER = 'bt-trace-id';
 
+const CF_RAY_HEADER = 'cf-ray';
+
 const BT_IDEMPOTENCY_KEY_HEADER = 'bt-idempotency-key';
 
 const BT_EXPOSE_PROXY_RESPONSE_HEADER = 'BT-EXPOSE-RAW-PROXY-RESPONSE';
-
-const BT_TRANSACTION_ID_HEADER = 'BT-TRANSACTION-ID';
 
 const CONTENT_TYPE_HEADER = 'Content-Type';
 
@@ -24,10 +26,16 @@ const DEFAULT_BASE_URL = `https://${process.env.API_HOST}`;
 
 const DEFAULT_ELEMENTS_BASE_URL = `https://${process.env.ELEMENTS_HOST}`;
 
+const DD_TOKEN = process.env.DD_TOKEN;
+
+const DD_GIT_SHA = process.env.DD_GIT_SHA;
+
 const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   tokens: 'tokens',
   tokenize: 'tokenize',
   applications: 'applications',
+  applicationKeys: 'applications',
+  applicationTemplates: 'application-templates',
   tenants: 'tenants/self',
   logs: 'logs',
   reactorFormulas: 'reactor-formulas',
@@ -36,7 +44,8 @@ const CLIENT_BASE_PATHS: BasisTheoryServicesBasePathMap = {
   proxies: 'proxies',
   proxy: 'proxy',
   sessions: 'sessions',
-  transactions: 'transactions',
+  threeds: '3ds',
+  tokenIntents: 'token-intents',
 };
 
 const BROWSER_LIST = [
@@ -80,17 +89,20 @@ const BROWSER_LIST = [
 
 export {
   API_KEY_HEADER,
-  BT_TRACE_ID_HEADER,
-  BT_IDEMPOTENCY_KEY_HEADER,
-  CONTENT_TYPE_HEADER,
-  MERGE_CONTENT_TYPE,
-  USER_AGENT_HEADER,
-  CLIENT_USER_AGENT_HEADER,
-  USER_AGENT_CLIENT,
+  BROWSER_LIST,
   BT_EXPOSE_PROXY_RESPONSE_HEADER,
+  BT_IDEMPOTENCY_KEY_HEADER,
+  BT_TRACE_ID_HEADER,
+  CF_RAY_HEADER,
+  CLIENT_BASE_PATHS,
+  CLIENT_USER_AGENT_HEADER,
+  CONTENT_TYPE_HEADER,
+  DD_GIT_SHA,
+  DD_TOKEN,
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
-  CLIENT_BASE_PATHS,
-  BROWSER_LIST,
-  BT_TRANSACTION_ID_HEADER,
+  MERGE_CONTENT_TYPE,
+  USER_AGENT_CLIENT,
+  USER_AGENT_HEADER,
+  WEB_ELEMENTS_VERSION,
 };

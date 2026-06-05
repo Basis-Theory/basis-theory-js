@@ -35,26 +35,6 @@ interface Tokens
     Retrieve<Token<any>>,
     Delete,
     List<Token, ListTokensQuery> {
-  createAssociation(
-    parentId: string,
-    childId: string,
-    options?: RequestOptions
-  ): Promise<void>;
-  deleteAssociation(
-    parentId: string,
-    childId: string,
-    options?: RequestOptions
-  ): Promise<void>;
-  createChild(
-    parentId: string,
-    token: CreateToken,
-    options?: RequestOptions
-  ): Promise<Token>;
-  listChildren(
-    parentId: string,
-    query?: ListTokensQuery,
-    options?: RequestOptions
-  ): Promise<PaginatedList<Token>>;
   search(
     searchRequest: SearchTokensRequest,
     options?: RequestOptions

@@ -1,5 +1,6 @@
+import { CreditCardType } from './cardTypes';
 import { AutoCompleteValue, DataElementReference } from './shared';
-import type { ElementStyle } from './styles';
+import type { CopyIconStyles, ElementStyle } from './styles';
 
 const ELEMENTS_TYPES = [
   'card',
@@ -16,6 +17,10 @@ interface ElementInternalOptions {
   apiKey: string | undefined;
   baseUrl: string;
   type: ElementType;
+  useNgApi: boolean | undefined;
+  useSameOriginApi: boolean | undefined;
+  disableTelemetry?: boolean | undefined;
+  debug?: boolean | undefined;
 }
 
 enum InputMode {
@@ -32,16 +37,20 @@ enum InputMode {
 interface SanitizedElementOptions {
   ariaDescription?: string;
   ariaLabel?: string;
-  autoComplete?: string;
+  autoComplete?: AutoCompleteValue;
   cardBrand?: string;
+  cardTypes?: CreditCardType[];
+  copyIconStyles?: CopyIconStyles;
   disabled?: boolean;
   enableCopy?: boolean;
   iconPosition?: string;
   inputMode?: `${InputMode}`;
   mask?: (RegExp | string)[];
+  maxLength?: HTMLInputElement['maxLength'];
   password?: boolean;
   placeholder?: string;
   readOnly?: boolean;
+  skipLuhnValidation?: boolean;
   style?: ElementStyle;
   targetId?: string;
   transform?: [RegExp, string] | null;
@@ -67,10 +76,13 @@ interface AutoCompleteOption {
 
 type CustomizableElementOptions = Pick<
   ElementOptions,
+  | 'cardTypes'
+  | 'copyIconStyles'
   | 'disabled'
   | 'enableCopy'
   | 'inputMode'
   | 'readOnly'
+  | 'skipLuhnValidation'
   | 'style'
   | 'validateOnChange'
 > &
@@ -85,14 +97,22 @@ interface CardElementValue<T extends ElementValueType> {
   number?: T extends 'reference' ? DataElementReference : string;
 }
 
+interface CardElementPlaceholder {
+  cardNumber?: string;
+  cardExpirationDate?: string;
+  cardSecurityCode?: string;
+}
+
 interface CardExpirationDateValue<T extends ElementValueType> {
   month: T extends 'reference' ? DataElementReference : number;
   year: T extends 'reference' ? DataElementReference : number;
 }
 
-type CreateCardElementOptions = CustomizableElementOptions & {
-  value?: CardElementValue<'static'>;
-};
+type CreateCardElementOptions = CustomizableElementOptions &
+  Pick<ElementOptions, 'cardTypes' | 'skipLuhnValidation'> & {
+    placeholder?: CardElementPlaceholder;
+    value?: CardElementValue<'static'>;
+  };
 
 type UpdateCardElementOptions = Omit<
   CreateCardElementOptions,
@@ -100,7 +120,10 @@ type UpdateCardElementOptions = Omit<
 >;
 
 type CreateTextElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'mask' | 'password' | 'validation'> &
+  Pick<
+    ElementOptions,
+    'placeholder' | 'mask' | 'maxLength' | 'password' | 'validation'
+  > &
   TransformOption &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
@@ -113,7 +136,10 @@ type UpdateTextElementOptions = Omit<
 >;
 
 type CreateCardNumberElementOptions = CustomizableElementOptions &
-  Pick<ElementOptions, 'placeholder' | 'iconPosition'> &
+  Pick<
+    ElementOptions,
+    'placeholder' | 'iconPosition' | 'cardTypes' | 'skipLuhnValidation'
+  > &
   Required<Pick<ElementOptions, 'targetId'>> & {
     'aria-label'?: string;
     value?: string;
@@ -149,6 +175,7 @@ type UpdateCardVerificationCodeElementOptions = Omit<
 >;
 
 export type {
+  CardElementPlaceholder,
   CardElementValue,
   CardExpirationDateValue,
   CreateCardElementOptions,
