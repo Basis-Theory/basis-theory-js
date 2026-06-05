@@ -1,8 +1,3 @@
-import {
-  makeRequestWithElementsPayloadCheck,
-  makeRequestWithoutElementsPayloadCheck,
-} from '@/common/BasisTheoryClient';
-import { BasisTheoryTransactions } from '@/transactions';
 import type {
   BasisTheoryElements,
   BasisTheoryElementsInternal,
@@ -22,30 +17,36 @@ import type {
   Tokenize as ElementsTokenize,
   TokenizeData as ElementsTokenizeData,
   Tokens as ElementsTokens,
+  TokenIntents as ElementsTokenIntents,
 } from '@/types/elements';
 import type { TokenizeData } from '@/types/models';
 import type {
+  ApplicationKeys,
   Applications,
+  ApplicationTemplates,
   BasisTheory as IBasisTheory,
   BasisTheoryInit,
   BasisTheoryInitOptions,
   BasisTheoryInitOptionsWithElements,
   BasisTheoryInitOptionsWithoutElements,
   BasisTheoryInitStatus,
+  HttpClient,
   Logs,
   Permissions,
   Proxies,
   Proxy,
   ReactorFormulas,
   Reactors,
-  RequestConfig,
   RequestOptions,
   Sessions,
   Tenants,
+  ThreeDS,
+  TokenIntents,
   Tokenize,
   Tokens,
 } from '@/types/sdk';
-import { Transactions } from '@/types/sdk/services/transactions';
+import { BasisTheoryApplicationTemplates } from './application-templates';
+import { BasisTheoryApplicationKeys } from './applicationKeys';
 import { BasisTheoryApplications } from './applications';
 import {
   assertInit,
@@ -53,8 +54,10 @@ import {
   DEFAULT_BASE_URL,
   DEFAULT_ELEMENTS_BASE_URL,
 } from './common';
+import { logger } from './common/logging';
 import {
   delegateProxy,
+  delegateTokenIntents,
   delegateTokenize,
   delegateTokens,
   loadElements,
@@ -67,10 +70,13 @@ import { BasisTheoryReactorFormulas } from './reactor-formulas';
 import { BasisTheoryReactors } from './reactors';
 import { BasisTheorySessions } from './sessions';
 import { BasisTheoryTenants } from './tenants';
+import { BasisTheoryThreeDS } from './threeds';
 
 const defaultInitOptions: Required<BasisTheoryInitOptionsWithoutElements> = {
   apiBaseUrl: DEFAULT_BASE_URL,
   elements: false,
+  disableTelemetry: false,
+  debug: false,
   appInfo: {},
 };
 
@@ -78,23 +84,17 @@ export class BasisTheory
   implements BasisTheoryInit, IBasisTheory, BasisTheoryElements {
   private _initStatus: BasisTheoryInitStatus = 'not-started';
 
-  private _initOptions?: Required<BasisTheoryInitOptions>;
-
-  private _tokens?: Tokens & ElementsTokens;
-
-  private _tokenize?: Tokenize & ElementsTokenize;
-
-  private _elements?: BasisTheoryElementsInternal;
+  private _applicationKeys?: BasisTheoryApplicationKeys;
 
   private _applications?: BasisTheoryApplications;
 
-  private _tenants?: BasisTheoryTenants;
+  private _applicationTemplates?: BasisTheoryApplicationTemplates;
+
+  private _elements?: BasisTheoryElementsInternal;
+
+  private _initOptions?: Required<BasisTheoryInitOptions>;
 
   private _logs?: BasisTheoryLogs;
-
-  private _reactorFormulas?: BasisTheoryReactorFormulas;
-
-  private _reactors?: BasisTheoryReactors;
 
   private _permissions?: BasisTheoryPermissions;
 
@@ -102,9 +102,21 @@ export class BasisTheory
 
   private _proxy?: Proxy & ElementsProxy;
 
+  private _reactorFormulas?: BasisTheoryReactorFormulas;
+
+  private _reactors?: BasisTheoryReactors;
+
   private _sessions?: Sessions;
 
-  private _transactions?: Transactions;
+  private _tenants?: BasisTheoryTenants;
+
+  private _threeds?: ThreeDS;
+
+  private _tokenize?: Tokenize & ElementsTokenize;
+
+  private _tokens?: Tokens & ElementsTokens;
+
+  private _tokenIntents?: TokenIntents & ElementsTokenIntents;
 
   public init(
     apiKey: string | undefined,
@@ -145,7 +157,7 @@ export class BasisTheory
           baseUrlObject.protocol = 'https';
         }
 
-        baseUrl = baseUrlObject.toString().replace(/\/$/u, '');
+        baseUrl = `${baseUrlObject.toString().replace(/\/$/u, '')}/`;
       } catch {
         throw new Error('Invalid format for the given API base url.');
       }
@@ -160,15 +172,30 @@ export class BasisTheory
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokens, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
       this._tokenize = new (delegateTokenize(this._elements))({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.tokenize, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
       this._applications = new BasisTheoryApplications({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.applications, baseUrl).toString(),
+        appInfo,
+      });
+      this._applicationKeys = new BasisTheoryApplicationKeys({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.applicationKeys, baseUrl).toString(),
+        appInfo,
+      });
+      this._applicationTemplates = new BasisTheoryApplicationTemplates({
+        apiKey,
+        baseURL: new URL(
+          CLIENT_BASE_PATHS.applicationTemplates,
+          baseUrl
+        ).toString(),
         appInfo,
       });
       this._tenants = new BasisTheoryTenants({
@@ -205,17 +232,29 @@ export class BasisTheory
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.proxy, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
       this._sessions = new BasisTheorySessions({
         apiKey,
         baseURL: new URL(CLIENT_BASE_PATHS.sessions, baseUrl).toString(),
         appInfo,
+        debug: this._initOptions.debug,
       });
-      this._transactions = new BasisTheoryTransactions({
+      this._threeds = new BasisTheoryThreeDS({
         apiKey,
-        baseURL: new URL(CLIENT_BASE_PATHS.transactions, baseUrl).toString(),
+        baseURL: new URL(CLIENT_BASE_PATHS.threeds, baseUrl).toString(),
         appInfo,
       });
+      this._tokenIntents = new (delegateTokenIntents(this._elements))({
+        apiKey,
+        baseURL: new URL(CLIENT_BASE_PATHS.tokenIntents, baseUrl).toString(),
+        appInfo,
+        debug: this._initOptions.debug,
+      });
+
+      if (options.disableTelemetry) {
+        logger.setTelemetryEnabled(false);
+      }
 
       this._initStatus = 'done';
     } catch (error) {
@@ -274,66 +313,6 @@ export class BasisTheory
     return assertInit(this._tokenize).tokenize(tokens, options);
   }
 
-  public post(
-    url: string,
-    payload: unknown,
-    config?: RequestConfig
-  ): Promise<unknown> {
-    return makeRequestWithElementsPayloadCheck(
-      this._elements,
-      'post',
-      url,
-      payload,
-      config
-    );
-  }
-
-  public put(
-    url: string,
-    payload: unknown,
-    config?: RequestConfig
-  ): Promise<unknown> {
-    return makeRequestWithElementsPayloadCheck(
-      this._elements,
-      'put',
-      url,
-      payload,
-      config
-    );
-  }
-
-  public patch(
-    url: string,
-    payload: unknown,
-    config?: RequestConfig
-  ): Promise<unknown> {
-    return makeRequestWithElementsPayloadCheck(
-      this._elements,
-      'patch',
-      url,
-      payload,
-      config
-    );
-  }
-
-  public get(url: string, config?: RequestConfig): Promise<unknown> {
-    return makeRequestWithoutElementsPayloadCheck(
-      this._elements,
-      'get',
-      url,
-      config
-    );
-  }
-
-  public delete(url: string, config?: RequestConfig): Promise<unknown> {
-    return makeRequestWithoutElementsPayloadCheck(
-      this._elements,
-      'delete',
-      url,
-      config
-    );
-  }
-
   private async loadElements(apiKey: string): Promise<void> {
     let elementsBaseUrl: URL;
 
@@ -350,10 +329,30 @@ export class BasisTheory
       (this.initOptions as BasisTheoryInitOptionsWithElements).elementsClientUrl
     );
 
+    const elementsUseNgApi =
+      (this.initOptions as BasisTheoryInitOptionsWithElements)
+        .elementsUseNgApi || false;
+
+    const elementsUseSameOriginApi =
+      (this.initOptions as BasisTheoryInitOptionsWithElements)
+        .elementsUseSameOriginApi || false;
+
+    const disableTelemetry =
+      (this.initOptions as BasisTheoryInitOptionsWithElements)
+        .disableTelemetry || false;
+
+    const debug =
+      (this.initOptions as BasisTheoryInitOptionsWithElements).debug || false;
+
     await (elements as BasisTheoryElementsInternal).init(
       apiKey,
-      elementsBaseUrl.toString().replace(/\/$/u, '')
+      elementsBaseUrl.toString().replace(/\/$/u, ''),
+      elementsUseNgApi,
+      elementsUseSameOriginApi,
+      disableTelemetry,
+      debug
     );
+
     this.elements = elements;
   }
 
@@ -371,6 +370,27 @@ export class BasisTheory
     return assertInit(this._applications);
   }
 
+  public get applicationKeys(): ApplicationKeys {
+    return assertInit(this._applicationKeys);
+  }
+
+  public get applicationTemplates(): ApplicationTemplates {
+    return assertInit(this._applicationTemplates);
+  }
+
+  public get client(): HttpClient | undefined {
+    if (this._elements) {
+      return this._elements?.client;
+    }
+
+    // eslint-disable-next-line no-console
+    console.error(
+      'Elements are not initialized. Either initialize elements or use a regular HTTP client if no elements are needed.'
+    );
+
+    return undefined;
+  }
+
   public get tenants(): Tenants {
     return assertInit(this._tenants);
   }
@@ -379,6 +399,10 @@ export class BasisTheory
     return assertInit(this._logs);
   }
 
+  /**
+   * @deprecated Reactor Formulas are now deprecated and will be removed in a future release.
+   * @description We have introduced a `code` property for Reactors to replace Formula's code. For more details visit [our API reference](https://developers.basistheory.com/docs/api/reactors#create-reactor).
+   */
   public get reactorFormulas(): ReactorFormulas {
     return assertInit(this._reactorFormulas);
   }
@@ -403,9 +427,14 @@ export class BasisTheory
     return assertInit(this._sessions);
   }
 
-  public get transactions(): Transactions {
-    return assertInit(this._transactions);
+  public get threeds(): ThreeDS {
+    return assertInit(this._threeds);
   }
+
+  public get tokenIntents(): TokenIntents & ElementsTokenIntents {
+    return assertInit(this._tokenIntents);
+  }
+
   /* eslint-enable accessor-pairs */
 
   /**

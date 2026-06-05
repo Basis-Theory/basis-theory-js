@@ -1,19 +1,22 @@
 import type { BasisTheoryElements } from '@/types/elements';
-import { Transactions } from '@/types/sdk/services/transactions';
 import type {
-  Tokens,
-  Tokenize,
   Applications,
-  Tenants,
+  ApplicationTemplates,
+  HttpClient,
   Logs,
-  ReactorFormulas,
-  Reactors,
   Permissions,
   Proxies,
   Proxy,
+  ReactorFormulas,
+  Reactors,
   Sessions,
-  HttpClient,
+  Tenants,
+  Tokenize,
+  Tokens,
+  ThreeDS,
+  TokenIntents,
 } from './services';
+import { ApplicationKeys } from './services/applicationKeys';
 
 interface ApplicationInfo {
   name?: string;
@@ -24,6 +27,8 @@ interface ApplicationInfo {
 interface BasisTheoryInitOptions {
   apiBaseUrl?: string;
   appInfo?: ApplicationInfo;
+  disableTelemetry?: boolean;
+  debug?: boolean;
 }
 
 interface BasisTheoryInitOptionsWithoutElements extends BasisTheoryInitOptions {
@@ -34,6 +39,8 @@ interface BasisTheoryInitOptionsWithElements extends BasisTheoryInitOptions {
   elements: true;
   elementsBaseUrl?: string;
   elementsClientUrl?: string;
+  elementsUseNgApi?: boolean;
+  elementsUseSameOriginApi?: boolean;
 }
 
 interface BasisTheoryInit {
@@ -47,18 +54,27 @@ interface BasisTheoryInit {
     options: BasisTheoryInitOptionsWithElements
   ): Promise<BasisTheory & BasisTheoryElements>;
 }
-interface BasisTheory extends Tokenize, HttpClient {
-  tokens: Tokens;
+interface BasisTheory extends Tokenize {
   applications: Applications;
-  tenants: Tenants;
+  applicationKeys: ApplicationKeys;
+  applicationTemplates: ApplicationTemplates;
+  /**
+   * @description Allows you to utilize element values in requests to a third-party API using our HTTP client service.
+   * @requires Before proceeding, ensure that the elements are properly initialized. Refer to the [Basis Theory Docs - Initialize elements]((https://developers.basistheory.com/docs/sdks/web/javascript/#initialization)) for more information.
+   * @see For details on how to use the HTTP client service, refer to [Basis Theory Docs - HTTP Client](https://developers.basistheory.com/docs/sdks/web/javascript/methods#http-client-service).
+   */
+  client?: HttpClient;
   logs: Logs;
-  reactorFormulas: ReactorFormulas;
-  reactors: Reactors;
   permissions: Permissions;
   proxies: Proxies;
   proxy: Proxy;
+  reactorFormulas: ReactorFormulas;
+  reactors: Reactors;
   sessions: Sessions;
-  transactions: Transactions;
+  tenants: Tenants;
+  tokens: Tokens;
+  threeds: ThreeDS;
+  tokenIntents: TokenIntents;
 }
 
 interface ClientUserAgent {
@@ -69,7 +85,7 @@ interface ClientUserAgent {
   application?: ApplicationInfo;
 }
 
-type BasisTheoryServices = keyof Omit<BasisTheory, keyof HttpClient>;
+type BasisTheoryServices = keyof Omit<BasisTheory, 'client'>;
 
 type BasisTheoryServicesBasePathMap = {
   [key in BasisTheoryServices]: string;

@@ -40,6 +40,7 @@ describe('Applications', () => {
       createPayload: {
         name: chance.string(),
         type: chance.string() as ApplicationType,
+        createKey: true,
         permissions: [chance.string()],
         expiresAt: chance.date().toString(),
       },
@@ -57,6 +58,7 @@ describe('Applications', () => {
       createPayload: {
         name: chance.string(),
         type: chance.string() as ApplicationType,
+        createKey: true,
         rules: [
           {
             description: chance.string(),

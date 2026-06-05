@@ -35,6 +35,7 @@ type SafeStyle = Pick<CSSProperties, SafeCSSProperty>;
 const CARD_ELEMENT_STYLE_VARIANT_SELECTORS = [
   ':hover',
   ':focus',
+  ':read-only',
   '::placeholder',
   '::selection',
   ':disabled',
@@ -69,6 +70,12 @@ type CardElementStyle = Partial<
 
 type ElementStyle = CardElementStyle; // add others here as union type
 
+type CopyIconStyles = {
+  size?: string;
+  color?: string;
+  successColor?: string;
+};
+
 export {
   SAFE_CSS_PROPERTIES,
   SAFE_CSS_PROPERTIES_ALTERNATES,
@@ -79,13 +86,14 @@ export {
 };
 
 export type {
-  SafeCSSProperty,
-  SafeStyle,
+  CardElementStyle,
+  CardElementStyleVariant,
   CardElementStyleVariantSelector,
   CardElementStyleVariantStyle,
-  CardElementStyleVariant,
-  FontSources,
-  Fonts,
-  CardElementStyle,
+  CopyIconStyles,
   ElementStyle,
+  Fonts,
+  FontSources,
+  SafeCSSProperty,
+  SafeStyle,
 };

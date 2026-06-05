@@ -1,5 +1,12 @@
 # Basis Theory JS SDK (aka BasisTheory.js)
 
+> [!CAUTION]
+> This SDK has been deprecated.
+>
+> Our new Node.js SDK can be found at https://github.com/Basis-Theory/node-sdk
+>
+> See our documentation site for more information. https://developers.basistheory.com/docs/sdks/server-side/node
+
 [![Version](https://img.shields.io/npm/v/@basis-theory/basis-theory-js.svg)](https://www.npmjs.org/package/@basis-theory/basis-theory-js)
 [![Downloads](https://img.shields.io/npm/dm/@basis-theory/basis-theory-js.svg)](https://www.npmjs.org/package/@basis-theory/basis-theory-js)
 [![Verify](https://github.com/Basis-Theory/basis-theory-js/actions/workflows/release.yml/badge.svg)](https://github.com/Basis-Theory/basis-theory-js/actions/workflows/release.yml)
@@ -31,13 +38,12 @@ For a complete list of endpoints and examples, please refer to our [API docs](ht
 ```javascript
 import { BasisTheory } from '@basis-theory/basis-theory-js';
 
-const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED'); // replace with your application key
+const bt = await new BasisTheory().init('<API Key>'); // replace with your application key
 ```
 
 ### Per-request configuration
 
-All of the service methods accept an optional `RequestOptions` object. This is used if you want to set a per-request `BT-TRACE-ID`, `BT-API-KEY`, `BT-IDEMPOTENCY-KEY`
-and/or `BT-TRANSACTION-ID`.
+All of the service methods accept an optional `RequestOptions` object. This is used if you want to set a per-request `BT-TRACE-ID`, `BT-API-KEY` and/or `BT-IDEMPOTENCY-KEY`.
 
 ```javascript
 import { v4 as uuid } from 'uuid';
@@ -45,7 +51,7 @@ import { v4 as uuid } from 'uuid';
 await bt.applications.list(
   {},
   {
-    apiKey: 'key_N88mVGsp3sCXkykyN2EFED',
+    apiKey: '<Management API Key>',
     correlationId: 'aa5d3379-6385-4ef4-9fdb-ca1341572153',
     idempotencyKey: 'bb5d3379-6385-4ef4-9fdb-ca1341572154',
   }
@@ -57,10 +63,9 @@ await bt.tokens.create(
     data: "Sensitive Value",
   },
   {
-    apiKey: 'key_N88mVGsp3sCXkykyN2EFED',
+    apiKey: '<API Key>',
     correlationId: 'aa5d3379-6385-4ef4-9fdb-ca1341572153',
     idempotencyKey: 'bb5d3379-6385-4ef4-9fdb-ca1341572154',
-    transactionId: 'cc5d3379-3921-4ef4-9fdb-ca1341572169',
   }
 );
 ```
@@ -72,7 +77,7 @@ You can set a custom API Url to be used across all clients when creating a new S
 ```javascript
 import { BasisTheory } from '@basis-theory/basis-theory-js';
 
-const bt = await new BasisTheory().init('key_N88mVGsp3sCXkykyN2EFED', {
+const bt = await new BasisTheory().init('<API Key>', {
   apiBaseUrl: 'https://api.somedomain.com',
 }); // replace with your application key and api base URL.
 ```

@@ -2,36 +2,39 @@ name: Pull Request
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
+    environment: DEV
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+      statuses: write
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: [ '14.x' ]
-        os: [ ubuntu-latest ]
+        node: ["14.x"]
+        os: [ubuntu-latest]
     env:
       CI: 1 # prevents extra Cypress installation progress messages
       HUSKY: 0 # disables husky hooks
-      PULUMI_GLOBAL_DEV_STACK: basistheory/btinfra-global/dev
-      PULUMI_GLOBAL_PROD_STACK: basistheory/btinfra-global/prod
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+
+      - name: Setup rclone
+        uses: AnimMouse/setup-rclone@v1
 
       - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-
-      - name: Setup Pulumi CLI
-        uses: pulumi/action-install-pulumi-cli@v1.0.1
-
-      - name: Login in Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_DEV_CREDENTIALS }}
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
@@ -49,10 +52,10 @@ jobs:
 
       - name: Cache Cypress Binaries
         id: cache-cypress
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
-          key: cypress-cache-v2-${{ runner.os }}-${{ fromJson(steps.read-package-json.outputs.packageJson).devDependencies.cypress }}
+          key: cypress-cache-v4-${{ runner.os }}-${{ fromJson(steps.read-package-json.outputs.packageJson).devDependencies.cypress }}
 
       # Install and check Cypress binary
       - run: yarn run cypress install
@@ -61,8 +64,8 @@ jobs:
       - name: Write .env
         run: make write-lib-vars
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           ENVIRONMENT: dev
+          DD_GIT_SHA: ${{ github.sha }}
           IS_PR_WORKFLOW: true
 
       - name: Verify
@@ -71,7 +74,7 @@ jobs:
           SKIP_INSTALL: 1 # install with cache was done already
 
       - name: Upload failed e2e tests screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
@@ -80,25 +83,47 @@ jobs:
       - name: Verify Infrastructure
         run: make setup-infra
         env:
-          ENVIRONMENT: dev
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          S3_CF_DEV_STATE: ${{ vars.S3_CF_DEV_STATE }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.JS_AWS_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.JS_AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: us-east-2
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+          ENVIRONMENT: dev
+          IS_PR_WORKFLOW: true
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::914054469264:role/basis-theory-js-gh-admin
+          aws-region: us-east-2
+
+      - name: Deploy Index Hash
+        run: make deploy-index-hash
+        env:
+          AWS_REGION: us-east-2
+          ENVIRONMENT: dev 
           IS_PR_WORKFLOW: true
 
       - name: Purge cache
         uses: jakejarvis/cloudflare-purge-action@master
         env:
-          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_DEV_ZONE_ID }}
+          CLOUDFLARE_ZONE: ${{ vars.CF_DEV_ZONE_ID }}
           CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
           PURGE_URLS: '["https://js.flock-dev.com/*"]'
+
+      - name: Purge cache
+        uses: jakejarvis/cloudflare-purge-action@master
+        env:
+          CLOUDFLARE_ZONE: ${{ vars.CF_DEV_ELEMENTS_ZONE_ID }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
 
       - name: Monitor coverage
         uses: slavcodev/coverage-monitor-action@1.2.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          clover_file: 'coverage/clover.xml'
+          clover_file: "coverage/clover.xml"
           threshold_alert: 80
           threshold_warning: 90
+
+  pr-security-check:
+    name: PR Security Check
+    uses: Basis-Theory/public-security-workflows/.github/workflows/pr-check.yml@master
+    secrets: inherit

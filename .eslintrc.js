@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   extends: '@basis-theory/eslint-config/typescript',
   rules: {
+    'unicorn/no-null': 'warn',
     camelcase: [
       'error',
       {
@@ -27,6 +28,8 @@ module.exports = {
           'metrics_by_type',
           'monthly_active_tokens',
           'included_monthly_active_tokens',
+          'application_type',
+          'template_type',
         ],
       },
     ],

@@ -11,10 +11,11 @@ type UpdateTenant = Pick<Tenant, 'name' | 'settings'>;
 
 interface TenantUsageReport {
   tokenReport: TokenReport;
+  totalTokens: number;
 }
 
 interface TokenReport {
-  metricsByType: Record<string, TokenTypeMetrics>;
+  totalTokens: number;
   includedMonthlyActiveTokens: number;
   monthlyActiveTokens: number;
 }

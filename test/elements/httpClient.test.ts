@@ -1,277 +1,161 @@
 import { Chance } from 'chance';
 
-describe('elements http client', () => {
+describe('elements http client requests with element payloads (post, put, patch, get, delete)', () => {
   const chance = new Chance();
-  let BtElementImport: any;
+
+  let mockPost: jest.Mock,
+    mockPut: jest.Mock,
+    mockPatch: jest.Mock,
+    mockGet: jest.Mock,
+    mockDelete: jest.Mock,
+    mockPostResponse: string,
+    mockPutResponse: string,
+    mockPatchResponse: string,
+    expectationsMap: any,
+    elements: any;
 
   afterEach(() => {
     jest.resetModules();
     jest.clearAllMocks();
   });
 
-  describe('elements http client requests without element payloads (get, delete)', () => {
-    let mockGet: jest.Mock,
-      mockDelete: jest.Mock,
-      mockGetResponse: string,
-      mockDeleteResponse: string;
+  beforeEach(async () => {
+    mockPostResponse = chance.string();
+    mockPutResponse = chance.string();
+    mockPatchResponse = chance.string();
 
-    describe('elements has not been initialized', () => {
-      beforeEach(async () => {
-        jest.mock('@/elements', () => ({
-          ...jest.requireActual('@/elements'),
-          loadElements: jest.fn().mockReturnValue({
-            init: jest.fn().mockResolvedValue({}),
-          }),
-        }));
-        const { BasisTheory } = await import('@/BasisTheory');
+    mockPost = jest.fn().mockResolvedValue(mockPostResponse);
+    mockPut = jest.fn().mockResolvedValue(mockPutResponse);
+    mockPatch = jest.fn().mockResolvedValue(mockPatchResponse);
+    mockGet = jest.fn();
+    mockDelete = jest.fn();
 
-        BtElementImport = BasisTheory;
-      });
+    const elementsModule = (jest.requireActual(
+      '@/elements'
+    ) as unknown) as Record<string, unknown>;
 
-      test('should throw NoElementsError', async () => {
-        const btElements = await new BtElementImport().init(chance.string());
-        const expectedUrl = chance.url();
-        const expectedConfig = {
-          [chance.string()]: chance.string(),
-        };
+    jest.mock('@/elements', () => ({
+      ...elementsModule,
+      loadElements: jest.fn().mockReturnValue({
+        client: {
+          post: mockPost,
+          put: mockPut,
+          patch: mockPatch,
+          get: mockGet,
+          delete: mockDelete,
+        },
+        init: jest.fn().mockResolvedValue({}),
+        hasElement: jest.fn().mockReturnValue(true),
+      }),
+    }));
 
-        expect(() => btElements.get(expectedUrl, expectedConfig)).toThrow(
-          'Elements not initialized. Use a regular HTTP client if no elements are needed.'
-        );
+    const { BasisTheory } = await import('@/BasisTheory');
 
-        expect(() => btElements.delete(expectedUrl, expectedConfig)).toThrow(
-          'Elements not initialized. Use a regular HTTP client if no elements are needed.'
-        );
-      });
+    elements = await new BasisTheory().init(chance.string(), {
+      elements: true,
     });
 
-    describe('elements has been initialized', () => {
-      beforeEach(async () => {
-        mockGetResponse = chance.string();
-        mockDeleteResponse = chance.string();
-        mockGet = jest.fn().mockResolvedValue(mockGetResponse);
-        mockDelete = jest.fn().mockResolvedValue(mockDeleteResponse);
-
-        jest.mock('@/elements', () => ({
-          ...jest.requireActual('@/elements'),
-          loadElements: jest.fn().mockReturnValue({
-            client: {
-              get: mockGet,
-              delete: mockDelete,
-            },
-            init: jest.fn().mockResolvedValue({}),
-            hasElement: jest.fn().mockReturnValue(true),
-          }),
-        }));
-        const { BasisTheory } = await import('@/BasisTheory');
-
-        BtElementImport = BasisTheory;
-      });
-
-      test('should delegate http client request method to elements', async () => {
-        const btElements = await new BtElementImport().init(chance.string(), {
-          elements: true,
-        });
-        const expectedUrl = chance.url();
-        const expectedConfig = {
-          [chance.string()]: chance.string(),
-        };
-
-        const getResponse = await btElements.get(expectedUrl, expectedConfig);
-
-        expect(mockGet).toHaveBeenCalledTimes(1);
-        expect(mockGet).toHaveBeenCalledWith(expectedUrl, expectedConfig);
-        expect(getResponse).toStrictEqual(mockGetResponse);
-
-        const deleteResponse = await btElements.delete(
-          expectedUrl,
-          expectedConfig
-        );
-
-        expect(mockDelete).toHaveBeenCalledTimes(1);
-        expect(mockDelete).toHaveBeenCalledWith(expectedUrl, expectedConfig);
-        expect(deleteResponse).toStrictEqual(mockDeleteResponse);
-      });
-    });
+    expectationsMap = {
+      post: {
+        fn: mockPost,
+        response: mockPostResponse,
+      },
+      put: {
+        fn: mockPut,
+        response: mockPutResponse,
+      },
+      patch: {
+        fn: mockPatch,
+        response: mockPatchResponse,
+      },
+      get: {
+        fn: mockGet,
+      },
+      delete: {
+        fn: mockDelete,
+      },
+    };
   });
 
-  describe('elements http client requests with element payloads (post, put, patch)', () => {
-    let mockPost: jest.Mock,
-      mockPut: jest.Mock,
-      mockPatch: jest.Mock,
-      mockPostResponse: string,
-      mockPutResponse: string,
-      mockPatchResponse: string;
+  test.each(['post', 'put', 'patch'])('calls %s', async (method) => {
+    const expectedUrl = chance.url();
+    const expectedPayload = {
+      [chance.string()]: chance.string(),
+    };
+    const expectedConfig = {
+      [chance.string()]: chance.string(),
+    };
 
-    describe('elements exists on payload', () => {
-      beforeEach(async () => {
-        mockPostResponse = chance.string();
-        mockPutResponse = chance.string();
-        mockPatchResponse = chance.string();
-        mockPost = jest.fn().mockResolvedValue(mockPostResponse);
-        mockPut = jest.fn().mockResolvedValue(mockPutResponse);
-        mockPatch = jest.fn().mockResolvedValue(mockPatchResponse);
+    const response = await elements.client[method](
+      expectedUrl,
+      expectedPayload,
+      expectedConfig
+    );
 
-        jest.mock('@/elements', () => ({
-          ...jest.requireActual('@/elements'),
-          loadElements: jest.fn().mockReturnValue({
-            client: {
-              post: mockPost,
-              put: mockPut,
-              patch: mockPatch,
-            },
-            init: jest.fn().mockResolvedValue({}),
-            hasElement: jest.fn().mockReturnValue(true),
-          }),
-        }));
-        const { BasisTheory } = await import('@/BasisTheory');
+    expect(expectationsMap[method].fn).toHaveBeenCalledTimes(1);
+    expect(expectationsMap[method].fn).toHaveBeenCalledWith(
+      expectedUrl,
+      expectedPayload,
+      expectedConfig
+    );
+    expect(response).toStrictEqual(expectationsMap[method].response);
+  });
 
-        BtElementImport = BasisTheory;
-      });
+  test.each(['get', 'delete'])('calls %s', async (method) => {
+    const expectedUrl = chance.url();
 
-      test('should delegate http client request method with elements payload to elements', async () => {
-        const btElements = await new BtElementImport().init(chance.string(), {
-          elements: true,
-        });
-        const expectedUrl = chance.url();
-        const expectedPayload = {
-          [chance.string()]: chance.string(),
-        };
-        const expectedConfig = {
-          [chance.string()]: chance.string(),
-        };
+    const expectedConfig = {
+      [chance.string()]: chance.string(),
+    };
 
-        const postResponse = await btElements.post(
-          expectedUrl,
-          expectedPayload,
-          expectedConfig
-        );
+    await elements.client[method](expectedUrl, expectedConfig);
 
-        expect(mockPost).toHaveBeenCalledTimes(1);
-        expect(mockPost).toHaveBeenCalledWith(
-          expectedUrl,
-          expectedPayload,
-          expectedConfig
-        );
-        expect(postResponse).toStrictEqual(mockPostResponse);
+    expect(expectationsMap[method].fn).toHaveBeenCalledTimes(1);
 
-        const patchResponse = await btElements.patch(
-          expectedUrl,
-          expectedPayload,
-          expectedConfig
-        );
+    expect(expectationsMap[method].fn).toHaveBeenCalledWith(
+      expectedUrl,
+      expectedConfig
+    );
+  });
+});
 
-        expect(mockPatch).toHaveBeenCalledTimes(1);
-        expect(mockPatch).toHaveBeenCalledWith(
-          expectedUrl,
-          expectedPayload,
-          expectedConfig
-        );
-        expect(patchResponse).toStrictEqual(mockPatchResponse);
+describe('http client error handling/warnings', () => {
+  const chance = new Chance();
 
-        const putResponse = await btElements.put(
-          expectedUrl,
-          expectedPayload,
-          expectedConfig
-        );
+  let BasisTheoryClient;
 
-        expect(mockPut).toHaveBeenCalledTimes(1);
-        expect(mockPut).toHaveBeenCalledWith(
-          expectedUrl,
-          expectedPayload,
-          expectedConfig
-        );
-        expect(putResponse).toStrictEqual(mockPutResponse);
-      });
-    });
+  afterEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+  });
 
-    describe('elements does not exist on payload', () => {
-      beforeEach(async () => {
-        jest.mock('@/elements', () => ({
-          ...jest.requireActual('@/elements'),
-          loadElements: jest.fn().mockReturnValue({
-            init: jest.fn().mockResolvedValue({}),
-            hasElement: jest.fn().mockReturnValue(false),
-          }),
-        }));
-        const { BasisTheory } = await import('@/BasisTheory');
+  beforeEach(async () => {
+    const { BasisTheory } = await import('@/BasisTheory');
 
-        BtElementImport = BasisTheory;
-      });
+    BasisTheoryClient = BasisTheory;
+  });
 
-      test('should throw NoElementsError', async () => {
-        const btElements = await new BtElementImport().init(chance.string(), {
-          elements: true,
-        });
-        const expectedUrl = chance.url();
-        const expectedPayload = {
-          [chance.string()]: chance.string(),
-        };
-        const expectedConfig = {
-          [chance.string()]: chance.string(),
-        };
+  test('http client returns undefined when elements are not initialized', async () => {
+    const btClient = await new BasisTheoryClient().init(chance.string());
 
-        expect(() =>
-          btElements.post(expectedUrl, expectedPayload, expectedConfig)
-        ).toThrow(
-          'Element not found in payload. Use a regular HTTP client if no elements are needed.'
-        );
+    expect(btClient.client).toBeUndefined();
+  });
 
-        expect(() =>
-          btElements.patch(expectedUrl, expectedPayload, expectedConfig)
-        ).toThrow(
-          'Element not found in payload. Use a regular HTTP client if no elements are needed.'
-        );
+  test('logs error to console when trying to use client with elements not initialized', async () => {
+    const consoleErrorMock = jest.spyOn(console, 'error');
 
-        expect(() =>
-          btElements.put(expectedUrl, expectedPayload, expectedConfig)
-        ).toThrow(
-          'Element not found in payload. Use a regular HTTP client if no elements are needed.'
-        );
-      });
-    });
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    consoleErrorMock.mockImplementation(() => {});
 
-    describe('elements has not been initialized', () => {
-      beforeEach(async () => {
-        jest.mock('@/elements', () => ({
-          ...jest.requireActual('@/elements'),
-          loadElements: jest.fn().mockReturnValue({
-            init: jest.fn().mockResolvedValue({}),
-          }),
-        }));
-        const { BasisTheory } = await import('@/BasisTheory');
+    const btClient = await new BasisTheoryClient().init(chance.string());
 
-        BtElementImport = BasisTheory;
-      });
+    expect(btClient.client).toBeUndefined();
 
-      test('should throw NoElementsError', async () => {
-        const btElements = await new BtElementImport().init(chance.string());
-        const expectedUrl = chance.url();
-        const expectedPayload = {
-          [chance.string()]: chance.string(),
-        };
-        const expectedConfig = {
-          [chance.string()]: chance.string(),
-        };
+    // eslint-disable-next-line no-console
+    expect(console.error).toHaveBeenCalledWith(
+      'Elements are not initialized. Either initialize elements or use a regular HTTP client if no elements are needed.'
+    );
 
-        expect(() =>
-          btElements.post(expectedUrl, expectedPayload, expectedConfig)
-        ).toThrow(
-          'Elements not initialized. Use a regular HTTP client if no elements are needed.'
-        );
-
-        expect(() =>
-          btElements.patch(expectedUrl, expectedPayload, expectedConfig)
-        ).toThrow(
-          'Elements not initialized. Use a regular HTTP client if no elements are needed.'
-        );
-
-        expect(() =>
-          btElements.put(expectedUrl, expectedPayload, expectedConfig)
-        ).toThrow(
-          'Elements not initialized. Use a regular HTTP client if no elements are needed.'
-        );
-      });
-    });
+    consoleErrorMock.mockRestore();
   });
 });
