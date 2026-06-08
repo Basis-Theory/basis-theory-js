@@ -9,7 +9,8 @@ jobs:
     environment: PROD
     permissions:
       id-token: write
-      contents: read
+      contents: write
+      issues: write
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -20,7 +21,7 @@ jobs:
       HUSKY: 0 # disables husky hooks
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_SEMANTIC_RELEASE_PAT }}
 
@@ -34,9 +35,13 @@ jobs:
           channel: ${{ vars.SLACK_DUCKBOT_RELEASE_CHANNEL_ID }}
 
       - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
@@ -68,7 +73,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
           ENVIRONMENT: prod
           GITHUB_TOKEN: ${{ secrets.GH_SEMANTIC_RELEASE_PAT }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
