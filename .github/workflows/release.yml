@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ["14.x"]
+        node: ["20.x"]
         os: [ubuntu-latest]
     env:
       CI: 1 # prevents extra Cypress installation progress messages
@@ -38,10 +38,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-          registry-url: 'https://registry.npmjs.org'
+          # registry-url is intentionally NOT set - it writes an .npmrc auth line that blocks OIDC
 
       - name: Upgrade npm for trusted publishing
-        run: npm install -g npm@latest
+        run: npm install -g npm@latest # Requires npm 11.5.1+ for OIDC trusted publishing
 
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
@@ -73,7 +73,12 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
           ENVIRONMENT: prod
           GITHUB_TOKEN: ${{ secrets.GH_SEMANTIC_RELEASE_PAT }}
-          NPM_CONFIG_PROVENANCE: true
+
+      # semantic-release (above) bumps dist/package.json and creates the GitHub release/tag/changelog,
+      # but does NOT publish to npm. Publishing happens here as a plain step so npm can perform the
+      # OIDC token exchange (requires id-token: write and no stored NPM_TOKEN).
+      - name: Publish to npm (OIDC trusted publishing)
+        run: cd dist && npm publish --provenance --access public
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4

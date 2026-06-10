@@ -21,7 +21,6 @@
       "@semantic-release/exec",
       {
         "prepareCmd": "npm version ${nextRelease.version} --no-git-tag-version && cd dist && npm version ${nextRelease.version} --no-git-tag-version",
-        "publishCmd": "cd dist && npm publish --provenance --access public",
         "verifyReleaseCmd": "echo VERSION=${nextRelease.version} >> .env"
       }
     ]
