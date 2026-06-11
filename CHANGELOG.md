@@ -1,3 +1,11 @@
+## [4.30.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.30.0...v4.30.1) (2026-06-11)
+
+
+### Bug Fixes
+
+* **ENG-11189:** replace terraform-admin role chain with scoped IAM roles ([#473](https://github.com/Basis-Theory/basis-theory-js/issues/473)) ([ef0d52d](https://github.com/Basis-Theory/basis-theory-js/commit/ef0d52db4d0833d6f5eba79bb75474230adc37a3))
+* migrate npm publish to OIDC trusted publishing ([#475](https://github.com/Basis-Theory/basis-theory-js/issues/475)) ([b98533b](https://github.com/Basis-Theory/basis-theory-js/commit/b98533b95123240d6b1bc40147a0141b8fedc0de))
+
 # [4.30.0](https://github.com/Basis-Theory/basis-theory-js/compare/v4.29.0...v4.30.0) (2025-07-18)
 
 
