@@ -1,3 +1,10 @@
+## [4.30.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.30.1...v4.30.2) (2026-07-08)
+
+
+### Bug Fixes
+
+* **ENG-11520:** replace semantic-release PAT with bt_semantic_release app token ([#476](https://github.com/Basis-Theory/basis-theory-js/issues/476)) ([f05cf07](https://github.com/Basis-Theory/basis-theory-js/commit/f05cf07b315efad3b4b912f87f61d65e60f16185))
+
 ## [4.30.1](https://github.com/Basis-Theory/basis-theory-js/compare/v4.30.0...v4.30.1) (2026-06-11)
 
 
