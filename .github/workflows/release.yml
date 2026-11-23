@@ -7,6 +7,8 @@ on:
 jobs:
   build-release:
     environment: PROD
+    outputs:
+      released: ${{ steps.released.outputs.released }}
     permissions:
       id-token: write # npm OIDC trusted publishing
       contents: read
@@ -89,7 +91,19 @@ jobs:
 
       - name: Check for a new version
         id: released
-        run: grep -q '^VERSION=' .env && echo released=true >> "$GITHUB_OUTPUT" || echo 'No new version released'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if grep -q '^VERSION=' .env; then
+            echo released=true >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          tag=$(gh api "repos/${GITHUB_REPOSITORY}/releases/latest" --jq .tag_name)
+          if [ -z "$(npm view "@basis-theory/basis-theory-js@${tag#v}" version)" ]; then
+            echo "::error::${tag} has a GitHub release but is not on npm. Publish it before releasing again."
+            exit 1
+          fi
+          echo "No new version released. ${tag} is already on npm."
 
       # semantic-release (above) bumps dist/package.json and creates the GitHub release/tag/changelog,
       # but does NOT publish to npm. Publishing happens here as a plain step so npm can perform the
@@ -141,6 +155,7 @@ jobs:
       id-token: write
       contents: read
     needs: build-release
+    if: needs.build-release.outputs.released == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
