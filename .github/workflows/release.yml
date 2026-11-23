@@ -9,6 +9,7 @@ jobs:
     environment: PROD
     outputs:
       released: ${{ steps.released.outputs.released }}
+      version: ${{ steps.released.outputs.version }}
     permissions:
       id-token: write # npm OIDC trusted publishing
       contents: read
@@ -96,6 +97,7 @@ jobs:
         run: |
           if grep -q '^VERSION=' .env; then
             echo released=true >> "$GITHUB_OUTPUT"
+            grep '^VERSION=' .env | tail -1 | sed 's/^VERSION=/version=/' >> "$GITHUB_OUTPUT"
             exit 0
           fi
           tag=$(gh api "repos/${GITHUB_REPOSITORY}/releases/latest" --jq .tag_name)
@@ -104,13 +106,6 @@ jobs:
             exit 1
           fi
           echo "No new version released. ${tag} is already on npm."
-
-      # semantic-release (above) bumps dist/package.json and creates the GitHub release/tag/changelog,
-      # but does NOT publish to npm. Publishing happens here as a plain step so npm can perform the
-      # OIDC token exchange (requires id-token: write and no stored NPM_TOKEN).
-      - name: Publish to npm (OIDC trusted publishing)
-        if: steps.released.outputs.released == 'true'
-        run: cd dist && npm publish --provenance --access public
 
       - name: Configure AWS Credentials
         if: steps.released.outputs.released == 'true'
@@ -125,6 +120,13 @@ jobs:
         env:
           AWS_REGION: us-east-2
           ENVIRONMENT:  prod
+
+      # semantic-release (above) bumps dist/package.json and creates the GitHub release/tag/changelog,
+      # but does NOT publish to npm. Publishing happens here as a plain step so npm can perform the
+      # OIDC token exchange (requires id-token: write and no stored NPM_TOKEN).
+      - name: Publish to npm (OIDC trusted publishing)
+        if: steps.released.outputs.released == 'true'
+        run: cd dist && npm publish --provenance --access public
 
       - name: Purge cache
         if: steps.released.outputs.released == 'true'
@@ -172,6 +174,11 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::244923700941:role/basis-theory-js-gh-admin
           aws-region: us-east-2
+
+      - name: Set released version
+        env:
+          VERSION: ${{ needs.build-release.outputs.version }}
+        run: npm version "$VERSION" --no-git-tag-version --allow-same-version
 
       - name: UAT Deploy Index Hash
         run: make deploy-index-hash

@@ -15,7 +15,7 @@ if [[ -z "${ENVIRONMENT}" ]]; then
     exit 1
 fi
 
-if [ "${ENVIRONMENT}" = prod]; then
+if [ "${ENVIRONMENT}" = prod ]; then
     JS_HOST="js.basistheory.com"
 elif [ "${ENVIRONMENT}" = uat ]; then
     JS_HOST="js.btsandbox.com"
