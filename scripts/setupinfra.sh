@@ -34,7 +34,7 @@ shasum -b -a 384 $dist_directory/basis-theory-js.bundle.js | awk '{ print $1 }' 
 echo "Uploading bundle to $JS_HOST/$INDEX_JS_NAME"
 
 if [[ -z ${AWS} ]]; then
-  JS_BUCKET_NAME=$(aws s3 cp s3://basis-theory-tf-state/basistheory-cloudflare/$ENVIRONMENT/terraform.tfstate - | jq -r .outputs.js_bucket_name.value)
+  JS_BUCKET_NAME="${JS_HOST}"
 else
   JS_BUCKET_NAME="${ENVIRONMENT}-${JS_HOST}"
 fi
