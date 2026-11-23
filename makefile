@@ -17,7 +17,7 @@ deploy-index-hash:
 
 release:
 	yarn release
-	$(MAKE) setup-infra
+	if grep -q '^VERSION=' .env; then $(MAKE) setup-infra; else echo 'No new version released; skipping CDN upload'; fi
 
 write-lib-vars:
 	./scripts/writelibvars.sh
