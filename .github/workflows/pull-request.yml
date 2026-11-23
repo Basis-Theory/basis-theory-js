@@ -80,12 +80,16 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
 
+      - name: Configure Legacy AWS Credentials
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: arn:aws:iam::110783777282:role/basis-theory-js-legacy-cdn-dev
+          aws-region: us-east-2
+
       - name: Verify Infrastructure
         run: make setup-infra
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: us-east-2
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
           ENVIRONMENT: dev
           IS_PR_WORKFLOW: true
 
