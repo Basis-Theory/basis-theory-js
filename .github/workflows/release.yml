@@ -7,9 +7,6 @@ on:
 jobs:
   build-release:
     environment: PROD
-    outputs:
-      released: ${{ steps.released.outputs.released }}
-      version: ${{ steps.released.outputs.version }}
     permissions:
       id-token: write # npm OIDC trusted publishing
       contents: read
@@ -97,7 +94,6 @@ jobs:
         run: |
           if grep -q '^VERSION=' .env; then
             echo released=true >> "$GITHUB_OUTPUT"
-            grep '^VERSION=' .env | tail -1 | sed 's/^VERSION=/version=/' >> "$GITHUB_OUTPUT"
             exit 0
           fi
           tag=$(gh api "repos/${GITHUB_REPOSITORY}/releases/latest" --jq .tag_name)
@@ -157,7 +153,6 @@ jobs:
       id-token: write
       contents: read
     needs: build-release
-    if: needs.build-release.outputs.released == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -174,11 +169,6 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::244923700941:role/basis-theory-js-gh-admin
           aws-region: us-east-2
-
-      - name: Set released version
-        env:
-          VERSION: ${{ needs.build-release.outputs.version }}
-        run: npm version "$VERSION" --no-git-tag-version --allow-same-version
 
       - name: UAT Deploy Index Hash
         run: make deploy-index-hash
