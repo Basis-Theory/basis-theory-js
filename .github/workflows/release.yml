@@ -87,25 +87,45 @@ jobs:
           ENVIRONMENT: prod
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
-      # semantic-release (above) bumps dist/package.json and creates the GitHub release/tag/changelog,
-      # but does NOT publish to npm. Publishing happens here as a plain step so npm can perform the
-      # OIDC token exchange (requires id-token: write and no stored NPM_TOKEN).
-      - name: Publish to npm (OIDC trusted publishing)
-        run: cd dist && npm publish --provenance --access public
+      - name: Check for a new version
+        id: released
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if grep -q '^VERSION=' .env; then
+            echo released=true >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          tag=$(gh api "repos/${GITHUB_REPOSITORY}/releases/latest" --jq .tag_name)
+          if [ -z "$(npm view "@basis-theory/basis-theory-js@${tag#v}" version)" ]; then
+            echo "::error::${tag} has a GitHub release but is not on npm. Publish it before releasing again."
+            exit 1
+          fi
+          echo "No new version released. ${tag} is already on npm."
 
       - name: Configure AWS Credentials
+        if: steps.released.outputs.released == 'true'
         uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
         with:
           role-to-assume: arn:aws:iam::469828239459:role/basis-theory-js-gh-admin
           aws-region: us-east-2
 
       - name: UAT Deploy Index Hash
+        if: steps.released.outputs.released == 'true'
         run: make deploy-index-hash
         env:
           AWS_REGION: us-east-2
           ENVIRONMENT:  prod
 
+      # semantic-release (above) bumps dist/package.json and creates the GitHub release/tag/changelog,
+      # but does NOT publish to npm. Publishing happens here as a plain step so npm can perform the
+      # OIDC token exchange (requires id-token: write and no stored NPM_TOKEN).
+      - name: Publish to npm (OIDC trusted publishing)
+        if: steps.released.outputs.released == 'true'
+        run: cd dist && npm publish --provenance --access public
+
       - name: Purge cache
+        if: steps.released.outputs.released == 'true'
         uses: jakejarvis/cloudflare-purge-action@eee6dba0236093358f25bb1581bd615dc8b3d8e3 # master
         env:
           CLOUDFLARE_ZONE: ${{ vars.CF_PROD_ZONE_ID }}
@@ -113,6 +133,7 @@ jobs:
           PURGE_URLS: '["https://js.basistheory.com/*"]'
 
       - name: Purge prod wl cache
+        if: steps.released.outputs.released == 'true'
         uses: jakejarvis/cloudflare-purge-action@eee6dba0236093358f25bb1581bd615dc8b3d8e3 # master
         env:
           CLOUDFLARE_ZONE: ${{ vars.CF_PROD_ELEMENTS_ZONE_ID }}
