@@ -1,3 +1,10 @@
+## [4.30.3](https://github.com/Basis-Theory/basis-theory-js/compare/v4.30.2...v4.30.3) (2026-11-24)
+
+
+### Bug Fixes
+
+* **ENG-14315:** skip publish and cdn upload when no version is released ([#479](https://github.com/Basis-Theory/basis-theory-js/issues/479)) ([4f2e151](https://github.com/Basis-Theory/basis-theory-js/commit/4f2e151d6e19a3de4c7a553fb761b63e9160b0fc))
+
 ## [4.30.2](https://github.com/Basis-Theory/basis-theory-js/compare/v4.30.1...v4.30.2) (2026-07-08)
 
 
